@@ -1,19 +1,18 @@
 'use client'
 
 import React from 'react'
-import { Input } from '../ui/Input'
 import { Button } from '../ui/Button'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormItem, FormLabel } from '../ui/Form'
+import { Form } from '../ui/Form'
 import { updateUserValidationSchema } from '@/constants/schemas'
 import { updateUser } from '@/app/lib/api/user/mutations'
 import { UpdateUserData } from '@/models/user'
 import { Text, toast } from '../ui'
-import { Loader } from '../shared/Loader'
 import { useToggle } from '@/hooks'
 import { useRouter } from 'next/navigation'
+import { Divider } from '../shared/Divider'
 
 type Props = {
   id: number | string
@@ -45,36 +44,69 @@ export const UpdateUserDetailsForm: React.FC<Props> = ({ id, name, email }) => {
 
   return (
     <Form {...form}>
-      <div className='text-gray-400 border-b border-gray-400 text-sm font-bold uppercase pb-1'>Basic details</div>
-      <form onSubmit={form.handleSubmit(handleProfileUpdate)} className='flex flex-col gap-4'>
-        <FormItem>
-          <FormLabel className='font-bold'>Email</FormLabel>
-          <Text as='p' styleVariant='body-small'>
-            If changed, verification email will be sent to the new address
+      <div className='flex flex-col gap-4'>
+        <div className='flex flex-col'>
+          <Text as='p' styleVariant='body-normal' className='font-bold'>
+            Display Name
           </Text>
-          <Input
-            {...form.register('email')}
-            placeholder={email}
-            className='bg-grey-300 border-grey-200 border rounded-md p-2 w-full'
-          />
-        </FormItem>
+          <div className='flex justify-between items-center'>
+            <Text as='p' styleVariant='body-normal'>
+              {name}
+            </Text>
+            <Button variant='secondary' size='md'>
+              Edit
+            </Button>
+          </div>
 
-        <FormItem>
-          <FormLabel className='font-bold'>Username</FormLabel>
-          <Text as='p' styleVariant='body-small'>
-            Must be 3 to 20 characters long. Leters, numbers, underscores, and dashes are allowed
+          {/* <Input
+              {...form.register('name')}
+              placeholder={name}
+              className='bg-grey-300 border-grey-200 border rounded-md p-2 w-full'
+            /> */}
+        </div>
+        <Divider />
+
+        <div className='flex flex-col'>
+          <Text as='p' styleVariant='body-normal' className='font-bold'>
+            Username
           </Text>
-          <Input
+          <div className='flex justify-between items-center'>
+            <Text as='p' styleVariant='body-normal'>
+              @{name}
+            </Text>
+            <Button variant='secondary' size='md'>
+              Edit
+            </Button>
+          </div>
+
+          {/* <Input
             {...form.register('name')}
             placeholder={name}
             className='bg-grey-300 border-grey-200 border rounded-md p-2 w-full'
-          />
-        </FormItem>
+          />*/}
+        </div>
+        <Divider />
 
-        <Button type='submit' variant='secondary' subVariant={2} className='w-fit '>
-          {showLoader ? <Loader /> : 'Save'}
-        </Button>
-      </form>
+        <div className='flex flex-col'>
+          <Text as='p' styleVariant='body-normal' className='font-bold'>
+            Email
+          </Text>
+          <div className='flex justify-between items-center'>
+            <Text as='p' styleVariant='body-normal'>
+              {email}
+            </Text>
+            <Button variant='secondary' size='md'>
+              Edit
+            </Button>
+          </div>
+
+          {/* <Input
+            {...form.register('email')}
+            placeholder={email}
+            className='bg-grey-300 border-grey-200 border rounded-md p-2 w-full'
+          />*/}
+        </div>
+      </div>
     </Form>
   )
 }

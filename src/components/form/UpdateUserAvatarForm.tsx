@@ -51,28 +51,28 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
 
   return (
     <Form {...form}>
-      <div className='text-gray-400 border-b border-gray-400 text-sm font-bold uppercase pb-1'>Assets</div>
       <form onSubmit={form.handleSubmit(handleAvatarUpdateFormSubmit)}>
-        <div className='flex justify-between'>
-          <div className='flex flex-col justify-between leading-6 gap-3'>
-            <div className='flex flex-col gap-3'>
-              <FormLabel className='font-bold'>Update avatar image</FormLabel>
-              <Text as='p' styleVariant='body-small'>
-                Recommended size is 500 x 500px, 3mb max size
-              </Text>
-            </div>
-
-            <Button type='submit' variant='secondary' subVariant={2} size='lg' className='w-fit'>
-              {showLoader ? <Loader /> : 'Update Avatar'}
+        <div className='flex flex-col justify-between gap-8'>
+          <div className='flex flex-col gap-2'>
+            <Text as='p' styleVariant='body-normal' className='font-bold'>
+              Profile photo
+            </Text>
+            <Text as='p' styleVariant='body-small' className='text-grey-200'>
+              Recommended size is 500 x 500px, 3mb max size
+            </Text>
+          </div>
+          <div className='flex justify-between items-end'>
+            <FormControl>
+              <FileUpload
+                id='avatar'
+                onUpload={(files) => form.setValue('avatar', files[0]?.file)}
+                previewUrl={avatar ?? null}
+              />
+            </FormControl>
+            <Button type='submit' variant='secondary' size='md'>
+              {showLoader ? <Loader /> : 'Update photo'}
             </Button>
           </div>
-          <FormControl>
-            <FileUpload
-              id='avatar'
-              onUpload={(files) => form.setValue('avatar', files[0]?.file)}
-              previewUrl={avatar ?? null}
-            />
-          </FormControl>
         </div>
       </form>
     </Form>

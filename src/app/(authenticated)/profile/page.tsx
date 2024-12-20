@@ -14,45 +14,66 @@ async function ProfilePage() {
     return null
   }
   const wallets = await fetchUserWallets(me.id)
+  const tabTriggerClass =
+    'w-full text-grey-200 font-bold text-sm sm:text-base border-none data-[state=active]:text-white md:p-0 p-0'
 
   return (
     <BaseLayout>
-      <main className='w-full max-w-[1200px] mx-auto'>
-        <Tabs defaultValue='1'>
-          <TabsList className='border-b-2 border-grey-300 w-full flex gap-4 justify-start'>
-            <TabsTrigger value='1' className='tab-button text-white font-bold text-sm sm:text-base'>
-              Account
+      <div className='flex flex-col justify-start w-full max-w-[1200px] gap-5'>
+        <Text as='h1' styleVariant='primary-heading' className=''>
+          Settings
+        </Text>
+        <Tabs defaultValue='1' className='flex gap-36 w-full'>
+          <TabsList className='flex gap-5 justify-start flex-col text-left'>
+            <TabsTrigger value='1' className={tabTriggerClass}>
+              <Text as='h4' styleVariant='secondary-heading'>
+                Account
+              </Text>
             </TabsTrigger>
-            <TabsTrigger value='2' className='tab-button text-white font-bold text-sm sm:text-base'>
-              Wallets
+            <TabsTrigger value='2' className={tabTriggerClass}>
+              <Text as='h4' styleVariant='secondary-heading'>
+                Wallet
+              </Text>
             </TabsTrigger>
-            <TabsTrigger value='3' className='tab-button text-white font-bold text-sm sm:text-base'>
-              Security
+            <TabsTrigger value='3' className={tabTriggerClass}>
+              <Text as='h4' styleVariant='secondary-heading'>
+                Security
+              </Text>
             </TabsTrigger>
-            <TabsTrigger value='4' className='tab-button text-white font-bold text-sm sm:text-base'>
-              FAQ
+            <TabsTrigger value='4' className={tabTriggerClass}>
+              <Text as='h4' styleVariant='secondary-heading'>
+                FAQ
+              </Text>
             </TabsTrigger>
           </TabsList>
-          <TabsContent value='1'>{me && <AccountSettingSection user={me} />}</TabsContent>
-          <TabsContent value='2'>{me && <UserWalletSection wallets={wallets} />}</TabsContent>
-          <TabsContent value='3'>
-            <div className='px-2'>
-              <div className='py-8'>
-                <h2 className='text-2xl font-bold'>Security & Privacy</h2>
-                <Text as='p' styleVariant='body-normal' className='text-gray-400 italic'>
-                  Change your security settings and review the privacy policy{' '}
-                  <Link target='_' href={RoutePath.PrivacyPolicy} className='text-important-color underline font-bold'>
-                    here
-                  </Link>
-                </Text>
+          <div className='w-full max-w-[750px]'>
+            <TabsContent value='1'>
+              <AccountSettingSection user={me} />
+            </TabsContent>
+            <TabsContent value='2'>{me && <UserWalletSection wallets={wallets} />}</TabsContent>
+            <TabsContent value='3'>
+              <div className='px-2'>
+                <div className='py-8'>
+                  <h2 className='text-2xl font-bold'>Security & Privacy</h2>
+                  <Text as='p' styleVariant='body-normal' className='text-gray-400 italic'>
+                    Change your security settings and review the privacy policy{' '}
+                    <Link
+                      target='_'
+                      href={RoutePath.PrivacyPolicy}
+                      className='text-important-color underline font-bold'
+                    >
+                      here
+                    </Link>
+                  </Text>
+                </div>
               </div>
-            </div>
-          </TabsContent>
-          <TabsContent value='4'>
-            <FAQ />
-          </TabsContent>
+            </TabsContent>
+            <TabsContent value='4'>
+              <FAQ />
+            </TabsContent>
+          </div>
         </Tabs>
-      </main>
+      </div>
     </BaseLayout>
   )
 }
