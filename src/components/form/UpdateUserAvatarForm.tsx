@@ -1,11 +1,10 @@
 'use client'
 
 import React from 'react'
-import { Button } from '../ui/Button'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormLabel } from '../ui/Form'
+import { Form, FormControl } from '../ui/Form'
 import { updateUserAvatarValidationSchema } from '@/constants/schemas'
 import { UpdateUserAvatarData } from '@/models/user'
 import { updateUserAvatar } from '@/app/lib/api/user/mutations'
@@ -13,7 +12,6 @@ import { Text, toast } from '../ui'
 import FileUpload from '../shared/FileUpload'
 import { useRouter } from 'next/navigation'
 import { useToggle } from '@/hooks'
-import { Loader } from '../shared/Loader'
 
 type Props = {
   id: string | number
@@ -22,6 +20,7 @@ type Props = {
 
 export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
   const [showLoader, toggleLoader] = useToggle()
+
   const form = useForm<z.infer<typeof updateUserAvatarValidationSchema>>({
     resolver: zodResolver(updateUserAvatarValidationSchema),
     defaultValues: {
@@ -57,11 +56,13 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
             <Text as='p' styleVariant='body-normal' className='font-bold'>
               Profile photo
             </Text>
+
             <Text as='p' styleVariant='body-small' className='text-grey-200'>
-              Recommended size is 500 x 500px, 3mb max size
+              Recommended image size: 500 x 500
             </Text>
           </div>
-          <div className='flex justify-between items-end'>
+
+          <div className='flex justify-between items-center'>
             <FormControl>
               <FileUpload
                 id='avatar'
@@ -69,9 +70,6 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
                 previewUrl={avatar ?? null}
               />
             </FormControl>
-            <Button type='submit' variant='secondary' size='md'>
-              {showLoader ? <Loader /> : 'Update photo'}
-            </Button>
           </div>
         </div>
       </form>

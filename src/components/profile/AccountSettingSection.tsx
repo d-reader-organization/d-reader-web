@@ -20,7 +20,8 @@ export const AccountSettingSection: React.FC<Props> = ({ user }) => {
       <Text as='h5' styleVariant='secondary-heading'>
         Your Account
       </Text>
-      <UpdateUserDetailsForm id={id} name={name} email={email} />
+      {/* todo: update username */}
+      <UpdateUserDetailsForm id={id} name={name} email={email} username={name} />
       <Divider />
       <UpdateUserAvatarForm id={id} avatar={avatar} />
     </div>

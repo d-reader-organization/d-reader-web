@@ -1,38 +1,61 @@
-'use client'
-
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/Button'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Form } from '../ui/Form'
 import { updateUserValidationSchema } from '@/constants/schemas'
 import { updateUser } from '@/app/lib/api/user/mutations'
-import { UpdateUserData } from '@/models/user'
-import { Text, toast } from '../ui'
+import { Input, Text, toast } from '../ui'
 import { useToggle } from '@/hooks'
 import { useRouter } from 'next/navigation'
 import { Divider } from '../shared/Divider'
+import { Loader } from '../shared/Loader'
 
 type Props = {
   id: number | string
   name: string
+  username: string
   email: string
 }
 
-export const UpdateUserDetailsForm: React.FC<Props> = ({ id, name, email }) => {
+export const UpdateUserDetailsForm: React.FC<Props> = ({ id, name, email, username }) => {
+  return (
+    <div className='flex flex-col gap-4'>
+      {['Display Name', 'Username', 'Email'].map((title, index) => {
+        const value = title === 'Email' ? email : title === 'Username' ? username : name
+
+        return (
+          <React.Fragment key={title}>
+            <UserDetailsFormItem title={title} value={value} id={id} />
+            {index < 2 && <Divider />}
+          </React.Fragment>
+        )
+      })}
+    </div>
+  )
+}
+
+type FormItemProps = {
+  title: string
+  value: string
+  id: string | number
+}
+
+const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id }) => {
   const [showLoader, toggleLoader] = useToggle()
+  const [showEditItem, toggleEditItem] = useToggle()
+  const [item, setItem] = useState<string>()
+
   const { refresh } = useRouter()
 
-  const form = useForm<z.infer<typeof updateUserValidationSchema>>({
-    resolver: zodResolver(updateUserValidationSchema),
-    defaultValues: { email, name },
-  })
+  useEffect(() => {
+    setItem(value)
+  }, [value])
 
-  const handleProfileUpdate = async (data: UpdateUserData) => {
+  const field = title === 'Email' ? 'email' : title === 'Username' ? 'username' : 'name'
+  const handleItemUpdate = async () => {
     toggleLoader()
-    const { errorMessage } = await updateUser(id, data)
 
+    const data = { [field]: item }
+    updateUserValidationSchema.parse(data)
+    const { errorMessage } = await updateUser(id, data)
     if (errorMessage) {
       toast({ description: errorMessage, variant: 'error' })
     } else {
@@ -40,73 +63,44 @@ export const UpdateUserDetailsForm: React.FC<Props> = ({ id, name, email }) => {
       refresh()
     }
     toggleLoader()
+    toggleEditItem()
   }
 
+  const isUsername = title === 'Username'
   return (
-    <Form {...form}>
-      <div className='flex flex-col gap-4'>
-        <div className='flex flex-col'>
-          <Text as='p' styleVariant='body-normal' className='font-bold'>
-            Display Name
-          </Text>
-          <div className='flex justify-between items-center'>
-            <Text as='p' styleVariant='body-normal'>
-              {name}
-            </Text>
-            <Button variant='secondary' size='md'>
-              Edit
-            </Button>
-          </div>
+    <div className='flex flex-col gap-[10px]'>
+      <Text as='p' styleVariant='body-normal' className='font-bold'>
+        {title}
+      </Text>
 
-          {/* <Input
-              {...form.register('name')}
-              placeholder={name}
-              className='bg-grey-300 border-grey-200 border rounded-md p-2 w-full'
-            /> */}
+      {showEditItem ? (
+        <div className='flex gap-2 w-full'>
+          <Input
+            onChange={(e) => setItem(e.target.value)}
+            value={item}
+            type='default'
+            placeholder={value}
+            className='w-full max-w-full'
+          />
+
+          <Button variant='secondary' size='md' onClick={toggleEditItem}>
+            Cancel
+          </Button>
+          <Button variant='white' size='md' onClick={handleItemUpdate}>
+            {showLoader ? <Loader /> : 'Save'}
+          </Button>
         </div>
-        <Divider />
-
-        <div className='flex flex-col'>
-          <Text as='p' styleVariant='body-normal' className='font-bold'>
-            Username
+      ) : (
+        <div className='flex justify-between items-center'>
+          <Text as='p' styleVariant='body-normal' className='break-all'>
+            {isUsername ? `@${value}` : value}
           </Text>
-          <div className='flex justify-between items-center'>
-            <Text as='p' styleVariant='body-normal'>
-              @{name}
-            </Text>
-            <Button variant='secondary' size='md'>
-              Edit
-            </Button>
-          </div>
 
-          {/* <Input
-            {...form.register('name')}
-            placeholder={name}
-            className='bg-grey-300 border-grey-200 border rounded-md p-2 w-full'
-          />*/}
+          <Button variant='secondary' size='md' onClick={toggleEditItem}>
+            Edit
+          </Button>
         </div>
-        <Divider />
-
-        <div className='flex flex-col'>
-          <Text as='p' styleVariant='body-normal' className='font-bold'>
-            Email
-          </Text>
-          <div className='flex justify-between items-center'>
-            <Text as='p' styleVariant='body-normal'>
-              {email}
-            </Text>
-            <Button variant='secondary' size='md'>
-              Edit
-            </Button>
-          </div>
-
-          {/* <Input
-            {...form.register('email')}
-            placeholder={email}
-            className='bg-grey-300 border-grey-200 border rounded-md p-2 w-full'
-          />*/}
-        </div>
-      </div>
-    </Form>
+      )}
+    </div>
   )
 }

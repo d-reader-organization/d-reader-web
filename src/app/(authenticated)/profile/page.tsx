@@ -23,8 +23,8 @@ async function ProfilePage() {
         <Text as='h1' styleVariant='primary-heading' className=''>
           Settings
         </Text>
-        <Tabs defaultValue='1' className='flex gap-36 w-full'>
-          <TabsList className='flex gap-5 justify-start flex-col text-left'>
+        <Tabs defaultValue='1' className='flex gap-36 w-full max-sm:flex-col max-sm:gap-10'>
+          <TabsList className='flex gap-5 justify-start flex-col text-left max-sm:flex-row'>
             <TabsTrigger value='1' className={tabTriggerClass}>
               <Text as='h4' styleVariant='secondary-heading'>
                 Account
