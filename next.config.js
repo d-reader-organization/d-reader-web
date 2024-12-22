@@ -25,6 +25,7 @@ const nextConfig = {
   },
   env: {
     TIPLINK_CLIENT_ID: process.env.TIPLINK_CLIENT_ID,
+    SPHERE_APPLICATION_ID: process.env.SPHERE_APPLICATION_ID,
   },
   // Configure `pageExtensions` to include MDX files
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],

@@ -32,6 +32,9 @@ async function ProfilePage() {
             <TabsTrigger value='4' className='tab-button text-white font-bold text-sm sm:text-base'>
               FAQ
             </TabsTrigger>
+            <TabsTrigger value='5' className='tab-button text-white font-bold text-sm sm:text-base'>
+              On/Off Ramp
+            </TabsTrigger>
           </TabsList>
           <TabsContent value='1'>{me && <AccountSettingSection user={me} />}</TabsContent>
           <TabsContent value='2'>{me && <UserWalletSection wallets={wallets} />}</TabsContent>
@@ -50,6 +53,9 @@ async function ProfilePage() {
           </TabsContent>
           <TabsContent value='4'>
             <FAQ />
+          </TabsContent>
+          <TabsContent value='5'>
+            <iframe src='/ramp' className='w-full h-[700px] border-0'></iframe>
           </TabsContent>
         </Tabs>
       </main>
