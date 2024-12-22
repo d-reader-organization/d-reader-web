@@ -4,6 +4,7 @@ import React, { forwardRef, InputHTMLAttributes, useEffect, useState } from 'rea
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Button } from '../ui'
+import { Loader } from './Loader'
 
 type UploadedFile = { url: string; file: File | undefined }
 
@@ -17,7 +18,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
-  { id, allowMultipleFiles = false, previewUrl = '', onUpload = () => {}, className = '' },
+  { id, allowMultipleFiles = false, previewUrl = '', onUpload = () => {}, className = '', isUploading },
   ref
 ) {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>(
@@ -107,7 +108,7 @@ const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
               }
             }}
           />
-          {isPhotoSelected ? 'Change photo' : 'Upload photo'}
+          {isUploading ? <Loader /> : isPhotoSelected ? 'Change photo' : 'Upload photo'}
         </Button>
       </div>
     </div>

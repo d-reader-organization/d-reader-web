@@ -31,7 +31,6 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
   const { refresh } = useRouter()
   const handleAvatarUpdateFormSubmit = async (data: UpdateUserAvatarData) => {
     toggleLoader()
-
     if (data.avatar) {
       const formData = new FormData()
       formData.append('avatar', data.avatar)
@@ -50,7 +49,7 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleAvatarUpdateFormSubmit)}>
+      <form>
         <div className='flex flex-col justify-between gap-8'>
           <div className='flex flex-col gap-2'>
             <Text as='p' styleVariant='body-normal' className='font-bold'>
@@ -66,8 +65,14 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
             <FormControl>
               <FileUpload
                 id='avatar'
-                onUpload={(files) => form.setValue('avatar', files[0]?.file)}
+                onUpload={(files) => {
+                  if (files[0]?.file) {
+                    form.setValue('avatar', files[0].file)
+                    form.handleSubmit(handleAvatarUpdateFormSubmit)()
+                  }
+                }}
                 previewUrl={avatar ?? null}
+                isUploading={showLoader}
               />
             </FormControl>
           </div>
