@@ -1,8 +1,5 @@
-'use client'
-
 import React from 'react'
 import { UpdateUserAvatarForm } from '../form/UpdateUserAvatarForm'
-import { UpdatePasswordForm } from '../form/UpdatePasswordForm'
 import { UpdateUserDetailsForm } from '../form/UpdateUserDetailsForm'
 import { User } from '@/models/user'
 import { Text } from '../ui'

@@ -5,8 +5,7 @@ import { BaseLayout } from '@/components/layout/BaseLayout'
 import { AccountSettingSection } from '@/components/profile/AccountSettingSection'
 import FAQ from '@/components/profile/FAQ'
 import { Text } from '@/components/ui'
-import Link from 'next/link'
-import { RoutePath } from '@/enums/routePath'
+import { SecuritySection } from '@/components/profile/Security'
 
 async function ProfilePage() {
   const me = await fetchMe()
@@ -24,7 +23,7 @@ async function ProfilePage() {
           Settings
         </Text>
         <Tabs defaultValue='1' className='flex gap-36 w-full max-sm:flex-col max-sm:gap-10'>
-          <TabsList className='flex gap-5 justify-start flex-col text-left max-sm:flex-row'>
+          <TabsList className='flex gap-7 justify-start flex-col text-left max-sm:flex-row'>
             <TabsTrigger value='1' className={tabTriggerClass}>
               <Text as='h4' styleVariant='secondary-heading'>
                 Account
@@ -46,27 +45,16 @@ async function ProfilePage() {
               </Text>
             </TabsTrigger>
           </TabsList>
+
           <div className='w-full max-w-[750px]'>
             <TabsContent value='1'>
-              <AccountSettingSection user={me} />
+              <AccountSettingSection user={me} />{' '}
             </TabsContent>
-            <TabsContent value='2'>{me && <UserWalletSection wallets={wallets} />}</TabsContent>
+            <TabsContent value='2'>
+              <UserWalletSection wallets={wallets} />
+            </TabsContent>
             <TabsContent value='3'>
-              <div className='px-2'>
-                <div className='py-8'>
-                  <h2 className='text-2xl font-bold'>Security & Privacy</h2>
-                  <Text as='p' styleVariant='body-normal' className='text-gray-400 italic'>
-                    Change your security settings and review the privacy policy{' '}
-                    <Link
-                      target='_'
-                      href={RoutePath.PrivacyPolicy}
-                      className='text-important-color underline font-bold'
-                    >
-                      here
-                    </Link>
-                  </Text>
-                </div>
-              </div>
+              <SecuritySection user={me} />
             </TabsContent>
             <TabsContent value='4'>
               <FAQ />
