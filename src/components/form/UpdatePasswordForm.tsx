@@ -44,10 +44,10 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
 
   return (
     <Form {...form}>
-      <div className='flex flex-col gap-5'>
+      <div className='flex flex-col gap-6'>
         <div className='flex flex-col gap-2'>
           <Text as='h4' styleVariant='secondary-heading'>
-            Change your password
+            Change Password
           </Text>
           <Text as='p' styleVariant='body-normal' className='text-grey-200 max-w-[486px]'>
             Your new password must be different from previously used passwords.

@@ -47,16 +47,16 @@ async function ProfilePage() {
           </TabsList>
 
           <div className='w-full max-w-[750px]'>
-            <TabsContent value='1'>
+            <TabsContent value='1' className='m-0'>
               <AccountSettingSection user={me} />{' '}
             </TabsContent>
-            <TabsContent value='2'>
+            <TabsContent value='2' className='m-0'>
               <UserWalletSection wallets={wallets} />
             </TabsContent>
-            <TabsContent value='3'>
+            <TabsContent value='3' className='m-0'>
               <SecuritySection user={me} />
             </TabsContent>
-            <TabsContent value='4'>
+            <TabsContent value='4' className='m-0'>
               <FAQ />
             </TabsContent>
           </div>

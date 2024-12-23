@@ -19,7 +19,7 @@ type Props = {
 
 export const UpdateUserDetailsForm: React.FC<Props> = ({ id, displayName, email, username }) => {
   return (
-    <div className='flex flex-col gap-5'>
+    <div className='flex flex-col gap-4'>
       {['Display Name', 'Username', 'Email'].map((title, index) => {
         const value = title === 'Email' ? email : title === 'Username' ? username : displayName
 

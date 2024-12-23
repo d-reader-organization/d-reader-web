@@ -13,8 +13,8 @@ export const AccountSettingSection: React.FC<Props> = ({ user }) => {
   const { id, displayName, username, email, avatar } = user
 
   return (
-    <div className='flex flex-col px-2 gap-4'>
-      <Text as='h5' styleVariant='secondary-heading'>
+    <div className='flex flex-col gap-4'>
+      <Text as='h4' styleVariant='secondary-heading'>
         Your Account
       </Text>
       <UpdateUserDetailsForm id={id} displayName={displayName} email={email} username={username} />
