@@ -1,6 +1,6 @@
 'use client'
 
-import React, { forwardRef, InputHTMLAttributes, useEffect, useState } from 'react'
+import React, { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Button } from '../ui'
@@ -20,22 +20,20 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   isRemoving?: boolean
 }
 
-const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
-  {
-    id,
-    allowMultipleFiles = false,
-    previewUrl = '',
-    onUpload = () => {},
-    onRemove = () => {},
-    className = '',
-    isUploading,
-    isRemoving,
-  },
-  ref
-) {
+const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload({
+  id,
+  allowMultipleFiles = false,
+  previewUrl = '',
+  onUpload = () => {},
+  onRemove = () => {},
+  className = '',
+  isUploading,
+  isRemoving,
+}) {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>(
     previewUrl ? [{ url: previewUrl, file: undefined }] : []
   )
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
@@ -53,6 +51,14 @@ const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
       setUploadedFiles(newFiles)
       onUpload(newFiles)
     }
+  }
+
+  const handleRemoveFile = async () => {
+    setUploadedFiles([])
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+    onRemove()
   }
 
   useEffect(() => {
@@ -90,7 +96,7 @@ const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
       </div>
       <div className='flex gap-2'>
         {isPhotoSelected && !isUploading ? (
-          <Button variant='ghost' size='md' className='w-fit' onClick={onRemove}>
+          <Button variant='ghost' size='md' className='w-fit' onClick={handleRemoveFile}>
             {isRemoving ? <Loader /> : 'Remove photo'}
           </Button>
         ) : null}
@@ -106,14 +112,7 @@ const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
             className='absolute inset-0 opacity-0 cursor-pointer z-10'
             onChange={handleFileChange}
             accept='image/*'
-            ref={(el) => {
-              // Use a callback ref to set the ref correctly
-              if (ref && typeof ref === 'function') {
-                ref(el)
-              } else if (ref) {
-                ref.current = el // Ensure type safety
-              }
-            }}
+            ref={fileInputRef}
           />
           {isUploading ? <Loader /> : isPhotoSelected && !isUploading ? 'Change photo' : 'Upload photo'}
         </Button>

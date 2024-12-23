@@ -18,6 +18,11 @@ type Props = {
 }
 
 export const UpdateUserDetailsForm: React.FC<Props> = ({ id, displayName, email, username }) => {
+  const [editingIndex, setEditingIndex] = useState<number | null>(null)
+  const handleEditToggle = (index: number) => {
+    setEditingIndex(editingIndex === index ? null : index)
+  }
+
   return (
     <div className='flex flex-col gap-4'>
       {['Display Name', 'Username', 'Email'].map((title, index) => {
@@ -25,7 +30,13 @@ export const UpdateUserDetailsForm: React.FC<Props> = ({ id, displayName, email,
 
         return (
           <React.Fragment key={title}>
-            <UserDetailsFormItem title={title} value={value} id={id} />
+            <UserDetailsFormItem
+              title={title}
+              value={value}
+              id={id}
+              showEdit={editingIndex === index}
+              onEditToggle={() => handleEditToggle(index)}
+            />
             {index < 2 && <Divider />}
           </React.Fragment>
         )
@@ -35,16 +46,16 @@ export const UpdateUserDetailsForm: React.FC<Props> = ({ id, displayName, email,
 }
 
 type FormItemProps = {
+  showEdit: boolean
+  onEditToggle: VoidFunction
   title: string
   value: string
   id: string | number
 }
 
-const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id }) => {
+const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id, showEdit, onEditToggle }) => {
   const [showLoader, toggleLoader] = useToggle()
-  const [showEditItem, toggleEditItem] = useToggle()
   const [item, setItem] = useState<string>()
-
   const { refresh } = useRouter()
 
   useEffect(() => {
@@ -65,7 +76,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id }) => {
       refresh()
     }
     toggleLoader()
-    toggleEditItem()
+    onEditToggle()
   }
 
   const isUsername = title === 'Username'
@@ -75,7 +86,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id }) => {
         {title}
       </Text>
 
-      {showEditItem ? (
+      {showEdit ? (
         <div className='flex gap-2 w-full'>
           <Input
             onChange={(e) => setItem(e.target.value)}
@@ -86,7 +97,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id }) => {
             className='w-full max-w-full'
           />
 
-          <Button variant='secondary' size='md' onClick={toggleEditItem}>
+          <Button variant='secondary' size='md' onClick={onEditToggle}>
             Cancel
           </Button>
           <Button variant='white' size='md' onClick={handleItemUpdate}>
@@ -99,7 +110,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id }) => {
             {isUsername ? `@${value}` : value}
           </Text>
 
-          <Button variant='secondary' size='md' onClick={toggleEditItem}>
+          <Button variant='secondary' size='md' onClick={onEditToggle}>
             Edit
           </Button>
         </div>

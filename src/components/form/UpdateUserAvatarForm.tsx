@@ -10,7 +10,6 @@ import { UpdateUserAvatarData } from '@/models/user'
 import { removeUserProfilePhoto, updateUserAvatar } from '@/app/lib/api/user/mutations'
 import { Text, toast } from '../ui'
 import FileUpload from '../shared/FileUpload'
-import { useRouter } from 'next/navigation'
 import { useToggle } from '@/hooks'
 
 type Props = {
@@ -29,7 +28,6 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
     },
   })
 
-  const { refresh } = useRouter()
   const handleAvatarUpdateFormSubmit = async (data: UpdateUserAvatarData) => {
     toggleChangePhotoLoader()
     if (data.avatar) {
@@ -42,7 +40,6 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
         toast({ description: errorMessage, variant: 'error' })
       } else {
         toast({ description: 'Photo has been updated successfully!', variant: 'success' })
-        refresh()
       }
     }
     toggleChangePhotoLoader()
@@ -55,7 +52,6 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
       toast({ description: errorMessage, variant: 'error' })
     } else {
       toast({ description: 'Photo has been removed successfully!', variant: 'success' })
-      refresh()
     }
     toggleRemovePhotoLoader()
   }
