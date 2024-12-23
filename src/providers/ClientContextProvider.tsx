@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 // import { RoutePath } from '@/enums/routePath'
 import { useWalletAdapter } from '@/hooks/useWalletAdapter'
 import { AuthorizeWalletProvider } from './AuthorizeWalletContextProvider'
-import { CircleSdkProvider } from './CircleSdkProvider'
 
 export const ClientContext = createContext(null)
 
@@ -34,17 +33,15 @@ const ClientContextProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const wallets = useWalletAdapter()
 
   return (
-    <CircleSdkProvider>
-      <QueryClientProvider client={queryClient}>
-        <ConnectionProvider endpoint={endpoint}>
-          <WalletProvider wallets={wallets}>
-            <AuthorizeWalletProvider>
-              <WalletModalProvider className='wallet-dialog'>{children}</WalletModalProvider>
-            </AuthorizeWalletProvider>
-          </WalletProvider>
-        </ConnectionProvider>
-      </QueryClientProvider>
-    </CircleSdkProvider>
+    <QueryClientProvider client={queryClient}>
+      <ConnectionProvider endpoint={endpoint}>
+        <WalletProvider wallets={wallets}>
+          <AuthorizeWalletProvider>
+            <WalletModalProvider className='wallet-dialog'>{children}</WalletModalProvider>
+          </AuthorizeWalletProvider>
+        </WalletProvider>
+      </ConnectionProvider>
+    </QueryClientProvider>
   )
 }
 

@@ -20,6 +20,7 @@ import { useCandyMachineStore } from '@/providers/CandyMachineStoreProvider'
 const normalise = (value: number, MAX: number): number => (value * 100) / MAX
 type DetailsProps = { candyMachine: CandyMachine }
 type CandyMachineDetailsProps = {
+  accessToken: string
   comicIssue: ComicIssue
   isAuthenticated: boolean
   bounce?: boolean
@@ -27,6 +28,7 @@ type CandyMachineDetailsProps = {
 }
 
 export const CandyMachineDetails: React.FC<CandyMachineDetailsProps> = ({
+  accessToken,
   comicIssue,
   isAuthenticated,
   bounce = false,
@@ -45,7 +47,13 @@ export const CandyMachineDetails: React.FC<CandyMachineDetailsProps> = ({
             <UserDetails candyMachine={candyMachine} />
             <ProgressBar value={normalise(candyMachine.itemsMinted, candyMachine.supply)} />
             <ComicVault />
-            <PurchaseRow comicIssue={comicIssue} isAuthenticated={isAuthenticated} bounce={bounce} onMint={onMint} />
+            <PurchaseRow
+              accessToken={accessToken}
+              comicIssue={comicIssue}
+              isAuthenticated={isAuthenticated}
+              bounce={bounce}
+              onMint={onMint}
+            />
           </div>
         )}
         {coupons.length ? (
@@ -186,6 +194,7 @@ const ComicVault: React.FC = () => (
 )
 
 type PurchaseRowProps = {
+  accessToken: string
   comicIssue: ComicIssue
   isAuthenticated: boolean
   bounce?: boolean
@@ -193,6 +202,7 @@ type PurchaseRowProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 export const PurchaseRow: React.FC<PurchaseRowProps> = ({
+  accessToken,
   comicIssue,
   className,
   isAuthenticated,
@@ -207,7 +217,13 @@ export const PurchaseRow: React.FC<PurchaseRowProps> = ({
       )}
     >
       <NumberOfItemsWidget />
-      <MintButton comicIssue={comicIssue} isAuthenticated={isAuthenticated} bounce={bounce} onMint={onMint} />
+      <MintButton
+        accessToken={accessToken}
+        comicIssue={comicIssue}
+        isAuthenticated={isAuthenticated}
+        bounce={bounce}
+        onMint={onMint}
+      />
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { fetchAssets } from '@/app/lib/api/asset/queries'
 import { fetchComicIssue, fetchComicIssuePages } from '@/app/lib/api/comicIssue/queries'
 import { fetchMe } from '@/app/lib/api/user/queries'
+import { getAccessToken } from '@/app/lib/utils/auth'
 import { ComicIssuePages } from '@/components/comicIssue/Pages'
 import { EReaderNavigation } from '@/components/layout/EReaderNavigation'
 import { UnwrapIssueDialog } from '@/components/shared/dialogs/UnwrapIssueDialog'
@@ -9,8 +10,9 @@ import PreviewPagesIcon from 'public/assets/vector-icons/preview-pages-icon.svg'
 import React from 'react'
 
 export default async function ReadComicIssuePage({ params }: ComicIssuePageParams) {
-  const pages = await fetchComicIssuePages(params.id)
-  const comicIssue = await fetchComicIssue(params.id)
+  const accessToken = getAccessToken()
+  const pages = await fetchComicIssuePages({ id: params.id, accessToken })
+  const comicIssue = await fetchComicIssue({ id: params.id, accessToken })
   const me = await fetchMe()
 
   if (!pages || !comicIssue) return null
@@ -36,7 +38,11 @@ export default async function ReadComicIssuePage({ params }: ComicIssuePageParam
                   To view all pages you need to own at least one <strong>opened</strong> copy of this item.
                 </p>
               )}
-              <UnwrapIssueDialog assets={assets} showUnwrapButton={hasUnusedAssets && !comicIssue.myStats?.canRead} />
+              <UnwrapIssueDialog
+                accessToken={accessToken}
+                assets={assets}
+                showUnwrapButton={hasUnusedAssets && !comicIssue.myStats?.canRead}
+              />
               {!comicIssue.isFullyUploaded && (
                 <p className='preview-message-text'>
                   This comic is not yet fully uploaded. New chapters/pages might be added weekly or the comic is still

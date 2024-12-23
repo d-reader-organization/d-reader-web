@@ -7,8 +7,6 @@ import { Button } from '../../ui/Button'
 import { Loader } from '../Loader'
 import { AssetMintedDialog } from '../dialogs/AssetMintedDialog'
 import { ComicIssue } from '@/models/comicIssue'
-// import { EmailVerificationDialog } from './dialogs/EmailVerificationDialog'
-// import { NoWalletConnectedDialog } from './dialogs/NoWalletConnectedDialog'
 import { ConfirmingTransactionDialog } from '../dialogs/ConfirmingTransactionDialog'
 import { useToggle } from '@/hooks'
 import { toast } from '../../ui/toast'
@@ -22,16 +20,16 @@ import Image from 'next/image'
 import { AssetMintEvent } from '@/models/asset/assetMintEvent'
 import { ConnectButton } from './ConnectButton'
 import { cn } from '@/lib/utils'
-import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 
 type Props = {
+  accessToken: string
   comicIssue: ComicIssue
   isAuthenticated: boolean
   bounce?: boolean
   onMint?: VoidFunction
 }
 
-export const MintButton: React.FC<Props> = ({ comicIssue, isAuthenticated, bounce = false, onMint }) => {
+export const MintButton: React.FC<Props> = ({ accessToken, comicIssue, isAuthenticated, bounce = false, onMint }) => {
   const { candyMachine, selectedCoupon, numberOfItems, selectedCurrency, supportedTokens, refetchCandyMachine } =
     useCandyMachineStore((state) => state)
   const [showAssetMinted, toggleAssetMinted] = useToggle()
@@ -95,10 +93,7 @@ export const MintButton: React.FC<Props> = ({ comicIssue, isAuthenticated, bounc
     setIsMintTransactionLoading(true)
 
     // figure out what about this
-    const updatedCandyMachine = await fetchCandyMachine({
-      candyMachineAddress: candyMachine?.address ?? '',
-      walletAddress,
-    })
+    const updatedCandyMachine = await refetchCandyMachine()
     if (!updatedCandyMachine || !selectedCoupon) {
       setIsMintTransactionLoading(false)
       return
@@ -112,11 +107,14 @@ export const MintButton: React.FC<Props> = ({ comicIssue, isAuthenticated, bounc
     let mintTransactions: VersionedTransaction[] = []
     try {
       const { data: transactions, error } = await fetchMintTransaction({
-        candyMachineAddress: updatedCandyMachine.address,
-        minterAddress: walletAddress,
-        couponId: selectedCoupon.id,
-        label: selectedCurrency.label,
-        numberOfItems: numberOfItems ?? 1,
+        accessToken,
+        params: {
+          candyMachineAddress: updatedCandyMachine.address,
+          minterAddress: walletAddress,
+          couponId: selectedCoupon.id,
+          label: selectedCurrency.label,
+          numberOfItems: numberOfItems ?? 1,
+        },
       })
 
       if (error) {
@@ -247,6 +245,7 @@ export const MintButton: React.FC<Props> = ({ comicIssue, isAuthenticated, bounc
       )}
       {assetMintEventData ? (
         <AssetMintedDialog
+          accessToken={accessToken}
           assets={assetMintEventData.assets}
           comicIssue={comicIssue}
           isAuthenticated={isAuthenticated}
@@ -256,8 +255,6 @@ export const MintButton: React.FC<Props> = ({ comicIssue, isAuthenticated, bounc
           }}
         />
       ) : null}
-      {/* <EmailVerificationDialog open={showEmailVerification} toggleDialog={toggleEmailVerification} /> */}
-      {/* <NoWalletConnectedDialog open={showWalletNotConnected} toggleDialog={toggleWalletNotConnected} /> */}
       <ConfirmingTransactionDialog open={showConfirmingTransaction} toggleDialog={toggleConfirmingTransaction} />
     </>
   )

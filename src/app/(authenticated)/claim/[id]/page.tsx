@@ -1,5 +1,7 @@
-import { fetchComicIssuePages, fetchPublicComicIssue } from '@/app/lib/api/comicIssue/queries'
-import { isAuthenticatedUser } from '@/app/lib/utils/auth'
+import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
+import { fetchComicIssuePages } from '@/app/lib/api/comicIssue/queries'
+import { fetchPublicComicIssue } from '@/app/lib/api/comicIssue/queries'
+import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
 import { CandyMachineClaimDetails } from '@/components/claim/CandyMachineClaimDetails'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { AboutIssueSection } from '@/components/mint/AboutIssueSection'
@@ -45,14 +47,17 @@ export default async function ClaimPage({ params }: ComicIssuePageParams) {
 
   const comicIssue = await fetchPublicComicIssue(params.id)
   if (!comicIssue) return null
-  const pages = await fetchComicIssuePages(comicIssue.id)
-  const isAuthenticated = isAuthenticatedUser()
+  const accessToken = getAccessToken()
+  const pages = await fetchComicIssuePages({ id: comicIssue.id, accessToken })
+  const candyMachine = await fetchCandyMachine({
+    params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
+  })
 
   return (
     <BaseLayout>
       <ClaimPageHintDialog />
       <div className='flex flex-col max-md:items-center md:flex-row md:justify-center gap-6 md:gap-10 w-full mb-2'>
-        <CoverCarousel comicIssue={comicIssue} covers={comicIssue.statelessCovers ?? []} />
+        <CoverCarousel candyMachine={candyMachine} covers={comicIssue.statelessCovers ?? []} />
         <div className='flex flex-col gap-6 w-full max-w-[800px]'>
           <div className='flex flex-col max-md:self-center gap-4'>
             <div className='flex gap-12 text-base md:text-lg font-medium leading-[22.4px] md:leading-[25.2px] text-grey-100'>
@@ -63,7 +68,11 @@ export default async function ClaimPage({ params }: ComicIssuePageParams) {
               {comicIssue.title}
             </Text>
           </div>
-          <CandyMachineClaimDetails comicIssue={comicIssue} isAuthenticated={isAuthenticated} />
+          <CandyMachineClaimDetails
+            accessToken={accessToken}
+            comicIssue={comicIssue}
+            isAuthenticated={isAuthenticatedUser()}
+          />
           <Divider className='max-md:hidden' />
           <div className='flex flex-col 1160:flex-row gap-10 justify-between'>
             <AboutIssueSection comicIssue={comicIssue} />

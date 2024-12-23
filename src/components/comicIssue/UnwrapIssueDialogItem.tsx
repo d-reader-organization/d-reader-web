@@ -14,12 +14,11 @@ import { cn } from '@/lib/utils'
 import { ComicRarity } from '@/enums/comicRarity'
 import { UnwrapButtonListItem } from '../shared/buttons/UnwrapButtonListItem'
 import { LOCAL_STORAGE } from '@/constants/general'
-import { ConnectButton } from '../shared/buttons/ConnectButton'
+import { Button } from '../ui/Button'
 
-export const UnwrapIssueDialogItem: React.FC<{ asset: Asset; closeDialog: VoidFunction }> = ({
-  asset,
-  closeDialog,
-}) => {
+type Props = { accessToken: string; asset: Asset; closeDialog: VoidFunction }
+
+export const UnwrapIssueDialogItem: React.FC<Props> = ({ accessToken, asset, closeDialog }) => {
   const [isDialogRead] = useLocalStorage(LOCAL_STORAGE.IS_UNWRAP_HINT_READ, false)
   const [unwrapWarningDialog, toggleUnwrapWarningDialog, closeUnwrapWarningDialog] = useToggle(false)
 
@@ -67,16 +66,23 @@ export const UnwrapIssueDialogItem: React.FC<{ asset: Asset; closeDialog: VoidFu
         </div>
       </div>
       {isDialogRead ? (
-        <ConnectButton className={unwrapButtonStyle} onClick={handleUnwrap}>
+        <Button
+          className={unwrapButtonStyle}
+          onClick={async () => {
+            await handleUnwrap(accessToken)
+          }}
+        >
           {isUnwrapLoading ? <Loader /> : 'Open'}
-        </ConnectButton>
+        </Button>
       ) : (
         <UnwrapButtonListItem isLoading={isUnwrapLoading} onClick={toggleUnwrapWarningDialog} />
       )}
       <UnwrapWarningDialog
         open={unwrapWarningDialog}
         toggleDialog={toggleUnwrapWarningDialog}
-        handleUnwrap={handleUnwrap}
+        handleUnwrap={async () => {
+          await handleUnwrap(accessToken)
+        }}
         isLoading={isUnwrapLoading}
       />
     </div>

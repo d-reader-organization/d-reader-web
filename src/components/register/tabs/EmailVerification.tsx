@@ -5,7 +5,7 @@ import { Button } from '../../ui/Button'
 import { ButtonLink } from '../../ui/ButtonLink'
 import { toast } from '../../ui/toast'
 import { RoutePath } from '@/enums/routePath'
-import { requestUserEmailVerification } from '@/app/lib/api/user/queries'
+import { requestUserEmailVerification } from '@/app/lib/api/user/mutations'
 
 type Props = {
   redirectTo: string | null

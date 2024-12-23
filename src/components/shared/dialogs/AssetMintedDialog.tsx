@@ -20,14 +20,12 @@ import { fetchUseComicIssueAssetTransaction } from '@/app/lib/api/transaction/qu
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { toast } from '@/components/ui'
 import { sleep } from '@/utils/helpers'
-import { useQueryClient } from '@tanstack/react-query'
-import { comicIssueKeys } from '@/api/comicIssue/comicIssueKeys'
 import { useRouter } from 'next/navigation'
-import { useFetchMe } from '@/api/user/queries/useFetchMe'
 import { Loader } from 'lucide-react'
 import { LOCAL_STORAGE } from '@/constants/general'
 
 type Props = {
+  accessToken: string
   comicIssue: ComicIssue
   isAuthenticated: boolean
 } & CommonDialogProps
@@ -41,6 +39,7 @@ export const AssetMintedDetails: React.FC<{ asset: AssetEventData }> = ({ asset 
 }
 
 export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> = ({
+  accessToken,
   assets,
   comicIssue,
   isAuthenticated,
@@ -57,10 +56,6 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
 
   const { push } = useRouter()
   const { connection } = useConnection()
-  const queryClient = useQueryClient()
-
-  const { data: me } = useFetchMe()
-  const myId = me?.id || 0
 
   const { data: twitterIntentComicMinted } = useFetchTwitterIntentComicMinted({
     comicAddress: assets[selectedIndex].address ?? '',
@@ -76,8 +71,8 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
       setUnwrapTransactionLoading(true)
 
       const unwrapTransaction = await fetchUseComicIssueAssetTransaction({
-        assetAddress: selectedAsset.address,
-        ownerAddress: publicKey.toString(),
+        accessToken,
+        params: { assetAddress: selectedAsset.address, ownerAddress: publicKey.toString() },
       })
       if (unwrapTransaction) {
         if (!signTransaction) return
@@ -93,11 +88,6 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
         }
         await sleep(1000)
       }
-
-      queryClient.invalidateQueries({ queryKey: comicIssueKeys.get(comicIssue.id) })
-      queryClient.invalidateQueries({ queryKey: comicIssueKeys.getByOwner(myId) })
-      queryClient.invalidateQueries({ queryKey: comicIssueKeys.getPages(comicIssue.id) })
-
       push(RoutePath.ReadComicIssue(comicIssue.id), { scroll: false })
       toast({ description: 'Comic unwrapped, time to read! 🎉', variant: 'success' })
     } catch (e) {

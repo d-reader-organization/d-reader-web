@@ -9,6 +9,7 @@ import { fetchProject, fetchUserInterestedReceipts } from '@/app/lib/api/invest/
 import { ProjectInvestDialog } from '@/components/shared/dialogs/ProjectInvestDialog'
 import { InterestUpdatesCard } from '@/components/invest/InterestUpdatesCard'
 import { Metadata } from 'next'
+import { isAuthenticatedUser } from '@/app/lib/utils/auth'
 
 type Props = {
   params: { slug: string }
@@ -67,13 +68,23 @@ export default async function ProjectInvestPage({ params }: Props) {
               videoUrl={project.videoUrl}
             />
             <ProjectHeader title={project.title} subtitle={project.subtitle} className='md:hidden' />
-            <ProjectFundingCard funding={project.funding} slug={project.slug} className='md:hidden' />
+            <ProjectFundingCard
+              isAuthenticated={isAuthenticatedUser()}
+              funding={project.funding}
+              slug={project.slug}
+              className='md:hidden'
+            />
             <ProjectCreatorSection creator={project.creator} tags={project.tags} />
             <InterestUpdatesCard className='md:hidden -ml-4 w-screen rounded-none' receipts={receipts} />
             <ProjectInfo info={project.info} />
           </div>
           <div className='flex flex-col'>
-            <ProjectFundingCard funding={{ ...project.funding }} slug={project.slug} className='max-md:hidden' />
+            <ProjectFundingCard
+              isAuthenticated={isAuthenticatedUser()}
+              funding={project.funding}
+              slug={project.slug}
+              className='max-md:hidden'
+            />
             <InterestUpdatesCard className='max-md:hidden' receipts={receipts} />
           </div>
         </div>

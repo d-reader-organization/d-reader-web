@@ -7,11 +7,12 @@ import { useToggle } from '@/hooks/useToggle'
 import { Text } from '@/components/ui'
 
 type Props = {
+  accessToken: string
   assets: Asset[]
   showUnwrapButton?: boolean
 }
 
-export const UnwrapIssueDialog: React.FC<Props> = ({ assets, showUnwrapButton = true }) => {
+export const UnwrapIssueDialog: React.FC<Props> = ({ accessToken, assets, showUnwrapButton = true }) => {
   const [unwrapIssueDialog, toggleDialog, closeDialog] = useToggle()
   const unusedAssets = assets.filter((asset) => !asset.isUsed)
   return (
@@ -34,7 +35,12 @@ export const UnwrapIssueDialog: React.FC<Props> = ({ assets, showUnwrapButton = 
           least one copy. This action is irreversible and will make the selected copy lose the mint condition.
         </Text>
         {unusedAssets.map((asset) => (
-          <UnwrapIssueDialogItem key={asset.address} asset={asset} closeDialog={closeDialog} />
+          <UnwrapIssueDialogItem
+            accessToken={accessToken}
+            key={asset.address}
+            asset={asset}
+            closeDialog={closeDialog}
+          />
         ))}
       </DialogContent>
     </Dialog>

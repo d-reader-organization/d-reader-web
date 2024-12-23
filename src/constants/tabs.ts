@@ -21,22 +21,7 @@ export const DISCOVER_PAGE_TABS: Tab[] = [
   },
 ]
 
-export const LIBRARY_PAGE_TABS: Tab[] = [
-  {
-    name: 'Owned',
-    url: RoutePath.LibraryOwned,
-  },
-  {
-    name: 'Favorites',
-    url: RoutePath.LibraryFavorites,
-  },
-  {
-    name: 'Creators',
-    url: RoutePath.LibraryCreators,
-  },
-]
-
-export const getCreatorPageTabs = (slug: string): Tab[] => [
+export const creatorPageTabs = (slug: string): Tab[] => [
   {
     name: 'Series',
     url: RoutePath.CreatorSeries(slug),
@@ -44,6 +29,18 @@ export const getCreatorPageTabs = (slug: string): Tab[] => [
   {
     name: 'Collectibles',
     url: RoutePath.CreatorCollectibles(slug),
+    disabled: true,
+  },
+]
+
+export const comicPageTabs = (slug: string): Tab[] => [
+  {
+    name: 'Episodes',
+    url: RoutePath.ComicEpisodes(slug),
+  },
+  {
+    name: 'Collectibles',
+    url: RoutePath.ComicCollectibles(slug),
     disabled: true,
   },
 ]

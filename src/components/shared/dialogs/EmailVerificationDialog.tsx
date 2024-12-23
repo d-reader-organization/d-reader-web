@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from '@/components/ui/Dialog'
 import { Button } from '@/components/ui/Button'
 import { CommonDialogProps } from '@/models/common'
 import { toast } from '@/components/ui/toast'
-import { requestUserEmailVerification } from '@/app/lib/api/user/queries'
+import { requestUserEmailVerification } from '@/app/lib/api/user/mutations'
 
 export const EmailVerificationDialog: React.FC<CommonDialogProps> = ({ open, toggleDialog }) => (
   <Dialog open={open} onOpenChange={toggleDialog}>

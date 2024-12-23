@@ -29,10 +29,11 @@ const EXPRESS_INTEREST_OPTIONS: Option[] = [
 ]
 
 type Props = {
+  accessToken: string
   slug: string
 }
 
-export const ExpressInterestSection: React.FC<Props> = ({ slug }) => {
+export const ExpressInterestSection: React.FC<Props> = ({ accessToken, slug }) => {
   const [selectedOption, setOption] = useState<Option | undefined>(DEFAULT_OPTION)
   const { publicKey, signTransaction } = useWallet()
   const [isLoading, toggleLoading] = useToggle()
@@ -56,8 +57,8 @@ export const ExpressInterestSection: React.FC<Props> = ({ slug }) => {
     try {
       toggleLoading()
       const { data: encodedTransaction, errorMessage } = await fetchExpressInterestTransaction({
-        walletAddress: publicKey.toString(),
-        projectSlug: slug,
+        accessToken,
+        params: { walletAddress: publicKey.toString(), projectSlug: slug },
       })
       if (!encodedTransaction || errorMessage) {
         throw new Error(errorMessage || 'Failed to fetch transaction')

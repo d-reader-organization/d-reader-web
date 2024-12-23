@@ -1,7 +1,7 @@
 import { SortOrder } from '@/enums/sortOrder'
-import { ComicParams, ComicSortTag } from '@/models/comic/comicParams'
-import { ComicIssueParams, ComicIssueSortTag } from '@/models/comicIssue/comicIssueParams'
-import { CreatorParams, CreatorSortTag } from '@/models/creator/creatorParams'
+import { ComicParams } from '@/models/comic/comicParams'
+import { ComicIssueParams } from '@/models/comicIssue/comicIssueParams'
+import { CreatorParams } from '@/models/creator/creatorParams'
 import { Genre } from '@/models/genre'
 import { createStore } from 'zustand/vanilla'
 
@@ -34,7 +34,7 @@ export const defaultInitState: DiscoverQueryParamsStoreState = {
     creatorSlug: undefined,
     search: undefined,
     filterTag: undefined,
-    sortTag: ComicSortTag.Title,
+    sortTag: undefined,
   },
   comicIssueParams: {
     skip: 0,
@@ -45,7 +45,7 @@ export const defaultInitState: DiscoverQueryParamsStoreState = {
     search: undefined,
     comicSlug: undefined,
     filterTag: undefined,
-    sortTag: ComicIssueSortTag.Title,
+    sortTag: undefined,
   },
   creatorParams: {
     skip: 0,
@@ -54,7 +54,7 @@ export const defaultInitState: DiscoverQueryParamsStoreState = {
     search: undefined,
     sortOrder: SortOrder.ASC,
     filterTag: undefined,
-    sortTag: CreatorSortTag.Name,
+    sortTag: undefined,
   },
 }
 

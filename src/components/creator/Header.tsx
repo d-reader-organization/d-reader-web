@@ -4,6 +4,7 @@ import { Creator } from '@/models/creator'
 import { FollowCreatorButton } from '../shared/buttons/FollowCreatorButton'
 import { formatCurrency } from '@/utils/numbers'
 import { ShareButton } from '../shared/buttons/ShareButton'
+import { StatsContainer,StatsItem } from '../shared/Stats'
 
 type Props = {
   creator: Creator
@@ -36,39 +37,14 @@ const LeftSection: React.FC<Props> = ({ creator }) => {
 }
 
 const RightSection: React.FC<Props> = ({ creator }) => (
-  <div className='flex flex-col gap-4 p-4 border rounded-xl border-grey-300 w-full h-auto max-h-[152px] sm:max-w-[282px] sm:p-6'>
-    <div className='flex justify-between'>
-      <Text as='span' styleVariant='body-small' className='text-grey-100 uppercase max-sm:text-xs'>
-        VOLUME
-      </Text>
-      <Text as='span' styleVariant='body-small' fontWeight='bold' className='uppercase max-sm:text-xs'>
-        {formatCurrency({ value: creator.stats.totalVolume, currency: '$', divisor: 1, fractionDigits: 0 })}
-      </Text>
-    </div>
-    <div className='w-full h-[1px] bg-grey-300' />
-    <div className='flex justify-between'>
-      <Text as='span' styleVariant='body-small' className='text-grey-100 uppercase max-sm:text-xs'>
-        EPISODES
-      </Text>
-      <Text as='span' styleVariant='body-small' fontWeight='bold' className='uppercase max-sm:text-xs'>
-        {creator.stats.comicIssuesCount}
-      </Text>
-    </div>
-    {/* <div className='flex justify-between'>
-      <Text as='span' styleVariant='body-small' className='text-grey-100 uppercase max-sm:text-xs'>
-        COLLECTIBLES
-      </Text>
-      <Text as='span' styleVariant='body-small' fontWeight='bold' className='uppercase max-sm:text-xs'>
-        {creator.stats.comicIssuesCount}
-      </Text>
-    </div> */}
-    <div className='flex justify-between'>
-      <Text as='span' styleVariant='body-small' className='text-grey-100 uppercase max-sm:text-xs'>
-        FOLLOWERS
-      </Text>
-      <Text as='span' styleVariant='body-small' fontWeight='bold' className='uppercase max-sm:text-xs'>
-        {creator.stats.followersCount}
-      </Text>
-    </div>
-  </div>
+  <>
+    <StatsContainer>
+      <StatsItem
+        label='VOLUME'
+        value={formatCurrency({ value: creator.stats.totalVolume, currency: '◎', fractionDigits: 0, divisor: 9 })}
+      />
+      <StatsItem label='EPISODES' value={creator.stats.comicIssuesCount} />
+      <StatsItem label='followers' value={creator.stats.followersCount} />
+    </StatsContainer>
+  </>
 )

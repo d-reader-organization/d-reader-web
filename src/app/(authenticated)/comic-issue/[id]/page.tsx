@@ -13,8 +13,12 @@ import { PagesPreview } from '@/components/mint/PagesPreview'
 import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { ChevronRightIcon } from 'lucide-react'
-import { InfoListActions } from '@/components/shared/InfoListActions'
 import { Metadata } from 'next'
+import { RateButton } from '@/components/shared/buttons/RateButton'
+import { FavouritiseButton } from '@/components/shared/buttons/FavouritiseButton'
+import { ShareButton } from '@/components/shared/buttons/ShareButton'
+import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
+import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const ogImagePath = `/api/og/${params.id}`
@@ -31,16 +35,20 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 }
 
 export default async function ComicIssuePage({ params: { id } }: ComicIssuePageParams) {
-  const comicIssue = await fetchComicIssue(id)
+  const accessToken = getAccessToken()
+  const comicIssue = await fetchComicIssue({ accessToken, id })
   if (!comicIssue || !comicIssue.stats) return null
-  const pages = await fetchComicIssuePages(comicIssue.id)
+  const pages = await fetchComicIssuePages({ accessToken, id: comicIssue.id })
+  const candyMachine = await fetchCandyMachine({
+    params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
+  })
 
   return (
     <BaseLayout>
       <ComicIssueBanner cover={comicIssue.cover} />
       <div className='flex flex-col max-md:items-center md:flex-row md:justify-center gap-6 md:gap-10 w-full mb-2'>
         <div className='flex flex-col gap-4'>
-          <CoverCarousel comicIssue={comicIssue} covers={comicIssue.statelessCovers ?? []} />
+          <CoverCarousel candyMachine={candyMachine} covers={comicIssue.statelessCovers ?? []} />
           <Link
             href={RoutePath.ReadComicIssue(comicIssue.id)}
             prefetch={false}
@@ -51,15 +59,19 @@ export default async function ComicIssuePage({ params: { id } }: ComicIssuePageP
             </Text>
             <ChevronRightIcon className='text-grey-600' />
           </Link>
-          <InfoListActions
-            averageRating={comicIssue.stats?.averageRating}
-            className='flex w-fit [&>*]:min-w-20'
-            comicIssueId={comicIssue.id}
-            favouritesCount={comicIssue.stats?.favouritesCount}
-            isFavourite={comicIssue.myStats?.isFavourite}
-            orientation='horizontal'
-            rating={comicIssue.myStats?.rating}
-          />
+          <div className='flex gap-1 md:gap-2 justify-between md:justify-around'>
+            <RateButton
+              comicIssueId={comicIssue.id}
+              averageRating={comicIssue.stats?.averageRating}
+              rating={comicIssue.myStats?.rating}
+            />
+            <FavouritiseButton
+              comicIssueId={comicIssue.id}
+              isFavourite={comicIssue.myStats?.isFavourite}
+              favouritesCount={comicIssue.stats?.favouritesCount}
+            />
+            <ShareButton title={comicIssue.title} text={comicIssue.description} />
+          </div>
         </div>
         <div className='flex flex-col gap-6 w-full max-w-[800px] pb-20'>
           <div className='flex flex-col max-md:self-center gap-4'>
@@ -76,8 +88,12 @@ export default async function ComicIssuePage({ params: { id } }: ComicIssuePageP
             {pages.length ? <PagesPreview comicIssueId={comicIssue.id} pages={pages} /> : null}
           </div>
           <Divider className='max-md:hidden' />
-          <CandyMachineStoreProvider comicIssue={comicIssue} isAuthenticated>
-            <CandyMachineDetails comicIssue={comicIssue} isAuthenticated />
+          <CandyMachineStoreProvider comicIssue={comicIssue} accessToken={accessToken}>
+            <CandyMachineDetails
+              accessToken={accessToken}
+              comicIssue={comicIssue}
+              isAuthenticated={isAuthenticatedUser()}
+            />
           </CandyMachineStoreProvider>
         </div>
       </div>

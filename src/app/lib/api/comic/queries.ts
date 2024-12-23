@@ -1,5 +1,3 @@
-'use server'
-
 import { COMIC_QUERY_KEYS } from '@/api/comic/comicKeys'
 import { Comic, SearchResultComic } from '@/models/comic'
 import { ComicParams } from '@/models/comic/comicParams'
@@ -16,20 +14,27 @@ export const fetchComics = async (params: ComicParams): Promise<Comic[]> => {
   return data ?? []
 }
 
+export const fetchComic = async ({
+  accessToken,
+  slug,
+}: {
+  accessToken: string
+  slug: string
+}): Promise<Comic | null> => {
+  const { data } = await fetchWrapper<Comic>({
+    accessToken,
+    path: `${COMIC}/${GET}/${slug}`,
+  })
+
+  return data
+}
+
 export const searchComics = async (params: ComicParams): Promise<SearchResultComic[]> => {
   const { data } = await fetchWrapper<SearchResultComic[]>({
     params,
     path: `${COMIC}/${SEARCH}`,
   })
   return data ?? []
-}
-
-export const fetchComic = async (slug: string): Promise<Comic | null> => {
-  const { data } = await fetchWrapper<Comic>({
-    path: `${COMIC}/${GET}/${slug}`,
-  })
-
-  return data
 }
 
 export const fetchComicsByOwner = async ({

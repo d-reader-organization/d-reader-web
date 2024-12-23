@@ -71,6 +71,7 @@ export const HeroCarousel: React.FC<Props> = ({ slides }) => {
               >
                 <button
                   key={slide.title}
+                  name={slide.title}
                   onClick={() => {
                     if (index !== currentSlide) {
                       isNextSlide ? emblaApi?.scrollNext() : emblaApi?.scrollPrev()

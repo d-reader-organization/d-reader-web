@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/Dialog'
 import { StarIcon } from '../icons/StarIcon'

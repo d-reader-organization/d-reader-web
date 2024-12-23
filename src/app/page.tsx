@@ -24,7 +24,7 @@ export default async function HomePage() {
       <div className='flex justify-center items-center size-full overflow-hidden'>
         <HeroCarousel slides={carouselSlides} />
       </div>
-      <div className='w-full flex flex-col items-center gap-10 md:px-4 lg:px-6 xl:px-8 xs:max-w-[480px] sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl'>
+      <div className='w-full flex flex-col items-center gap-10 px-2 sm:px-4 max-w-screen-md md:max-w-screen-xl'>
         <div className='flex flex-col gap-8 w-full max-sm:px-2 py-4 md:py-6 lg:py-8'>
           <div className='flex flex-col'>
             <h1 className='text-32 md:text-64 lg:text-[120px] text-white md:text-grey-400 font-obviouslyNarrow font-semibold leading-1/2 tracking-024 uppercase relative top-8 md:top-[66px] lg:top-[68px] w-fit'>

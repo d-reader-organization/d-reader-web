@@ -12,7 +12,7 @@ export interface AvatarImageProps extends Omit<ImageProps, 'alt'> {
 }
 
 const sizeVariants: Record<AvatarSize, string> = {
-  small: 'w-10 h-10',
+  small: 'w-[42px] h-[42px]',
   medium: 'w-12 h-12',
   large: 'w-14 h-14',
 }

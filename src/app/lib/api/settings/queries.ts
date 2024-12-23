@@ -1,5 +1,3 @@
-'use server'
-
 import { SETTINGS_QUERY_KEYS } from '@/api/settings/settingsKeys'
 import { SplToken } from '@/models/settings/splToken'
 import { fetchWrapper } from '@/app/lib/fetchWrapper'

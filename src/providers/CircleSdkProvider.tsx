@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { W3SSdk } from '@circle-fin/w3s-pw-web-sdk'
 import {
   type SignMessageResult,
@@ -91,11 +91,7 @@ function hexToBase58(hexString: string) {
   return bs58.encode(buffer)
 }
 
-interface SdkProviderProps {
-  children: ReactNode
-}
-
-export const CircleSdkProvider = ({ children }: SdkProviderProps): JSX.Element => {
+export const CircleSdkProvider = ({ children }: React.PropsWithChildren): JSX.Element => {
   const [deviceId, setDeviceId] = useState<string>()
   const [userToken, setUserToken] = useState<string>()
   const [encryptionKey, setEncryptionKey] = useState<string>()
@@ -294,11 +290,8 @@ export const CircleSdkProvider = ({ children }: SdkProviderProps): JSX.Element =
       const couponId = 29
       const label = 'ru0-1'
       const transaction = await fetchMintTransaction({
-        candyMachineAddress,
-        couponId,
-        label,
-        minterAddress: address,
-        numberOfItems: 1,
+        accessToken: '',
+        params: { candyMachineAddress, couponId, label, minterAddress: address, numberOfItems: 1 },
       })
 
       if (transaction.error) {

@@ -8,23 +8,16 @@ import useToggle from '@/hooks/useToggle'
 import { CoverPreviewDialog } from './CoverPreview'
 import { CoverSlide } from './CoverSlide'
 import { SliderDots } from './SliderDots'
-import { useWallet } from '@solana/wallet-adapter-react'
-import { ComicIssue } from '@/models/comicIssue'
-import { useFetchCandyMachine } from '@/api/candyMachine/queries/useFetchCandyMachine'
+import { CandyMachine } from '@/models/candyMachine'
+import { Nullable } from '@/models/common'
 
-type Props = { covers: StatelessCover[]; comicIssue: ComicIssue }
+type Props = { candyMachine: Nullable<CandyMachine>; covers: StatelessCover[] }
 
-export const CoverCarousel: React.FC<Props> = ({ covers, comicIssue }) => {
-  const { publicKey } = useWallet()
+export const CoverCarousel: React.FC<Props> = ({ candyMachine, covers }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 5000, stopOnMouseEnter: true })])
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
   const [isCoverPreviewOpen, toggleCoverPreview] = useToggle()
   const hasCoverVariants = covers.length > 1
-
-  const { data: candyMachine } = useFetchCandyMachine({
-    candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '',
-    walletAddress: publicKey?.toBase58() ?? '',
-  })
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return

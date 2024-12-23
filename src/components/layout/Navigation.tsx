@@ -44,7 +44,7 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
         <div className='flex items-center justify-between p-4 max-w-screen-xl w-full'>
           <div className='flex items-center gap-8'>
             <Link href={RoutePath.Home} prefetch={false}>
-              <DReaderLogo className='h-8 min-w-fit fill-white ml-4' />
+              <DReaderLogo className='h-8 min-w-fit fill-white ml-2' />
             </Link>
             {!hideSearch && <SearchInput />}
             <div className='flex items-center gap-10'>

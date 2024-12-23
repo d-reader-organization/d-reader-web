@@ -33,6 +33,7 @@ export const LargeComicCard: React.FC<Props> = ({ className, comic, index }) => 
             styleVariant='body-normal'
             fontWeight='bold'
             className='line-clamp-1 overflow-ellipsis max-md:text-sm'
+            title={comic.title}
           >
             {comic.title}
           </Text>
@@ -41,6 +42,7 @@ export const LargeComicCard: React.FC<Props> = ({ className, comic, index }) => 
             styleVariant='body-small'
             fontWeight='medium'
             className='line-clamp-1 overflow-ellipsis text-grey-100 max-md:text-xs'
+            title={comic.creator?.name ?? 'creator name'}
           >
             by&nbsp;{comic.creator?.name}
           </Text>

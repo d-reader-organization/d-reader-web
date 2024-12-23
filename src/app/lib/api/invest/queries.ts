@@ -1,5 +1,3 @@
-'use server'
-
 import { fetchWrapper } from '../../fetchWrapper'
 import { Nullable } from '@/models/common'
 import {

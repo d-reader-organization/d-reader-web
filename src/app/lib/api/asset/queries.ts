@@ -1,5 +1,3 @@
-'use server'
-
 import { Asset } from '@/models/asset'
 import { fetchWrapper } from '../../fetchWrapper'
 import { AssetParams } from '@/models/asset/assetParams'

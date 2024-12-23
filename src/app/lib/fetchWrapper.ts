@@ -1,6 +1,5 @@
-import { accessTokenKey, baseApiUrl, SUCC_RESPONSE_STATUS_CODES } from '@/constants/general'
+import { baseApiUrl, SUCC_RESPONSE_STATUS_CODES } from '@/constants/general'
 import { isUndefined } from 'lodash'
-import { cookies } from 'next/headers'
 
 const defaultHeaders = {
   Accept: 'application/json',
@@ -23,6 +22,7 @@ const generateQueryParams = (params: ParamsType) =>
  * example: `fetchWrapper<MyType>({ params: generateQueryParamsArray(params, myQueryParamKey) })`
  */
 export async function fetchWrapper<T>({
+  accessToken,
   body,
   formData,
   headers,
@@ -33,6 +33,7 @@ export async function fetchWrapper<T>({
   isTextResponse = false,
   timeoutInMiliseconds,
 }: {
+  accessToken?: string
   body?: unknown
   formData?: FormData
   headers?: HeadersInit
@@ -47,7 +48,6 @@ export async function fetchWrapper<T>({
   errorMessage?: string
   status: number
 }> {
-  const token = cookies().get(accessTokenKey)?.value ?? ''
   const url = new URL(`${baseApiUrl}/${path}`)
   const queryParams: Record<string, string> | null = !!params ? generateQueryParams(params) : null
   const search = !!queryParams ? new URLSearchParams(queryParams) : null
@@ -61,7 +61,7 @@ export async function fetchWrapper<T>({
     headers: {
       ...(!formData && { ...defaultHeaders }), // quick fix: file upload - server will figure out proper content type
       ...headers,
-      ...(token && { authorization: token }),
+      ...(!!accessToken && { authorization: accessToken }),
     },
   }
   try {

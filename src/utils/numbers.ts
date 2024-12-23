@@ -5,22 +5,35 @@ export const generateRandom = (max = 1, min = 0) => {
 type FormatCurrency = {
   value: number
   currency?: string
+  currencyPosition?: CurrencyPosition
   divisor?: number
   fractionDigits?: number
 }
 
-export const formatCurrency = ({ value, currency = '$', divisor = 1, fractionDigits = 2 }: FormatCurrency): string => {
+type CurrencyPosition = 'left' | 'right'
+
+export const formatCurrency = ({
+  value,
+  currency = '$',
+  divisor = 1,
+  fractionDigits = 2,
+  currencyPosition = 'left',
+}: FormatCurrency): string => {
   const numberFormatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
     minimumFractionDigits: fractionDigits,
     maximumFractionDigits: fractionDigits,
   })
 
-  const suffix = currency ? currency : ''
   if (!value) return '-.--'
 
   const scaledValue = value / divisor
-  return suffix + numberFormatter.format(scaledValue)
+
+  if (currencyPosition === 'left') {
+    return currency + numberFormatter.format(scaledValue) 
+  }
+
+  return numberFormatter.format(scaledValue) + currency
 }
 
 export const formatPercentage = (value: number): string => {

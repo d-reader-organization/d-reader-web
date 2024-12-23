@@ -24,6 +24,7 @@ export const Arrow: React.FC<Props> = ({ arrowOrientation, className, onClick })
         'inline-flex justify-center items-center size-[42px] rounded-xl bg-grey-400 hover:brightness-125',
         className
       )}
+      name={`Arrow ${arrowOrientation}`}
       onClick={onClick}
     >
       <ChevronRight className={orientationClasses[arrowOrientation]} />

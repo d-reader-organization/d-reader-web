@@ -69,6 +69,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   iconOnly?: boolean
   icon?: LucideIcon
+  iconClassname?: string
 }
 
 /**
@@ -98,7 +99,21 @@ export interface ButtonProps
  * <Button icon={Mail}>Send Email</Button>
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, subVariant, size = 'md', iconPosition, icon: Icon, iconOnly, children, ...props }, ref) => {
+  (
+    {
+      className,
+      iconClassname,
+      variant,
+      subVariant,
+      size = 'md',
+      iconPosition,
+      icon: Icon,
+      iconOnly,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const iconSize = size === 'sm' ? 16 : size === 'md' ? 18 : 20
 
     if (iconOnly && Icon) {
@@ -112,7 +127,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           ref={ref}
           {...props}
         >
-          <Icon size={iconSize} className={cn('shrink-0')} />
+          <Icon size={iconSize} className={cn('shrink-0', iconClassname)} />
         </button>
       )
     }
@@ -123,7 +138,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {Icon && <Icon size={iconSize} className='shrink-0' />}
+        {Icon && <Icon size={iconSize} className={cn('shrink-0', iconClassname)} />}
         {children}
       </button>
     )

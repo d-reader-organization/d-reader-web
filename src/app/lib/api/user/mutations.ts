@@ -8,10 +8,10 @@ import { ResetPasswordData } from '@/models/auth/resetPassword'
 import { UpdateUserData, User } from '@/models/user'
 import { Nullable } from '@/models/common'
 import { UpdatePasswordData } from '@/models/auth/updatePassword'
+import { getAccessToken } from '../../utils/auth'
 
 const {
   AVATAR,
-  DELETE,
   USER,
   UPDATE,
   RESET_PASSWORD,
@@ -19,14 +19,18 @@ const {
   REQUEST_EMAIL_CHANGE,
   UPDATE_PASSWORD,
   VERIFY_EMAIL,
+  REQUEST_EMAIL_VERIFICATION,
 } = USER_QUERY_KEYS
 
 export const requestUserPasswordReset = async (body: RequestPasswordResetParams): Promise<void> => {
-  await fetchWrapper<void>({ method: 'PATCH', body, isTextResponse: true, path: `${USER}/${REQUEST_PASSWORD_RESET}` })
-}
-
-export const deleteUser = async (slug: string): Promise<void> => {
-  await fetchWrapper<void>({ path: `${USER}/${DELETE}/${slug}`, method: 'PATCH', isTextResponse: true })
+  const accessToken = getAccessToken()
+  await fetchWrapper<void>({
+    accessToken,
+    method: 'PATCH',
+    body,
+    isTextResponse: true,
+    path: `${USER}/${REQUEST_PASSWORD_RESET}`,
+  })
 }
 
 export const requestUserEmailChange = async (data: RequestEmailChangeParams): Promise<void> => {
@@ -39,7 +43,9 @@ export const requestUserEmailChange = async (data: RequestEmailChangeParams): Pr
 }
 
 export const resetUserPassword = async (resetPasswordData: ResetPasswordData): Promise<void> => {
+  const accessToken = getAccessToken()
   await fetchWrapper({
+    accessToken,
     path: `${USER}/${RESET_PASSWORD}`,
     isTextResponse: true,
     body: resetPasswordData,
@@ -48,12 +54,20 @@ export const resetUserPassword = async (resetPasswordData: ResetPasswordData): P
 }
 
 export const updateUser = async (id: string | number, request: UpdateUserData): Promise<{ errorMessage?: string }> => {
-  const response = await fetchWrapper<User>({ path: `${USER}/${UPDATE}/${id}`, body: request, method: 'PATCH' })
+  const accessToken = getAccessToken()
+  const response = await fetchWrapper<User>({
+    accessToken,
+    path: `${USER}/${UPDATE}/${id}`,
+    body: request,
+    method: 'PATCH',
+  })
   return response
 }
 
 export const updateUserAvatar = async (id: string | number, request: FormData): Promise<{ errorMessage?: string }> => {
+  const accessToken = getAccessToken()
   const response = await fetchWrapper<User>({
+    accessToken,
     path: `${USER}/${UPDATE}/${id}/${AVATAR}`,
     formData: request,
     method: 'PATCH',
@@ -66,7 +80,9 @@ export const updateUserPassword = async (
   id: string | number,
   request: UpdatePasswordData
 ): Promise<{ errorMessage?: string }> => {
+  const accessToken = getAccessToken()
   const response = await fetchWrapper<void>({
+    accessToken,
     method: 'PATCH',
     path: `${USER}/${UPDATE_PASSWORD}/${id}`,
     body: request,
@@ -75,6 +91,21 @@ export const updateUserPassword = async (
 }
 
 export const verifyUserEmail = async (verificationToken: string): Promise<Nullable<User>> => {
-  const response = await fetchWrapper<User>({ method: 'PATCH', path: `${USER}/${VERIFY_EMAIL}/${verificationToken}` })
+  const accessToken = getAccessToken()
+  const response = await fetchWrapper<User>({
+    accessToken,
+    method: 'PATCH',
+    path: `${USER}/${VERIFY_EMAIL}/${verificationToken}`,
+  })
   return response.data
+}
+
+export const requestUserEmailVerification = async (): Promise<string> => {
+  const accessToken = getAccessToken()
+  const { errorMessage } = await fetchWrapper<void>({
+    accessToken,
+    path: `${USER}/${REQUEST_EMAIL_VERIFICATION}`,
+    method: 'PATCH',
+  })
+  return errorMessage ?? ' '
 }

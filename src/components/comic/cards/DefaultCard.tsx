@@ -25,7 +25,7 @@ export const DefaultComicCard: React.FC<Props> = ({ comic, className }) => {
     >
       <Image
         src={comic.cover}
-        alt=''
+        alt={`Comic cover ${comic.title}`}
         className='rounded-2xl h-auto aspect-comic-cover object-cover opacity-50'
         {...COMIC_COVER_SIZE}
       />
@@ -53,15 +53,20 @@ export const DefaultComicCard: React.FC<Props> = ({ comic, className }) => {
       </div>
       <div className='flex flex-col px-2 pb-1 max-sm:gap-1'>
         <Text
-          title={comic.title}
           as='p'
           styleVariant='body-normal'
           fontWeight='bold'
           className='max-sm:text-sm line-clamp-1 overflow-ellipsis'
+          title={comic.title}
         >
           {comic.title}
         </Text>
-        <Text as='p' styleVariant='body-small' className='text-grey-100 line-clamp-1 overflow-ellipsis max-sm:text-xs'>
+        <Text
+          as='p'
+          styleVariant='body-small'
+          className='text-grey-100 line-clamp-1 overflow-ellipsis max-sm:text-xs'
+          title={comic.creator?.name ?? 'creator name'}
+        >
           {comic.creator ? 'by ' + comic.creator.name : ''}
         </Text>
       </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui'
-import { useCircleSdk } from '@/providers/CircleSdkProvider'
+import { CircleSdkProvider, useCircleSdk } from '@/providers/CircleSdkProvider'
 
 export default function CirclePage() {
   const {
@@ -16,61 +16,65 @@ export default function CirclePage() {
   } = useCircleSdk()
 
   return (
-    <div className='flex flex-col justify-center items-center gap-6'>
-      <h1> Circle integration testing</h1>
-      {deviceId ? null : (
-        <div className='flex flex-col gap-4'>
-          <Button
-            onClick={async () => {
-              await onGoogleLogin?.()
-            }}
-          >
-            Login with Google
-          </Button>
-          <Button
-            onClick={async () => {
-              await onLogin?.()
-            }}
-          >
-            Login with Email
-          </Button>
-        </div>
-      )}
-      {userToken ? (
-        <div className='flex flex-col gap-4'>
-          {!activeWallet ? (
+    <CircleSdkProvider>
+      (
+      <div className='flex flex-col justify-center items-center gap-6'>
+        <h1> Circle integration testing</h1>
+        {deviceId ? null : (
+          <div className='flex flex-col gap-4'>
             <Button
-              onClick={() => {
-                createWalletAction?.()
+              onClick={async () => {
+                await onGoogleLogin?.()
               }}
             >
-              Create wallet
+              Login with Google
             </Button>
-          ) : null}
-          {!!activeWallet ? (
-            <div className='flex flex-col gap-4'>
+            <Button
+              onClick={async () => {
+                await onLogin?.()
+              }}
+            >
+              Login with Email
+            </Button>
+          </div>
+        )}
+        {userToken ? (
+          <div className='flex flex-col gap-4'>
+            {!activeWallet ? (
               <Button
-                onClick={async () => {
-                  const { address, id } = activeWallet
-                  await requestAndSignMessage?.({ address, walletId: id })
+                onClick={() => {
+                  createWalletAction?.()
                 }}
               >
-                Sign message
+                Create wallet
               </Button>
-              <Button
-                onClick={async () =>
-                  await fetchAndSignTransaction?.({
-                    address: activeWallet.address,
-                    walletId: activeWallet.id,
-                  })
-                }
-              >
-                Sign transaction
-              </Button>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-    </div>
+            ) : null}
+            {!!activeWallet ? (
+              <div className='flex flex-col gap-4'>
+                <Button
+                  onClick={async () => {
+                    const { address, id } = activeWallet
+                    await requestAndSignMessage?.({ address, walletId: id })
+                  }}
+                >
+                  Sign message
+                </Button>
+                <Button
+                  onClick={async () =>
+                    await fetchAndSignTransaction?.({
+                      address: activeWallet.address,
+                      walletId: activeWallet.id,
+                    })
+                  }
+                >
+                  Sign transaction
+                </Button>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+      )
+    </CircleSdkProvider>
   )
 }

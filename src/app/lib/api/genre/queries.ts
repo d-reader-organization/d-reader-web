@@ -1,5 +1,3 @@
-'use server'
-
 import { fetchWrapper } from '../../fetchWrapper'
 import { Genre } from '@/models/genre'
 import { GenreParams } from '@/models/genre/genreParams'

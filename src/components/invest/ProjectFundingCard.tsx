@@ -8,16 +8,21 @@ import { formatCurrency, formatNumberWithCommas } from '@/utils/numbers'
 import { differenceInDays } from 'date-fns'
 import { Text } from '../ui'
 import { cn, withRedirect } from '@/lib/utils'
-import { useUserAuth } from '@/providers/UserAuthProvider'
 import { RoutePath } from '@/enums/routePath'
 
 type ProjectFundingCardProps = {
   funding: ProjectFunding
+  isAuthenticated: boolean
   slug: string
   className: string
 }
 
-export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ funding, slug, className }) => {
+export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({
+  funding,
+  isAuthenticated,
+  slug,
+  className,
+}) => {
   const currentDate = new Date()
   const startedAt = funding.startDate ? new Date(funding.startDate) : undefined
   const hasFundingStarted = startedAt ? startedAt <= currentDate : false
@@ -85,7 +90,7 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ funding,
           hasFundingEnded ? (
             <FundingEndedButton />
           ) : (
-            <InvestButton slug={slug} />
+            <InvestButton isAuthenticated={isAuthenticated} slug={slug} />
           )
         ) : (
           <ExpressInterestButton slug={slug} isUserInterested={funding.isUserInterested} />
@@ -159,11 +164,11 @@ const FundingEndedButton: React.FC = () => {
 }
 
 type InvestButtonProps = {
+  isAuthenticated: boolean
   slug: string
 }
 
-const InvestButton: React.FC<InvestButtonProps> = ({ slug }) => {
-  const { isAuthenticated } = useUserAuth()
+const InvestButton: React.FC<InvestButtonProps> = ({ isAuthenticated, slug }) => {
   const href = isAuthenticated ? RoutePath.InvestCheckout(slug) : withRedirect(RoutePath.InvestCheckout(slug))
 
   return (

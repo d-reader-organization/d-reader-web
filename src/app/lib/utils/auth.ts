@@ -2,7 +2,5 @@ import { accessTokenKey } from '@/constants/general'
 import { cookies } from 'next/headers'
 import { isTokenValid } from './jwt'
 
-export const isAuthenticatedUser = (): boolean => {
-  const token = cookies().get(accessTokenKey)?.value ?? ''
-  return isTokenValid(token)
-}
+export const isAuthenticatedUser = (): boolean => isTokenValid(getAccessToken())
+export const getAccessToken = () => cookies().get(accessTokenKey)?.value ?? ''

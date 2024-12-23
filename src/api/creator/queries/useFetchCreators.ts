@@ -5,11 +5,20 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { fetchCreators } from '@/app/lib/api/creator/queries'
 import { onQueryError } from '@/components/ui'
 
-export const useFetchCreators = (params: CreatorParams, enabled = true) => {
+export const useFetchCreators = ({
+  params,
+  accessToken,
+  enabled = true,
+}: {
+  params: CreatorParams
+  accessToken: string
+  enabled?: boolean
+}) => {
   const infiniteQuery = useInfiniteQuery({
     initialPageParam: 0,
     queryKey: creatorKeys.getMany(params),
-    queryFn: ({ pageParam = 0 }) => fetchCreators({ ...params, skip: pageParam * params.take }),
+    queryFn: ({ pageParam = 0 }) =>
+      fetchCreators({ params: { ...params, skip: pageParam * params.take }, accessToken }),
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length >= params.take) return allPages.length
     },

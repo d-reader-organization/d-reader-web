@@ -5,16 +5,17 @@ import { Button } from '@/components/ui/Button'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Text } from '@/components/ui/Text'
 import { RoutePath } from '@/enums/routePath'
-import { OwnedComicIssue } from '@/models/comicIssue'
+import { ComicIssue, OwnedComicIssue } from '@/models/comicIssue'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
 type Props = {
+  comicIssue: ComicIssue
   ownedIssues: OwnedComicIssue[]
 }
 
-export const OwnedIssuesContent: React.FC<Props> = ({ ownedIssues }) => {
+export const OwnedIssuesContent: React.FC<Props> = ({ comicIssue, ownedIssues }) => {
   const { back } = useRouter()
 
   return (
@@ -63,7 +64,7 @@ export const OwnedIssuesContent: React.FC<Props> = ({ ownedIssues }) => {
               </div>
               <div className='flex flex-wrap gap-6 md:gap-10 w-full'>
                 {ownedIssue.collectibles.map((asset) => (
-                  <OwnedAssetPreview key={asset.address} asset={asset} />
+                  <OwnedAssetPreview key={asset.address} asset={asset} comicIssue={comicIssue} />
                 ))}
               </div>
             </div>

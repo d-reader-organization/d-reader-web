@@ -10,22 +10,19 @@ import { getDefaultCoupon, isComicVaultCoupon } from '@/utils/mint'
 import { WRAPPED_SOL_MINT } from '@metaplex-foundation/js'
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 import { fetchSupportedTokens } from '@/app/lib/api/settings/queries'
+import { isTokenValid } from '@/app/lib/utils/jwt'
 
 export type CandyMachineStoreApi = ReturnType<typeof createCandyMachineStore>
 
 export const CandyMachineStoreContext = createContext<CandyMachineStoreApi | undefined>(undefined)
 
 export type CandyMachineStoreProviderProps = {
+  accessToken: string
   comicIssue: ComicIssue
-  isAuthenticated: boolean
   children: ReactNode
 }
 
-export const CandyMachineStoreProvider = ({
-  comicIssue,
-  isAuthenticated,
-  children,
-}: CandyMachineStoreProviderProps) => {
+export const CandyMachineStoreProvider = ({ accessToken, comicIssue, children }: CandyMachineStoreProviderProps) => {
   const { publicKey } = useWallet()
   const storeRef = useRef<CandyMachineStoreApi>()
 
@@ -40,19 +37,23 @@ export const CandyMachineStoreProvider = ({
 
   const refetchCandyMachine = useCallback(async () => {
     const candyMachine = await fetchCandyMachine({
-      candyMachineAddress: comicIssue?.collectibleInfo?.activeCandyMachineAddress ?? '',
-      walletAddress: publicKey?.toBase58() ?? '',
+      accessToken,
+      params: {
+        candyMachineAddress: comicIssue?.collectibleInfo?.activeCandyMachineAddress ?? '',
+        walletAddress: publicKey?.toBase58() ?? '',
+      },
     })
     storeRef.current?.setState({
       candyMachine: candyMachine ?? storeRef.current.getState().candyMachine,
     })
     return candyMachine
-  }, [comicIssue?.collectibleInfo?.activeCandyMachineAddress, publicKey])
+  }, [accessToken, comicIssue?.collectibleInfo?.activeCandyMachineAddress, publicKey])
 
   useEffect(() => {
     const fetchAndStoreData = async () => {
       const candyMachine = await refetchCandyMachine()
       const supportedTokens = await fetchSupportedTokens()
+      const isAuthenticated = !!accessToken && isTokenValid(accessToken)
       const defaultCoupon = getDefaultCoupon(candyMachine?.coupons ?? [], isAuthenticated)
 
       const solCurrencySetting = defaultCoupon?.prices.find(
@@ -74,7 +75,7 @@ export const CandyMachineStoreProvider = ({
       })
     }
     fetchAndStoreData()
-  }, [isAuthenticated, refetchCandyMachine])
+  }, [accessToken, refetchCandyMachine])
 
   return <CandyMachineStoreContext.Provider value={storeRef.current}>{children}</CandyMachineStoreContext.Provider>
 }

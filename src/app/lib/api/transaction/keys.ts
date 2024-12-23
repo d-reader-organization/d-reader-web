@@ -9,7 +9,6 @@ export const TRANSACTION_QUERY_KEYS = Object.freeze({
   PRIVATE_BID: 'private-bid',
   INSTANT_BUY: 'instant-buy',
   TIP_CREATOR: 'tip-creator',
-  MULTIPLE_BUY: 'multiple-buy',
   CANCEL_BID: 'cancel-bid',
   CANCEL_LISTING: 'cancel-listing',
   EXPRESS_INTEREST: 'express-interest',

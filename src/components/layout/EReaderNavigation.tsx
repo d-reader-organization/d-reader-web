@@ -6,10 +6,11 @@ import React from 'react'
 import ArrowRightIcon from 'public/assets/vector-icons/arrow-right.svg'
 import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
-import { InfoListActions } from '../shared/InfoListActions'
 import { useRouter } from 'next/navigation'
 import { Button } from '../ui'
 import { cn } from '@/lib/utils'
+import { RateButton } from '../shared/buttons/RateButton'
+import { FavouritiseButton } from '../shared/buttons/FavouritiseButton'
 
 type Props = {
   comicIssue: ComicIssue
@@ -21,15 +22,16 @@ export const EReaderNavigation: React.FC<Props> = ({ comicIssue, hideNavigation 
   const arrowRightReversedStyle = 'h-[18px] text-text-color rotate-180'
   const { back } = useRouter()
   const commands = (
-    <div className='justify-end '>
-      <InfoListActions
-        className='flex flex-row-reverse border-none [&>*:not(:last-child)]:border-r-0'
-        orientation='horizontal'
-        averageRating={comicIssue.stats?.averageRating}
+    <div className='justify-end gap-2 flex max-md:px-2'>
+      <RateButton
         comicIssueId={comicIssue.id}
-        favouritesCount={comicIssue.stats?.favouritesCount}
-        isFavourite={comicIssue.myStats?.isFavourite}
+        averageRating={comicIssue.stats?.averageRating}
         rating={comicIssue.myStats?.rating}
+      />
+      <FavouritiseButton
+        comicIssueId={comicIssue.id}
+        isFavourite={comicIssue.myStats?.isFavourite}
+        favouritesCount={comicIssue.stats?.favouritesCount}
       />
     </div>
   )

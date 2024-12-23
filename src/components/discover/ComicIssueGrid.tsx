@@ -1,11 +1,11 @@
 'use client'
 
 import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
-import { useFetchComicIssues } from '@/api/comicIssue/queries'
 import { ComicIssue } from '@/models/comicIssue'
 import { DefaultComicIssueCard } from '../comicIssue/cards/DefaultCard'
 import { ShowMoreButton } from './ShowMoreButton'
 import { Loader } from '../shared/Loader'
+import { useFetchComicIssues } from '@/api/comicIssue/queries/useFetchComicIssues'
 
 export const ComicIssueGrid: React.FC = () => {
   const comicIssueParams = useDiscoverQueryStore((state) => state.comicIssueParams)

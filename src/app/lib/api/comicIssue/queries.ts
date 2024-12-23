@@ -1,5 +1,3 @@
-'use server'
-
 import { ComicIssue, OwnedComicIssue } from '@/models/comicIssue'
 import { ComicIssueParams } from '@/models/comicIssue/comicIssueParams'
 import { fetchWrapper } from '../../fetchWrapper'
@@ -18,12 +16,26 @@ export const fetchComicIssues = async (params: ComicIssueParams): Promise<ComicI
   return data ?? []
 }
 
-export const fetchComicIssue = async (id: string | number): Promise<Nullable<ComicIssue>> => {
-  const { data } = await fetchWrapper<ComicIssue>({
-    path: `${COMIC_ISSUE}/${GET}/${id}`,
-  })
+export const fetchComicIssue = async ({
+  accessToken,
+  id,
+}: {
+  accessToken?: string
+  id: string | number
+}): Promise<Nullable<ComicIssue>> => {
+  const response = await fetchWrapper<ComicIssue>({ accessToken, path: `${COMIC_ISSUE}/${GET}/${id}` })
+  return response.data
+}
 
-  return data
+export const fetchComicIssuePages = async ({
+  accessToken,
+  id,
+}: {
+  accessToken?: string
+  id: string | number
+}): Promise<ComicPage[]> => {
+  const response = await fetchWrapper<ComicPage[]>({ accessToken, path: `${COMIC_ISSUE}/${GET}/${id}/${PAGES}` })
+  return response.data ?? []
 }
 
 export const fetchPublicComicIssue = async (id: string | number): Promise<Nullable<ComicIssue>> => {
@@ -32,11 +44,6 @@ export const fetchPublicComicIssue = async (id: string | number): Promise<Nullab
     revalidateCacheInSeconds: 10,
   })
   return response.data
-}
-
-export const fetchComicIssuePages = async (id: string | number): Promise<ComicPage[]> => {
-  const response = await fetchWrapper<ComicPage[]>({ path: `${COMIC_ISSUE}/${GET}/${id}/${PAGES}` })
-  return response.data ?? []
 }
 
 export const fetchOwnedComicIssues = async ({

@@ -8,7 +8,7 @@ import { useOptimistic, useTransition } from 'react'
 import { cn } from '@/lib/utils'
 import { RequireAuthWrapperButton } from './RequireAuthWrapperButton'
 
-type Props = React.HTMLAttributes<HTMLDivElement> & {
+type Props = React.HTMLAttributes<HTMLButtonElement> & {
   isFollowing?: boolean
   creatorSlug: string
 }
@@ -31,7 +31,7 @@ export const FollowCreatorButton: React.FC<Props> = ({ isFollowing = false, crea
 
   return (
     <RequireAuthWrapperButton
-      className={cn('min-w-[124px]', className)}
+      className={cn('min-w-[126px]', className)}
       variant={isFollowingState ? 'outline' : 'white'}
       onClick={handleFollow}
     >

@@ -1,5 +1,3 @@
-'use server'
-
 import { Creator, SearchResultCreator } from '@/models/creator'
 import { CreatorParams } from '@/models/creator/creatorParams'
 import { fetchWrapper } from '../../fetchWrapper'
@@ -8,15 +6,29 @@ import { Nullable } from '@/models/common'
 
 const { CREATOR, GET, SEARCH } = CREATOR_QUERY_KEYS
 
-export const fetchCreator = async (slug: string): Promise<Nullable<Creator>> => {
+export const fetchCreator = async ({
+  slug,
+  accessToken,
+}: {
+  slug: string
+  accessToken?: string
+}): Promise<Nullable<Creator>> => {
   const response = await fetchWrapper<Creator>({
+    accessToken,
     path: `${CREATOR}/${GET}/${slug}`,
   })
   return response.data
 }
 
-export const fetchCreators = async (params: CreatorParams): Promise<Creator[]> => {
+export const fetchCreators = async ({
+  params,
+  accessToken,
+}: {
+  params: CreatorParams
+  accessToken?: string
+}): Promise<Creator[]> => {
   const { data } = await fetchWrapper<Creator[]>({
+    accessToken,
     params,
     path: `${CREATOR}/${GET}`,
   })

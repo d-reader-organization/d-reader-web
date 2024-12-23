@@ -1,5 +1,3 @@
-'use server'
-
 import { TwitterIntentComicMintedParams } from '@/models/twitter/twitterIntentComicMintedParams'
 import { TWITTER_QUERY_KEYS } from '@/api/twitter/twitterKeys'
 import { PROJECTS } from '@/constants/projects'
