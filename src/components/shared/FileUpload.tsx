@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '../ui'
 import { Loader } from './Loader'
 import { ANON_BUN_IMAGE_LINK } from '@/constants/general'
+import { FileUploadRef } from '@/lib/types'
 
 type UploadedFile = { url: string; file: File | undefined }
 
@@ -20,16 +21,19 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   isRemoving?: boolean
 }
 
-const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload({
-  id,
-  allowMultipleFiles = false,
-  previewUrl = '',
-  onUpload = () => {},
-  onRemove = () => {},
-  className = '',
-  isUploading,
-  isRemoving,
-}) {
+const FileUpload = forwardRef<FileUploadRef, Props>(function FileUpload(
+  {
+    id,
+    allowMultipleFiles = false,
+    previewUrl = '',
+    onUpload = () => {},
+    onRemove = () => {},
+    className = '',
+    isUploading,
+    isRemoving,
+  },
+  ref
+) {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>(
     previewUrl ? [{ url: previewUrl, file: undefined }] : []
   )
@@ -53,13 +57,16 @@ const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload({
     }
   }
 
-  const handleRemoveFile = async () => {
-    setUploadedFiles([])
+  const resetFileUpload = async () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
-    onRemove()
+    setUploadedFiles([])
   }
+
+  React.useImperativeHandle(ref, () => ({
+    reset: resetFileUpload,
+  }))
 
   useEffect(() => {
     if (previewUrl) {
@@ -96,7 +103,7 @@ const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload({
       </div>
       <div className='flex gap-2'>
         {isPhotoSelected && !isUploading ? (
-          <Button variant='ghost' size='md' className='w-fit' onClick={handleRemoveFile}>
+          <Button type='reset' variant='ghost' size='md' className='w-fit' onClick={onRemove}>
             {isRemoving ? <Loader /> : 'Remove photo'}
           </Button>
         ) : null}

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useRef } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,6 +11,8 @@ import { removeUserProfilePhoto, updateUserAvatar } from '@/app/lib/api/user/mut
 import { Text, toast } from '../ui'
 import FileUpload from '../shared/FileUpload'
 import { useToggle } from '@/hooks'
+import { RemovePhotoWarningDialog } from '../shared/dialogs/RemovePhotoWarningDialog'
+import { FileUploadRef } from '@/lib/types'
 
 type Props = {
   id: string | number
@@ -20,6 +22,8 @@ type Props = {
 export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
   const [showChangePhotoLoader, toggleChangePhotoLoader] = useToggle()
   const [showRemovePhotoLoader, toggleRemovePhotoLoader] = useToggle()
+  const [showRemovePhotoWarningDialog, toggleRemovePhotoWarningDialog, closeRemovePhotoWarningDialog] = useToggle()
+  const ref = useRef<FileUploadRef>(null)
 
   const form = useForm<z.infer<typeof updateUserAvatarValidationSchema>>({
     resolver: zodResolver(updateUserAvatarValidationSchema),
@@ -48,12 +52,18 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
   const handleRemoveAvatar = async () => {
     toggleRemovePhotoLoader()
     const { errorMessage } = await removeUserProfilePhoto(id)
+
+    if (ref.current) {
+      ref.current.reset()
+    }
+
     if (errorMessage) {
       toast({ description: errorMessage, variant: 'error' })
     } else {
       toast({ description: 'Photo has been removed successfully!', variant: 'success' })
     }
     toggleRemovePhotoLoader()
+    closeRemovePhotoWarningDialog()
   }
 
   return (
@@ -80,15 +90,22 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
                     form.handleSubmit(handleAvatarUpdateFormSubmit)()
                   }
                 }}
-                onRemove={() => handleRemoveAvatar()}
+                onRemove={toggleRemovePhotoWarningDialog}
                 previewUrl={avatar ?? null}
                 isUploading={showChangePhotoLoader}
                 isRemoving={showRemovePhotoLoader}
+                ref={ref}
               />
             </FormControl>
           </div>
         </div>
       </form>
+      <RemovePhotoWarningDialog
+        open={showRemovePhotoWarningDialog}
+        toggleDialog={closeRemovePhotoWarningDialog}
+        isLoading={showRemovePhotoLoader}
+        removePhoto={handleRemoveAvatar}
+      />
     </Form>
   )
 }
