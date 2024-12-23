@@ -14,7 +14,8 @@ type Props = {
   comicIssue: ComicIssue
 }
 
-export const AboutIssueSection: React.FC<Props> = ({ comicIssue }) => (
+//TODO: Check if this component is getting updated with the new UI for comic issues page, update variable names/refactor the code accordingly
+export const MintAboutIssueSection: React.FC<Props> = ({ comicIssue }) => (
   <div className='flex flex-col gap-6'>
     <h5 className='text-xl font-semibold leading-[20px] tracking-[0.04px]'>Description</h5>
     <GenreTags genres={comicIssue.genres ?? []} />

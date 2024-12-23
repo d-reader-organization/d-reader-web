@@ -12,7 +12,7 @@ const buttonVariants = cva(
         secondary: 'text-grey-100',
         outline: '',
         white: 'text-black',
-        ghost: 'w-full bg-transparent text-base font-medium leading-[22.4px] text-white',
+        ghost: 'w-full bg-transparent text-base font-medium leading-[22.4px] text-white shadow-none',
       },
       subVariant: {
         1: '',

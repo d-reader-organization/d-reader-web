@@ -11,6 +11,7 @@ interface Props
     Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> {
   icon?: LucideIcon
   iconOnly?: boolean
+  iconClassName?: string
 }
 
 /**
@@ -42,14 +43,14 @@ interface Props
  */
 const ButtonLink = forwardRef<HTMLAnchorElement, Props>(
   (
-    { className, variant, subVariant, size = 'md', iconPosition, icon: Icon, iconOnly, href, children, ...props },
+    { className, variant, subVariant, size = 'md', iconPosition, icon: Icon, iconOnly, iconClassName, href, children, ...props },
     ref
   ) => {
     const iconSize = size === 'sm' ? 16 : size === 'md' ? 18 : 20
 
     const linkContent = (
       <>
-        {Icon && <Icon size={iconSize} className={cn('shrink-0')} />}
+        {Icon && <Icon size={iconSize} className={cn('shrink-0', iconClassName)} />}
         {!iconOnly && children}
       </>
     )
@@ -59,7 +60,7 @@ const ButtonLink = forwardRef<HTMLAnchorElement, Props>(
         className={cn(
           buttonVariants({ variant, subVariant, size, iconPosition, className }),
           iconOnly && 'min-w-9 px-0 py-0',
-          iconOnly && (size === 'sm' ? 'size-9' : size === 'md' ? 'size-[42px]' : 'size-[52px]')
+          iconOnly && (size === 'sm' ? 'size-9' : size === 'md' ? 'size-[42px]' : 'size-[52px]'),
         )}
         ref={ref}
         href={href}

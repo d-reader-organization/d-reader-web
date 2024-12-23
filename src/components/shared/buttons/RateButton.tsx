@@ -32,7 +32,7 @@ export const RateButton: React.FC<Props> = ({ comicSlug, comicIssueId, rating, a
         )}
         iconClassname={cn(rating && 'fill-yellow-500')}
       >
-        <Text as='span' styleVariant='body-normal' className={cn('max-sm:text-xs', rating && 'text-white')}>
+        <Text as='span' styleVariant='body-small' fontWeight='bold' className={cn('max-sm:text-xs', rating && 'text-white')}>
           {averageRating}
         </Text>
       </RequireAuthWrapperButton>

@@ -124,8 +124,9 @@
 }
 
 .comic-issue-banner-standard {
-  background: linear-gradient(rgba(21, 23, 28, 0.85) 0%, rgb(21, 23, 28) 100%);
+  background: linear-gradient(180deg, rgba(21, 23, 28, 0.20) 0%, #15171C 96.37%);
 }
+
 
 .comic-issue-banner-simpler {
   background: linear-gradient(
