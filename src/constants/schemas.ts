@@ -31,10 +31,10 @@ const updateUserAvatarValidationSchema = z.object({
 
 const updateUserValidationSchema = z.object({
   email: z.string().email().optional(),
-  name: z
+  displayName: z
     .string()
     .min(2, generateMinLengthErrorMessage('name', 2))
-    .max(20, generateMaxLengthErrorMessage('name', 20))
+    .max(40, generateMaxLengthErrorMessage('name', 40))
     .optional(),
   username: z
     .string()

@@ -20,6 +20,7 @@ const {
   UPDATE_PASSWORD,
   VERIFY_EMAIL,
   REQUEST_EMAIL_VERIFICATION,
+  REMOVE,
 } = USER_QUERY_KEYS
 
 export const requestUserPasswordReset = async (body: RequestPasswordResetParams): Promise<void> => {
@@ -70,6 +71,17 @@ export const updateUserAvatar = async (id: string | number, request: FormData): 
     accessToken,
     path: `${USER}/${UPDATE}/${id}/${AVATAR}`,
     formData: request,
+    method: 'PATCH',
+  })
+
+  return response
+}
+
+export const removeUserProfilePhoto = async (id: string | number): Promise<{ errorMessage?: string }> => {
+  const accessToken = getAccessToken()
+  const response = await fetchWrapper<User>({
+    accessToken,
+    path: `${USER}/${REMOVE}/${id}/${AVATAR}`,
     method: 'PATCH',
   })
 

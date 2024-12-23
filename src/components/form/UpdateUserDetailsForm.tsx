@@ -10,16 +10,16 @@ import { Loader } from '../shared/Loader'
 
 type Props = {
   id: number | string
-  name: string
+  displayName: string
   username: string
   email: string
 }
 
-export const UpdateUserDetailsForm: React.FC<Props> = ({ id, name, email, username }) => {
+export const UpdateUserDetailsForm: React.FC<Props> = ({ id, displayName, email, username }) => {
   return (
     <div className='flex flex-col gap-4'>
       {['Display Name', 'Username', 'Email'].map((title, index) => {
-        const value = title === 'Email' ? email : title === 'Username' ? username : name
+        const value = title === 'Email' ? email : title === 'Username' ? username : displayName
 
         return (
           <React.Fragment key={title}>
@@ -49,7 +49,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id }) => {
     setItem(value)
   }, [value])
 
-  const field = title === 'Email' ? 'email' : title === 'Username' ? 'username' : 'name'
+  const field = title === 'Email' ? 'email' : title === 'Username' ? 'username' : 'displayName'
   const handleItemUpdate = async () => {
     toggleLoader()
 
@@ -59,7 +59,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id }) => {
     if (errorMessage) {
       toast({ description: errorMessage, variant: 'error' })
     } else {
-      toast({ description: 'Profile details updated !', variant: 'success' })
+      toast({ description: `${title} has been updated successfully!`, variant: 'success' })
       refresh()
     }
     toggleLoader()
@@ -79,6 +79,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id }) => {
             onChange={(e) => setItem(e.target.value)}
             value={item}
             type='default'
+            prefix={isUsername ? '@' : undefined}
             placeholder={value}
             className='w-full max-w-full'
           />

@@ -36,6 +36,7 @@ export const D_PUBLISHER_LINK = 'https://www.dpublisher.app'
 export const D_READER_LINK = 'https://www.dreader.app'
 export const SUPPORT_EMAIL = 'support@dreader.io'
 export const SUPPORT_LINK = 'mailto:' + SUPPORT_EMAIL
+export const ANON_BUN_IMAGE_LINK = `${process.env.NEXT_PUBLIC_SITE_URL}/assets/images/anon-bunny.png`
 
 // metadata
 export const USED_TRAIT = 'used'

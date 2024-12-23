@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl } from '../ui/Form'
 import { updateUserAvatarValidationSchema } from '@/constants/schemas'
 import { UpdateUserAvatarData } from '@/models/user'
-import { updateUserAvatar } from '@/app/lib/api/user/mutations'
+import { removeUserProfilePhoto, updateUserAvatar } from '@/app/lib/api/user/mutations'
 import { Text, toast } from '../ui'
 import FileUpload from '../shared/FileUpload'
 import { useRouter } from 'next/navigation'
@@ -19,7 +19,8 @@ type Props = {
 }
 
 export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
-  const [showLoader, toggleLoader] = useToggle()
+  const [showChangePhotoLoader, toggleChangePhotoLoader] = useToggle()
+  const [showRemovePhotoLoader, toggleRemovePhotoLoader] = useToggle()
 
   const form = useForm<z.infer<typeof updateUserAvatarValidationSchema>>({
     resolver: zodResolver(updateUserAvatarValidationSchema),
@@ -30,7 +31,7 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
 
   const { refresh } = useRouter()
   const handleAvatarUpdateFormSubmit = async (data: UpdateUserAvatarData) => {
-    toggleLoader()
+    toggleChangePhotoLoader()
     if (data.avatar) {
       const formData = new FormData()
       formData.append('avatar', data.avatar)
@@ -40,11 +41,23 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
       if (errorMessage) {
         toast({ description: errorMessage, variant: 'error' })
       } else {
-        toast({ description: 'Avatar updated !', variant: 'success' })
+        toast({ description: 'Photo has been updated successfully!', variant: 'success' })
         refresh()
       }
     }
-    toggleLoader()
+    toggleChangePhotoLoader()
+  }
+
+  const handleRemoveAvatar = async () => {
+    toggleRemovePhotoLoader()
+    const { errorMessage } = await removeUserProfilePhoto(id)
+    if (errorMessage) {
+      toast({ description: errorMessage, variant: 'error' })
+    } else {
+      toast({ description: 'Photo has been removed successfully!', variant: 'success' })
+      refresh()
+    }
+    toggleRemovePhotoLoader()
   }
 
   return (
@@ -71,8 +84,10 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
                     form.handleSubmit(handleAvatarUpdateFormSubmit)()
                   }
                 }}
+                onRemove={() => handleRemoveAvatar()}
                 previewUrl={avatar ?? null}
-                isUploading={showLoader}
+                isUploading={showChangePhotoLoader}
+                isRemoving={showRemovePhotoLoader}
               />
             </FormControl>
           </div>

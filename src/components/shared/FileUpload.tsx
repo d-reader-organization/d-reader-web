@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Button } from '../ui'
 import { Loader } from './Loader'
+import { ANON_BUN_IMAGE_LINK } from '@/constants/general'
 
 type UploadedFile = { url: string; file: File | undefined }
 
@@ -12,13 +13,24 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   id: string
   allowMultipleFiles?: boolean
   onUpload?: (uploadedFiles: UploadedFile[]) => void
+  onRemove?: () => void
   previewUrl?: string
   sortable?: boolean
   isUploading?: boolean
+  isRemoving?: boolean
 }
 
 const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
-  { id, allowMultipleFiles = false, previewUrl = '', onUpload = () => {}, className = '', isUploading },
+  {
+    id,
+    allowMultipleFiles = false,
+    previewUrl = '',
+    onUpload = () => {},
+    onRemove = () => {},
+    className = '',
+    isUploading,
+    isRemoving,
+  },
   ref
 ) {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>(
@@ -41,11 +53,6 @@ const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
       setUploadedFiles(newFiles)
       onUpload(newFiles)
     }
-  }
-
-  const handleUnsetFiles = () => {
-    setUploadedFiles([])
-    onUpload([])
   }
 
   useEffect(() => {
@@ -77,28 +84,28 @@ const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
           </div>
         ) : (
           <div className='w-[80px] h-[80px] z-1 overflow-hidden rounded-[100px]'>
-            <Image
-              src={`${process.env.NEXT_PUBLIC_SITE_URL}/assets/images/anon-bunny.png`}
-              width={500}
-              height={500}
-              alt=''
-            />
+            <Image src={ANON_BUN_IMAGE_LINK} width={500} height={500} alt='' />
           </div>
         )}
       </div>
       <div className='flex gap-2'>
-        {isPhotoSelected ? (
-          <Button variant='ghost' size='md' className='w-fit' onClick={handleUnsetFiles}>
-            Remove photo
+        {isPhotoSelected && !isUploading ? (
+          <Button variant='ghost' size='md' className='w-fit' onClick={onRemove}>
+            {isRemoving ? <Loader /> : 'Remove photo'}
           </Button>
         ) : null}
-        <Button variant='secondary' size='md' className='relative overflow-hidden'>
+        <Button
+          variant='secondary'
+          size='md'
+          className={`relative overflow-hidden ${isRemoving ? 'disabled:opacity-80' : ''}`}
+        >
           <input
             id={id}
             type='file'
             multiple={allowMultipleFiles}
             className='absolute inset-0 opacity-0 cursor-pointer z-10'
             onChange={handleFileChange}
+            accept='image/*'
             ref={(el) => {
               // Use a callback ref to set the ref correctly
               if (ref && typeof ref === 'function') {
@@ -108,7 +115,7 @@ const FileUpload = forwardRef<HTMLInputElement, Props>(function FileUpload(
               }
             }}
           />
-          {isUploading ? <Loader /> : isPhotoSelected ? 'Change photo' : 'Upload photo'}
+          {isUploading ? <Loader /> : isPhotoSelected && !isUploading ? 'Change photo' : 'Upload photo'}
         </Button>
       </div>
     </div>
