@@ -10,6 +10,7 @@ export interface User {
   hasBetaAccess: boolean
   referralsRemaining: number
   role: Role
+  hasPassword: boolean
 }
 
 export interface UpdateUserData extends Partial<Pick<User, 'email' | 'username' | 'displayName'>> {

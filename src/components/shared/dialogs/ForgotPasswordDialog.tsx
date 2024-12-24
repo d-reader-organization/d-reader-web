@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/Dialog'
 import useToggle from '@/hooks/useToggle'
-import LockIcon from 'public/assets/vector-icons/yellow-lock-icon.svg'
+import LockIcon from 'public/assets/vector-icons/filled-lock-icon.svg'
 
 export const ForgotPasswordDialog: React.FC = () => {
   const [passwordDialogOpen, togglePasswordDialog] = useToggle()
@@ -23,7 +23,7 @@ export const ForgotPasswordDialog: React.FC = () => {
           className='flex self-start text-grey-100 p-0 py-2 pr-2 pl-0 sm:pl-0 w-fit hover:brightness-150'
           variant='ghost'
         >
-          <LockIcon className='h-[18px] w-[18px]' />
+          <LockIcon className='scale-75 text-important-color' />
           <Text as='span' styleVariant='body-small' className='text-important-color font-medium'>
             Forgot Password?
           </Text>
