@@ -17,7 +17,7 @@ const zPassword = z
   .string()
   .min(8, generateMinLengthErrorMessage('Password', 8))
   .regex(PASSWORD_LOWERCASE_REGEX, 'Password should include a lowercase character')
-  .regex(PASSWORD_UPPERCASE_REGEX, 'Password should include a uppercase character')
+  .regex(PASSWORD_UPPERCASE_REGEX, 'Password should include an uppercase character')
   .regex(PASSWORD_DIGIT_REGEX, 'Password should include a number')
 
 const loginSchema = z.object({
