@@ -6,3 +6,5 @@ export type ComicIssuePageParams = {
     id: string
   }
 }
+
+export type ParsedFormError = { message: string; paths: Array<string | number> }

@@ -36,7 +36,7 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
     if (errorMessage) {
       toast({ description: errorMessage, variant: 'error' })
     } else {
-      toast({ description: 'Password changed successfully !', variant: 'success' })
+      toast({ description: 'Password changed successfully!', variant: 'success' })
     }
     toggleLoader()
   }

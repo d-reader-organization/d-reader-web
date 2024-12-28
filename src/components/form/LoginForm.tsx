@@ -7,6 +7,7 @@ import { useFormState, useFormStatus } from 'react-dom'
 import { useSearchParams } from 'next/navigation'
 import { REDIRECT_TO_KEY } from '@/constants/general'
 import { Loader } from '../shared/Loader'
+import { FormErrorMessage } from './FormErrorMessage'
 
 const SubmitButton: React.FC = () => {
   const { pending } = useFormStatus()
@@ -43,7 +44,7 @@ const Form: React.FC = () => {
           <Label>Password</Label>
           <Input className='max-w-md' placeholder='********' type='password' name='password' />
         </div>
-        {!state?.success && state?.error && <p className='text-red-600'>{state.error}</p>}
+        {!state?.success && <FormErrorMessage message={state?.error} />}
       </div>
       <SubmitButton />
     </form>

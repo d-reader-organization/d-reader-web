@@ -9,6 +9,7 @@ import { redirect, RedirectType } from 'next/navigation'
 import { fetchWrapper } from '../../fetchWrapper'
 import { accessTokenKey, jwtCookieProps, refreshTokenKey } from '@/constants/general'
 import { loginSchema } from '@/constants/schemas'
+import { mapZodParsedErrors } from '@/lib/forms'
 
 const { AUTH, USER, LOGIN } = AUTH_QUERY_KEYS
 
@@ -22,8 +23,10 @@ export const loginAction = async (
     password: formData.get('password') ?? '',
   })
   if (!parsed.success) {
+    const parsedErrors = mapZodParsedErrors(parsed.error?.errors)
     return {
-      error: `Provide username or email and password`,
+      error: `Please provide valid data`,
+      errors: parsedErrors,
       success: false,
     }
   }

@@ -9,13 +9,14 @@ import { Button } from '../../ui/Button'
 import { DividerWithText } from '../../shared/Divider'
 import { GoogleSignInButton } from '../../shared/buttons/GoogleSignInButton'
 import { Text } from '../../ui/Text'
-import { DescriptionText } from '../../shared/DescriptionText'
 import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { TermsOfServiceAndPrivacyPolicy } from '../../shared/TermsOfServiceAndPrivacyText'
 import { useToast } from '../../ui/toast/use-toast'
 import { Loader } from '@/components/shared/Loader'
-import { passwordDescriptionText } from '@/constants/staticText'
+import { ParsedFormError } from '@/models/common'
+import { FormErrorMessage } from '@/components/form/FormErrorMessage'
+import { findError } from '@/lib/forms'
 
 type Props = { isGoogleSignUp?: boolean; onSuccess: () => void }
 
@@ -76,45 +77,47 @@ const RegisterForm: React.FC<FormProps> = ({ isGoogleSignUp, onSuccess }) => {
     }
   }, [state?.success, state?.error, toast, onSuccess])
 
-  return isGoogleSignUp ? <GoogleForm action={action} /> : <RegularForm action={action} error={state?.error} />
+  return isGoogleSignUp ? (
+    <GoogleForm action={action} />
+  ) : (
+    <RegularForm action={action} error={state?.error} errors={state?.errors} />
+  )
 }
 
-type RegularFormProps = {
+type RegisterFormProps = {
   action: (payload: FormData) => void
   error?: string
+  errors?: ParsedFormError[]
 }
 
-const RegularForm: React.FC<RegularFormProps> = ({ action, error }) => (
+const RegularForm: React.FC<RegisterFormProps> = ({ action, error, errors }) => (
   <form action={action} className='flex flex-col gap-6'>
     <div className='flex flex-col gap-6'>
       <div className='flex flex-col w-full space-y-2'>
         <Label>Username</Label>
-        <DescriptionText text='3-20 chars. Numbers, dashes, underscores allowed' />
+        <FormErrorMessage message={findError(errors, 'name')} />
         <Input placeholder='john-doe' name='name' />
       </div>
       <div className='flex flex-col w-full space-y-2'>
         <Label>Email</Label>
+        <FormErrorMessage message={findError(errors, 'email')} />
         <Input placeholder='john.doe@gmail.com' name='email' />
       </div>
       <div className='flex flex-col w-full space-y-2'>
         <Label>Password</Label>
-        <DescriptionText text={passwordDescriptionText} />
+        <FormErrorMessage message={findError(errors, 'password')} />
         <Input placeholder='********' type='password' name='password' />
       </div>
-      {!!error && <p className='text-red-600'>{error}</p>}
+      <FormErrorMessage message={error} />
     </div>
     <RegisterButton />
   </form>
 )
 
-type GoogleFormProps = {
-  action: (payload: FormData) => void
-}
-
-const GoogleForm: React.FC<GoogleFormProps> = ({ action }) => (
+const GoogleForm: React.FC<RegisterFormProps> = ({ action, errors }) => (
   <form action={action} className='flex flex-col gap-6'>
     <Label>Username</Label>
-    <DescriptionText text='3-20 chars. Numbers, dashes, underscores allowed' />
+    <FormErrorMessage message={findError(errors, 'name')} />
     <Input placeholder='john-doe' name='name' />
     <RegisterButton />
   </form>

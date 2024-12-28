@@ -54,4 +54,3 @@ Then join the Discord to get your comics signed on-chain -- at the creator's dis
 Appreciate you all! Enjoy the first ever on-chain y00ts comic! 👏
 dReader team
 `
-export const passwordDescriptionText = '8 characters minimum. At least 1 lowercase, 1 uppercase and 1 number'

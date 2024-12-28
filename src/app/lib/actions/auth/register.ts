@@ -9,6 +9,7 @@ import { googleAccessTokenKey } from '@/constants/general'
 import { AuthFormState, Authorization } from '@/models/auth/'
 import { registerSchema, registerWithGoogleSchema } from '@/constants/schemas'
 import { parseAndSetCookieAfterAuth } from './login'
+import { mapZodParsedErrors } from '@/lib/forms'
 
 const { AUTH, USER, REGISTER, REGISTER_WITH_GOOGLE } = AUTH_QUERY_KEYS
 
@@ -19,7 +20,8 @@ const registerAction = async (_: AuthFormState | null, formData: FormData): Prom
     password: formData.get('password') ?? '',
   })
   if (!parsed.success) {
-    return { error: `Please provide valid data`, success: false }
+    const parsedErrors = mapZodParsedErrors(parsed.error?.errors)
+    return { error: `Please provide valid data`, errors: parsedErrors, success: false }
   }
 
   try {
