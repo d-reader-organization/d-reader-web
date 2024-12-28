@@ -75,7 +75,7 @@ export default async function ClaimPage({ params }: ComicIssuePageParams) {
           />
           <Divider className='max-md:hidden' />
           <div className='flex flex-col 1160:flex-row gap-10 justify-between'>
-            <AboutIssueSection comicIssue={comicIssue} />
+            <AboutIssueSection comicIssue={comicIssue} targetBlank />
             {pages.length ? <PagesPreview comicIssueId={comicIssue.id} pages={pages} /> : null}
           </div>
         </div>
