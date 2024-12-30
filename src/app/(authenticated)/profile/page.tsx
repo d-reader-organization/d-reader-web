@@ -14,7 +14,7 @@ async function ProfilePage() {
   }
   const wallets = await fetchUserWallets(me.id)
   const tabTriggerClass =
-    'w-full text-grey-200 font-bold text-sm sm:text-base border-none data-[state=active]:text-white md:p-0 p-0'
+    'text-start text-grey-200 font-bold text-sm sm:text-base border-none data-[state=active]:text-white md:p-0 p-0'
 
   return (
     <BaseLayout>
@@ -23,7 +23,7 @@ async function ProfilePage() {
           Settings
         </Text>
         <Tabs defaultValue='1' className='flex gap-36 w-full max-sm:flex-col max-sm:gap-10'>
-          <TabsList className='flex gap-7 justify-start flex-col text-left max-sm:flex-row'>
+          <TabsList className='flex gap-7 items-start justify-start flex-col text-left max-sm:flex-row max-sm:gap-4'>
             <TabsTrigger value='1' className={tabTriggerClass}>
               <Text as='h4' styleVariant='secondary-heading'>
                 Account
