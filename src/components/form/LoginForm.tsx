@@ -38,11 +38,11 @@ const Form: React.FC = () => {
       <div className='space-y-6'>
         <div className='flex flex-col w-full space-y-2'>
           <Label>Email or username</Label>
-          <Input className='max-w-md' placeholder='john.doe@dreader.io' name='nameOrEmail' />
+          <Input placeholder='john.doe@dreader.io' name='nameOrEmail' />
         </div>
         <div className='flex flex-col w-full space-y-2'>
           <Label>Password</Label>
-          <Input className='max-w-md' placeholder='********' type='password' name='password' />
+          <Input placeholder='********' type='password' name='password' />
         </div>
         {!state?.success && <FormErrorMessage message={state?.error} />}
       </div>

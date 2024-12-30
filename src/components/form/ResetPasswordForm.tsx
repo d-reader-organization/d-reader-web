@@ -36,7 +36,7 @@ export const ResetPasswordForm: React.FC<Props> = ({ verificationToken }) => {
         <div className='flex flex-col w-full space-y-2'>
           <Label>Password</Label>
           <FormErrorMessage message={findError(state?.errors, 'newPassword')} />
-          <Input className='max-w-md' placeholder='********' name='newPassword' type='password' />
+          <Input placeholder='********' name='newPassword' type='password' />
         </div>
         {!state?.success && <FormErrorMessage message={state?.error} />}
       </div>

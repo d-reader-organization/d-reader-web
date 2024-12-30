@@ -46,7 +46,7 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
       <div className='text-gray-400 border-b border-gray-400 text-sm font-bold uppercase pb-1'>
         Change your password
       </div>
-      <form onSubmit={form.handleSubmit(handleUpdatePassword)} className='flex flex-col gap-4'>
+      <form onSubmit={form.handleSubmit(handleUpdatePassword)} className='flex flex-col gap-4 max-w-[400px]'>
         <FormItem>
           <FormLabel className='font-bold'>Current password</FormLabel>
           <FormControl>

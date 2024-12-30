@@ -24,7 +24,7 @@ export const ForgotPasswordDialog: React.FC = () => {
           Forgot password?
         </Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[444px] p-0 '>
+      <DialogContent className='sm:max-w-sm p-0'>
         <DialogHeader className='p-4'>
           <DialogTitle>Reset password</DialogTitle>
           <DialogDescription>

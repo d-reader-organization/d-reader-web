@@ -12,30 +12,23 @@ type Props = {
 }
 
 export const EmailVerificationContent: React.FC<Props> = ({ redirectTo }) => (
-  <main className='container mb-4 md:mb-8 sm:p-0 flex flex-col max-w-md gap-4 items-center'>
-    <Text as='h3' styleVariant='primary-heading' fontWeight='semibold' className='text-center pt-4 sm:mb-4'>
+  <main className='container flex flex-col items-center max-w-md mb-8'>
+    <Text as='h2' styleVariant='primary-heading' className='flex items-center text-center my-4 sm:my-8'>
+      <MailIcon className='h-auto w-12 md:w-14 mr-2' />
       Check your mail
     </Text>
-    <div className='flex justify-center'>
-      <MailIcon className='h-auto w-10 md:w-14' />
-    </div>
     <Text as='p' styleVariant='body-normal' className='text-center'>
-      Follow the simple instructions within the email to verify and become eligible for rewards. It might take up to 5
-      minutes to receive the mail
+      We&apos;ve sent you an email with instructions to verify and become eligible for rewards. Check your spam folder!
     </Text>
-    <ButtonLink variant='primary' subVariant={1} className='w-fit' href={redirectTo ?? RoutePath.Home}>
+    <ButtonLink variant='primary' subVariant={1} className='w-fit mt-2' href={redirectTo ?? RoutePath.Home}>
       Next
     </ButtonLink>
-    <div className='mt-4 flex flex-col gap-4 items-center'>
-      <p className='text-sm text-grey-100 text-center'>
-        Didn&apos;t get the email?
-        <br />
-        Check your spam folder{/* before resending */}
-      </p>
+    <div className='mt-4 flex flex-col items-center'>
+      <p className='text-sm text-grey-100 text-center'>Didn&apos;t get the email?</p>
       <Button
-        variant='primary'
+        variant='ghost'
         size='md'
-        className='w-fit'
+        className='w-fit text-important-color hover:brightness-150'
         onClick={async () => {
           const error = await requestUserEmailVerification()
           toast({

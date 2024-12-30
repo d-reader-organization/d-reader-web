@@ -46,7 +46,7 @@ export const UpdateUserDetailsForm: React.FC<Props> = ({ id, name, email }) => {
   return (
     <Form {...form}>
       <div className='text-gray-400 border-b border-gray-400 text-sm font-bold uppercase pb-1'>Basic details</div>
-      <form onSubmit={form.handleSubmit(handleProfileUpdate)} className='flex flex-col gap-4'>
+      <form onSubmit={form.handleSubmit(handleProfileUpdate)} className='flex flex-col gap-4 max-w-[400px]'>
         <FormItem>
           <FormLabel className='font-bold'>Email</FormLabel>
           <Text as='p' styleVariant='body-small'>
