@@ -37,8 +37,7 @@ export async function GET(request: Request, { params }: { params: { slug: string
       }
     )
   }
-  console.log('comicCCC')
-  console.log(comic)
+
   return generateImage(comic)
 }
 
