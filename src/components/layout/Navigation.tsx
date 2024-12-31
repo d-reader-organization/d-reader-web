@@ -15,6 +15,7 @@ import { SearchInput } from '../shared/SearchInput'
 import { User } from '@/models/user'
 import { NavItemLink } from './NavItemLink'
 import { GenesisNavigation } from './GenesisNavigation'
+import { PLACEHOLDER_AVATAR } from '@/constants/general'
 
 type Props = {
   me: User | null
@@ -77,7 +78,7 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
                 <div className='bg-white bg-opacity-15 rounded-xl flex items-center justify-center gap-1.5 px-2 h-10'>
                   <Image
                     alt='avatar'
-                    src={me.avatar || 'https://d323dls9ny69nf.cloudfront.net/users/5256/avatar-1713526462785.png'}
+                    src={me.avatar || PLACEHOLDER_AVATAR}
                     width={28}
                     height={28}
                     className='size-7 object-cover rounded-full border border-black'

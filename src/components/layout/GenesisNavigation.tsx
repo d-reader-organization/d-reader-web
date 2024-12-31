@@ -14,6 +14,7 @@ import { ProfileSheet } from '../shared/sheets/profile/ProfileSheet'
 import { User } from '@/models/user'
 import { MoveLeft } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import { PLACEHOLDER_AVATAR } from '@/constants/general'
 
 type Props = {
   me: User | null
@@ -56,7 +57,7 @@ export const GenesisNavigation: React.FC<Props> = ({ me }) => {
                 <div className='bg-white rounded-xl flex items-center justify-center gap-1.5 px-2 h-10'>
                   <Image
                     alt=''
-                    src={me.avatar || 'https://d323dls9ny69nf.cloudfront.net/users/5256/avatar-1713526462785.png'}
+                    src={me.avatar || PLACEHOLDER_AVATAR}
                     width={28}
                     height={28}
                     className='size-7 object-cover rounded-full border border-black'

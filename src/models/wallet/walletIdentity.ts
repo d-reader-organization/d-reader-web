@@ -4,7 +4,7 @@ import { User } from '../user'
 export interface WalletIdentity {
   id?: User['id']
   avatar?: User['avatar']
-  name?: User['name']
+  name?: User['username']
   address: Wallet['address']
   sns?: string
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { ForgotPasswordForm } from '@/components/form/ForgotPasswordForm'
+import { Text } from '@/components/ui'
 import { Button } from '@/components/ui/Button'
 import {
   Dialog,
@@ -11,6 +12,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/Dialog'
 import useToggle from '@/hooks/useToggle'
+import LockIcon from 'public/assets/vector-icons/filled-lock-icon.svg'
 
 export const ForgotPasswordDialog: React.FC = () => {
   const [passwordDialogOpen, togglePasswordDialog] = useToggle()
@@ -18,10 +20,13 @@ export const ForgotPasswordDialog: React.FC = () => {
     <Dialog open={passwordDialogOpen} onOpenChange={togglePasswordDialog}>
       <DialogTrigger asChild>
         <Button
-          className='self-start text-grey-100 p-0 py-2 pr-2 pl-0 sm:pl-0 w-fit hover:brightness-150'
+          className='flex self-start text-grey-100 p-0 py-2 pr-2 pl-0 sm:pl-0 w-fit hover:brightness-150'
           variant='ghost'
         >
-          Forgot password?
+          <LockIcon className='scale-75 text-important-color' />
+          <Text as='span' styleVariant='body-small' className='text-important-color font-medium'>
+            Forgot Password?
+          </Text>
         </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-sm p-0'>

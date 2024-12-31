@@ -9,14 +9,18 @@ import { SUPPORT_EMAIL } from '@/constants/general'
 
 const FAQ: React.FC = () => {
   return (
-    <div className='py-8 flex flex-col gap-4'>
-      <h2 className='text-2xl font-bold'>Frequent Questions</h2>
-      <Text as='p' styleVariant='body-normal' className='text-gray-400 italic'>
-        If you&apos;d like to report your bug use the &nbsp;
-        <span className='text-important-color'>
-          <Link href='https://forms.gle/pXH2DFaVPyquv1Yv9'>bug report form</Link>
-        </span>
-      </Text>
+    <div className='flex flex-col gap-8'>
+      <div className='flex flex-col gap-2'>
+        <Text as='h4' styleVariant='secondary-heading'>
+          Frequent Questions
+        </Text>
+        <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-200'>
+          If you&apos;d like to report your bug use the &nbsp;
+          <span className='text-important-color'>
+            <Link href='https://forms.gle/pXH2DFaVPyquv1Yv9'>bug report form</Link>
+          </span>
+        </Text>
+      </div>
       <div className='flex flex-col gap-8'>
         <div>
           <Text as='p' styleVariant='body-large' className='font-bold mb-2'>

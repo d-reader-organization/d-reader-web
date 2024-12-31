@@ -16,7 +16,7 @@ export function sleep(ms: number): Promise<void> {
  */
 export const shortenString = (string: string, slice = 4): string => {
   if (string.length < slice * 2 + 3) return string
-  return `${string.slice(0, slice)}..${string.slice(-slice)}`
+  return `${string.slice(0, slice)}...${string.slice(-slice)}`
 }
 
 export const getUnixTimeInSeconds = () => {
@@ -162,4 +162,11 @@ export const getTwitterIntentExpressedInterest = (project: Project) => {
 
   const tweetText = encodeURI(`${twitterIntentPrefix}${headline}\n\n${content}\n${shoutOutLine}\n\n${genesisLink}`)
   return tweetText
+}
+
+export const getTokenPrice = (basePrice: number, decimals: number) => {
+  const denominator = Math.pow(10, decimals)
+  const price = parseFloat((basePrice / denominator).toFixed(3))
+
+  return price
 }

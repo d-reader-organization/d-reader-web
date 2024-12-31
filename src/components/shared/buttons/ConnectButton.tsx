@@ -9,19 +9,23 @@ import { WalletListItem } from '../WalletListItem'
 import { cn } from '@/lib/utils'
 import { Text } from '../../ui/Text'
 import { useAuthorizeWalletContext } from '@/providers/AuthorizeWalletContextProvider'
+import { useToggle } from '@/hooks'
 require('@solana/wallet-adapter-react-ui/styles.css')
 
 type Props = {
   text?: string
   onClick?: () => Promise<void>
+  triggerReconnect?: boolean
 } & ButtonProps
 
 /**
  * Making custom wallet buttons sucks af on Solana...
  * Why can't we have wallet sessions like on Mobile Wallet Adapter?
  * https://github.com/solana-labs/wallet-adapter/tree/master/packages/core/react */
-export const ConnectButton: React.FC<Props> = ({ onClick, text, children, className, ...props }) => {
+export const ConnectButton: React.FC<Props> = ({ onClick, triggerReconnect, text, children, className, ...props }) => {
   const [actionTriggered, setActionTriggered] = useState(false)
+  const [isReconnectClicked, toggleReconnectClick] = useToggle()
+
   useAuthorizeWalletContext()
 
   const [walletModalConfig, setWalletModalConfig] = useState<Readonly<{
@@ -58,6 +62,9 @@ export const ConnectButton: React.FC<Props> = ({ onClick, text, children, classN
           await onClick()
         } else if (onDisconnect) {
           onDisconnect()
+          if (triggerReconnect) {
+            toggleReconnectClick()
+          }
         }
         break
       case 'has-wallet':
@@ -70,7 +77,15 @@ export const ConnectButton: React.FC<Props> = ({ onClick, text, children, classN
         break
       }
     }
-  }, [buttonState, onClick, onConnect, onDisconnect, onSelectWallet])
+  }, [buttonState, onClick, onConnect, onDisconnect, onSelectWallet, toggleReconnectClick, triggerReconnect])
+
+  useEffect(() => {
+    if (isReconnectClicked && buttonState == 'no-wallet' && onSelectWallet) {
+      onSelectWallet()
+      setActionTriggered(true)
+      toggleReconnectClick()
+    }
+  }, [buttonState, onSelectWallet, isReconnectClicked, toggleReconnectClick])
 
   useEffect(() => {
     if (buttonState == 'has-wallet' && onConnect) {
