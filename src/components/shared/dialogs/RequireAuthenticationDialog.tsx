@@ -41,7 +41,7 @@ export const RequireAuthDialog: React.FC<Props> = ({ showDialog = false, closeDi
             <GoogleSignInButton buttonText='Continue with Google' className='justify-start' />
             <ButtonLink
               className='justify-start'
-              href={withRedirect(RoutePath.Login, pathname)}
+              href={withRedirect(RoutePath.Register, pathname)}
               variant='outline'
               size='lg'
               icon={Mail}

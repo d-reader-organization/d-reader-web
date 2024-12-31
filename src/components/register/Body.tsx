@@ -54,14 +54,14 @@ const InnerRegisterBody: React.FC = () => {
         })}
       </TabsList>
 
-      <TabsContent value={TabValue.createAccount}>
+      <TabsContent className='mt-0' value={TabValue.createAccount}>
         <CreateAccountContent isGoogleSignUp={isGoogleSignUp} onSuccess={() => setActiveTab(TabValue.connectWallet)} />
       </TabsContent>
-      <TabsContent value={TabValue.connectWallet}>
+      <TabsContent className='mt-0' value={TabValue.connectWallet}>
         <ConnectWalletContent isGoogleSignUp={isGoogleSignUp} onSkip={() => setActiveTab(TabValue.verifyEmail)} />
       </TabsContent>
       {tabs.length > 2 ? (
-        <TabsContent value={TabValue.verifyEmail}>
+        <TabsContent className='mt-0' value={TabValue.verifyEmail}>
           <EmailVerificationContent redirectTo={redirectTo} />
         </TabsContent>
       ) : null}

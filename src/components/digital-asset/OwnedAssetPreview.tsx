@@ -85,8 +85,7 @@ export const OwnedAssetPreview: React.FC<Props> = ({ asset, comicIssue }) => (
             {comicIssue?.comicSlug ? (
               <Link
                 className='max-h-9 px-3 py-2 flex gap-2 justify-center items-center rounded-lg bg-grey-500'
-                href={RoutePath.Comic(comicIssue?.comicSlug)}
-                target='_blank'
+                href={RoutePath.Comic(comicIssue.comicSlug)}
               >
                 <ExternalLink className='text-grey-100' size={20} />
                 <span className='text-base font-medium leading-[22.4px] text-grey-100'>Explore series</span>

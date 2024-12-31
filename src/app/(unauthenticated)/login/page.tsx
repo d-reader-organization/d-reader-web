@@ -11,8 +11,8 @@ export default async function LoginPage() {
   return (
     <>
       <UnauthenticatedNavigation />
-      <main className='container sm:p-0 flex flex-col max-w-md gap-2 mt-8'>
-        <Text as='h2' styleVariant='primary-heading' className='text-center mb-8'>
+      <main className='container flex flex-col max-w-sm mb-8'>
+        <Text as='h2' styleVariant='primary-heading' className='text-center my-4 sm:my-8'>
           Welcome back
         </Text>
         <GoogleSignInButton />

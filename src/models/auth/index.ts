@@ -1,6 +1,7 @@
 import { Role } from '@/enums/role'
 import { Creator } from '@/models/creator'
 import { User } from '@/models/user'
+import { ParsedFormError } from '../common'
 
 export interface Authorization {
   accessToken: string
@@ -48,5 +49,6 @@ export type JwtPayload<T> = T & {
 
 export type AuthFormState = {
   error?: string
+  errors?: ParsedFormError[]
   success: boolean
 }

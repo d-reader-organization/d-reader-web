@@ -1,27 +1,46 @@
 import { generateMaxLengthErrorMessage, generateMinLengthErrorMessage } from '@/utils/error'
 import { z } from 'zod'
 
+export const USERNAME_REGEX = new RegExp(/^[a-zA-Z0-9-_čćžšđČĆŽŠĐ]+$/)
+// export const PASSWORD_REGEX = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
+export const PASSWORD_LOWERCASE_REGEX = new RegExp(/^(?=.*[a-z]).+$/)
+export const PASSWORD_UPPERCASE_REGEX = new RegExp(/^(?=.*[A-Z]).+$/)
+export const PASSWORD_DIGIT_REGEX = new RegExp(/^(?=.*\d).+$/)
+
+const zName = z
+  .string()
+  .min(3, generateMinLengthErrorMessage('name', 3))
+  .max(20, generateMaxLengthErrorMessage('name', 20))
+  .regex(USERNAME_REGEX, 'Only A-Z, 0-9, underscore, and hypen are allowed')
+const zEmail = z.string().email()
+const zPassword = z
+  .string()
+  .min(8, generateMinLengthErrorMessage('Password', 8))
+  .regex(PASSWORD_LOWERCASE_REGEX, 'Password should include a lowercase character')
+  .regex(PASSWORD_UPPERCASE_REGEX, 'Password should include an uppercase character')
+  .regex(PASSWORD_DIGIT_REGEX, 'Password should include a number')
+
 const loginSchema = z.object({
   nameOrEmail: z.string(),
   password: z.string(),
 })
 
 const registerSchema = z.object({
-  name: z.string().min(3, generateMinLengthErrorMessage('name', 3)),
-  email: z.string().email(),
-  password: z.string(),
+  name: zName,
+  email: zEmail,
+  password: zPassword,
 })
 
 const registerWithGoogleSchema = z.object({
-  name: z.string().min(3, generateMinLengthErrorMessage('name', 3)),
+  name: zName,
 })
 
 const forgotPasswordSchema = z.object({
-  nameOrEmail: z.string().email('Must be an email address'),
+  nameOrEmail: zEmail, // limit only to email
 })
 
 const resetPasswordSchema = z.object({
-  newPassword: z.string(),
+  newPassword: zPassword,
   verificationToken: z.string(),
 })
 
@@ -30,13 +49,13 @@ const updateUserAvatarValidationSchema = z.object({
 })
 
 const updateUserValidationSchema = z.object({
-  email: z.string().email(),
-  name: z.string().min(2, generateMinLengthErrorMessage('name', 2)).max(20, generateMaxLengthErrorMessage('name', 20)),
+  email: zEmail,
+  name: zName,
 })
 
 const updateUserPasswordValidationSchema = z.object({
-  oldPassword: z.string(),
-  newPassword: z.string(),
+  oldPassword: z.string(), // we don't care about validating the format of an old password
+  newPassword: zPassword,
 })
 
 export {
