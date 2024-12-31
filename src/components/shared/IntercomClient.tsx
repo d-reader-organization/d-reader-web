@@ -10,7 +10,7 @@ export const IntercomClient: React.FC<Props> = ({ user }) => {
   Intercom({
     app_id: 'kqybu780',
     user_id: user?.id.toString(),
-    name: user?.name,
+    name: user?.username,
     email: user?.email,
   })
 

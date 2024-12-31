@@ -5,6 +5,7 @@ export const USER_QUERY_KEYS = Object.freeze({
   GET: 'get',
   ME: 'me',
   UPDATE: 'update',
+  REMOVE: 'remove',
   UPDATE_PASSWORD: 'update-password',
   RESET_PASSWORD: 'reset-password',
   REQUEST_EMAIL_VERIFICATION: 'request-email-verification',

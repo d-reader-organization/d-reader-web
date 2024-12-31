@@ -12,7 +12,7 @@ export type UserPayload = {
   type: 'user'
   id: User['id']
   email: User['email']
-  name: User['name']
+  username: User['username']
   role: User['role']
 }
 
@@ -27,7 +27,7 @@ export const emptyUserPayload: JwtPayload<UserPayload> = Object.freeze({
   type: 'user',
   id: 0,
   email: '',
-  name: '',
+  username: '',
   role: Role.User,
   iat: Date.now(),
   exp: Date.now(),
