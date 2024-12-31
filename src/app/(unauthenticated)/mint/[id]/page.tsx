@@ -23,8 +23,8 @@ export async function generateMetadata({
   searchParams: { rarity: ComicRarity }
 }): Promise<Metadata> {
   const ogImagePath = searchParams.rarity
-    ? `/api/og/${params.id}?rarity=${searchParams.rarity}`
-    : `/api/og/${params.id}`
+    ? `/api/og/claim/${params.id}?rarity=${searchParams.rarity}`
+    : `/api/og/claim/${params.id}`
 
   return {
     openGraph: {
