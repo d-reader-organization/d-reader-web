@@ -12,7 +12,7 @@ type Params = {
 export default async function VerifyEmailPage({ params }: { params: Params }) {
   const verificationToken = params?.verificationToken
   const user = verificationToken ? await verifyUserEmail(verificationToken) : null
-  const name = user?.displayName ?? ''
+  const name = user?.displayName || user?.username || ''
 
   return (
     <main className='flex flex-col w-full justify-center items-center mt-20 md:mt-16 p-4 md:p-6 lg:p-8'>

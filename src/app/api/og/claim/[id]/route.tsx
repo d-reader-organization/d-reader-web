@@ -5,10 +5,11 @@ import Logo from 'public/assets/vector-icons/logo.svg'
 import SunIcon from 'public/assets/vector-icons/sun.svg'
 import { fetchComicIssue } from '@/app/lib/api/comicIssue/queries'
 import { generateDefaultImage } from '@/constants/og'
+import { getStatelessCoverFromComicIssue } from '@/utils/covers'
 
 const textStyles: React.CSSProperties = {
   position: 'absolute',
-  left: 471,
+  left: 470,
   padding: 0,
   margin: 0,
   width: 680,
@@ -20,13 +21,6 @@ const textStyles: React.CSSProperties = {
   overflow: 'hidden',
 }
 
-const getCoverFromComicIssue = (comicIssue: ComicIssue, rarity?: string | null): string => {
-  const statelessCover = comicIssue.statelessCovers?.find(
-    (cover) => cover.rarity.toLowerCase() === rarity?.toLowerCase()
-  )
-  return statelessCover?.image || comicIssue.cover
-}
-
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const url = new URL(request.url)
   const rarity = url.searchParams.get('rarity')
@@ -34,7 +28,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
   if (!comicIssue) return generateDefaultImage()
 
-  const cover = getCoverFromComicIssue(comicIssue, rarity)
+  const statelessCover = getStatelessCoverFromComicIssue(comicIssue, rarity)
+  const cover = statelessCover || comicIssue.cover
 
   return new ImageResponse(<OGClaimCard comicIssue={comicIssue} cover={cover} />, METADATA_IMAGE_SIZE)
 }
@@ -82,7 +77,7 @@ const OGClaimCard: React.FC<OGClaimCardProps> = ({ comicIssue, cover }) => (
       <p
         style={{
           position: 'absolute',
-          left: 471,
+          left: 470,
           top: 380,
           display: 'flex',
           height: '52px',
