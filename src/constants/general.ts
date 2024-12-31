@@ -36,6 +36,7 @@ export const D_PUBLISHER_LINK = 'https://www.dpublisher.app'
 export const D_READER_LINK = 'https://www.dreader.app'
 export const SUPPORT_EMAIL = 'support@dreader.io'
 export const SUPPORT_LINK = 'mailto:' + SUPPORT_EMAIL
+export const PLACEHOLDER_AVATAR = `/assets/images/default-avatar.png`
 
 // metadata
 export const USED_TRAIT = 'used'

@@ -7,11 +7,15 @@ export const PASSWORD_LOWERCASE_REGEX = new RegExp(/^(?=.*[a-z]).+$/)
 export const PASSWORD_UPPERCASE_REGEX = new RegExp(/^(?=.*[A-Z]).+$/)
 export const PASSWORD_DIGIT_REGEX = new RegExp(/^(?=.*\d).+$/)
 
-const zName = z
+const zUsername = z
   .string()
-  .min(3, generateMinLengthErrorMessage('name', 3))
-  .max(20, generateMaxLengthErrorMessage('name', 20))
+  .min(3, generateMinLengthErrorMessage('Username', 3))
+  .max(20, generateMaxLengthErrorMessage('Username', 20))
   .regex(USERNAME_REGEX, 'Only A-Z, 0-9, underscore, and hypen are allowed')
+const zDisplayName = z
+  .string()
+  .min(2, generateMinLengthErrorMessage('Display name', 2))
+  .max(40, generateMaxLengthErrorMessage('Display name', 40))
 const zEmail = z.string().email()
 const zPassword = z
   .string()
@@ -26,13 +30,13 @@ const loginSchema = z.object({
 })
 
 const registerSchema = z.object({
-  name: zName,
+  name: zUsername,
   email: zEmail,
   password: zPassword,
 })
 
 const registerWithGoogleSchema = z.object({
-  name: zName,
+  name: zUsername,
 })
 
 const forgotPasswordSchema = z.object({
@@ -49,8 +53,9 @@ const updateUserAvatarValidationSchema = z.object({
 })
 
 const updateUserValidationSchema = z.object({
-  email: zEmail,
-  name: zName,
+  email: zEmail.optional(),
+  username: zUsername.optional(),
+  displayName: zDisplayName.optional(),
 })
 
 const updateUserPasswordValidationSchema = z.object({

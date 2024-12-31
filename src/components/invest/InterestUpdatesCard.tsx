@@ -3,11 +3,11 @@
 import { formatDate } from 'date-fns'
 import { Text } from '../ui'
 import { Divider } from '../shared/Divider'
-import clsx from 'clsx'
 import ACTIVITY_ICON from 'public/assets/vector-icons/activity-icon.svg'
-import ANON_BUNNY from 'public/assets/images/anon-bunny.png'
-import Image from 'next/image'
 import { UserInterestedReceipt } from '@/models/project'
+import { PLACEHOLDER_AVATAR } from '@/constants/general'
+import clsx from 'clsx'
+import Image from 'next/image'
 
 type Props = {
   receipts: UserInterestedReceipt[]
@@ -36,7 +36,7 @@ export const InterestUpdatesCard: React.FC<Props> = ({ className, receipts }) =>
                 <div className='flex gap-4'>
                   <Image
                     alt='avatar'
-                    src={ANON_BUNNY}
+                    src={PLACEHOLDER_AVATAR}
                     width={32}
                     height={32}
                     className='size-7 object-cover rounded-full border border-black'

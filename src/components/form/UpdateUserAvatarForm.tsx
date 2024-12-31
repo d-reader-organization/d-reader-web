@@ -1,19 +1,18 @@
 'use client'
 
-import React from 'react'
-import { Button } from '../ui/Button'
+import React, { useRef } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormLabel } from '../ui/Form'
+import { Form, FormControl } from '../ui/Form'
 import { updateUserAvatarValidationSchema } from '@/constants/schemas'
 import { UpdateUserAvatarData } from '@/models/user'
-import { updateUserAvatar } from '@/app/lib/api/user/mutations'
+import { removeUserProfilePhoto, updateUserAvatar } from '@/app/lib/api/user/mutations'
 import { Text, toast } from '../ui'
 import FileUpload from '../shared/FileUpload'
-import { useRouter } from 'next/navigation'
 import { useToggle } from '@/hooks'
-import { Loader } from '../shared/Loader'
+import { RemovePhotoWarningDialog } from '../shared/dialogs/RemovePhotoWarningDialog'
+import { FileUploadRef } from '@/lib/types'
 
 type Props = {
   id: string | number
@@ -21,7 +20,11 @@ type Props = {
 }
 
 export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
-  const [showLoader, toggleLoader] = useToggle()
+  const [showChangePhotoLoader, toggleChangePhotoLoader] = useToggle()
+  const [showRemovePhotoLoader, toggleRemovePhotoLoader] = useToggle()
+  const [showRemovePhotoWarningDialog, toggleRemovePhotoWarningDialog, closeRemovePhotoWarningDialog] = useToggle()
+  const ref = useRef<FileUploadRef>(null)
+
   const form = useForm<z.infer<typeof updateUserAvatarValidationSchema>>({
     resolver: zodResolver(updateUserAvatarValidationSchema),
     defaultValues: {
@@ -29,10 +32,8 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
     },
   })
 
-  const { refresh } = useRouter()
   const handleAvatarUpdateFormSubmit = async (data: UpdateUserAvatarData) => {
-    toggleLoader()
-
+    toggleChangePhotoLoader()
     if (data.avatar) {
       const formData = new FormData()
       formData.append('avatar', data.avatar)
@@ -42,39 +43,69 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
       if (errorMessage) {
         toast({ description: errorMessage, variant: 'error' })
       } else {
-        toast({ description: 'Avatar updated !', variant: 'success' })
-        refresh()
+        toast({ description: 'Photo has been updated successfully!', variant: 'success' })
       }
     }
-    toggleLoader()
+    toggleChangePhotoLoader()
+  }
+
+  const handleRemoveAvatar = async () => {
+    toggleRemovePhotoLoader()
+    const { errorMessage } = await removeUserProfilePhoto(id)
+
+    if (ref.current) {
+      ref.current.reset()
+    }
+
+    if (errorMessage) {
+      toast({ description: errorMessage, variant: 'error' })
+    } else {
+      toast({ description: 'Photo has been removed successfully!', variant: 'success' })
+    }
+    toggleRemovePhotoLoader()
+    closeRemovePhotoWarningDialog()
   }
 
   return (
     <Form {...form}>
-      <div className='text-gray-400 border-b border-gray-400 text-sm font-bold uppercase pb-1'>Assets</div>
-      <form onSubmit={form.handleSubmit(handleAvatarUpdateFormSubmit)}>
-        <div className='flex justify-between'>
-          <div className='flex flex-col justify-between leading-6 gap-3'>
-            <div className='flex flex-col gap-3'>
-              <FormLabel className='font-bold'>Update avatar image</FormLabel>
-              <Text as='p' styleVariant='body-small'>
-                Recommended size is 500 x 500px, 3mb max size
-              </Text>
-            </div>
+      <form>
+        <div className='flex flex-col justify-between gap-8'>
+          <div className='flex flex-col gap-2'>
+            <Text as='p' styleVariant='body-normal' className='font-bold'>
+              Profile photo
+            </Text>
 
-            <Button type='submit' variant='secondary' subVariant={2} size='lg' className='w-fit'>
-              {showLoader ? <Loader /> : 'Update Avatar'}
-            </Button>
+            <Text as='p' styleVariant='body-small' className='text-grey-200'>
+              Recommended image size: 500 x 500
+            </Text>
           </div>
-          <FormControl>
-            <FileUpload
-              id='avatar'
-              onUpload={(files) => form.setValue('avatar', files[0]?.file)}
-              previewUrl={avatar ?? null}
-            />
-          </FormControl>
+
+          <div className='flex justify-between items-center'>
+            <FormControl>
+              <FileUpload
+                id='avatar'
+                onUpload={(files) => {
+                  if (files[0]?.file) {
+                    form.setValue('avatar', files[0].file)
+                    form.handleSubmit(handleAvatarUpdateFormSubmit)()
+                  }
+                }}
+                onRemove={toggleRemovePhotoWarningDialog}
+                previewUrl={avatar ?? null}
+                isUploading={showChangePhotoLoader}
+                isRemoving={showRemovePhotoLoader}
+                ref={ref}
+              />
+            </FormControl>
+          </div>
         </div>
       </form>
+      <RemovePhotoWarningDialog
+        open={showRemovePhotoWarningDialog}
+        toggleDialog={closeRemovePhotoWarningDialog}
+        isLoading={showRemovePhotoLoader}
+        removePhoto={handleRemoveAvatar}
+      />
     </Form>
   )
 }
