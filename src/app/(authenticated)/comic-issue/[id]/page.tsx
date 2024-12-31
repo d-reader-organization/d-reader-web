@@ -21,7 +21,7 @@ import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const ogImagePath = `/api/og/${params.id}`
+  const ogImagePath = `/api/og/claim/${params.id}`
 
   return {
     openGraph: {
