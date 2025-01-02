@@ -1,15 +1,15 @@
 import { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const ogImagePath = `/api/og/creator/${params.slug}`
+  const metadataImagePath = `/api/metadata/creator/${params.slug}`
 
   return {
     openGraph: {
-      images: ogImagePath,
+      images: metadataImagePath,
     },
     twitter: {
       card: 'summary_large_image',
-      images: ogImagePath,
+      images: metadataImagePath,
     },
   }
 }
