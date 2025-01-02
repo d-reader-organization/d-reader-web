@@ -7,8 +7,8 @@ import { forwardRef } from 'react'
 
 export interface ButtonLinkProps
   extends LinkProps,
-  VariantProps<typeof buttonVariants>,
-  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> {
+    VariantProps<typeof buttonVariants>,
+    Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> {
   icon?: LucideIcon
   iconOnly?: boolean
 }

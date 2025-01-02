@@ -1,5 +1,4 @@
 import { ComicRarity } from '@/enums/comicRarity'
-import { AssetAttribute } from './assetAttribute'
 
 export interface Asset {
   address: string
@@ -15,6 +14,5 @@ export interface Asset {
   comicIssueName: string
   comicIssueId: number
   isListed: boolean
-  attributes: AssetAttribute[]
   rarity: ComicRarity
 }

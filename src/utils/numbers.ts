@@ -30,7 +30,7 @@ export const formatCurrency = ({
   const scaledValue = value / divisor
 
   if (currencyPosition === 'left') {
-    return currency + numberFormatter.format(scaledValue) 
+    return currency + numberFormatter.format(scaledValue)
   }
 
   return numberFormatter.format(scaledValue) + currency

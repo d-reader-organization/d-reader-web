@@ -1,5 +1,4 @@
 import { RarityChip } from '@/components/shared/chips/Rarity'
-import { Asset } from '@/models/asset'
 import Image from 'next/image'
 import React from 'react'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/Dialog'
@@ -19,16 +18,17 @@ import { StateChip } from '../shared/chips/State'
 import { RoyaltyChip } from '../shared/chips/Royalty'
 import { CreatorInfoLink } from '../creator/InfoLink'
 import { ComicIssue } from '@/models/comicIssue'
+import { CollectibleComic } from '@/models/comic/collectibleComic'
 
 type Props = {
-  asset: Asset
+  collectibleComic: CollectibleComic
   comicIssue: ComicIssue
 }
 
-export const OwnedAssetPreview: React.FC<Props> = ({ asset, comicIssue }) => (
+export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssue }) => (
   <Dialog>
     <DialogTrigger>
-      <OwnedAssetCard asset={asset} />
+      <OwnedAssetCard asset={collectibleComic} />
     </DialogTrigger>
     <DialogContent
       className='bg-grey-500 rounded-3xl justify-start max-w-screen-md flex flex-col items-center gap-6 md:flex-row md:justify-center md:items-start md:gap-10 w-full p-4 md:p-10 max-h-full'
@@ -36,7 +36,12 @@ export const OwnedAssetPreview: React.FC<Props> = ({ asset, comicIssue }) => (
     >
       <DialogTitle className='sr-only'>Owned asset preview dialog</DialogTitle>
       <div className='flex flex-col gap-6 md:gap-8 items-center max-sm:mt-6 h-full'>
-        <Image alt={'asset ' + shortenAssetName(asset.name)} width={223} height={322} src={asset.image} />
+        <Image
+          alt={'asset ' + shortenAssetName(collectibleComic.name)}
+          width={223}
+          height={322}
+          src={collectibleComic.image}
+        />
         <div className='flex gap-4 max-h-12 sm:max-h-[52px] w-full'>
           {/* <Button className='w-full rounded-xl' size='normal' variant='outline'>
               <Text as='p' styleVariant='body-normal' fontWeight='medium'>
@@ -45,7 +50,7 @@ export const OwnedAssetPreview: React.FC<Props> = ({ asset, comicIssue }) => (
             </Button> */}
           <Link
             className='bg-yellow-500 w-full flex justify-center items-center h-10 sm:h-[52px] p-1 sm:p-4 rounded-xl'
-            href={RoutePath.ReadComicIssue(asset.comicIssueId)}
+            href={RoutePath.ReadComicIssue(collectibleComic.comicIssueId)}
             prefetch={false}
           >
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-600'>
@@ -57,23 +62,23 @@ export const OwnedAssetPreview: React.FC<Props> = ({ asset, comicIssue }) => (
       <div className='flex flex-col gap-2 w-full max-w-fit'>
         <div className='flex items-center gap-4 flex-wrap'>
           <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-            {asset.comicName}
+            {collectibleComic.comicName}
           </Text>
           <Circle className='size-2' fill='#D9D9D9' />
           <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-            {asset.comicIssueName}
+            {collectibleComic.comicIssueName}
           </Text>
           <Circle className='size-2' fill='#D9D9D9' />
           <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-            {shortenAssetName(asset.name)}
+            {shortenAssetName(collectibleComic.name)}
           </Text>
         </div>
         <div className='flex flex-col gap-3'>
           <Text as='h3' styleVariant='primary-heading' className='line-clamp-1 text-ellipsis'>
-            {asset.comicIssueName}
+            {collectibleComic.comicIssueName}
           </Text>
           <GenreTags className='bg-grey-400' genres={comicIssue?.genres ?? []} />
-          <ExpandableText className='max-w-[440px] lg:max-w-[486px]' text={asset.description} />
+          <ExpandableText className='max-w-[440px] lg:max-w-[486px]' text={collectibleComic.description} />
           <div className='flex justify-between'>
             <div className='flex gap-4 items-center'>
               <div className='text-base font-medium leading-[22.4px]'>
@@ -93,16 +98,16 @@ export const OwnedAssetPreview: React.FC<Props> = ({ asset, comicIssue }) => (
             ) : null}
           </div>
           <div className='flex items-center gap-2 flex-wrap'>
-            <RoyaltyChip royalty={asset.royalties} />
-            <RarityChip rarity={asset.rarity} />
-            {asset.isUsed ? <StateChip state='used' text='USED' /> : <StateChip state='mint' text='MINT' />}
-            {asset.isSigned ? <StateChip state='signed' text='SIGNED' /> : null}
+            <RoyaltyChip royalty={collectibleComic.royalties} />
+            <RarityChip rarity={collectibleComic.rarity} />
+            {collectibleComic.isUsed ? <StateChip state='used' text='USED' /> : <StateChip state='mint' text='MINT' />}
+            {collectibleComic.isSigned ? <StateChip state='signed' text='SIGNED' /> : null}
           </div>
           <Divider />
           <CreatorInfoLink creator={comicIssue?.creator} />
           <Divider />
-          <AddressContainer address={asset.ownerAddress} title='Owner' />
-          <AddressContainer address={asset.address} title='Asset Address' />
+          <AddressContainer address={collectibleComic.ownerAddress} title='Owner' />
+          <AddressContainer address={collectibleComic.address} title='Asset Address' />
         </div>
       </div>
     </DialogContent>

@@ -42,11 +42,13 @@ export default async function ReadComicIssuePage({ params }: ComicIssuePageParam
                   </p>
                 </>
               )}
-              {!!me && <UnwrapIssueDialog
-                accessToken={accessToken}
-                assets={assets}
-                showUnwrapButton={hasUnusedAssets && !comicIssue.myStats?.canRead}
-              />}
+              {!!me && (
+                <UnwrapIssueDialog
+                  accessToken={accessToken}
+                  assets={assets}
+                  showUnwrapButton={hasUnusedAssets && !comicIssue.myStats?.canRead}
+                />
+              )}
               {!comicIssue.isFullyUploaded && (
                 <p className='preview-message-text'>
                   This comic is not yet fully uploaded. New chapters/pages might be added weekly.

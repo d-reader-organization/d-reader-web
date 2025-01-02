@@ -12,4 +12,5 @@ export const TRANSACTION_QUERY_KEYS = Object.freeze({
   CANCEL_BID: 'cancel-bid',
   CANCEL_LISTING: 'cancel-listing',
   EXPRESS_INTEREST: 'express-interest',
+  DIRECT_BUY: 'direct-buy',
 })

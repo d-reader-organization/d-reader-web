@@ -19,6 +19,8 @@ import { FavouritiseButton } from '@/components/shared/buttons/FavouritiseButton
 import { ShareButton } from '@/components/shared/buttons/ShareButton'
 import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
+import { SecondaryMarketplaceSection } from '@/components/comicIssue/SecondaryMarketplaceSection'
+import { isEmpty } from 'lodash'
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const ogImagePath = `/api/og/${params.id}`
@@ -43,6 +45,7 @@ export default async function ComicIssuePage({ params: { id } }: ComicIssuePageP
     params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
   })
 
+  const isPrimarySaleActive = !isEmpty(comicIssue.collectibleInfo?.activeCandyMachineAddress)
   return (
     <BaseLayout>
       <ComicIssueBanner cover={comicIssue.cover} />
@@ -95,6 +98,12 @@ export default async function ComicIssuePage({ params: { id } }: ComicIssuePageP
               isAuthenticated={isAuthenticatedUser()}
             />
           </CandyMachineStoreProvider>
+          {!isPrimarySaleActive ? (
+            <SecondaryMarketplaceSection
+              collectionAddress={comicIssue.collectibleInfo?.collectionAddress}
+              accessToken={accessToken}
+            />
+          ) : null}
         </div>
       </div>
     </BaseLayout>
