@@ -1,14 +1,15 @@
 import { fetchComicIssue } from '@/app/lib/api/comicIssue/queries'
-import { generateFallbackMetadataImage, generateMetadataImage } from '@/utils/metadata'
+import { generateMetadataImage } from '@/utils/helpers'
 import { getStatelessCoverFromComicIssue } from '@/utils/covers'
-import { DefaultMetadataImage } from '@/components/shared/MetadataImage'
+import { DefaultMetadataImage } from '@/components/metadata/DefaultImage'
+import { FallbackMetadataImage } from '@/components/metadata/FallbackImage'
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const url = new URL(request.url)
   const rarity = url.searchParams.get('rarity')
   const comicIssue = await fetchComicIssue({ id: params.id })
 
-  if (!comicIssue) return generateFallbackMetadataImage()
+  if (!comicIssue) return generateMetadataImage(<FallbackMetadataImage />)
 
   const statelessCover = getStatelessCoverFromComicIssue(comicIssue, rarity)
   const cover = statelessCover || comicIssue.cover
@@ -21,6 +22,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       image={cover}
       backgroundImage={comicIssue.cover}
       isMinting={!!comicIssue.collectibleInfo?.activeCandyMachineAddress}
+      logo
     />
   )
 }

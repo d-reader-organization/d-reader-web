@@ -1,6 +1,5 @@
-import { HTMLAttributes } from 'react'
-import Logo from 'public/assets/vector-icons/logo.svg'
 import SunIcon from 'public/assets/vector-icons/sun.svg'
+import { MetadataImageBase } from './MetadataImageBase'
 
 const textStyles: React.CSSProperties = {
   position: 'absolute',
@@ -25,11 +24,20 @@ interface Props {
   caption?: string
   image: string
   backgroundImage: string
+  logo?: boolean
   isMinting?: boolean
 }
 
-export const DefaultMetadataImage: React.FC<Props> = ({ title, body, caption, image, backgroundImage, isMinting }) => (
-  <DefaultMetadataImageBackground image={backgroundImage}>
+export const DefaultMetadataImage: React.FC<Props> = ({
+  title,
+  body,
+  caption,
+  image,
+  backgroundImage,
+  logo,
+  isMinting,
+}) => (
+  <MetadataImageBase image={backgroundImage} logo={logo}>
     <img
       src={image}
       alt=''
@@ -70,39 +78,6 @@ export const DefaultMetadataImage: React.FC<Props> = ({ title, body, caption, im
         MINTING LIVE
       </p>
     )}
-    <Logo fill='white' color='white' width='41' height='40' style={{ position: 'absolute', bottom: 60, right: 60 }} />
-  </DefaultMetadataImageBackground>
+  </MetadataImageBase>
 )
-
-interface DefaultMetadataImageBackgroundProps extends HTMLAttributes<HTMLDivElement> {
-  image: string
-}
-
-export const DefaultMetadataImageBackground: React.FC<DefaultMetadataImageBackgroundProps> = ({
-  image,
-  children,
-  ...props
-}) => (
-  <div
-    {...props}
-    style={{
-      backgroundColor: 'rgb(21, 23, 28)',
-      width: '100%',
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      ...props.style,
-    }}
-  >
-    <img
-      src={image}
-      alt=''
-      width='100%'
-      height='100%'
-      style={{ position: 'absolute', opacity: 0.1, objectFit: 'cover' }}
-    />
-    {children}
-  </div>
-)
+export { MetadataImageBase }

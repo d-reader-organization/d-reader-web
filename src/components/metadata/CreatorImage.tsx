@@ -1,5 +1,4 @@
-import Logo from 'public/assets/vector-icons/logo.svg'
-import { DefaultMetadataImageBackground } from '../shared/MetadataImage'
+import { MetadataImageBase } from './MetadataImageBase'
 
 export const textStyles: React.CSSProperties = {
   position: 'absolute',
@@ -22,10 +21,11 @@ interface Props {
   name: string
   banner: string
   avatar: string
+  logo?: boolean
 }
 
-export const CreatorMetadataImage: React.FC<Props> = ({ name, banner, avatar }) => (
-  <DefaultMetadataImageBackground image={banner}>
+export const CreatorMetadataImage: React.FC<Props> = ({ name, banner, avatar, logo }) => (
+  <MetadataImageBase image={banner} logo={logo}>
     <img
       src={avatar}
       alt=''
@@ -37,6 +37,5 @@ export const CreatorMetadataImage: React.FC<Props> = ({ name, banner, avatar }) 
       }}
     />
     <p style={{ ...textStyles }}>{name}</p>
-    <Logo fill='white' color='white' width='41' height='40' style={{ position: 'absolute', bottom: 60, right: 60 }} />
-  </DefaultMetadataImageBackground>
+  </MetadataImageBase>
 )
