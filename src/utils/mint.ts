@@ -1,6 +1,7 @@
 import { CandyMachineCoupon, CouponCurrencySetting, CouponType } from '@/models/candyMachine/candyMachineCoupon'
 import { SplToken } from '@/models/settings/splToken'
 import { WRAPPED_SOL_MINT } from '@metaplex-foundation/js'
+import { getTokenPrice } from './helpers'
 
 export type TokenDetail = {
   label: string
@@ -73,19 +74,12 @@ export const getTokenMap = (currencySettings: CouponCurrencySetting[], splTokens
       label: setting.label,
       name: splToken.name,
       address: splToken.address,
-      price: getMintPrice(setting.mintPrice, splToken.decimals),
+      price: getTokenPrice(setting.mintPrice, splToken.decimals),
       icon: splToken.icon,
       symbol: splToken.symbol,
     })
   }
   return tokenMap
-}
-
-export const getMintPrice = (basePrice: number, decimals: number) => {
-  const denominator = Math.pow(10, decimals)
-  const price = parseFloat((basePrice / denominator).toFixed(3))
-
-  return price
 }
 
 export const getTotalItemsMintedByUser = (coupons: CandyMachineCoupon[]) => {

@@ -163,3 +163,10 @@ export const getTwitterIntentExpressedInterest = (project: Project) => {
   const tweetText = encodeURI(`${twitterIntentPrefix}${headline}\n\n${content}\n${shoutOutLine}\n\n${genesisLink}`)
   return tweetText
 }
+
+export const getTokenPrice = (basePrice: number, decimals: number) => {
+  const denominator = Math.pow(10, decimals)
+  const price = parseFloat((basePrice / denominator).toFixed(3))
+
+  return price
+}

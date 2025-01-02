@@ -1,13 +1,13 @@
 import { RarityChip } from '@/components/shared/chips/Rarity'
-import { Asset } from '@/models/asset'
 import Image from 'next/image'
 import React from 'react'
 import { StateChip } from '../shared/chips/State'
 import { CardBorderWrapper } from '../shared/CardBorderWrapper'
 import { shortenAssetName } from '@/utils/helpers'
+import { CollectibleComic } from '@/models/comic/collectibleComic'
 
 type Props = {
-  asset: Asset
+  asset: CollectibleComic
 }
 
 export const OwnedAssetCard: React.FC<Props> = ({ asset }) => (

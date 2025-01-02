@@ -4,7 +4,7 @@ import { Creator } from '@/models/creator'
 import { FollowCreatorButton } from '../shared/buttons/FollowCreatorButton'
 import { formatCurrency } from '@/utils/numbers'
 import { ShareButton } from '../shared/buttons/ShareButton'
-import { StatsContainer,StatsItem } from '../shared/Stats'
+import { StatsContainer, StatsItem } from '../shared/Stats'
 
 type Props = {
   creator: Creator
