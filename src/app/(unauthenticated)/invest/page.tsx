@@ -1,7 +1,7 @@
 import { fetchHighInterestProjects, fetchSuccessfulProjects } from '@/app/lib/api/invest/queries'
 // import { investSlides } from '@/app/lib/data/invest/carouselData'
 // import { InvestCarousel } from '@/components/invest/Carousel'
-import { FaqSection } from '@/components/invest/Faq'
+import FaqSection from '@/components/invest/FaqSection'
 import { ProjectsSection } from '@/components/invest/ProjectsSection'
 import { InvestSection } from '@/components/invest/Section'
 import { BaseLayout } from '@/components/layout/BaseLayout'
@@ -9,6 +9,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { InvestPageHero } from '@/components/invest/InvestPageHero'
 import { ceil } from 'lodash'
+import { GENESIS_FAQ_ITEMS } from '@/constants/faqs'
 
 export const metadata: Metadata = {
   title: 'Genesis',
@@ -64,7 +65,7 @@ export default async function InvestPage() {
           <ProjectsSection projects={successfulProjects} title='Recent Successful Projects' />
           {/* <InvestCarousel slides={investSlides} /> */}
           <InvestSection data={secondHalf} title='You Might Like' />
-          <FaqSection />
+          <FaqSection items={GENESIS_FAQ_ITEMS} />
         </div>
       </BaseLayout>
     </>

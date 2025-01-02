@@ -1,28 +1,26 @@
+import { BaseLayout } from '@/components/layout/BaseLayout'
+import { FAQItems } from '@/components/shared/FaqItem'
 import { Text } from '@/components/ui'
+import { STANDARD_FAQ_ITEMS } from '@/constants/faqs'
 import { SUPPORT_EMAIL } from '@/constants/general'
-import Link from 'next/link'
 import React from 'react'
 
 export default function FaqPage() {
   return (
-    <>
-      <main className='flex flex-col gap-1 justify-center items-center mt-20'>
-        <Text as='h1' styleVariant='primary-heading'>
-          FAQ
-        </Text>
-        <p className='text-center'>Find answers to your questions! For any details contact us at </p>
-        <Text as='p' styleVariant='body-xlarge' className='text-important-color'>
-          {SUPPORT_EMAIL}
-        </Text>
-        <br />
-        If you&apos;d like to report your bug use the&nbsp;
-        <div className='text-important-color'>
-          <Link href='https://forms.gle/pXH2DFaVPyquv1Yv9' target='_blank'>
-            bug report form
-          </Link>
+    <BaseLayout showFooter>
+      <div className='flex flex-col gap-8 mx-auto max-w-screen-md'>
+        <div className='flex flex-col gap-2'>
+          <Text as='h3' styleVariant='secondary-heading'>
+            Frequent Questions
+          </Text>
+          <Text as='p' styleVariant='body-normal' className='text-grey-200 font-medium'>
+            If you have any particular questions or concerns, contact us at&nbsp;
+            <span className='text-important-color'>{SUPPORT_EMAIL}</span>
+          </Text>
         </div>
-        <div>FAQ</div>
-      </main>
-    </>
+
+        <FAQItems items={STANDARD_FAQ_ITEMS} />
+      </div>
+    </BaseLayout>
   )
 }
