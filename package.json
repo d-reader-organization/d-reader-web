@@ -19,6 +19,7 @@
   "dependencies": {
     "@circle-fin/user-controlled-wallets": "^5.0.0",
     "@circle-fin/w3s-pw-web-sdk": "^1.1.6",
+    "@dialectlabs/blinks": "^0.18.3",
     "@hookform/resolvers": "^3.9.0",
     "@intercom/messenger-js-sdk": "^0.0.14",
     "@mdx-js/loader": "^3.0.1",

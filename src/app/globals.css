@@ -20,7 +20,7 @@
   }
 
   body *::selection {
-    background-color: #a89a23;
+    background-color: #fceb54;
   }
 
   img {
@@ -106,21 +106,17 @@
 }
 
 .comic-banner-standard {
-  background: linear-gradient(
-    rgba(21, 23, 28, 0.2) 0%,
-    rgba(21, 23, 28, 0.2) 16%,
-    rgba(21, 23, 28, 0.75) 72%,
-    rgb(21, 23, 28) 100%
-  );
+  background: linear-gradient(rgba(21, 23, 28, 0.2) 0%,
+      rgba(21, 23, 28, 0.2) 16%,
+      rgba(21, 23, 28, 0.75) 72%,
+      rgb(21, 23, 28) 100%);
 }
 
 .comic-banner-simpler {
-  background: linear-gradient(
-    rgba(21, 23, 28, 0) 0%,
-    rgba(21, 23, 28, 0.05) 85%,
-    rgba(21, 23, 28, 0.75) 92%,
-    rgb(21, 23, 28) 100%
-  );
+  background: linear-gradient(rgba(21, 23, 28, 0) 0%,
+      rgba(21, 23, 28, 0.05) 85%,
+      rgba(21, 23, 28, 0.75) 92%,
+      rgb(21, 23, 28) 100%);
 }
 
 .comic-issue-banner-standard {
@@ -128,10 +124,80 @@
 }
 
 .comic-issue-banner-simpler {
-  background: linear-gradient(
-    rgba(21, 23, 28, 0.2) 0%,
-    rgba(21, 23, 28, 0.2) 16%,
-    rgba(21, 23, 28, 0.75) 72%,
-    rgb(21, 23, 28) 100%
-  );
+  background: linear-gradient(rgba(21, 23, 28, 0.2) 0%,
+      rgba(21, 23, 28, 0.2) 16%,
+      rgba(21, 23, 28, 0.75) 72%,
+      rgb(21, 23, 28) 100%);
+}
+
+.blink {
+  width: 100%;
+}
+
+.blink>div {
+  border-radius: 0.5rem !important;
+}
+
+.blink img {
+  max-height: 240px;
+}
+
+.blink.custom {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  --blink-bg-primary: #202327;
+  --blink-button: #fceb54;
+  --blink-button-disabled: #2f3336;
+  --blink-button-hover: rgba(252, 235, 84, 0.9);
+  --blink-button-success: #00ae661a;
+  --blink-icon-error: #ff6565;
+  --blink-icon-error-hover: #ff7a7a;
+  --blink-icon-primary: #6e767d;
+  --blink-icon-primary-hover: #949ca4;
+  --blink-icon-warning: #ffb545;
+  --blink-icon-warning-hover: #ffc875;
+  --blink-input-bg: #202327;
+  --blink-input-stroke: #3d4144;
+  --blink-input-stroke-disabled: #2f3336;
+  --blink-input-stroke-error: #ff6565;
+  --blink-input-stroke-hover: #6e767d;
+  --blink-input-stroke-selected: #fceb54;
+  --blink-stroke-error: #ff6565;
+  --blink-stroke-primary: #fceb54;
+  --blink-stroke-secondary: #3d4144;
+  --blink-stroke-warning: #ffb545;
+  --blink-text-brand: #35aeff;
+  --blink-text-button: #17191d;
+  --blink-text-button-disabled: #768088;
+  --blink-text-button-success: #12dc88;
+  --blink-text-error: #ff6565;
+  --blink-text-error-hover: #ff7a7a;
+  --blink-text-input: #17191d;
+  --blink-text-input-disabled: #566470;
+  --blink-text-input-placeholder: #6e767d;
+  --blink-text-link: #6e767d;
+  --blink-text-link-hover: #949ca4;
+  --blink-text-primary: #fff;
+  --blink-text-secondary: #949ca4;
+  --blink-text-success: #12dc88;
+  --blink-text-warning: #ffb545;
+  --blink-text-warning-hover: #ffc875;
+  --blink-transparent-error: #aa00001a;
+  --blink-transparent-grey: #6e767d1a;
+  --blink-transparent-warning: #a966001a;
+
+  --blink-border-radius-rounded-lg: 0.5rem;
+  --blink-border-radius-rounded-xl: 0.75rem;
+  --blink-border-radius-rounded-2xl: 1rem;
+  --blink-border-radius-rounded-button: 9999px;
+  --blink-border-radius-rounded-input: 9999px;
+
+  --blink-shadow-container: 0px 2px 6px 0px #fceb5438, 0px 1px 24px 0px #fceb543d;
+}
+
+/* Hack to remove the 'powered by Dialect' text */
+.blink.custom div>div:last-of-type>div:last-of-type.mt-4 {
+  /* background-color: red; */
+  display: none;
 }

@@ -5,7 +5,7 @@ import LockIcon from 'public/assets/vector-icons/filled-lock-icon.svg'
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { ResetPasswordButton } from '../shared/buttons/ResetPasswordButton'
 
-// TODO: we need a couple of more Settings navi tems (like on the mobile app)
+// TODO: we need a couple of more Settings nav tems (like on the mobile app)
 // ie. Privacy (opt out of notifications etc.)
 export const SecuritySettings: React.FC = async () => {
   const me = await fetchMe()

@@ -28,7 +28,7 @@ export default async function ReadComicIssuePage({ params }: ComicIssuePageParam
     <>
       <EReaderNavigation comicIssue={comicIssue} />
       <main className='flex flex-col justify-center items-center max-w-screen-md mb-16 mx-auto'>
-        {<ComicIssuePages pages={pages} />}
+        <ComicIssuePages pages={pages} />
         {(!comicIssue.myStats?.canRead || !comicIssue.isFullyUploaded) && (
           <div className='rounded-2xl relative m-4 w-full border-2 border-grey-300 p-4 min-h-80'>
             <PreviewPagesIcon className='w-full h-auto brightness-50' />
@@ -42,11 +42,13 @@ export default async function ReadComicIssuePage({ params }: ComicIssuePageParam
                   </p>
                 </>
               )}
-              {!!me && <UnwrapIssueDialog
-                accessToken={accessToken}
-                assets={assets}
-                showUnwrapButton={hasUnusedAssets && !comicIssue.myStats?.canRead}
-              />}
+              {!!me && (
+                <UnwrapIssueDialog
+                  accessToken={accessToken}
+                  assets={assets}
+                  showUnwrapButton={hasUnusedAssets && !comicIssue.myStats?.canRead}
+                />
+              )}
               {!comicIssue.isFullyUploaded && (
                 <p className='preview-message-text'>
                   This comic is not yet fully uploaded. New chapters/pages might be added weekly.
