@@ -1,11 +1,11 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs'
 import { fetchMe, fetchUserWallets } from '@/app/lib/api/user/queries'
-import { UserWalletSection } from '@/components/profile/UserWalletSection'
 import { BaseLayout } from '@/components/layout/BaseLayout'
-import { AccountSettingSection } from '@/components/profile/AccountSettingSection'
-import FAQ from '@/components/profile/FAQ'
 import { Text } from '@/components/ui'
-import { SecuritySection } from '@/components/profile/Security'
+import WalletSettings from '@/components/profile/WalletSettings'
+import AccountSettings from '@/components/profile/AccountSettings'
+import SecuritySettings from '@/components/profile/SecuritySettings'
+import FaqSettings from '@/components/profile/FaqSettings'
 
 async function ProfilePage() {
   const me = await fetchMe()
@@ -48,16 +48,16 @@ async function ProfilePage() {
 
           <div className='w-full max-w-[750px]'>
             <TabsContent value='1' className='m-0'>
-              <AccountSettingSection user={me} />{' '}
+              <AccountSettings />
             </TabsContent>
             <TabsContent value='2' className='m-0'>
-              <UserWalletSection wallets={wallets} />
+              <WalletSettings wallets={wallets} />
             </TabsContent>
             <TabsContent value='3' className='m-0'>
-              <SecuritySection user={me} />
+              <SecuritySettings />
             </TabsContent>
             <TabsContent value='4' className='m-0'>
-              <FAQ />
+              <FaqSettings />
             </TabsContent>
           </div>
         </Tabs>

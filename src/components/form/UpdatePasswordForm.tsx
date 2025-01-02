@@ -37,7 +37,7 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
     if (errorMessage) {
       toast({ description: errorMessage, variant: 'error' })
     } else {
-      toast({ description: 'Password changed successfully!', variant: 'success' })
+      toast({ description: 'Password updated successfully!', variant: 'success' })
     }
     toggleLoader()
   }
@@ -49,8 +49,8 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
           <Text as='h4' styleVariant='secondary-heading'>
             Change Password
           </Text>
-          <Text as='p' styleVariant='body-normal' className='text-grey-200 max-w-[486px]'>
-            Your new password must be different from previously used passwords.
+          <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-200 max-w-[486px]'>
+            Your new password must be different your current password.
           </Text>
         </div>
 
@@ -78,6 +78,15 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
                   className='max-w-[486px]'
                 />
               </FormControl>
+              {/* TODO: standardize ALL forms */}
+              {/* {!state?.success && <FormErrorMessage message={state?.error} />} */}
+              {/* OTHER UNRELATED TODO COMMENTS:
+              - refactor form inputs (UpdateUserDetailsForm)
+              - cache SOL balance
+              - improve forgot password dialog
+              - improve RemovePhotoWarningDialog
+              - fallback to .username where .displayName is used
+              - auth/index.ts missing displayName? */}
               <Text as='p' styleVariant='body-small' className='text-grey-200'>
                 8 characters minimum. At least 1 lowercase, 1 uppercase and 1 number
               </Text>

@@ -1,16 +1,14 @@
 import React from 'react'
 import { UpdateUserAvatarForm } from '../form/UpdateUserAvatarForm'
 import { UpdateUserDetailsForm } from '../form/UpdateUserDetailsForm'
-import { User } from '@/models/user'
 import { Text } from '../ui'
 import { Divider } from '../shared/Divider'
+import { fetchMe } from '@/app/lib/api/user/queries'
 
-type Props = {
-  user: User
-}
-
-export const AccountSettingSection: React.FC<Props> = ({ user }) => {
-  const { id, displayName, username, email, avatar } = user
+export const AccountSettings: React.FC = async () => {
+  const me = await fetchMe()
+  if (!me) return null
+  const { id, displayName, username, email, avatar } = me
 
   return (
     <div className='flex flex-col gap-4'>
@@ -23,3 +21,5 @@ export const AccountSettingSection: React.FC<Props> = ({ user }) => {
     </div>
   )
 }
+
+export default AccountSettings

@@ -19,7 +19,7 @@ type Props = {
   wallets: Wallet[]
 }
 
-export const UserWalletSection: React.FC<Props> = ({ wallets }) => {
+export const WalletSettings: React.FC<Props> = ({ wallets }) => {
   const { isAuthorizing } = useAuthorizeWalletContext()
   const { publicKey, connecting } = useWallet()
   const isLoading = isAuthorizing || connecting
@@ -117,7 +117,7 @@ export const WalletItem: React.FC<{ index: number; wallet: Wallet; isActive: boo
             </Text>
           </div>
           <div className='flex gap-4'>
-            <Text as='p' styleVariant='body-normal' className='text-grey-100'>
+            <Text as='p' styleVariant='body-normal' className='text-grey-100 w-[100px]'>
               {shortenString(wallet.address)}
             </Text>
             <CopyIcon className='h-4 w-4 text-grey-100 self-center cursor-pointer' onClick={copyWalletAddress} />
@@ -158,3 +158,5 @@ const WalletItemOptions: React.FC<{ disconnect: VoidFunction; showLoader: boolea
     </DropdownMenu.Root>
   )
 }
+
+export default WalletSettings
