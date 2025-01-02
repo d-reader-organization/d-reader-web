@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Text, toast } from '../ui'
+import { Text, toast } from '../ui'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/Table'
 import { ComicRarity } from '@/enums/comicRarity'
 import { getRarityIcon } from '@/utils/rarity'
@@ -22,6 +22,10 @@ import { fetchDirectBuyTransaction } from '@/app/lib/api/transaction/queries'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { versionedTransactionFromBs64 } from '@/utils/transactions'
 import { Loader } from '../shared/Loader'
+import { ConnectButton } from '../shared/buttons/ConnectButton'
+import Link from 'next/link'
+import { ExternalLink } from 'lucide-react'
+import { InstantBuyParams } from '@/models/transaction/instantBuy'
 
 type Props = {
   accessToken: string
@@ -42,8 +46,6 @@ export const SecondaryMarketplaceSection: React.FC<Props> = ({ collectionAddress
   } = useFetchCollectibleComicListings({
     params: { skip: 0, take: 10, collectionAddress: collectionAddress || '', isSold: undefined },
   })
-
-  console.log(listings)
 
   if (isFetching && !isFetched) {
     return <Loader className='mx-auto pt-6 sm:pt-8' />
@@ -125,17 +127,29 @@ const ListedAssetRow: React.FC<{ listing: ListedItem; splTokens: SplToken[]; acc
       toggleLoader()
       return
     }
-    const { data: transactions } = await fetchDirectBuyTransaction({
+    const instantBuyParams: InstantBuyParams = {
+      assetAddress: collectibleComic.address,
+      buyerAddress: publicKey.toString(),
+    }
+    const { data: transactions, error } = await fetchDirectBuyTransaction({
       accessToken,
       params: {
-        instantBuyParamsArray: [{ assetAddress: collectibleComic.address, buyerAddress: publicKey.toString() }],
+        instantBuyParamsArray: [JSON.stringify(instantBuyParams)],
       },
     })
+
+    if (error) {
+      toast({ description: error, variant: 'error' })
+      toggleLoader()
+      return
+    }
+
     const buyTransactions = transactions.map(versionedTransactionFromBs64)
     if (!buyTransactions.length) return
 
     if (!signAllTransactions) {
-      return toast({ description: 'Wallet does not support signing multiple transactions', variant: 'error' })
+      toast({ description: 'Wallet does not support signing multiple transactions', variant: 'error' })
+      return
     }
 
     try {
@@ -179,9 +193,9 @@ const ListedAssetRow: React.FC<{ listing: ListedItem; splTokens: SplToken[]; acc
       <TableCell>
         <OwnerDetailsCell sellerAddress={listing.seller.address} />
       </TableCell>
-      <TableCell className='py-1 text-right'>
+      <TableCell className='py-1 text-right w-36'>
         {showBuyButton || showLoader ? (
-          <Button size='sm' variant='secondary' className='z-20' onClick={handleBuy}>
+          <ConnectButton size='sm' variant='secondary' onClick={handleBuy}>
             {showLoader ? (
               <Loader className='scale-75' />
             ) : (
@@ -189,9 +203,9 @@ const ListedAssetRow: React.FC<{ listing: ListedItem; splTokens: SplToken[]; acc
                 Buy
               </Text>
             )}
-          </Button>
+          </ConnectButton>
         ) : (
-          <Text as='p' styleVariant='body-normal' fontWeight='medium'>
+          <Text as='p' styleVariant='body-small' fontWeight='medium'>
             {format(listing.createdAt, 'dd MMM yyyy')}
           </Text>
         )}
@@ -210,9 +224,16 @@ const OwnerDetailsCell: React.FC<{ sellerAddress: string }> = ({ sellerAddress }
         height={32}
         className='size-7 object-cover rounded-full border border-black'
       />
-      <Text as='p' styleVariant='body-normal' fontWeight='bold'>
-        {shortenSolanaAddress({ address: sellerAddress })}
-      </Text>
+      <Link
+        className='flex gap-1 items-center'
+        href={`https://explorer.solana.com/address/${sellerAddress}`}
+        target='_blank'
+      >
+        <Text as='p' styleVariant='body-small' fontWeight='semibold'>
+          {shortenSolanaAddress({ address: sellerAddress })}
+        </Text>
+        <ExternalLink className='text-grey-100' size={15} />
+      </Link>
     </div>
   )
 }

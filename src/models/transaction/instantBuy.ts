@@ -4,5 +4,5 @@ export type InstantBuyParams = {
 }
 
 export type MultipleBuyParams = {
-  instantBuyParamsArray: InstantBuyParams[]
+  instantBuyParamsArray: string[]
 }
