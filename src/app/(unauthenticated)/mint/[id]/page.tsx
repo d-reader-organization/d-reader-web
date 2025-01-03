@@ -22,17 +22,17 @@ export async function generateMetadata({
   params: { id: string }
   searchParams: { rarity: ComicRarity }
 }): Promise<Metadata> {
-  const ogImagePath = searchParams.rarity
-    ? `/api/og/${params.id}?rarity=${searchParams.rarity}`
-    : `/api/og/${params.id}`
+  const metadataImagePath = searchParams.rarity
+    ? `/api/metadata/comic-issue/${params.id}?rarity=${searchParams.rarity}`
+    : `/api/metadata/comic-issue/${params.id}`
 
   return {
     openGraph: {
-      images: ogImagePath,
+      images: metadataImagePath,
     },
     twitter: {
       card: 'summary_large_image',
-      images: ogImagePath,
+      images: metadataImagePath,
     },
   }
 }
@@ -70,7 +70,7 @@ export default async function MintPage({ params }: ComicIssuePageParams) {
           </CandyMachineStoreProvider>
           <Divider className='max-md:hidden' />
           <div className='flex flex-col 1160:flex-row gap-10 justify-between'>
-            <AboutIssueSection comicIssue={comicIssue} />
+            <AboutIssueSection comicIssue={comicIssue} targetBlank />
             {pages.length ? <PagesPreview comicIssueId={comicIssue.id} pages={pages} /> : null}
           </div>
         </div>

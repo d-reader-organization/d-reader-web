@@ -25,7 +25,7 @@ export const DefaultComicCard: React.FC<Props> = ({ comic, className }) => {
     >
       <Image
         src={comic.cover}
-        alt=''
+        alt={`Comic cover ${comic.title}`}
         className='rounded-2xl h-auto aspect-comic-cover object-cover opacity-50'
         {...COMIC_COVER_SIZE}
       />

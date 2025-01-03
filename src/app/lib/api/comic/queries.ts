@@ -2,6 +2,7 @@ import { COMIC_QUERY_KEYS } from '@/api/comic/comicKeys'
 import { Comic, SearchResultComic } from '@/models/comic'
 import { ComicParams } from '@/models/comic/comicParams'
 import { fetchWrapper } from '../../fetchWrapper'
+import { Nullable } from '@/models/common'
 
 const { BY_OWNER, COMIC, FAVORITES, GET, SEARCH } = COMIC_QUERY_KEYS
 
@@ -18,9 +19,9 @@ export const fetchComic = async ({
   accessToken,
   slug,
 }: {
-  accessToken: string
+  accessToken?: string
   slug: string
-}): Promise<Comic | null> => {
+}): Promise<Nullable<Comic>> => {
   const { data } = await fetchWrapper<Comic>({
     accessToken,
     path: `${COMIC}/${GET}/${slug}`,

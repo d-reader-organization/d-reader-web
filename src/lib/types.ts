@@ -5,3 +5,7 @@ export type SlugParamsProps = {
     slug: string
   }
 }
+
+export type FileUploadRef = {
+  reset: () => void
+}

@@ -18,7 +18,7 @@ export const ComicGrid: React.FC = () => {
     <>
       <div className='grid grid-cols-2 md:grid-cols-3 1160:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 sm:gap-6 pt-1 sm:pt-2'>
         {comics.map((comic) => (
-          <DefaultComicCard key={comic.slug} comic={comic} />
+          <DefaultComicCard key={comic.slug} comic={comic} className='max-md:max-h-fit' />
         ))}
       </div>
       <div className='flex flex-col items-center pt-2 sm:pt-3'>

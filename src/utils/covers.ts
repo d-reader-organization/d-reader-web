@@ -1,5 +1,13 @@
+import { ComicIssue } from '@/models/comicIssue'
 import { StatefulCover } from '@/models/comicIssue/statefulCover'
 import { StatelessCover } from '@/models/comicIssue/statelessCover'
+
+export const getStatelessCoverFromComicIssue = (comicIssue: ComicIssue, rarity?: string | null): string | undefined => {
+  const statelessCover = comicIssue.statelessCovers?.find(
+    (cover) => cover.rarity.toLowerCase() === rarity?.toLowerCase()
+  )
+  return statelessCover?.image
+}
 
 export const statelessCoverToStatefulCovers = (cover: StatelessCover): StatefulCover[] => {
   return [

@@ -5,7 +5,7 @@ import { type VariantProps } from 'class-variance-authority'
 import { type LucideIcon } from 'lucide-react'
 import { forwardRef } from 'react'
 
-interface Props
+export interface ButtonLinkProps
   extends LinkProps,
     VariantProps<typeof buttonVariants>,
     Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> {
@@ -41,7 +41,7 @@ interface Props
  * import { Mail } from 'lucide-react';
  * <Link href="/contact" icon={Mail}>Contact Us</Link>
  */
-const ButtonLink = forwardRef<HTMLAnchorElement, Props>(
+const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   (
     { className, variant, subVariant, size = 'md', iconPosition, icon: Icon, iconOnly, iconClassName, href, children, ...props },
     ref

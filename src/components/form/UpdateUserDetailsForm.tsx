@@ -1,80 +1,120 @@
 'use client'
 
-import React from 'react'
-import { Input } from '../ui/Input'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/Button'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormItem, FormLabel } from '../ui/Form'
 import { updateUserValidationSchema } from '@/constants/schemas'
 import { updateUser } from '@/app/lib/api/user/mutations'
-import { UpdateUserData } from '@/models/user'
-import { Text, toast } from '../ui'
-import { Loader } from '../shared/Loader'
+import { Input, Text, toast } from '../ui'
 import { useToggle } from '@/hooks'
 import { useRouter } from 'next/navigation'
+import { Divider } from '../shared/Divider'
+import { Loader } from '../shared/Loader'
 
 type Props = {
   id: number | string
-  name: string
+  displayName: string
+  username: string
   email: string
 }
 
-export const UpdateUserDetailsForm: React.FC<Props> = ({ id, name, email }) => {
-  const [showLoader, toggleLoader] = useToggle()
-  const { refresh } = useRouter()
-
-  const form = useForm<z.infer<typeof updateUserValidationSchema>>({
-    resolver: zodResolver(updateUserValidationSchema),
-    defaultValues: { email, name },
-  })
-
-  const handleProfileUpdate = async (data: UpdateUserData) => {
-    toggleLoader()
-    const { errorMessage } = await updateUser(id, data)
-
-    if (errorMessage) {
-      toast({ description: errorMessage, variant: 'error' })
-    } else {
-      toast({ description: 'Profile details updated !', variant: 'success' })
-      refresh()
-    }
-    toggleLoader()
+export const UpdateUserDetailsForm: React.FC<Props> = ({ id, displayName, email, username }) => {
+  const [editingIndex, setEditingIndex] = useState<number | null>(null)
+  const handleEditToggle = (index: number) => {
+    setEditingIndex(editingIndex === index ? null : index)
   }
 
   return (
-    <Form {...form}>
-      <div className='text-gray-400 border-b border-gray-400 text-sm font-bold uppercase pb-1'>Basic details</div>
-      <form onSubmit={form.handleSubmit(handleProfileUpdate)} className='flex flex-col gap-4'>
-        <FormItem>
-          <FormLabel className='font-bold'>Email</FormLabel>
-          <Text as='p' styleVariant='body-small'>
-            If changed, verification email will be sent to the new address
-          </Text>
-          <Input
-            {...form.register('email')}
-            placeholder={email}
-            className='bg-grey-300 border-grey-200 border rounded-md p-2 w-full'
-          />
-        </FormItem>
+    <div className='flex flex-col gap-4'>
+      {['Display Name', 'Username', 'Email'].map((title, index) => {
+        const value = title === 'Email' ? email : title === 'Username' ? username : displayName
 
-        <FormItem>
-          <FormLabel className='font-bold'>Username</FormLabel>
-          <Text as='p' styleVariant='body-small'>
-            Must be 3 to 20 characters long. Leters, numbers, underscores, and dashes are allowed
-          </Text>
-          <Input
-            {...form.register('name')}
-            placeholder={name}
-            className='bg-grey-300 border-grey-200 border rounded-md p-2 w-full'
-          />
-        </FormItem>
+        return (
+          <React.Fragment key={title}>
+            <UserDetailsFormItem
+              title={title}
+              value={value}
+              id={id}
+              showEdit={editingIndex === index}
+              onEditToggle={() => handleEditToggle(index)}
+            />
+            {index < 2 && <Divider />}
+          </React.Fragment>
+        )
+      })}
+    </div>
+  )
+}
 
-        <Button type='submit' variant='secondary' subVariant={2} className='w-fit '>
-          {showLoader ? <Loader /> : 'Save'}
-        </Button>
-      </form>
-    </Form>
+type FormItemProps = {
+  showEdit: boolean
+  onEditToggle: VoidFunction
+  title: string
+  value: string
+  id: string | number
+}
+
+const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id, showEdit, onEditToggle }) => {
+  const [showLoader, toggleLoader] = useToggle()
+  const [item, setItem] = useState<string>()
+  const { refresh } = useRouter()
+
+  useEffect(() => {
+    setItem(value)
+  }, [value])
+
+  const field = title === 'Email' ? 'email' : title === 'Username' ? 'username' : 'displayName'
+  const handleItemUpdate = async () => {
+    toggleLoader()
+
+    const data = { [field]: item }
+    updateUserValidationSchema.parse(data)
+    const { errorMessage } = await updateUser(id, data)
+    if (errorMessage) {
+      toast({ description: errorMessage, variant: 'error' })
+    } else {
+      toast({ description: `${title} has been updated successfully!`, variant: 'success' })
+      refresh()
+    }
+    toggleLoader()
+    onEditToggle()
+  }
+
+  const isUsername = title === 'Username'
+  return (
+    <div className='flex flex-col gap-[10px]'>
+      <Text as='p' styleVariant='body-normal' className='font-bold'>
+        {title}
+      </Text>
+
+      {showEdit ? (
+        <div className='flex gap-2 w-full'>
+          <Input
+            onChange={(e) => setItem(e.target.value)}
+            value={item}
+            type='default'
+            prefix={isUsername ? '@' : undefined}
+            placeholder={value}
+            className='w-full max-w-full'
+          />
+
+          <Button variant='secondary' size='md' onClick={onEditToggle}>
+            Cancel
+          </Button>
+          <Button variant='white' size='md' onClick={handleItemUpdate}>
+            {showLoader ? <Loader /> : 'Save'}
+          </Button>
+        </div>
+      ) : (
+        <div className='flex justify-between items-center'>
+          <Text as='p' styleVariant='body-normal' className='break-all'>
+            {isUsername ? `@${value}` : value}
+          </Text>
+
+          <Button variant='secondary' size='md' onClick={onEditToggle}>
+            Edit
+          </Button>
+        </div>
+      )}
+    </div>
   )
 }

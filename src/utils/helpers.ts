@@ -4,6 +4,8 @@ import { CarouselSlide } from '@/models/carousel/carouselSlide'
 import { PartialGenre } from '@/models/genre'
 import { Project } from '@/models/project'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
+import { ImageResponse } from 'next/og'
+import { METADATA_IMAGE_SIZE } from '../constants/general'
 
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -16,7 +18,7 @@ export function sleep(ms: number): Promise<void> {
  */
 export const shortenString = (string: string, slice = 4): string => {
   if (string.length < slice * 2 + 3) return string
-  return `${string.slice(0, slice)}..${string.slice(-slice)}`
+  return `${string.slice(0, slice)}...${string.slice(-slice)}`
 }
 
 export const getUnixTimeInSeconds = () => {
@@ -162,4 +164,15 @@ export const getTwitterIntentExpressedInterest = (project: Project) => {
 
   const tweetText = encodeURI(`${twitterIntentPrefix}${headline}\n\n${content}\n${shoutOutLine}\n\n${genesisLink}`)
   return tweetText
+}
+
+export const getTokenPrice = (basePrice: number, decimals: number) => {
+  const denominator = Math.pow(10, decimals)
+  const price = parseFloat((basePrice / denominator).toFixed(3))
+
+  return price
+}
+
+export const generateMetadataImage = (Component: React.ReactElement) => {
+  return new ImageResponse(Component, METADATA_IMAGE_SIZE)
 }

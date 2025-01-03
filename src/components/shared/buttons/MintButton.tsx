@@ -1,6 +1,6 @@
 'use client'
 
-import { checkIfCouponIsActive, getMintPrice, validateMintEligibilty } from '@/utils/mint'
+import { checkIfCouponIsActive, validateMintEligibilty } from '@/utils/mint'
 import { useWallet } from '@solana/wallet-adapter-react'
 import React, { useEffect, useState } from 'react'
 import { Button } from '../../ui/Button'
@@ -20,6 +20,7 @@ import Image from 'next/image'
 import { AssetMintEvent } from '@/models/asset/assetMintEvent'
 import { ConnectButton } from './ConnectButton'
 import { cn } from '@/lib/utils'
+import { getTokenPrice } from '@/utils/helpers'
 
 type Props = {
   accessToken: string
@@ -190,7 +191,7 @@ export const MintButton: React.FC<Props> = ({ accessToken, comicIssue, isAuthent
     })?.mintPrice ?? 0
   const splToken = supportedTokens?.find((token) => token.address === selectedCurrency?.splTokenAddress)
 
-  const price = getMintPrice(mintPrice * numberOfItems, splToken?.decimals ?? 1)
+  const price = getTokenPrice(mintPrice * numberOfItems, splToken?.decimals ?? 1)
   const isFree = price == 0
 
   return (

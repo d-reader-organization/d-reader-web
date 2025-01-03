@@ -51,7 +51,7 @@ export const DiscoverSearchBar: React.FC<Props> = ({ className }) => {
       <Input
         placeholder={getPlaceholder()}
         value={localSearchTerm}
-        className='pl-10 pr-10 w-full max-w-[100%] max-h-[42px]'
+        className='pl-10 pr-10 w-full max-h-[42px]'
         onChange={handleInputChange}
       />
     </div>
