@@ -6,7 +6,7 @@ import { CollectibleComicRarityStats } from '@/models/asset/collectibleComicRari
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-export const TraitsSection: React.FC<{ collectionAddress: string | undefined }> = ({ collectionAddress }) => {
+export const StatsSection: React.FC<{ collectionAddress: string | undefined }> = ({ collectionAddress }) => {
   const [statsList, setStatsList] = useState<CollectibleComicRarityStats[]>()
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const TraitsSection: React.FC<{ collectionAddress: string | undefined }> 
   return (
     <div className='flex flex-col gap-4'>
       {collectionAddress ? (
-        statsList?.map((stats, index) => <TraitItem key={index} stats={stats} />)
+        statsList?.map((stats, index) => <CollectibleComicStats key={index} stats={stats} />)
       ) : (
         <Loader className='self-center' />
       )}
@@ -31,7 +31,7 @@ export const TraitsSection: React.FC<{ collectionAddress: string | undefined }> 
   )
 }
 
-export const TraitItem: React.FC<{ stats: CollectibleComicRarityStats }> = ({ stats }) => {
+export const CollectibleComicStats: React.FC<{ stats: CollectibleComicRarityStats }> = ({ stats }) => {
   return (
     <div className='flex flex-col'>
       <Image

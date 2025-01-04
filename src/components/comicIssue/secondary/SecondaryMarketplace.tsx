@@ -3,7 +3,8 @@
 import { Text } from '../../ui'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs'
 import { ListingSection } from './ListingSection'
-import { TraitsSection } from './TraitsSection'
+import { StatsSection } from './StatsSection'
+import { WalletAssetSection } from './UserAssetSection'
 
 type Props = {
   accessToken: string
@@ -29,11 +30,13 @@ export const SecondaryMarketplace: React.FC<Props> = ({ collectionAddress, acces
           </TabsTrigger>
         </TabsList>
         <TabsContent value='1'>
-          {<ListingSection collectionAddress={collectionAddress} accessToken={accessToken} />}
+          <ListingSection collectionAddress={collectionAddress} accessToken={accessToken} />
         </TabsContent>
-        <TabsContent value='2'>{<TraitsSection collectionAddress={collectionAddress} />}</TabsContent>
+        <TabsContent value='2'>
+          <StatsSection collectionAddress={collectionAddress} />
+        </TabsContent>
         <TabsContent value='3'>
-          <div>Items</div>
+          <WalletAssetSection collectionAddress={collectionAddress} />
         </TabsContent>
       </Tabs>
     </div>

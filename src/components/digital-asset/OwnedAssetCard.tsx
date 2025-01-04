@@ -11,7 +11,7 @@ type Props = {
 }
 
 export const OwnedAssetCard: React.FC<Props> = ({ asset }) => (
-  <CardBorderWrapper className='rounded-xl'>
+  <CardBorderWrapper className='rounded-xl w-fit'>
     <div className='flex flex-col items-center hover:brightness-105'>
       <Image
         alt={'asset ' + shortenAssetName(asset.name)}
