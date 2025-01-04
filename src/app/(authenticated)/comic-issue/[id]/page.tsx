@@ -19,7 +19,7 @@ import { FavouritiseButton } from '@/components/shared/buttons/FavouritiseButton
 import { ShareButton } from '@/components/shared/buttons/ShareButton'
 import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
-import { SecondaryMarketplaceSection } from '@/components/comicIssue/SecondaryMarketplaceSection'
+import { SecondaryMarketplace } from '@/components/comicIssue/secondary/SecondaryMarketplace'
 import { isEmpty } from 'lodash'
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
@@ -99,7 +99,7 @@ export default async function ComicIssuePage({ params: { id } }: ComicIssuePageP
             />
           </CandyMachineStoreProvider>
           {!isPrimarySaleActive ? (
-            <SecondaryMarketplaceSection
+            <SecondaryMarketplace
               collectionAddress={comicIssue.collectibleInfo?.collectionAddress}
               accessToken={accessToken}
             />

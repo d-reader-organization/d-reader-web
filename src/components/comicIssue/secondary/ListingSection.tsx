@@ -1,7 +1,4 @@
-'use client'
-
-import { Text, toast } from '../ui'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/Table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/Table'
 import { ComicRarity } from '@/enums/comicRarity'
 import { getRarityIcon } from '@/utils/rarity'
 import MintIcon from 'public/assets/vector-icons/mint-icon.svg'
@@ -11,7 +8,7 @@ import Image from 'next/image'
 import ANON_BUNNY from 'public/assets/images/anon-bunny.png'
 import { useToggle } from '@/hooks'
 import { useFetchCollectibleComicListings } from '@/api/auctionHouse/queries'
-import { ShowMoreButton } from '../discover/ShowMoreButton'
+import { ShowMoreButton } from '../../discover/ShowMoreButton'
 import { ListedItem } from '@/models/auctionHouse/listedItem'
 import { CollectibleComic } from '@/models/comic/collectibleComic'
 import { useFetchSupportedTokens } from '@/api/settings/queries/useFetchSupportedTokens'
@@ -21,20 +18,17 @@ import { format } from 'date-fns'
 import { fetchDirectBuyTransaction } from '@/app/lib/api/transaction/queries'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { versionedTransactionFromBs64 } from '@/utils/transactions'
-import { Loader } from '../shared/Loader'
-import { ConnectButton } from '../shared/buttons/ConnectButton'
+import { Loader } from '../../shared/Loader'
+import { ConnectButton } from '../../shared/buttons/ConnectButton'
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 import { InstantBuyParams } from '@/models/transaction/instantBuy'
+import { Text, toast } from '../../ui'
 
-type Props = {
-  accessToken: string
-  collectionAddress: string | undefined
-}
-
-const traitLabelStyle = `bg-transparent rounded-lg border border-solid text-xs flex items-center gap-0.5 [&>svg]:size-3 p-1`
-
-export const SecondaryMarketplaceSection: React.FC<Props> = ({ collectionAddress, accessToken }) => {
+export const ListingSection: React.FC<{ collectionAddress: string | undefined; accessToken: string }> = ({
+  collectionAddress,
+  accessToken,
+}) => {
   const { data: splTokens } = useFetchSupportedTokens()
 
   const {
@@ -52,10 +46,7 @@ export const SecondaryMarketplaceSection: React.FC<Props> = ({ collectionAddress
   }
 
   return (
-    <div className='flex flex-col gap-4'>
-      <Text as='h4' styleVariant='primary-heading'>
-        Secondary Market
-      </Text>
+    <div>
       <Table>
         <TableHeader>
           <TableRow className='border-grey-300'>
@@ -242,11 +233,12 @@ const CollectibleComicImageCell: React.FC<{ collectibleComic: CollectibleComic }
   return (
     <div className='flex gap-1 items-center'>
       <Image
-        alt='comic'
         src={collectibleComic.image}
-        width={32}
-        height={32}
-        className='size-7 object-cover rounded-full border border-black'
+        width='0'
+        height='0'
+        alt={collectibleComic.rarity + ' cover'}
+        sizes='(max-width: 30px) 100vw'
+        className='rounded-sm max-w-7 object-cover'
       />
       <Text as='p' styleVariant='body-normal' fontWeight='bold'>
         #{collectibleComic.name.split('#')[1]}
@@ -260,6 +252,8 @@ type CollectibleComicMetadataProps = {
   isSigned: boolean
   rarity: ComicRarity
 }
+
+const traitLabelStyle = `bg-transparent rounded-lg border border-solid text-xs flex items-center gap-0.5 [&>svg]:size-3 p-1`
 
 const CollectibleComicMetadataCell: React.FC<CollectibleComicMetadataProps> = ({ isUsed, isSigned, rarity }) => {
   return (
