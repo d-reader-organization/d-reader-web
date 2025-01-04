@@ -1,9 +1,5 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/Table'
 import { ComicRarity } from '@/enums/comicRarity'
-import { getRarityIcon } from '@/utils/rarity'
-import MintIcon from 'public/assets/vector-icons/mint-icon.svg'
-import SignedIcon from 'public/assets/vector-icons/signed-icon.svg'
-import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import ANON_BUNNY from 'public/assets/images/anon-bunny.png'
 import { useToggle } from '@/hooks'
@@ -23,14 +19,32 @@ import { ConnectButton } from '../../shared/buttons/ConnectButton'
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 import { InstantBuyParams } from '@/models/transaction/instantBuy'
-import { Text, toast } from '../../ui'
+import { Button, Text, toast } from '../../ui'
+import { SOLANA_EXPLORER_BASE_LINK } from '@/constants/general'
+import { useState } from 'react'
+import CHECK_CIRCLE from 'public/assets/vector-icons/check-circle.svg'
+import { RarityChip } from '@/components/shared/chips/Rarity'
+import { StateChip } from '@/components/shared/chips/State'
 
 export const ListingSection: React.FC<{ collectionAddress: string | undefined; accessToken: string }> = ({
   collectionAddress,
   accessToken,
 }) => {
   const { data: splTokens } = useFetchSupportedTokens()
+  const [showLoader, toggleLoader] = useToggle()
+  const { publicKey, signAllTransactions } = useWallet()
+  const { connection } = useConnection()
+  const [selectedListings, onSelectListing] = useState<ListedItem[]>([])
 
+  const handleSelectListing = (listing: ListedItem) => {
+    onSelectListing((prev) => {
+      if (prev.includes(listing)) {
+        return prev.filter((item) => item !== listing)
+      } else {
+        return [...prev, listing]
+      }
+    })
+  }
   const {
     flatData: listings,
     fetchNextPage,
@@ -41,8 +55,59 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined; a
     params: { skip: 0, take: 10, collectionAddress: collectionAddress || '', isSold: undefined },
   })
 
+  const handleBuy = async () => {
+    toggleLoader()
+    if (!publicKey) {
+      toast({ description: 'Connect you wallet to purchase', variant: 'error' })
+      toggleLoader()
+      return
+    }
+    const instantBuyParamsArray: InstantBuyParams[] = selectedListings.map((listing) => ({
+      assetAddress: listing.collectibleComic.address,
+      buyerAddress: publicKey.toString(),
+    }))
+
+    const { data: transactions, error } = await fetchDirectBuyTransaction({
+      accessToken,
+      params: {
+        instantBuyParamsArray: instantBuyParamsArray.map((item) => JSON.stringify(item)), /// JSON stringify to pass array as params in get request
+      },
+    })
+
+    if (error) {
+      toast({ description: error, variant: 'error' })
+      toggleLoader()
+      return
+    }
+
+    const buyTransactions = transactions.map(versionedTransactionFromBs64)
+    if (!buyTransactions.length) return
+
+    if (!signAllTransactions) {
+      toast({ description: 'Wallet does not support signing multiple transactions', variant: 'error' })
+      return
+    }
+
+    try {
+      const signedTransactions = await signAllTransactions(buyTransactions)
+      for await (const signedTransaction of signedTransactions) {
+        await connection.sendTransaction(signedTransaction, { skipPreflight: true })
+      }
+
+      toast({ description: 'Purchase compelete', variant: 'success' })
+    } catch (e) {
+      toast({ description: 'Error while sending buy transaction, try again!', variant: 'error' })
+    } finally {
+      toggleLoader()
+    }
+  }
+
   if (isFetching && !isFetched) {
-    return <Loader className='mx-auto pt-6 sm:pt-8' />
+    return (
+      <div className='flex w-full'>
+        <Loader className='m-auto' />
+      </div>
+    )
   }
 
   return (
@@ -80,7 +145,13 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined; a
         <TableBody>
           {splTokens
             ? listings.map((listing) => (
-                <ListedAssetRow key={listing.id} listing={listing} splTokens={splTokens} accessToken={accessToken} />
+                <ListedAssetRow
+                  key={listing.id}
+                  listing={listing}
+                  splTokens={splTokens}
+                  onSelectListing={handleSelectListing}
+                  isSelected={selectedListings.includes(listing)}
+                />
               ))
             : null}
         </TableBody>
@@ -93,75 +164,40 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined; a
           hasNextPage={hasNextPage}
         />
       </div>
+      {!publicKey ? (
+        <ConnectButton size='lg' variant='primary' className='fixed bottom-1 w-[810px]'>
+          <Text as='p' styleVariant='body-normal' fontWeight='bold'>
+            Purchase
+          </Text>
+        </ConnectButton>
+      ) : (
+        <Button onClick={handleBuy} size='lg' variant='primary' className='fixed bottom-1 w-[810px]'>
+          {showLoader ? (
+            <Loader />
+          ) : (
+            <Text as='p' styleVariant='body-normal' fontWeight='bold'>
+              Purchase
+            </Text>
+          )}
+        </Button>
+      )}
     </div>
   )
 }
 
-const ListedAssetRow: React.FC<{ listing: ListedItem; splTokens: SplToken[]; accessToken: string }> = ({
-  listing,
-  splTokens,
-  accessToken,
-}) => {
-  const [showBuyButton, toggleShowBuyButton] = useToggle()
-  const [showLoader, toggleLoader] = useToggle()
-
-  const { publicKey, signAllTransactions } = useWallet()
-  const { connection } = useConnection()
-
+const ListedAssetRow: React.FC<{
+  listing: ListedItem
+  splTokens: SplToken[]
+  onSelectListing: (listedItem: ListedItem) => void
+  isSelected: boolean
+}> = ({ listing, splTokens, onSelectListing, isSelected }) => {
   const collectibleComic = listing.collectibleComic
   const splToken = splTokens.find((token) => token.address == listing.splTokenAddress)
 
-  const handleBuy = async () => {
-    toggleLoader()
-    if (!publicKey) {
-      toast({ description: 'Connect you wallet to purchase', variant: 'error' })
-      toggleLoader()
-      return
-    }
-    const instantBuyParams: InstantBuyParams = {
-      assetAddress: collectibleComic.address,
-      buyerAddress: publicKey.toString(),
-    }
-    const { data: transactions, error } = await fetchDirectBuyTransaction({
-      accessToken,
-      params: {
-        instantBuyParamsArray: [JSON.stringify(instantBuyParams)],
-      },
-    })
-
-    if (error) {
-      toast({ description: error, variant: 'error' })
-      toggleLoader()
-      return
-    }
-
-    const buyTransactions = transactions.map(versionedTransactionFromBs64)
-    if (!buyTransactions.length) return
-
-    if (!signAllTransactions) {
-      toast({ description: 'Wallet does not support signing multiple transactions', variant: 'error' })
-      return
-    }
-
-    try {
-      const signedTransactions = await signAllTransactions(buyTransactions)
-      for await (const signedTransaction of signedTransactions) {
-        await connection.sendTransaction(signedTransaction, { skipPreflight: true })
-      }
-
-      toast({ description: 'Purchase compelete', variant: 'success' })
-    } catch (e) {
-      toast({ description: 'Error while sending buy transaction, try again!', variant: 'error' })
-    } finally {
-      toggleLoader()
-    }
-  }
-
   return (
     <TableRow
-      onMouseEnter={toggleShowBuyButton}
-      onMouseLeave={toggleShowBuyButton}
-      className={` border-grey-300 ${showBuyButton || showLoader ? 'brightness-125 bg-grey-700' : ''}`}
+      onClick={() => onSelectListing(listing)}
+      className={` border-grey-300 hover:brightness-125 hover:bg-grey-700 ${isSelected ? 'brightness-125 bg-grey-700' : ''}`}
     >
       <TableCell>
         <CollectibleComicImageCell collectibleComic={collectibleComic} />
@@ -184,17 +220,9 @@ const ListedAssetRow: React.FC<{ listing: ListedItem; splTokens: SplToken[]; acc
       <TableCell>
         <OwnerDetailsCell sellerAddress={listing.seller.address} />
       </TableCell>
-      <TableCell className='py-1 text-right w-36'>
-        {showBuyButton || showLoader ? (
-          <ConnectButton size='sm' variant='secondary' onClick={handleBuy}>
-            {showLoader ? (
-              <Loader className='scale-75' />
-            ) : (
-              <Text as='p' styleVariant='body-small' fontWeight='medium'>
-                Buy
-              </Text>
-            )}
-          </ConnectButton>
+      <TableCell className='flex py-1 justify-end'>
+        {isSelected ? (
+          <CHECK_CIRCLE />
         ) : (
           <Text as='p' styleVariant='body-small' fontWeight='medium'>
             {format(listing.createdAt, 'dd MMM yyyy')}
@@ -217,7 +245,7 @@ const OwnerDetailsCell: React.FC<{ sellerAddress: string }> = ({ sellerAddress }
       />
       <Link
         className='flex gap-1 items-center'
-        href={`https://explorer.solana.com/address/${sellerAddress}`}
+        href={`${SOLANA_EXPLORER_BASE_LINK}/address/${sellerAddress}`}
         target='_blank'
       >
         <Text as='p' styleVariant='body-small' fontWeight='semibold'>
@@ -253,35 +281,12 @@ type CollectibleComicMetadataProps = {
   rarity: ComicRarity
 }
 
-const traitLabelStyle = `bg-transparent rounded-lg border border-solid text-xs flex items-center gap-0.5 [&>svg]:size-3 p-1`
-
 const CollectibleComicMetadataCell: React.FC<CollectibleComicMetadataProps> = ({ isUsed, isSigned, rarity }) => {
   return (
-    <div className='flex flex-wrap gap-2 '>
-      {!isUsed && (
-        <div className={cn(traitLabelStyle, 'border-green-500')}>
-          <MintIcon className='text-green-500' />
-        </div>
-      )}
-      {isSigned && (
-        <div className={cn(traitLabelStyle, 'border-orange-500')}>
-          <SignedIcon className='text-orange-500' />
-        </div>
-      )}
-      {rarity && (
-        <div
-          className={cn(
-            traitLabelStyle,
-            rarity === ComicRarity.Common && 'border-white',
-            rarity === ComicRarity.Uncommon && 'border-yellow-50',
-            rarity === ComicRarity.Rare && 'border-blue-500',
-            rarity === ComicRarity.Epic && 'border-pink-500',
-            rarity === ComicRarity.Legendary && 'border-purple-500'
-          )}
-        >
-          {getRarityIcon(rarity)} {rarity}
-        </div>
-      )}
+    <div className='flex flex-wrap gap-1 '>
+      {isUsed ? <StateChip state='used' /> : <StateChip state='mint' />}
+      {isSigned ? <StateChip state='signed' /> : null}
+      {rarity && <RarityChip rarity={rarity} />}
     </div>
   )
 }

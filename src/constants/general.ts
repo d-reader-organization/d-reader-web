@@ -70,3 +70,4 @@ export const LEDGER_ADAPTERS = {
 export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr')
 
 export const MONSTER_CLAIM_QR_SLUG = 'mark-spears-monsters'
+export const SOLANA_EXPLORER_BASE_LINK = 'https://explorer.solana.com'
