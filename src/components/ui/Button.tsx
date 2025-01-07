@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import { type LucideIcon } from 'lucide-react'
 
 // TODO: we're missing the "inline-text" variant which makes the button appear and behave as inline text
+// CHECK ResetPasswordButton
 const buttonVariants = cva(
   'inline-flex items-center justify-center font-bold rounded-md shadow-[0px_16px_32px_-4px_rgba(0,0,0,0.10),0px_2px_4px_0px_rgba(0,0,0,0.04)] transition-colors hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
   {
@@ -67,7 +68,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   iconOnly?: boolean
   icon?: LucideIcon
   iconClassname?: string
