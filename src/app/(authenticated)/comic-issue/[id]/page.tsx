@@ -13,15 +13,15 @@ import { IssueStatsSection } from '@/components/comicIssue/StatsSection'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const ogImagePath = `/api/og/${params.id}`
+  const metadataImagePath = `/api/metadata/comic-issue/${params.id}`
 
   return {
     openGraph: {
-      images: ogImagePath,
+      images: metadataImagePath,
     },
     twitter: {
       card: 'summary_large_image',
-      images: ogImagePath,
+      images: metadataImagePath,
     },
   }
 }
@@ -37,7 +37,7 @@ export default async function ComicIssuePage({ params: { id } }: ComicIssuePageP
   return (
     <BaseLayout transparent>
       <ComicIssueBanner cover={comicIssue.cover} />
-      <div className='flex flex-col w-full max-w-screen-xl mt-24 md:flex-row md:justify-center gap-2 md:gap-3 lg:gap-10'>
+      <div className='flex flex-col w-full max-w-screen-xl mt-28 md:mt-24 md:flex-row md:justify-center gap-2 md:gap-6 lg:gap-10'>
         <ButtonLink
           href='#'
           prefetch={false}
@@ -45,11 +45,11 @@ export default async function ComicIssuePage({ params: { id } }: ComicIssuePageP
           size='lg'
           iconOnly
           icon={ChevronLeft}
-          className='self-center w-min sm:px-0'
+          className='self-center w-min sm:px-0 max-md:hidden'
         />
         <CoverCarousel candyMachine={candyMachine} covers={comicIssue.statelessCovers ?? []} />
         <AboutIssueSection comicIssue={comicIssue} />
-        <IssueStatsSection comicIssue={comicIssue} />
+        <IssueStatsSection comicIssue={comicIssue} className='max-1160:hidden' />
         <ButtonLink
           href='#'
           prefetch={false}
@@ -57,9 +57,14 @@ export default async function ComicIssuePage({ params: { id } }: ComicIssuePageP
           size='lg'
           iconOnly
           icon={ChevronRight}
-          className='self-center w-min sm:px-0'
+          className='self-center w-min sm:px-0 max-md:hidden'
         />
       </div>
+      <IssueStatsSection
+        comicIssue={comicIssue}
+        className='1160:hidden self-start md:px-16 w-full'
+        statsContainerClassName='sm:max-w-full'
+      />
     </BaseLayout>
   )
 }

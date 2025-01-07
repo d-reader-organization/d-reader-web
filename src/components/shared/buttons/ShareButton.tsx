@@ -4,12 +4,12 @@ import { Button, toast } from '@/components/ui'
 import { Share2 } from 'lucide-react'
 import React from 'react'
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   title?: string
   text?: string
 }
 
-export const ShareButton: React.FC<Props> = ({ title = '', text = '' }) => {
+export const ShareButton: React.FC<Props> = ({ title = '', text = '', ...props }) => {
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -27,5 +27,5 @@ export const ShareButton: React.FC<Props> = ({ title = '', text = '' }) => {
     }
   }
 
-  return <Button onClick={handleShare} size={'md'} icon={Share2} iconOnly variant='secondary' />
+  return <Button onClick={handleShare} size={'md'} icon={Share2} iconOnly variant='secondary' {...props} />
 }

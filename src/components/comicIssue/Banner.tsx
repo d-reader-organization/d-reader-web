@@ -14,7 +14,7 @@ export const ComicIssueBanner: React.FC<Props> = ({ cover }) => {
   const heroImage = cover || PageBanner.src
   return (
     <div
-      className='bg-cover bg-no-repeat bg-center relative md:absolute -z-[1] w-full h-[65vh] max-h-[620px] blur-none md:blur-[10px]'
+      className='bg-cover bg-no-repeat bg-center absolute max-md:mt-20 -z-[1] w-full h-[65vh] max-h-[620px] blur-none md:blur-[10px]'
       style={{ backgroundImage: `url('${heroImage}')` }}
     >
       <div

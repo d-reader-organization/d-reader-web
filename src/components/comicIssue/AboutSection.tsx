@@ -11,27 +11,28 @@ import { cn } from '@/lib/utils'
 import { AvatarImage } from '../shared/AvatarImage'
 import Link from 'next/link'
 import { Dot } from 'lucide-react'
-import { TextWithViewMoreButton } from '../ui/TextWithViewMoreButton'
 
 type Props = {
   comicIssue: ComicIssue
 }
 
-//TODO: Update GenreTags component, use it on Comic and ComicIssue pages(?).. 'tis not standardized?
-//TODO: Think about ExpandableText and TextWithViewMoreButton components, not both are needed
 export const AboutIssueSection: React.FC<Props> = ({ comicIssue }) => (
-  <div className='flex flex-col gap-6 w-full max-w-[800px]'>
-    <div className='flex flex-col max-md:self-center gap-4'>
-      <div className='flex gap-3 text-grey-100 items-center'>
+  <div className='flex flex-col max-md:justify-start gap-6 w-full max-w-[800px]'>
+    <div className='flex flex-col max-md:justify-start max-md:self-center gap-4'>
+      <div className='flex gap-3 text-grey-100 max-md:justify-center items-start'>
         <Text as='span' styleVariant='body-normal'>
           {comicIssue.comic?.title}
         </Text>
-        <Dot className='size-3' />
+        <Dot className='size-3 text-white' />
         <Text as='span' styleVariant='body-normal'>
           EP {comicIssue.number}
         </Text>
+        <Dot className='size-3 text-white md:hidden' />
+        <Text as='span' styleVariant='body-normal' className='md:hidden text-white'>
+          {comicIssue.title}
+        </Text>
       </div>
-      <Text as='h3' styleVariant='primary-heading'>
+      <Text as='h3' styleVariant='primary-heading' className='max-md:hidden'>
         {comicIssue.title}
       </Text>
     </div>
@@ -41,7 +42,9 @@ export const AboutIssueSection: React.FC<Props> = ({ comicIssue }) => (
           <div className='flex flex-wrap gap-[6px] sm:gap-2'>
             {comicIssue.genres.map((genre, index) => (
               <div
-                className={cn('flex justify-center items-center px-2 py-[2px] rounded-lg bg-grey-300 bg-opacity-30 backdrop-blur-lg')}
+                className={cn(
+                  'flex justify-center items-center px-2 py-[2px] rounded-lg bg-grey-300 bg-opacity-30 backdrop-blur-lg'
+                )}
                 key={`${genre}-${index}`}
               >
                 <Text as='span' styleVariant='body-normal' className='text-grey-100 max-sm:text-sm'>
@@ -53,21 +56,14 @@ export const AboutIssueSection: React.FC<Props> = ({ comicIssue }) => (
           </div>
         )}
         <ExpandableText className='max-w-[440px] lg:max-w-[486px]' text={comicIssue.description} />
-        {/* <TextWithViewMoreButton
-          as='p'
-          styleVariant='body-normal'
-          className='text-grey-100'
-
-          maxLength={140}
-        >{comicIssue.description}</TextWithViewMoreButton> */}
         <div className='flex justify-between items-center'>
           <div className='flex justify-center'>
-          <Text as='span' styleVariant='body-normal'>
-            {comicIssue.stats?.totalPagesCount}&nbsp;
-          </Text>
-          <Text as='span' styleVariant='body-normal' className='text-grey-100'>
-            pages
-          </Text>
+            <Text as='span' styleVariant='body-normal'>
+              {comicIssue.stats?.totalPagesCount}&nbsp;
+            </Text>
+            <Text as='span' styleVariant='body-normal' className='text-grey-100'>
+              pages
+            </Text>
           </div>
           <ButtonLink
             icon={ChevronRight}
@@ -84,7 +80,7 @@ export const AboutIssueSection: React.FC<Props> = ({ comicIssue }) => (
             </Text>
           </ButtonLink>
         </div>
-        <Divider />
+        <Divider className='max-md:hidden' />
         {comicIssue.creator && (
           <Link
             prefetch={false}

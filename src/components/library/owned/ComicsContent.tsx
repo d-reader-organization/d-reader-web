@@ -7,7 +7,7 @@ import { RoutePath } from '@/enums/routePath'
 
 type Props = { comics: Comic[] }
 
-const sortAndGetLetterOccurrences = (comics: Comic[]): Record<string, number> => {
+export const sortAndGetLetterOccurrences = (comics: Comic[]): Record<string, number> => {
   return comics.reduce<Record<string, number>>((prev, curr) => {
     const uppercaseChar = curr.title.at(0)?.toUpperCase() ?? ''
 
@@ -18,7 +18,7 @@ const sortAndGetLetterOccurrences = (comics: Comic[]): Record<string, number> =>
   }, {})
 }
 
-const getSublistBoundaries = (
+export const getSublistBoundaries = (
   sortedLetters: Record<string, number>,
   currentIndex: number
 ): { startAt: number; endAt: number } => {

@@ -17,6 +17,7 @@ export const CREATOR_QUERY_KEYS = Object.freeze({
   DELETE: 'delete',
   RECOVER: 'recover',
   FOLLOW: 'follow',
+  FOLLOWED_BY_USER: 'followed-by-user',
 })
 
 export const creatorKeys = Object.freeze({

@@ -3,17 +3,20 @@ import { FavouritiseButton } from '../shared/buttons/FavouritiseButton'
 import { RateButton } from '../shared/buttons/RateButton'
 import { ShareButton } from '../shared/buttons/ShareButton'
 import { StatsContainer, StatsItem } from '../shared/Stats'
-import { Button } from '../ui'
 import { Text } from '../ui'
+import { ButtonLink } from '../ui/ButtonLink'
+import { RoutePath } from '@/enums/routePath'
+import { cn } from '@/lib/utils'
 
-type Props = {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   comicIssue: ComicIssue
+  statsContainerClassName?: string
 }
 
-export const IssueStatsSection: React.FC<Props> = ({ comicIssue }) => {
+export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className, statsContainerClassName, ...props }) => {
   return (
-    <div className='flex flex-col gap-6'>
-      <div className='flex gap-3 justify-end'>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
+      <div className='flex gap-3 max-1160:justify-start 1160:justify-end'>
         <RateButton
           comicIssueId={comicIssue.id}
           averageRating={comicIssue.stats?.averageRating}
@@ -26,16 +29,23 @@ export const IssueStatsSection: React.FC<Props> = ({ comicIssue }) => {
         />
         <ShareButton title={comicIssue.title} text={comicIssue.description} />
       </div>
-      <StatsContainer>
+      <StatsContainer className={statsContainerClassName}>
         <StatsItem label='pages' value={comicIssue.stats?.totalPagesCount ?? ''} />
         <StatsItem label='copies' value={comicIssue.stats?.totalIssuesCount ?? ''} />
         <StatsItem label='floor price' value={comicIssue.stats?.price ?? ''} />
       </StatsContainer>
-      <Button variant={'secondary'} size={'md'}>
-        <Text as='span' styleVariant='body-normal'>
-          Preview
+      <ButtonLink
+        href={RoutePath.ReadComicIssue(comicIssue.id)}
+        prefetch={false}
+        variant={comicIssue.myStats?.canRead ? 'primary' : 'secondary'}
+        size={'lg'}
+        className='bg-opacity-30'
+        target='_blank'
+      >
+        <Text as='span' styleVariant='body-normal' fontWeight='bold'>
+          {comicIssue.isFreeToRead ? 'Read for Free!' : comicIssue.myStats?.canRead ? 'Read' : 'Preview'}
         </Text>
-      </Button>
+      </ButtonLink>
     </div>
   )
 }

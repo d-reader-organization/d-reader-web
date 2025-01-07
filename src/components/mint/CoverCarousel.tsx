@@ -10,6 +10,8 @@ import { CoverSlide } from './CoverSlide'
 import { SliderDots } from './SliderDots'
 import { CandyMachine } from '@/models/candyMachine'
 import { Nullable } from '@/models/common'
+import { ButtonLink } from '../ui/ButtonLink'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 type Props = { candyMachine: Nullable<CandyMachine>; covers: StatelessCover[] }
 
@@ -34,21 +36,41 @@ export const CoverCarousel: React.FC<Props> = ({ candyMachine, covers }) => {
 
   return (
     <div className='flex flex-col gap-14 md:gap-16'>
-      <div className='max-w-64 md:max-w-[354px] relative'>
-        <div className='overflow-hidden' ref={emblaRef}>
-          <div className='flex'>
-            {covers.map((cover, index) => (
-              <CoverSlide
-                cover={cover}
-                isPriority={index === 0}
-                totalSupply={candyMachine?.supply ?? 0}
-                key={`${cover.rarity}-${index}`}
-                onClick={() => toggleCoverPreview()}
-                hideRarityChip={!hasCoverVariants}
-              />
-            ))}
+      <div className='flex max-md:justify-between'>
+        <ButtonLink
+          href='#'
+          prefetch={false}
+          variant='ghost'
+          size='lg'
+          iconOnly
+          icon={ChevronLeft}
+          className='self-center w-min sm:px-0 md:hidden'
+        />
+        <div className='max-w-64 1160:max-w-[318px] relative'>
+          <div className='overflow-hidden' ref={emblaRef}>
+            <div className='flex'>
+              {covers.map((cover, index) => (
+                <CoverSlide
+                  cover={cover}
+                  isPriority={index === 0}
+                  totalSupply={candyMachine?.supply ?? 0}
+                  key={`${cover.rarity}-${index}`}
+                  onClick={() => toggleCoverPreview()}
+                  hideRarityChip={!hasCoverVariants}
+                />
+              ))}
+            </div>
           </div>
         </div>
+        <ButtonLink
+          href='#'
+          prefetch={false}
+          variant='ghost'
+          size='lg'
+          iconOnly
+          icon={ChevronRight}
+          className='self-center w-min sm:px-0 md:hidden'
+        />
       </div>
       {hasCoverVariants && <SliderDots emblaApi={emblaApi} slides={covers} selectedIndex={selectedIndex} />}
       <CoverPreviewDialog
