@@ -6,11 +6,10 @@ import { AUCTION_HOUSE_QUERY_KEYS } from '@/api/auctionHouse/auctionHouseKeys'
 const { GET, LISTINGS, COLLECTIBLE_COMICS, AUCTION_HOUSE } = AUCTION_HOUSE_QUERY_KEYS
 
 export async function findCollectibleComicListings(params: ListedItemsParams) {
-  console.log(params)
   const response = await fetchWrapper<ListedItem[]>({
     path: `${AUCTION_HOUSE}/${GET}/${LISTINGS}/${COLLECTIBLE_COMICS}`,
     params,
-    // revalidateCacheInSeconds: 5,
+    revalidateCacheInSeconds: 5,
   })
   return response.data ?? []
 }

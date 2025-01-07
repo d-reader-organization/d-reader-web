@@ -36,7 +36,7 @@ export const SecondaryMarketplace: React.FC<Props> = ({ collectionAddress, acces
           <StatsSection collectionAddress={collectionAddress} />
         </TabsContent>
         <TabsContent value='3'>
-          <WalletAssetSection collectionAddress={collectionAddress} />
+          <WalletAssetSection collectionAddress={collectionAddress} accessToken={accessToken} />
         </TabsContent>
       </Tabs>
     </div>
