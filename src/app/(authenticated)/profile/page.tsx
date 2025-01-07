@@ -2,10 +2,10 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs'
 import { fetchMe, fetchUserWallets } from '@/app/lib/api/user/queries'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { Text } from '@/components/ui'
-import WalletSettings from '@/components/profile/WalletSettings'
-import AccountSettings from '@/components/profile/AccountSettings'
-import SecuritySettings from '@/components/profile/SecuritySettings'
-import FaqSettings from '@/components/profile/FaqSettings'
+import { WalletSettings } from '@/components/profile/WalletSettings'
+import { AccountSettings } from '@/components/profile/AccountSettings'
+import { SecuritySettings } from '@/components/profile/SecuritySettings'
+import { FaqSettings } from '@/components/profile/FaqSettings'
 
 async function ProfilePage() {
   const me = await fetchMe()

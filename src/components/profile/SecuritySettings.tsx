@@ -44,5 +44,3 @@ export const SecuritySettings: React.FC = async () => {
     </div>
   )
 }
-
-export default SecuritySettings
