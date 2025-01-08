@@ -6,7 +6,7 @@ import { Project } from '@/models/project'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { ImageResponse } from 'next/og'
 import { METADATA_IMAGE_SIZE } from '../constants/general'
-import { Comic } from "@/models/comic"
+import { Comic } from '@/models/comic'
 
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -179,12 +179,12 @@ export const generateMetadataImage = (Component: React.ReactElement) => {
 }
 
 export const getComicsMappedByLetter = (comics: Comic[]) => {
-    return comics.reduce((acc: Record<string, Comic[]>, comic) => {
-      const firstLetter = comic.title.trim().charAt(0).toUpperCase()
-      if (!acc[firstLetter]) {
-        acc[firstLetter] = []
-      }
-      acc[firstLetter].push(comic)
-      return acc
-    }, {})
-  }
+  return comics.reduce((acc: Record<string, Comic[]>, comic) => {
+    const firstLetter = comic.title.trim().charAt(0).toUpperCase()
+    if (!acc[firstLetter]) {
+      acc[firstLetter] = []
+    }
+    acc[firstLetter].push(comic)
+    return acc
+  }, {})
+}

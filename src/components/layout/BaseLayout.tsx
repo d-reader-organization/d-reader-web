@@ -5,9 +5,9 @@ import { Footer } from './Footer'
 import { cn } from '@/lib/utils'
 import { IntercomClient } from '../shared/IntercomClient'
 
-type Props = React.PropsWithChildren & { mainClassName?: string; showFooter?: boolean, transparent?: boolean }
+type Props = React.PropsWithChildren & { mainClassName?: string; showFooter?: boolean; transparent?: boolean }
 
-export const BaseLayout: React.FC<Props> = async ({ children, transparent, mainClassName, showFooter}) => {
+export const BaseLayout: React.FC<Props> = async ({ children, transparent, mainClassName, showFooter }) => {
   const me = await fetchMe()
 
   return (

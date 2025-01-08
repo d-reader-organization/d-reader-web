@@ -54,7 +54,7 @@ export const LibraryTabsWrapper: React.FC<Props> = async ({ children }) => {
                 <Text as='h4' styleVariant='secondary-heading' className='text-base'>
                   {tab.title}
                 </Text>
-                {tab.isComingSoon ? <SoonTag /> : null}
+                {tab.isComingSoon && <SoonTag />}
               </TabsTrigger>
             ))}
           </div>

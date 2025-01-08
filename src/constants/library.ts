@@ -1,4 +1,4 @@
-import { RoutePath } from "@/enums/routePath"
+import { RoutePath } from '@/enums/routePath'
 
 export type EmptySectionState = {
   title: string

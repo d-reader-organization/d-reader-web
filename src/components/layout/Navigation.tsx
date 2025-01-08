@@ -17,7 +17,7 @@ import { NavItemLink } from './NavItemLink'
 import { GenesisNavigation } from './GenesisNavigation'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 
-type Props =  React.HtmlHTMLAttributes<HTMLDivElement> & {
+type Props = React.HtmlHTMLAttributes<HTMLDivElement> & {
   me: User | null
   hideSearch?: boolean
   transparent?: boolean

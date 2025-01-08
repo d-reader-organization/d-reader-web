@@ -62,7 +62,12 @@ export const FavouritiseButton: React.FC<Props> = ({
       )}
       iconClassname={cn(state.isFavourite && 'fill-red-500')}
     >
-      <Text as='span' styleVariant='body-small' fontWeight='bold' className={cn('max-sm:text-xs', state.isFavourite && 'text-white')}>
+      <Text
+        as='span'
+        styleVariant='body-small'
+        fontWeight='bold'
+        className={cn('max-sm:text-xs', state.isFavourite && 'text-white')}
+      >
         {state.favouritesCount}
       </Text>
     </RequireAuthWrapperButton>
