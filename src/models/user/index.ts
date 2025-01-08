@@ -23,3 +23,15 @@ export type UpdateUserPassword = {
   oldPassword: string
   newPassword: string
 }
+
+export enum ConsentType {
+  Marketing = 'Marketing',
+  DataAnalytics = 'DataAnalytics',
+  Unknown = 'Unknown',
+}
+
+export type UserConsent = {
+  id: number
+  isConsentGiven: boolean
+  consentType: ConsentType
+}
