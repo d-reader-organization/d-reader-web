@@ -25,15 +25,16 @@ const {
   PRIVACY_CONSENT,
 } = USER_QUERY_KEYS
 
-export const requestUserPasswordReset = async (body: RequestPasswordResetParams): Promise<void> => {
+export const requestUserPasswordReset = async (body: RequestPasswordResetParams): Promise<string> => {
   const accessToken = getAccessToken()
-  await fetchWrapper<void>({
+  const response = await fetchWrapper<void>({
     accessToken,
     method: 'PATCH',
     body,
     isTextResponse: true,
     path: `${USER}/${REQUEST_PASSWORD_RESET}`,
   })
+  return response.errorMessage ?? ''
 }
 
 export const requestUserEmailChange = async (data: RequestEmailChangeParams): Promise<void> => {

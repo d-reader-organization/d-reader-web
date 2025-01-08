@@ -50,7 +50,6 @@ export const OwnedComicsContent: React.FC<Props> = ({ comics }) => {
     )
   }
 
-  // TODO think about better handling of this
   const sortedLetters = sortAndGetLetterOccurrences(comics)
   const sortedLettersEntries = Object.keys(sortedLetters)
 

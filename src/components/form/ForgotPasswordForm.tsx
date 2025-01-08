@@ -1,62 +1,60 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input } from '../ui/Input'
 import { Button } from '../ui/Button'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/Form'
-import { useRequestUserPasswordReset } from '@/api/user/queries/useRequestUserPasswordReset'
-import { forgotPasswordSchema } from '@/constants/schemas'
+import { useFormState, useFormStatus } from 'react-dom'
+import { requestPasswordResetAction } from '@/app/lib/actions/auth/request-password-reset'
+import { toast } from '../ui/toast'
 
 type Props = {
   onClose: () => void
 }
 
 export const ForgotPasswordForm: React.FC<Props> = ({ onClose }) => {
-  const { mutateAsync: requestPasswordReset } = useRequestUserPasswordReset()
-  const form = useForm<z.infer<typeof forgotPasswordSchema>>({
-    resolver: zodResolver(forgotPasswordSchema),
-    defaultValues: {
-      nameOrEmail: '',
-    },
-  })
+  const [state, action] = useFormState(requestPasswordResetAction, null)
 
-  const onSubmit = async ({ nameOrEmail }: z.infer<typeof forgotPasswordSchema>): Promise<void> => {
-    requestPasswordReset({ nameOrEmail })
-    onClose()
-  }
+  useEffect(() => {
+    if (!state) {
+      return
+    }
+    if (state.error) {
+      toast({
+        description: state.error,
+        variant: 'error',
+      })
+      return
+    }
+    if (state.success) {
+      toast({
+        title: 'Password reset instructions sent to your inbox!',
+      })
+    }
+  }, [state])
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name='nameOrEmail'
-          render={({ field }) => (
-            <FormItem className='p-4'>
-              <FormControl>
-                <Input className='w-full' placeholder='john.doe@dreader.io' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className='flex w-full border-t-2 border-grey-600'>
-          <Button
-            className='p-4 w-full border-r-2 border-grey-600 rounded-r-none'
-            onClick={onClose}
-            type='button'
-            variant='ghost'
-          >
-            Cancel
-          </Button>
-          <Button className='p-4 w-full rounded-l-none' type='submit' variant='ghost'>
-            Send
-          </Button>
-        </div>
-      </form>
-    </Form>
+    <form action={action}>
+      <Input className='w-full m-4' name='nameOrEmail' placeholder='john.doe@dreader.io' />
+      <div className='flex w-full border-t-2 border-grey-600'>
+        <Button
+          className='p-4 w-full border-r-2 border-grey-600 rounded-r-none'
+          onClick={onClose}
+          type='button'
+          variant='ghost'
+        >
+          Cancel
+        </Button>
+        <SubmitButton />
+      </div>
+    </form>
+  )
+}
+
+const SubmitButton: React.FC = () => {
+  const { pending } = useFormStatus()
+  return (
+    <Button className='p-4 w-full rounded-l-none' type='submit' disabled={pending} variant='ghost'>
+      Send
+    </Button>
   )
 }
