@@ -3,7 +3,7 @@
 import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { ComicIssue } from '@/models/comicIssue'
 import { DefaultComicIssueCard } from '../comicIssue/cards/DefaultCard'
-import { ShowMoreButton } from './ShowMoreButton'
+import { ShowMoreButton } from '@/components/discover/ShowMoreButton'
 import { Loader } from '../shared/Loader'
 import { useFetchComicIssues } from '@/api/comicIssue/queries/useFetchComicIssues'
 

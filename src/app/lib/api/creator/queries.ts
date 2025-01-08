@@ -43,7 +43,7 @@ export const searchCreators = async (params: CreatorParams): Promise<SearchResul
   return data ?? []
 }
 
-export const fetchFavoriteComics = async ({ params, userId }: { params: CreatorParams; userId: number }) => {
+export const fetchFollowedCreators = async ({ params, userId }: { params: CreatorParams; userId: number }) => {
   const response = await fetchWrapper<Creator[]>({
     params,
     path: `${CREATOR}/${GET}/${FOLLOWED_BY_USER}/${userId}`,

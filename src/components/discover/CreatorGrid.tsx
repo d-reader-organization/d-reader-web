@@ -3,7 +3,7 @@
 import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { useFetchCreators } from '@/api/creator/queries/useFetchCreators'
 import { DefaultCreatorCard } from '../creator/cards/DefaultCard'
-import { ShowMoreButton } from './ShowMoreButton'
+import { ShowMoreButton } from '@/components/discover/ShowMoreButton'
 import { Loader } from '../shared/Loader'
 
 type Props = {

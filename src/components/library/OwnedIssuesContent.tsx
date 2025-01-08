@@ -26,7 +26,6 @@ export const OwnedIssuesContent: React.FC<Props> = ({ comicIssue, ownedIssues })
           {ownedIssues.at(0)?.collectibles.at(0)?.comicName}
         </Text>
       </Button>
-
       {!ownedIssues.length ? (
         <div className='flex flex-col justify-center items-center h-full self-center'>
           <Text as='h5' styleVariant='primary-heading'>
