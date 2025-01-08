@@ -1,7 +1,6 @@
 import { NextConfig } from 'next'
 import * as path from 'path'
 import createMDX from '@next/mdx'
-import withPWA from 'next-pwa'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 
@@ -75,4 +74,3 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({ options: { rehypePlugins: [rehypeRaw], remarkPlugins: [remarkGfm] } })
 export default withMDX(nextConfig)
-// export default withMDX(withPWA({ dest: 'public', ...nextConfig }))
