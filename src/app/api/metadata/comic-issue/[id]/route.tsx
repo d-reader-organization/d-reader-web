@@ -22,7 +22,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       image={cover}
       backgroundImage={comicIssue.cover}
       isMinting={!!comicIssue.collectibleInfo?.activeCandyMachineAddress}
-      logo
+      withLogo
     />
   )
 }

@@ -19,18 +19,17 @@ export const ComicsContent: React.FC<Props> = ({ comics, ComicCard }) => {
     <>
       <div className='md:hidden grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-6'>
         {comics.map((comic) => (
-          <ComicCard key={`owned_${comic.slug}`} comic={comic} className='max-md:max-h-fit' />
+          <ComicCard key={comic.slug} comic={comic} className='max-md:max-h-fit' />
         ))}
       </div>
       <div className='max-md:hidden'>
-        {Object.entries(comicsMappedByLetter).map(([letter, comics]) => (
+        {Object.entries(comicsMappedByLetter).map(([letter, comics], index, array) => (
           <div
             key={letter}
             className={cn(
               'grid grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full',
-              Object.keys(comicsMappedByLetter)[0] === letter ? 'pb-7 pt-3' : 'py-7',
-              Object.keys(comicsMappedByLetter)[Object.keys(comicsMappedByLetter).length - 1] !== letter &&
-                'border-b border-grey-300'
+              index === 0 ? 'pb-7 pt-3' : 'py-7',
+              index !== array.length - 1 && 'border-b border-grey-300'
             )}
           >
             <Text as='h5' styleVariant='secondary-heading' className='col-span-1'>
@@ -38,7 +37,7 @@ export const ComicsContent: React.FC<Props> = ({ comics, ComicCard }) => {
             </Text>
             <div className='grid grid-cols-2 col-span-2 sm:grid-cols-3 sm:col-span-3 lg:grid-cols-4 lg:col-span-4 xl:grid-cols-5 xl:col-span-5 gap-8'>
               {comics.map((comic) => (
-                <ComicCard key={`owned_${comic.slug}`} comic={comic} />
+                <ComicCard key={comic.slug} comic={comic} />
               ))}
             </div>
           </div>

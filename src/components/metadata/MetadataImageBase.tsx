@@ -3,10 +3,10 @@ import Logo from 'public/assets/vector-icons/logo.svg'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   image: string
-  logo?: boolean
+  withLogo?: boolean
 }
 
-export const MetadataImageBase: React.FC<Props> = ({ image, logo, children, ...props }) => (
+export const MetadataImageBase: React.FC<Props> = ({ image, withLogo, children, ...props }) => (
   <div
     {...props}
     style={{
@@ -28,7 +28,7 @@ export const MetadataImageBase: React.FC<Props> = ({ image, logo, children, ...p
       style={{ position: 'absolute', opacity: 0.1, objectFit: 'cover' }}
     />
     {children}
-    {logo && (
+    {withLogo && (
       <Logo fill='white' color='white' width='41' height='40' style={{ position: 'absolute', bottom: 60, right: 60 }} />
     )}
   </div>

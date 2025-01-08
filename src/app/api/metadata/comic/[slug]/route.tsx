@@ -11,10 +11,11 @@ export async function GET(request: Request, { params }: { params: { slug: string
   return generateMetadataImage(
     <DefaultMetadataImage
       title={comic.title}
-      caption={comic.creator?.name}
+      body={`by ${comic.creator?.name}`}
       image={comic.cover}
       backgroundImage={comic.banner}
-      logo
+      altBodyColor
+      withLogo
     />
   )
 }

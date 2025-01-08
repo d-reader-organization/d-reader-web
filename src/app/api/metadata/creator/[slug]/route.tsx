@@ -9,6 +9,6 @@ export async function GET(request: Request, { params }: { params: { slug: string
   if (!creator) return generateMetadataImage(<FallbackMetadataImage />)
 
   return generateMetadataImage(
-    <CreatorMetadataImage name={creator.name} banner={creator.banner} avatar={creator.avatar} logo />
+    <CreatorMetadataImage name={creator.name} banner={creator.banner} avatar={creator.avatar} withLogo />
   )
 }
