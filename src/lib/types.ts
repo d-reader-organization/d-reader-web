@@ -1,9 +1,9 @@
 export type ComicCardType = 'large' | 'default'
 
 export type SlugParamsProps = {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export type FileUploadRef = {

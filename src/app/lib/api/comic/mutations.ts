@@ -8,7 +8,7 @@ import { getAccessToken } from '../../utils/auth'
 const { COMIC, FAVOURITISE, RATE, BOOKMARK } = COMIC_QUERY_KEYS
 
 export const rateComic = async ({ slug, request }: { slug: string; request: RateComic }): Promise<void> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   await fetchWrapper<void>({
     accessToken,
     path: `${COMIC}/${RATE}/${slug}`,
@@ -19,7 +19,7 @@ export const rateComic = async ({ slug, request }: { slug: string; request: Rate
 }
 
 export const favouritiseComic = async (slug: string): Promise<void> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   await fetchWrapper<void>({
     accessToken,
     path: `${COMIC}/${FAVOURITISE}/${slug}`,
@@ -29,7 +29,7 @@ export const favouritiseComic = async (slug: string): Promise<void> => {
 }
 
 export const bookmarkComic = async (slug: string): Promise<void> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   await fetchWrapper<void>({
     accessToken,
     path: `${COMIC}/${BOOKMARK}/${slug}`,

@@ -68,15 +68,15 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
             ))}
           </div>
         </div>
-        <div className='flex border-t-2 border-t-grey-600 [&>*]:p-4'>
+        <div className='flex border-t-2 border-t-grey-600 [&>*]:p-4 w-full'>
           <Button
-            className='border-r-2 border-r-grey-600 rounded-r-none hover:bg-grey-300'
+            className='border-r-2 border-r-grey-600 rounded-r-none hover:bg-grey-300 w-full'
             onClick={handleClose}
             variant='ghost'
           >
             Cancel
           </Button>
-          <Button className='hover:bg-grey-300' onClick={handleSubmit} variant='ghost'>
+          <Button className='hover:bg-grey-300 w-full' onClick={handleSubmit} variant='ghost'>
             OK
           </Button>
         </div>

@@ -14,7 +14,7 @@ export const expressInterest = async ({
   slug: string
   request: ExpressInterest
 }): Promise<{ errorMessage?: string }> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<void>({
     accessToken,
     path: `${INVEST}/${EXPRESS_INTEREST}/${slug}`,

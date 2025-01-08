@@ -1,6 +1,5 @@
 'use client'
 
-import { useOptimistic, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { favouritiseComic } from '@/app/lib/api/comic/mutations'
 import { RequireAuthWrapperButton } from './RequireAuthWrapperButton'
@@ -24,30 +23,14 @@ export const FavouritiseButton: React.FC<Props> = ({
   className,
 }) => {
   const { refresh } = useRouter()
-  const [, startTransition] = useTransition()
-  const [state, setNewState] = useOptimistic(
-    {
-      favouritesCount,
-      isFavourite,
-    },
-    (state) => {
-      return {
-        favouritesCount: state.isFavourite ? state.favouritesCount - 1 : state.favouritesCount + 1,
-        isFavourite: !state.isFavourite,
-      }
-    }
-  )
 
   const handleSubmit = async () => {
-    startTransition(async () => {
-      setNewState(null)
-      if (comicSlug) {
-        await favouritiseComic(comicSlug)
-      } else if (comicIssueId) {
-        await favouritiseComicIssue(comicIssueId)
-      }
-      refresh()
-    })
+    if (comicSlug) {
+      await favouritiseComic(comicSlug)
+    } else if (comicIssueId) {
+      await favouritiseComicIssue(comicIssueId)
+    }
+    refresh()
   }
 
   return (
@@ -57,13 +40,13 @@ export const FavouritiseButton: React.FC<Props> = ({
       onClick={handleSubmit}
       className={cn(
         'rounded-xl min-w-[80px] w-[80px]',
-        state.isFavourite && 'bg-red-500 bg-opacity-40 text-red-500 border-0',
+        isFavourite && 'bg-red-500 bg-opacity-40 text-red-500 border-0',
         className
       )}
-      iconClassname={cn(state.isFavourite && 'fill-red-500')}
+      iconClassname={cn(isFavourite && 'fill-red-500')}
     >
-      <Text as='span' styleVariant='body-normal' className={cn('max-sm:text-xs', state.isFavourite && 'text-white')}>
-        {state.favouritesCount}
+      <Text as='span' styleVariant='body-normal' className={cn('max-sm:text-xs', isFavourite && 'text-white')}>
+        {favouritesCount}
       </Text>
     </RequireAuthWrapperButton>
   )

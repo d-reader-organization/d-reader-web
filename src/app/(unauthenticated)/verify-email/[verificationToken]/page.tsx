@@ -9,7 +9,8 @@ type Params = {
   verificationToken: string
 }
 
-export default async function VerifyEmailPage({ params }: { params: Params }) {
+export default async function VerifyEmailPage(props: { params: Promise<Params> }) {
+  const params = await props.params
   const verificationToken = params?.verificationToken
   const user = verificationToken ? await verifyUserEmail(verificationToken) : null
   const name = user?.displayName || user?.username || ''

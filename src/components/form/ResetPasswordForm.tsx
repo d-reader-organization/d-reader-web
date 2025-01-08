@@ -1,8 +1,8 @@
 'use client'
 
 import { Button, Input, Label, toast } from '@/components/ui'
-import React from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
+import React, { useActionState } from 'react'
+import { useFormStatus } from 'react-dom'
 import { Loader } from '../shared/Loader'
 import { resetPasswordAction } from '@/app/lib/actions/auth/reset-password'
 import { FormErrorMessage } from './FormErrorMessage'
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export const ResetPasswordForm: React.FC<Props> = ({ verificationToken }) => {
-  const [state, action] = useFormState(resetPasswordAction.bind(null, verificationToken), null)
+  const [state, action] = useActionState(resetPasswordAction.bind(null, verificationToken), null)
   React.useEffect(() => {
     if (state?.error) {
       toast({

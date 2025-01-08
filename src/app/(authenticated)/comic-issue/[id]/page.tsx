@@ -20,7 +20,8 @@ import { ShareButton } from '@/components/shared/buttons/ShareButton'
 import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const params = await props.params
   const metadataImagePath = `/api/metadata/comic-issue/${params.id}`
 
   return {
@@ -34,8 +35,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   }
 }
 
-export default async function ComicIssuePage({ params: { id } }: ComicIssuePageParams) {
-  const accessToken = getAccessToken()
+export default async function ComicIssuePage(props: ComicIssuePageParams) {
+  const params = await props.params
+
+  const { id } = params
+
+  const accessToken = await getAccessToken()
   const comicIssue = await fetchComicIssue({ accessToken, id })
   if (!comicIssue || !comicIssue.stats) return null
   const pages = await fetchComicIssuePages({ accessToken, id: comicIssue.id })
@@ -92,7 +97,7 @@ export default async function ComicIssuePage({ params: { id } }: ComicIssuePageP
             <CandyMachineDetails
               accessToken={accessToken}
               comicIssue={comicIssue}
-              isAuthenticated={isAuthenticatedUser()}
+              isAuthenticated={await isAuthenticatedUser()}
             />
           </CandyMachineStoreProvider>
         </div>

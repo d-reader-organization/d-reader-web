@@ -11,13 +11,17 @@ import { notFound } from 'next/navigation'
 import { getAccessToken } from '@/app/lib/utils/auth'
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default async function CreatorReleasesPage({ params: { slug } }: Props) {
-  const creator = await fetchCreator({ slug, accessToken: getAccessToken() })
+export default async function CreatorReleasesPage(props: Props) {
+  const params = await props.params
+
+  const { slug } = params
+  const accessToken = await getAccessToken()
+  const creator = await fetchCreator({ slug, accessToken })
   const comics = await fetchComics({ creatorSlug: slug, skip: 0, take: 4 })
   const tabs = creatorPageTabs(slug)
 

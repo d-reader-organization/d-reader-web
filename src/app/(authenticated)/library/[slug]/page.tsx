@@ -4,7 +4,11 @@ import { BaseLayout } from '@/components/layout/BaseLayout'
 import { LibraryTabs } from '@/components/library/Tabs'
 import { SlugParamsProps } from '@/lib/types'
 
-export default async function OwnedIssuesPage({ params: { slug: comicSlug } }: SlugParamsProps) {
+export default async function OwnedIssuesPage(props: SlugParamsProps) {
+  const params = await props.params
+
+  const { slug: comicSlug } = params
+
   const me = await fetchMe()
 
   if (!me) {

@@ -10,13 +10,17 @@ import { comicPageTabs } from '@/constants/tabs'
 import React from 'react'
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default async function ComicEpisodesPage({ params: { slug } }: Props) {
-  const comic = await fetchComic({ accessToken: getAccessToken(), slug })
+export default async function ComicEpisodesPage(props: Props) {
+  const params = await props.params
+
+  const { slug } = params
+
+  const comic = await fetchComic({ accessToken: await getAccessToken(), slug })
   if (!comic || !comic.stats) {
     return null
   }

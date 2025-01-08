@@ -14,7 +14,7 @@ export const rateComicIssue = async ({
   id: string | number
   request: RateComicIssue
 }): Promise<void> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   await fetchWrapper<void>({
     accessToken,
     path: `${COMIC_ISSUE}/${RATE}/${id}`,
@@ -25,7 +25,7 @@ export const rateComicIssue = async ({
 }
 
 export const favouritiseComicIssue = async (id: string | number): Promise<void> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   await fetchWrapper<void>({
     accessToken,
     path: `${COMIC_ISSUE}/${FAVOURITISE}/${id}`,
