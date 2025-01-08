@@ -7,15 +7,15 @@ import { getAccessToken } from '../../utils/auth'
 
 const { COMIC, FAVOURITISE, RATE, BOOKMARK } = COMIC_QUERY_KEYS
 
-export const rateComic = async ({ slug, request }: { slug: string; request: RateComic }): Promise<void> => {
+export const rateComic = async ({ slug, request }: { slug: string; request: RateComic }): Promise<string> => {
   const accessToken = await getAccessToken()
-  await fetchWrapper<void>({
+  const response = await fetchWrapper({
     accessToken,
     path: `${COMIC}/${RATE}/${slug}`,
     body: request,
     method: 'PATCH',
-    isTextResponse: true,
   })
+  return response.errorMessage ?? ''
 }
 
 export const favouritiseComic = async (slug: string): Promise<void> => {

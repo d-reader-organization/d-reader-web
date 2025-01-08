@@ -13,15 +13,16 @@ export const rateComicIssue = async ({
 }: {
   id: string | number
   request: RateComicIssue
-}): Promise<void> => {
+}): Promise<string> => {
   const accessToken = await getAccessToken()
-  await fetchWrapper<void>({
+  const response = await fetchWrapper<void>({
     accessToken,
     path: `${COMIC_ISSUE}/${RATE}/${id}`,
     body: request,
     method: 'PATCH',
     isTextResponse: true,
   })
+  return response.errorMessage ?? ''
 }
 
 export const favouritiseComicIssue = async (id: string | number): Promise<void> => {

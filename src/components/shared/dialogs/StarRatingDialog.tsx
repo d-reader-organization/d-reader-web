@@ -30,21 +30,22 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
     if (!rating) {
       return
     }
+    let errorMessage = ''
     if (comicSlug) {
-      await rateComic({
+      errorMessage = await rateComic({
         slug: comicSlug,
         request: { rating },
       })
     } else if (comicIssueId) {
-      await rateComicIssue({
+      errorMessage = await rateComicIssue({
         id: comicIssueId,
         request: { rating },
       })
     }
     handleClose()
     toast({
-      description: comicSlug ? 'Comic rated' : 'Comic issue rated!',
-      variant: 'success',
+      description: !!errorMessage ? errorMessage : comicSlug ? 'Comic rated' : 'Comic issue rated!',
+      variant: !!errorMessage ? 'error' : 'success',
     })
     refresh()
   }
