@@ -4,6 +4,7 @@ export const USER_QUERY_KEYS = Object.freeze({
   USER: 'user',
   GET: 'get',
   ME: 'me',
+  CREATE: 'create',
   UPDATE: 'update',
   REMOVE: 'remove',
   UPDATE_PASSWORD: 'update-password',
@@ -19,6 +20,7 @@ export const USER_QUERY_KEYS = Object.freeze({
   DELETE: 'delete',
   RECOVER: 'recover',
   SYNC_WALLETS: 'sync-wallets',
+  PRIVACY_CONSENT: 'privacy-consent',
 })
 
 export const userKeys = Object.freeze({

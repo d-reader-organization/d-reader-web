@@ -83,10 +83,8 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
               {/* OTHER UNRELATED TODO COMMENTS:
               - refactor form inputs (UpdateUserDetailsForm)
               - cache SOL balance
-              - improve forgot password dialog
               - improve RemovePhotoWarningDialog
-              - fallback to .username where .displayName is used
-              - auth/index.ts missing displayName? */}
+              */}
               <Text as='p' styleVariant='body-small' className='text-grey-200'>
                 8 characters minimum. At least 1 lowercase, 1 uppercase and 1 number
               </Text>

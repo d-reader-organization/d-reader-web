@@ -21,5 +21,3 @@ export const AccountSettings: React.FC = async () => {
     </div>
   )
 }
-
-export default AccountSettings

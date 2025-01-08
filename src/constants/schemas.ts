@@ -39,7 +39,7 @@ const registerWithGoogleSchema = z.object({
   name: zUsername,
 })
 
-const forgotPasswordSchema = z.object({
+const requestPasswordResetSchema = z.object({
   nameOrEmail: zEmail, // limit only to email
 })
 
@@ -67,7 +67,7 @@ export {
   loginSchema,
   registerSchema,
   registerWithGoogleSchema,
-  forgotPasswordSchema,
+  requestPasswordResetSchema,
   resetPasswordSchema,
   updateUserAvatarValidationSchema,
   updateUserValidationSchema,

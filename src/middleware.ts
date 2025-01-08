@@ -66,7 +66,6 @@ export const config = {
     '/invest/:path+/express-interest',
     '/library/:path*',
     '/profile',
-    '/circle',
     '/creator/:path*',
     '/mint/:path+',
     '/api/:path*',
@@ -74,7 +73,7 @@ export const config = {
   ],
 }
 
-const authRoutesRegex = /^\/(library|profile|claim|circle|invest\/[^/]+\/express-interest)(\/.*)?$/
+const authRoutesRegex = /^\/(library|profile|claim|invest\/[^/]+\/express-interest)(\/.*)?$/
 
 const handleUnauthorized = async ({ path, refreshToken, url }: { path: string; refreshToken: string; url: string }) => {
   if (refreshToken) {

@@ -2,10 +2,11 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs'
 import { fetchMe, fetchUserWallets } from '@/app/lib/api/user/queries'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { Text } from '@/components/ui'
-import WalletSettings from '@/components/profile/WalletSettings'
-import AccountSettings from '@/components/profile/AccountSettings'
-import SecuritySettings from '@/components/profile/SecuritySettings'
-import FaqSettings from '@/components/profile/FaqSettings'
+import { WalletSettings } from '@/components/profile/WalletSettings'
+import { AccountSettings } from '@/components/profile/AccountSettings'
+import { SecuritySettings } from '@/components/profile/SecuritySettings'
+import { FaqSettings } from '@/components/profile/FaqSettings'
+import { PrivacySettingsWrapper } from '@/components/profile/PrivacySettingsWrapper'
 
 async function ProfilePage() {
   const me = await fetchMe()
@@ -41,6 +42,11 @@ async function ProfilePage() {
             </TabsTrigger>
             <TabsTrigger value='4' className={tabTriggerClass}>
               <Text as='h4' styleVariant='secondary-heading'>
+                Privacy
+              </Text>
+            </TabsTrigger>
+            <TabsTrigger value='5' className={tabTriggerClass}>
+              <Text as='h4' styleVariant='secondary-heading'>
                 FAQ
               </Text>
             </TabsTrigger>
@@ -57,6 +63,9 @@ async function ProfilePage() {
               <SecuritySettings />
             </TabsContent>
             <TabsContent value='4' className='m-0'>
+              <PrivacySettingsWrapper />
+            </TabsContent>
+            <TabsContent value='5' className='m-0'>
               <FaqSettings />
             </TabsContent>
           </div>

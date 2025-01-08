@@ -11,9 +11,9 @@ import { useRouter } from 'next/navigation'
 import { CopyIcon, Dot, MoreHorizontal, Plus } from 'lucide-react'
 import { PublicKey } from '@solana/web3.js'
 import { useToggle } from '@/hooks'
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { Loader } from '../shared/Loader'
 import { useAuthorizeWalletContext } from '@/providers/AuthorizeWalletContextProvider'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/DropdownMenu'
 
 type Props = {
   wallets: Wallet[]
@@ -132,31 +132,26 @@ export const WalletItem: React.FC<{ index: number; wallet: Wallet; isActive: boo
   )
 }
 
-// TODO: replace Dropdown with the Shadcn Dropdown component
 const WalletItemOptions: React.FC<{ disconnect: VoidFunction; showLoader: boolean }> = ({ disconnect, showLoader }) => {
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         {showLoader ? (
           <Loader className='self-center scale-75' />
         ) : (
           <MoreHorizontal className='w-5 h-5 cursor-pointer self-center font-bold' />
         )}
-      </DropdownMenu.Trigger>
+      </DropdownMenuTrigger>
 
-      <DropdownMenu.Portal>
-        <DropdownMenu.Content className='bg-grey-500 p-3 rounded-xl' sideOffset={5}>
-          <DropdownMenu.Item>
-            <Button variant='ghost' size='sm' onClick={disconnect}>
-              <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-                Remove Wallet
-              </Text>
-            </Button>
-          </DropdownMenu.Item>
-        </DropdownMenu.Content>
-      </DropdownMenu.Portal>
-    </DropdownMenu.Root>
+      <DropdownMenuContent className='bg-grey-500 p-3 rounded-xl' sideOffset={5}>
+        <DropdownMenuItem>
+          <Button variant='ghost' size='sm' onClick={disconnect}>
+            <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
+              Remove Wallet
+            </Text>
+          </Button>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
-
-export default WalletSettings

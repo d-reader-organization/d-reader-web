@@ -3,7 +3,6 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { type LucideIcon } from 'lucide-react'
 
-// TODO: we're missing the "inline-text" variant which makes the button appear and behave as inline text
 const buttonVariants = cva(
   'inline-flex items-center justify-center font-bold rounded-md shadow-[0px_16px_32px_-4px_rgba(0,0,0,0.10),0px_2px_4px_0px_rgba(0,0,0,0.04)] transition-colors hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
   {
@@ -13,7 +12,7 @@ const buttonVariants = cva(
         secondary: 'text-grey-100',
         outline: '',
         white: 'text-black',
-        ghost: 'w-full bg-transparent text-base font-medium leading-[22.4px] text-white shadow-none',
+        ghost: 'w-full bg-transparent text-base font-medium leading-[22.4px] text-white h-min w-fit inline',
       },
       subVariant: {
         1: '',
@@ -135,7 +134,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        className={cn(buttonVariants({ variant, subVariant, size, iconPosition, className }))}
+        className={cn(
+          buttonVariants({ variant, subVariant, size, iconPosition, className }),
+          variant === 'ghost' ? 'px-0 sm:px-0 py-0 sm:py-0' : ''
+        )}
         ref={ref}
         {...props}
       >

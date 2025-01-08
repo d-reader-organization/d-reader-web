@@ -5,13 +5,14 @@ import { fetchWrapper } from '../../fetchWrapper'
 import { RequestPasswordResetParams } from '@/models/user/requestPasswordResetParams'
 import { RequestEmailChangeParams } from '@/models/user/requestEmailChangeParams'
 import { ResetPasswordData } from '@/models/auth/resetPassword'
-import { UpdateUserData, User } from '@/models/user'
+import { ConsentType, UpdateUserData, User } from '@/models/user'
 import { Nullable } from '@/models/common'
 import { UpdatePasswordData } from '@/models/auth/updatePassword'
 import { getAccessToken } from '../../utils/auth'
 
 const {
   AVATAR,
+  CREATE,
   USER,
   UPDATE,
   RESET_PASSWORD,
@@ -21,17 +22,19 @@ const {
   VERIFY_EMAIL,
   REQUEST_EMAIL_VERIFICATION,
   REMOVE,
+  PRIVACY_CONSENT,
 } = USER_QUERY_KEYS
 
-export const requestUserPasswordReset = async (body: RequestPasswordResetParams): Promise<void> => {
+export const requestUserPasswordReset = async (body: RequestPasswordResetParams): Promise<string> => {
   const accessToken = getAccessToken()
-  await fetchWrapper<void>({
+  const response = await fetchWrapper<void>({
     accessToken,
     method: 'PATCH',
     body,
     isTextResponse: true,
     path: `${USER}/${REQUEST_PASSWORD_RESET}`,
   })
+  return response.errorMessage ?? ''
 }
 
 export const requestUserEmailChange = async (data: RequestEmailChangeParams): Promise<void> => {
@@ -120,4 +123,17 @@ export const requestUserEmailVerification = async (): Promise<string> => {
     method: 'PATCH',
   })
   return errorMessage ?? ' '
+}
+
+export const createUserConsent = async (payload: {
+  isConsentGiven: boolean
+  consentType: ConsentType
+}): Promise<string> => {
+  const response = await fetchWrapper({
+    accessToken: getAccessToken(),
+    method: 'POST',
+    path: `${USER}/${PRIVACY_CONSENT}/${CREATE}`,
+    body: payload,
+  })
+  return response.errorMessage ?? ''
 }

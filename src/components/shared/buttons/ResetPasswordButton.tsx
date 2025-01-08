@@ -9,11 +9,7 @@ export const ResetPasswordButton: React.FC = () => {
 
   return (
     <>
-      <Button
-        className='inline text-grey-100 !p-0 h-min w-fit hover:brightness-150'
-        variant='ghost'
-        onClick={toggleDialog}
-      >
+      <Button className='hover:brightness-150' variant='ghost' onClick={toggleDialog}>
         <Text
           as='span'
           styleVariant='body-normal'
