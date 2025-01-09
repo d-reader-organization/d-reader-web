@@ -1,8 +1,8 @@
 'use client'
 
 import { registerAction, registerWithGoogleAction } from '@/app/lib/actions/auth/register'
-import React, { useEffect } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
+import React, { useActionState, useEffect } from 'react'
+import { useFormStatus } from 'react-dom'
 import { Label } from '../../ui/Label'
 import { Input } from '../../ui/Input'
 import { Button } from '../../ui/Button'
@@ -60,7 +60,7 @@ type FormProps = {
 
 const RegisterForm: React.FC<FormProps> = ({ isGoogleSignUp, onSuccess }) => {
   const formAction = isGoogleSignUp ? registerWithGoogleAction : registerAction
-  const [state, action] = useFormState(formAction, null)
+  const [state, action] = useActionState(formAction, null)
   const { toast } = useToast()
 
   useEffect(() => {

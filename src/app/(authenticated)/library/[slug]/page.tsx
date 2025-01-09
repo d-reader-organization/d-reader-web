@@ -7,7 +7,11 @@ import { EMPTY_SECTION_STATES } from '@/constants/library'
 import { SlugParamsProps } from '@/lib/types'
 import { TabsContent } from '@radix-ui/react-tabs'
 
-export default async function OwnedIssuesPage({ params: { slug: comicSlug } }: SlugParamsProps) {
+export default async function OwnedIssuesPage(props: SlugParamsProps) {
+  const params = await props.params
+
+  const { slug: comicSlug } = params
+
   const me = await fetchMe()
 
   if (!me) return null

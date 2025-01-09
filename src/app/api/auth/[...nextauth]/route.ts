@@ -39,11 +39,11 @@ const handler = NextAuth({
       })
       const parsed: Authorization | string = await response.json()
       if (typeof parsed === 'string') {
-        cookies().set(googleAccessTokenKey, account?.access_token ?? '')
+        ;(await cookies()).set(googleAccessTokenKey, account?.access_token ?? '')
         return parsed
       }
 
-      parseAndSetCookieAfterAuth(parsed)
+      await parseAndSetCookieAfterAuth(parsed)
       return true
     },
   },

@@ -10,7 +10,7 @@ import { Wallet } from '@/models/wallet'
 const { USER, GET, ME, WALLETS, PRIVACY_CONSENT } = USER_QUERY_KEYS
 
 export const fetchMe = async (): Promise<Nullable<User>> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   if (!accessToken) {
     return null
   }
@@ -24,7 +24,7 @@ export const fetchUserWallets = async (id: string | number): Promise<Wallet[]> =
 }
 
 export const fetchUserConsents = async (): Promise<UserConsent[]> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<UserConsent[]>({
     accessToken,
     path: `${USER}/${PRIVACY_CONSENT}`,

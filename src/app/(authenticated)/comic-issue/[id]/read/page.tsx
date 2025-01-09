@@ -10,8 +10,9 @@ import { ComicIssuePageParams } from '@/models/common'
 import PreviewPagesIcon from 'public/assets/vector-icons/preview-pages-icon.svg'
 import React from 'react'
 
-export default async function ReadComicIssuePage({ params }: ComicIssuePageParams) {
-  const accessToken = getAccessToken()
+export default async function ReadComicIssuePage(props: ComicIssuePageParams) {
+  const params = await props.params
+  const accessToken = await getAccessToken()
   const pages = await fetchComicIssuePages({ id: params.id, accessToken })
   const comicIssue = await fetchComicIssue({ id: params.id, accessToken })
   const me = await fetchMe()

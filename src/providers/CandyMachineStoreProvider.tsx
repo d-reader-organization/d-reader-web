@@ -24,7 +24,7 @@ export type CandyMachineStoreProviderProps = {
 
 export const CandyMachineStoreProvider = ({ accessToken, comicIssue, children }: CandyMachineStoreProviderProps) => {
   const { publicKey } = useWallet()
-  const storeRef = useRef<CandyMachineStoreApi>()
+  const storeRef = useRef<CandyMachineStoreApi>(null)
 
   if (!storeRef.current) {
     storeRef.current = createCandyMachineStore({

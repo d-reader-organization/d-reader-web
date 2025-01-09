@@ -17,13 +17,12 @@ import { ComicIssuePageParams } from '@/models/common'
 import { Metadata } from 'next'
 import { redirect, RedirectType } from 'next/navigation'
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: { id: string }
-  searchParams: { rarity: ComicRarity }
+export async function generateMetadata(props: {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ rarity: ComicRarity }>
 }): Promise<Metadata> {
+  const searchParams = await props.searchParams
+  const params = await props.params
   const metadataImagePath = searchParams.rarity
     ? `/api/metadata/comic-issue/${params.id}?rarity=${searchParams.rarity}`
     : `/api/metadata/comic-issue/${params.id}`
@@ -39,7 +38,8 @@ export async function generateMetadata({
   }
 }
 
-export default async function ClaimPage({ params }: ComicIssuePageParams) {
+export default async function ClaimPage(props: ComicIssuePageParams) {
+  const params = await props.params
   //hotfix: remove it after the monsters claim window expires
   if (params.id === MONSTER_CLAIM_QR_SLUG) {
     redirect(RoutePath.Claim(148), RedirectType.replace)
@@ -47,7 +47,7 @@ export default async function ClaimPage({ params }: ComicIssuePageParams) {
 
   const comicIssue = await fetchPublicComicIssue(params.id)
   if (!comicIssue) return null
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const pages = await fetchComicIssuePages({ id: comicIssue.id, accessToken })
   const candyMachine = await fetchCandyMachine({
     params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
@@ -71,7 +71,7 @@ export default async function ClaimPage({ params }: ComicIssuePageParams) {
           <CandyMachineClaimDetails
             accessToken={accessToken}
             comicIssue={comicIssue}
-            isAuthenticated={isAuthenticatedUser()}
+            isAuthenticated={await isAuthenticatedUser()}
           />
           <Divider className='max-md:hidden' />
           <div className='flex flex-col 1160:flex-row gap-10 justify-between'>

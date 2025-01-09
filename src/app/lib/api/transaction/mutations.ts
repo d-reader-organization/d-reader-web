@@ -11,7 +11,7 @@ export const sendMintTransaction = async (
   transactions: string[]
 ): Promise<string | undefined> => {
   const response = await fetchWrapper<void>({
-    accessToken: getAccessToken(),
+    accessToken: await getAccessToken(),
     path: `${TRANSACTION}/${SEND_MINT_TRANSACTION}/${walletAddress}`,
     method: 'POST',
     body: { transactions },

@@ -4,7 +4,7 @@ import React, { RefObject, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Text, TextProps, TextRef } from './Text'
 
-const createRefForVariant = (variant: TextProps['as']): RefObject<TextRef> => {
+const createRefForVariant = (variant: TextProps['as']): RefObject<TextRef | null> => {
   switch (variant) {
     case 'span':
       return React.createRef<HTMLSpanElement>()

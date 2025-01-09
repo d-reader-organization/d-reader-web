@@ -12,7 +12,7 @@ import { Metadata } from 'next'
 import { isAuthenticatedUser } from '@/app/lib/utils/auth'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export const metadata: Metadata = {
@@ -46,7 +46,8 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 }
 
-export default async function ProjectInvestPage({ params }: Props) {
+export default async function ProjectInvestPage(props: Props) {
+  const params = await props.params
   const { data: project, errorMessage } = await fetchProject(params.slug)
 
   if (!project || errorMessage) {
@@ -54,7 +55,7 @@ export default async function ProjectInvestPage({ params }: Props) {
   }
 
   const receipts = await fetchUserInterestedReceipts(project.slug)
-
+  const isAuthenticated = await isAuthenticatedUser()
   return (
     <BaseLayout showFooter>
       <div className='flex flex-col max-w-screen-xl w-full'>
@@ -69,7 +70,7 @@ export default async function ProjectInvestPage({ params }: Props) {
             />
             <ProjectHeader title={project.title} subtitle={project.subtitle} className='md:hidden' />
             <ProjectFundingCard
-              isAuthenticated={isAuthenticatedUser()}
+              isAuthenticated={isAuthenticated}
               funding={project.funding}
               slug={project.slug}
               className='md:hidden'
@@ -80,7 +81,7 @@ export default async function ProjectInvestPage({ params }: Props) {
           </div>
           <div className='flex flex-col'>
             <ProjectFundingCard
-              isAuthenticated={isAuthenticatedUser()}
+              isAuthenticated={isAuthenticated}
               funding={project.funding}
               slug={project.slug}
               className='max-md:hidden'

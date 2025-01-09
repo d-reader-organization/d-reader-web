@@ -6,7 +6,8 @@ type Params = {
   verificationToken: string
 }
 
-export default async function ResetPasswordPage({ params }: { params: Params }) {
+export default async function ResetPasswordPage(props: { params: Promise<Params> }) {
+  const params = await props.params
   return (
     <main className='h-screen w-full flex justify-center items-center flex-col gap-4'>
       <Text as='h1' styleVariant='primary-heading'>

@@ -1,6 +1,5 @@
 'use client'
 
-import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { RequireAuthWrapperButton } from './RequireAuthWrapperButton'
 import { cn } from '@/lib/utils'
@@ -11,12 +10,9 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 
 export const ReadMoreButton: React.FC<Props> = ({ className }) => {
   const { refresh } = useRouter()
-  const [, startTransition] = useTransition()
 
-  const handleSubmit = async () => {
-    startTransition(async () => {
-      refresh()
-    })
+  const handleSubmit = () => {
+    refresh()
   }
 
   return (

@@ -24,7 +24,7 @@ const ConnectWalletContent: React.FC<Props> = ({ isGoogleSignUp, onSkip }) => {
   const redirectTo = searchParams.get(REDIRECT_TO_KEY)
 
   return (
-    <main className='container flex flex-col max-w-md mb-8'>
+    <main className='container flex flex-col items-center max-w-md mb-8 gap-4'>
       <Text as='h2' styleVariant='primary-heading' className='text-center my-4 sm:my-8'>
         Connect wallet
       </Text>

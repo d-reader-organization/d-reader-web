@@ -15,13 +15,12 @@ import { ComicIssuePageParams } from '@/models/common'
 import { CandyMachineStoreProvider } from '@/providers/CandyMachineStoreProvider'
 import { Metadata } from 'next'
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: { id: string }
-  searchParams: { rarity: ComicRarity }
+export async function generateMetadata(props: {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ rarity: ComicRarity }>
 }): Promise<Metadata> {
+  const searchParams = await props.searchParams
+  const params = await props.params
   const metadataImagePath = searchParams.rarity
     ? `/api/metadata/comic-issue/${params.id}?rarity=${searchParams.rarity}`
     : `/api/metadata/comic-issue/${params.id}`
@@ -37,15 +36,16 @@ export async function generateMetadata({
   }
 }
 
-export default async function MintPage({ params }: ComicIssuePageParams) {
-  const accessToken = getAccessToken()
+export default async function MintPage(props: ComicIssuePageParams) {
+  const params = await props.params
+  const accessToken = await getAccessToken()
   const comicIssue = await fetchPublicComicIssue(params.id)
   if (!comicIssue) return null
   const pages = await fetchComicIssuePages({ id: comicIssue.id, accessToken })
   const candyMachine = await fetchCandyMachine({
     params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
   })
-
+  const isAuthenticated = await isAuthenticatedUser()
   return (
     <BaseLayout>
       <MintPageWelcomeDialog />
@@ -62,11 +62,7 @@ export default async function MintPage({ params }: ComicIssuePageParams) {
             </Text>
           </div>
           <CandyMachineStoreProvider accessToken={accessToken} comicIssue={comicIssue}>
-            <CandyMachineDetails
-              accessToken={accessToken}
-              comicIssue={comicIssue}
-              isAuthenticated={isAuthenticatedUser()}
-            />
+            <CandyMachineDetails accessToken={accessToken} comicIssue={comicIssue} isAuthenticated={isAuthenticated} />
           </CandyMachineStoreProvider>
           <Divider className='max-md:hidden' />
           <div className='flex flex-col 1160:flex-row gap-10 justify-between'>

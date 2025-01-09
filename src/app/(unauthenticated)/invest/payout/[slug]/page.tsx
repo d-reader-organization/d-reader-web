@@ -9,7 +9,7 @@ import { ProjectCreatorSection } from '@/components/shared/ProjectCreatorSection
 import { notFound } from 'next/navigation'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 function fetchSuccessfulProject(slug: string): SuccessfulProject | undefined {
@@ -18,7 +18,8 @@ function fetchSuccessfulProject(slug: string): SuccessfulProject | undefined {
   return isSuccessfulProject(project) ? project : undefined
 }
 
-export default async function PayoutPage({ params }: Props) {
+export default async function PayoutPage(props: Props) {
+  const params = await props.params
   const project = fetchSuccessfulProject(params.slug)
 
   if (!project) {
