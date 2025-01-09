@@ -14,7 +14,7 @@ type Props = {
 export const CarouselDots: React.FC<Props> = ({
   emblaApi,
   selectedIndex,
-  selectedSliderColor = 'bg-yellow-500',
+  selectedSliderColor = 'bg-yellow-300',
   slides,
   topWidget,
 }) => (

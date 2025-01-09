@@ -33,7 +33,7 @@ export const MobileNav: React.FC<Props> = ({ user }) => {
   // const isMarketplace = pathname.startsWith(RoutePath.Marketplace)
   const isLibrary = pathname.startsWith(RoutePath.Library)
   const isProfile = pathname.startsWith(RoutePath.Profile)
-  const activeLinkColor = isInvest ? 'text-green-genesis' : 'text-yellow-500'
+  const activeLinkColor = isInvest ? 'text-green-genesis' : 'text-yellow-300'
 
   if (isInvest) return <GenesisMobileNavigation user={user} />
 

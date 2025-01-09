@@ -54,7 +54,7 @@ export const loginAction = async (
 
     await parseAndSetCookieAfterAuth(response.data)
     revalidatePath(RoutePath.Login)
-  } catch (error) {
+  } catch (_) {
     return {
       error: `Failed to login user`,
       success: false,

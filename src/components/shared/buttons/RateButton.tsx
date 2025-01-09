@@ -27,10 +27,10 @@ export const RateButton: React.FC<Props> = ({ comicSlug, comicIssueId, rating, a
         variant='outline'
         className={cn(
           'rounded-xl min-w-[80px] w-[80px]',
-          rating && 'bg-yellow-500 bg-opacity-40 text-yellow-500 border-0',
+          rating && 'bg-yellow-300 bg-opacity-40 text-yellow-300 border-0',
           className
         )}
-        iconClassname={cn(rating && 'fill-yellow-500')}
+        iconClassname={cn(rating && 'fill-yellow-300')}
       >
         <Text
           as='span'

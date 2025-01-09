@@ -35,7 +35,7 @@ export const DefaultComicIssueCard: React.FC<Props> = ({ comicIssue, className }
           as='span'
           styleVariant='body-small'
           fontWeight='bold'
-          className='bg-yellow-500 rounded-xl p-1 px-2 text-black absolute right-3 top-3 max-sm:text-xxs'
+          className='bg-yellow-300 rounded-xl p-1 px-2 text-black absolute right-3 top-3 max-sm:text-xxs'
         >
           FREE
         </Text>

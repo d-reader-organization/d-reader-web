@@ -19,7 +19,7 @@ export const AuthProfileContent: React.FC<AuthProfileContentProps> = ({ user }) 
   const isLibrary = pathname.startsWith(RoutePath.Library)
   const isProfile = pathname.startsWith(RoutePath.Profile)
   const isInvest = pathname.startsWith(RoutePath.Invest)
-  const activeLinkColor = isInvest ? 'text-green-genesis' : 'text-yellow-500'
+  const activeLinkColor = isInvest ? 'text-green-genesis' : 'text-yellow-300'
   const { publicKey } = useWallet()
 
   return (

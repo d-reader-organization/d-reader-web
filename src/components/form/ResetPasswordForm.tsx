@@ -7,6 +7,7 @@ import { Loader } from '../shared/Loader'
 import { resetPasswordAction } from '@/app/lib/actions/auth/reset-password'
 import { FormErrorMessage } from './FormErrorMessage'
 import { findError } from '@/lib/forms'
+import { onSubmitPreventFormListener } from '@/app/lib/utils/submitFormWithPreventDefault'
 
 type Props = {
   verificationToken: string
@@ -31,7 +32,7 @@ export const ResetPasswordForm: React.FC<Props> = ({ verificationToken }) => {
   }, [state?.error, state?.success])
 
   return (
-    <form action={action} className='flex flex-col items-center gap-4'>
+    <form action={action} onSubmit={onSubmitPreventFormListener(action)} className='flex flex-col items-center gap-4'>
       <div className='flex flex-col'>
         <div className='flex flex-col w-full space-y-2'>
           <Label>Password</Label>

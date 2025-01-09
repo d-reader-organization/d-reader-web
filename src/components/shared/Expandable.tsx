@@ -119,7 +119,7 @@ export const CurrencyExpandable: React.FC<CurrencyExpandableProps> = ({
   useEventListener('resize', handleContentHeightChange)
 
   // const discountWidget = (
-  //   <div className='p-1.5 flex justify-center items-center rounded-xl bg-yellow-500'>
+  //   <div className='p-1.5 flex justify-center items-center rounded-xl bg-yellow-300'>
   //     <span className='text-base text-grey-600 font-bold leading-[22.4px]'>-{100}&#37;</span>
   //   </div>
   // )

@@ -44,7 +44,7 @@ export const OwnedAssetPreview: React.FC<Props> = ({ asset, comicIssue }) => (
               </Text>
             </Button> */}
           <Link
-            className='bg-yellow-500 w-full flex justify-center items-center h-10 sm:h-[52px] p-1 sm:p-4 rounded-xl'
+            className='bg-yellow-300 w-full flex justify-center items-center h-10 sm:h-[52px] p-1 sm:p-4 rounded-xl'
             href={RoutePath.ReadComicIssue(asset.comicIssueId)}
             prefetch={false}
           >

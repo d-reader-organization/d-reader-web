@@ -18,7 +18,7 @@ type Props = {
 }
 
 export const EReaderNavigation: React.FC<Props> = ({ comicIssue, hideNavigation = false }) => {
-  const navigationLinkStyle = 'hover:text-yellow-500 hover:[&>*]:text-yellow-500 text-lg'
+  const navigationLinkStyle = 'hover:text-yellow-300 hover:[&>*]:text-yellow-300 text-lg'
   const arrowRightReversedStyle = 'h-[18px] text-text-color rotate-180'
   const { back } = useRouter()
   const commands = (

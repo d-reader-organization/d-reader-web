@@ -6,6 +6,7 @@ import { Button } from '../ui/Button'
 import { useFormStatus } from 'react-dom'
 import { requestPasswordResetAction } from '@/app/lib/actions/auth/request-password-reset'
 import { toast } from '../ui/toast'
+import { onSubmitPreventFormListener } from '@/app/lib/utils/submitFormWithPreventDefault'
 
 type Props = {
   onClose: () => void
@@ -33,7 +34,7 @@ export const ForgotPasswordForm: React.FC<Props> = ({ onClose }) => {
   }, [state])
 
   return (
-    <form action={action}>
+    <form action={action} onSubmit={onSubmitPreventFormListener(action)}>
       <Input className='w-full m-4' name='nameOrEmail' placeholder='john.doe@dreader.io' />
       <div className='flex w-full border-t-2 border-grey-600'>
         <Button

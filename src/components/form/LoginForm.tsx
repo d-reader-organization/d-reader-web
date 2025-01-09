@@ -8,6 +8,7 @@ import { useSearchParams } from 'next/navigation'
 import { REDIRECT_TO_KEY } from '@/constants/general'
 import { Loader } from '../shared/Loader'
 import { FormErrorMessage } from './FormErrorMessage'
+import { onSubmitPreventFormListener } from '@/app/lib/utils/submitFormWithPreventDefault'
 
 const SubmitButton: React.FC = () => {
   const { pending } = useFormStatus()
@@ -34,7 +35,7 @@ const Form: React.FC = () => {
   }, [state?.error])
 
   return (
-    <form action={action} className='space-y-4'>
+    <form action={action} className='space-y-4' onSubmit={onSubmitPreventFormListener(action)}>
       <div className='space-y-6'>
         <div className='flex flex-col w-full space-y-2'>
           <Label>Email or username</Label>

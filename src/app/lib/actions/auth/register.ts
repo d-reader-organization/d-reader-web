@@ -43,7 +43,7 @@ const registerAction = async (_: AuthFormState | null, formData: FormData): Prom
 
     await parseAndSetCookieAfterAuth(response.data)
     revalidatePath(RoutePath.Register)
-  } catch (error) {
+  } catch (_) {
     return { error: `Failed to register user`, success: false }
   }
   return { success: true }
@@ -83,7 +83,7 @@ const registerWithGoogleAction = async (
     await parseAndSetCookieAfterAuth(response.data)
     ;(await cookies()).delete(googleAccessTokenKey)
     revalidatePath(RoutePath.Register)
-  } catch (error) {
+  } catch (_) {
     return { error: `Failed to register user`, success: false }
   }
   return { success: true }

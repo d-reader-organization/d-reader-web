@@ -18,7 +18,7 @@ export const CouponCardButton: React.FC<CardProps> = ({ coupon, discount, isSele
     disabled={!coupon.stats.isEligible}
     className={cn(
       'flex md:flex-col justify-between md:justify-center items-center md:items-start gap-3 p-4 rounded-xl bg-black bg-opacity-20 border border-dashed border-grey-200 w-full md:max-w-[212px] h-full max-h-20 md:max-h-[120px]',
-      isSelected && 'border border-solid border-yellow-500 bg-yellow-500 bg-opacity-10',
+      isSelected && 'border border-solid border-yellow-300 bg-yellow-300 bg-opacity-10',
       !coupon.stats.isEligible && 'opacity-40'
     )}
     onClick={onClick}

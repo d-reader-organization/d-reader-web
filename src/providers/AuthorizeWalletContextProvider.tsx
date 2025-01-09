@@ -87,7 +87,7 @@ export function AuthorizeWalletProvider({ children }: { children: ReactNode }) {
         }
 
         if (typeof callback === 'function') callback()
-      } catch (error) {
+      } catch (_) {
         toast({ description: `Authorization failed`, variant: 'error' })
       } finally {
         setIsAuthorizing(false)

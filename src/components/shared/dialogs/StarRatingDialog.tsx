@@ -57,7 +57,7 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
         <div className='flex flex-col items-center justify-center text-center py-8 px-4 text-base md:text-lg'>
           <strong>Rate the episode</strong>
           Tap a star to give a rating!
-          <div className='mt-4 flex gap-3 [&>*]:text-yellow-500'>
+          <div className='mt-4 flex gap-3 [&>*]:text-yellow-300'>
             {[1, 2, 3, 4, 5].map((star) => (
               <StarIcon
                 style={{ cursor: 'pointer' }}

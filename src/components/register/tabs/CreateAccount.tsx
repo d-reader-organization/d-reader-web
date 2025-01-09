@@ -17,6 +17,7 @@ import { Loader } from '@/components/shared/Loader'
 import { ParsedFormError } from '@/models/common'
 import { FormErrorMessage } from '@/components/form/FormErrorMessage'
 import { findError } from '@/lib/forms'
+import { onSubmitPreventFormListener } from '@/app/lib/utils/submitFormWithPreventDefault'
 
 type Props = { isGoogleSignUp?: boolean; onSuccess: () => void }
 
@@ -91,7 +92,7 @@ type RegisterFormProps = {
 }
 
 const RegularForm: React.FC<RegisterFormProps> = ({ action, error, errors }) => (
-  <form action={action} className='flex flex-col gap-6'>
+  <form action={action} onSubmit={onSubmitPreventFormListener(action)} className='flex flex-col gap-6'>
     <div className='flex flex-col gap-6'>
       <div className='flex flex-col w-full space-y-2'>
         <Label>Username</Label>
@@ -115,7 +116,7 @@ const RegularForm: React.FC<RegisterFormProps> = ({ action, error, errors }) => 
 )
 
 const GoogleForm: React.FC<RegisterFormProps> = ({ action, errors }) => (
-  <form action={action} className='flex flex-col gap-6'>
+  <form action={action} onSubmit={onSubmitPreventFormListener(action)} className='flex flex-col gap-6'>
     <Label>Username</Label>
     <FormErrorMessage message={findError(errors, 'name')} />
     <Input placeholder='john-doe' name='name' />

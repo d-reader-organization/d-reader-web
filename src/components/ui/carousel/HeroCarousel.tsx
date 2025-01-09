@@ -44,7 +44,7 @@ export const HeroCarousel: React.FC<Props> = ({ slides }) => {
           onClick={() => emblaApi && emblaApi.scrollTo(dotIndex)}
         >
           <span
-            className={cn('flex w-full', dotIndex === currentSlide ? 'bg-yellow-500 h-[3px]' : 'bg-grey-200 h-[1px]')}
+            className={cn('flex w-full', dotIndex === currentSlide ? 'bg-yellow-300 h-[3px]' : 'bg-grey-200 h-[1px]')}
           ></span>
         </button>
       ))}
@@ -74,7 +74,11 @@ export const HeroCarousel: React.FC<Props> = ({ slides }) => {
                   name={slide.title}
                   onClick={() => {
                     if (index !== currentSlide) {
-                      isNextSlide ? emblaApi?.scrollNext() : emblaApi?.scrollPrev()
+                      if (isNextSlide) {
+                        emblaApi?.scrollNext()
+                        return
+                      }
+                      emblaApi?.scrollPrev()
                     }
                   }}
                   className={cn(
@@ -126,7 +130,7 @@ export const HeroCarousel: React.FC<Props> = ({ slides }) => {
                         {slide.subtitle}
                       </Text>
                     </div>
-                    <div className='bg-yellow-500 px-2 py-2 sm:px-5 sm:py-3 rounded-lg sm:rounded-xl backdrop-blur-md flex justify-center items-center h-7 sm:h-[42px] w-fit'>
+                    <div className='bg-yellow-300 px-2 py-2 sm:px-5 sm:py-3 rounded-lg sm:rounded-xl backdrop-blur-md flex justify-center items-center h-7 sm:h-[42px] w-fit'>
                       <Text as='span' styleVariant='body-small' fontWeight='bold' className='text-black uppercase'>
                         {linkTag?.title ?? 'See details'}
                       </Text>

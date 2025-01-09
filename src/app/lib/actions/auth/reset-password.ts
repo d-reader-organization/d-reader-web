@@ -23,7 +23,7 @@ export const resetPasswordAction = async (
     await resetUserPassword(parsed.data)
 
     return { success: true }
-  } catch (error) {
+  } catch (_) {
     return {
       error: `Failed to reset user password`,
       success: false,

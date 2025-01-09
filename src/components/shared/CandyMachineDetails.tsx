@@ -148,7 +148,7 @@ const CurrencyRow: React.FC<CurrencyRowProps> = ({ isSelected = false, token, se
     <button
       className={cn(
         'flex justify-between items-center p-4 rounded-2xl border border-grey-300 bg-grey-600',
-        isSelected && 'border border-yellow-500 bg-yellow-500 bg-opacity-[0.08]'
+        isSelected && 'border border-yellow-300 bg-yellow-300 bg-opacity-[0.08]'
       )}
       onClick={() => setCurrency(currencySetting)}
     >

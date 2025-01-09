@@ -20,7 +20,7 @@ export const requestPasswordResetAction = async (
   try {
     const errorMessage = await requestUserPasswordReset({ nameOrEmail: parsed.data.nameOrEmail })
     return { success: !errorMessage, error: errorMessage }
-  } catch (error) {
+  } catch (_) {
     return {
       error: `Failed to send reset password email`,
       success: false,
