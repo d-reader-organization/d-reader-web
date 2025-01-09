@@ -17,7 +17,7 @@ export const NavItemLink: React.FC<NavigationLinkProps> = ({
   href,
   isActive,
   title,
-  activeColor = 'text-yellow-500',
+  activeColor = 'text-yellow-300',
   as = 'p',
   isComingSoon = false,
   disabled = false,

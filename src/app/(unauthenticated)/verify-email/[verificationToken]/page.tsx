@@ -45,7 +45,7 @@ export default async function VerifyEmailPage(props: { params: Promise<Params> }
             dReader is a platform for discovering, reading, collecting, and trading digital comics.
           </p>
           <p className='text-xl font-medium'>
-            Sign in & <span className='text-yellow-500'>start collecting</span>!
+            Sign in & <span className='text-yellow-300'>start collecting</span>!
           </p>
         </div>
       </div>

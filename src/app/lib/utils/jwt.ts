@@ -5,7 +5,7 @@ export function isTokenValid(token: string): boolean {
     const decoded = decodeJwt(token)
     const currentTime = Date.now() / 1000
     return !!decoded.exp && decoded.exp >= currentTime
-  } catch (error) {
+  } catch (_) {
     return false
   }
 }

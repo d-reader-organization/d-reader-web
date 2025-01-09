@@ -18,7 +18,7 @@ export const UnwrapIssueDialog: React.FC<Props> = ({ accessToken, assets, showUn
   return (
     <Dialog open={unwrapIssueDialog} onOpenChange={toggleDialog}>
       {showUnwrapButton && (
-        <DialogTrigger className='bg-yellow-500 rounded-lg text-black p-2 font-semibold text-base min-w-28 w-min mx-auto'>
+        <DialogTrigger className='bg-yellow-300 rounded-lg text-black p-2 font-semibold text-base min-w-28 w-min mx-auto'>
           Unwrap
         </DialogTrigger>
       )}

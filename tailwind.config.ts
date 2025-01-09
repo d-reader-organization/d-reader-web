@@ -80,12 +80,14 @@ const config = {
           accent: '#07BD74',
         },
         yellow: {
-          50: '#fffce3',
+          50: '#FFFCE3',
           100: '#FFF8B8',
           200: '#FFF387',
-          400: '#fff174',
-          500: '#fceb54', // main
-          600: '#cabc41',
+          300: '#FCEB54', // main
+          400: '#CEC149',
+          500: '#A0963E',
+          600: '#716C32',
+          700: '#434127',
         },
         orange: {
           100: '#FFBF78',

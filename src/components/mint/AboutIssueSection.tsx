@@ -40,7 +40,7 @@ export const AboutIssueSection: React.FC<Props> = ({ comicIssue, targetBlank }) 
         </Link>
         {comicIssue.collectibleInfo && !comicIssue.collectibleInfo?.activeCandyMachineAddress && (
           <Link
-            className='max-h-9 px-3 py-2 flex gap-2 justify-center items-center rounded-lg bg-yellow-500'
+            className='max-h-9 px-3 py-2 flex gap-2 justify-center items-center rounded-lg bg-yellow-300'
             href={`https://www.tensor.trade/trade/${comicIssue.collectibleInfo.collectionAddress}`}
             target='_blank'
           >

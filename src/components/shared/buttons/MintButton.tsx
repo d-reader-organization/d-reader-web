@@ -166,7 +166,7 @@ export const MintButton: React.FC<Props> = ({ accessToken, comicIssue, isAuthent
         try {
           const serializedTransaction = Buffer.from(transaction.serialize()).toString('base64')
           serializedTransactions.push(serializedTransaction)
-        } catch (e) {
+        } catch (_) {
           clearTimeout(timeoutId)
           setIsMintTransactionLoading(false)
           closeConfirmingTransaction()

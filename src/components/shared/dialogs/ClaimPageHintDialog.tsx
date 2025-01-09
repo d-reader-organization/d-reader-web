@@ -19,7 +19,7 @@ export const ClaimPageHintDialog: React.FC = () => {
     try {
       toggleClaimHintDialog()
       setIsDialogRead(true)
-    } catch (e) {
+    } catch (_) {
       toast({ description: 'failed to connect wallet, try again!', variant: 'error' })
     }
   }

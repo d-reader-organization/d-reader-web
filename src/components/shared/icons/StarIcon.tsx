@@ -16,6 +16,6 @@ export const StarIcon: React.FC<Props> = ({ solid = false, size = 'md', classNam
     'h-[22px]': size === 'xl',
   }
 
-  if (solid) return <StarSolidIcon className={clsx(className, 'text-yellow-500', sharedClasses)} {...props} />
+  if (solid) return <StarSolidIcon className={clsx(className, 'text-yellow-300', sharedClasses)} {...props} />
   else return <StarOutlinedIcon className={clsx(className, 'star-icon--outlined', sharedClasses)} {...props} />
 }

@@ -39,7 +39,7 @@ export const ExpandableText = ({ className, text, maxLines = 2 }: ExpandableText
       {showToggle && (
         <button
           onClick={toggleExpand}
-          className='flex items-center text-yellow-500'
+          className='flex items-center text-yellow-300'
           aria-expanded={isExpanded}
           aria-controls='expandable-text'
         >

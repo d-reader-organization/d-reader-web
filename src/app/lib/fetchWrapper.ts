@@ -10,7 +10,6 @@ type ParamsType = Record<string, unknown>
 
 const generateQueryParams = (params: ParamsType) =>
   Object.entries(params).reduce((prev, [key, value]) => {
-    // console.log(`${key}: ${value} | ${typeof value}`)
     if (isUndefined(value) || value === '') return prev
     else return { ...prev, [key]: `${value}` }
   }, {})
@@ -82,7 +81,7 @@ export async function fetchWrapper<T>({
       data: parsed,
       status: responseStatus,
     }
-  } catch (error) {
+  } catch (_) {
     return {
       data: null,
       errorMessage: 'Something went wrong',

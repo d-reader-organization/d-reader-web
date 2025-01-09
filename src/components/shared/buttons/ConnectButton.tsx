@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 import { Text } from '../../ui/Text'
 import { useAuthorizeWalletContext } from '@/providers/AuthorizeWalletContextProvider'
 import { useToggle } from '@/hooks'
-require('@solana/wallet-adapter-react-ui/styles.css')
+import '@solana/wallet-adapter-react-ui/styles.css'
 
 type Props = {
   text?: string
