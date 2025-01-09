@@ -41,7 +41,7 @@ const registerAction = async (_: AuthFormState | null, formData: FormData): Prom
       }
     }
 
-    parseAndSetCookieAfterAuth(response.data)
+    await parseAndSetCookieAfterAuth(response.data)
     revalidatePath(RoutePath.Register)
   } catch (error) {
     return { error: `Failed to register user`, success: false }
@@ -65,7 +65,7 @@ const registerWithGoogleAction = async (
     const response = await fetchWrapper<Authorization>({
       body: parsed.data,
       headers: {
-        authorization: `Google ${cookies().get(googleAccessTokenKey)?.value}`,
+        authorization: `Google ${(await cookies()).get(googleAccessTokenKey)?.value}`,
       },
       method: 'POST',
       path: `${AUTH}/${USER}/${REGISTER_WITH_GOOGLE}`,
@@ -80,8 +80,8 @@ const registerWithGoogleAction = async (
         success: false,
       }
     }
-    parseAndSetCookieAfterAuth(response.data)
-    cookies().delete(googleAccessTokenKey)
+    await parseAndSetCookieAfterAuth(response.data)
+    ;(await cookies()).delete(googleAccessTokenKey)
     revalidatePath(RoutePath.Register)
   } catch (error) {
     return { error: `Failed to register user`, success: false }

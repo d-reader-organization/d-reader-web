@@ -52,7 +52,7 @@ export const loginAction = async (
       }
     }
 
-    parseAndSetCookieAfterAuth(response.data)
+    await parseAndSetCookieAfterAuth(response.data)
     revalidatePath(RoutePath.Login)
   } catch (error) {
     return {
@@ -64,18 +64,21 @@ export const loginAction = async (
   redirect(redirectTo ?? RoutePath.Home, RedirectType.replace)
 }
 
-export const parseAndSetCookieAfterAuth = (data: Authorization): void => {
+export const parseAndSetCookieAfterAuth = async (data: Authorization): Promise<void> => {
   const { accessToken, refreshToken } = data
-  setCookie({
-    name: accessTokenKey,
-    value: accessToken,
-  })
-  setCookie({
-    name: refreshTokenKey,
-    value: refreshToken,
-  })
+  await Promise.all([
+    setCookie({
+      name: accessTokenKey,
+      value: accessToken,
+    }),
+    setCookie({
+      name: refreshTokenKey,
+      value: refreshToken,
+    }),
+  ])
 }
 
-export const setCookie = ({ name, value }: { name: string; value: string }) => {
-  cookies().set(name, value, jwtCookieProps)
+export const setCookie = async ({ name, value }: { name: string; value: string }) => {
+  const cookieStore = await cookies()
+  cookieStore.set(name, value, jwtCookieProps)
 }

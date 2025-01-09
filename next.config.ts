@@ -1,12 +1,10 @@
-const withMDX = require('@next/mdx')()
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  disable: process.env.NODE_ENV === 'development',
-  mode: 'production',
-})
-const path = require('path')
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import { NextConfig } from 'next'
+import * as path from 'path'
+import createMDX from '@next/mdx'
+import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
+
+const nextConfig: NextConfig = {
   async headers() {
     return [
       {
@@ -26,11 +24,7 @@ const nextConfig = {
   env: {
     TIPLINK_CLIENT_ID: process.env.TIPLINK_CLIENT_ID,
   },
-  // Configure `pageExtensions` to include MDX files
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  // experimental: {
-  // 	missingSuspenseWithCSRBailout: false,
-  // },
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
@@ -78,4 +72,5 @@ const nextConfig = {
   },
 }
 
-module.exports = withPWA(withMDX(nextConfig))
+const withMDX = createMDX({ options: { rehypePlugins: [rehypeRaw], remarkPlugins: [remarkGfm] } })
+export default withMDX(nextConfig)

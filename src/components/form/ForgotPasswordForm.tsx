@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useActionState, useEffect } from 'react'
 import { Input } from '../ui/Input'
 import { Button } from '../ui/Button'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormStatus } from 'react-dom'
 import { requestPasswordResetAction } from '@/app/lib/actions/auth/request-password-reset'
 import { toast } from '../ui/toast'
 
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const ForgotPasswordForm: React.FC<Props> = ({ onClose }) => {
-  const [state, action] = useFormState(requestPasswordResetAction, null)
+  const [state, action] = useActionState(requestPasswordResetAction, null)
 
   useEffect(() => {
     if (!state) {

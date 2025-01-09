@@ -26,7 +26,7 @@ const {
 } = USER_QUERY_KEYS
 
 export const requestUserPasswordReset = async (body: RequestPasswordResetParams): Promise<string> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<void>({
     accessToken,
     method: 'PATCH',
@@ -47,7 +47,7 @@ export const requestUserEmailChange = async (data: RequestEmailChangeParams): Pr
 }
 
 export const resetUserPassword = async (resetPasswordData: ResetPasswordData): Promise<void> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   await fetchWrapper({
     accessToken,
     path: `${USER}/${RESET_PASSWORD}`,
@@ -58,7 +58,7 @@ export const resetUserPassword = async (resetPasswordData: ResetPasswordData): P
 }
 
 export const updateUser = async (id: string | number, request: UpdateUserData): Promise<{ errorMessage?: string }> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<User>({
     accessToken,
     path: `${USER}/${UPDATE}/${id}`,
@@ -69,7 +69,7 @@ export const updateUser = async (id: string | number, request: UpdateUserData): 
 }
 
 export const updateUserAvatar = async (id: string | number, request: FormData): Promise<{ errorMessage?: string }> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<User>({
     accessToken,
     path: `${USER}/${UPDATE}/${id}/${AVATAR}`,
@@ -81,7 +81,7 @@ export const updateUserAvatar = async (id: string | number, request: FormData): 
 }
 
 export const removeUserProfilePhoto = async (id: string | number): Promise<{ errorMessage?: string }> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<User>({
     accessToken,
     path: `${USER}/${REMOVE}/${id}/${AVATAR}`,
@@ -95,7 +95,7 @@ export const updateUserPassword = async (
   id: string | number,
   request: UpdatePasswordData
 ): Promise<{ errorMessage?: string }> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<void>({
     accessToken,
     method: 'PATCH',
@@ -106,7 +106,7 @@ export const updateUserPassword = async (
 }
 
 export const verifyUserEmail = async (verificationToken: string): Promise<Nullable<User>> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<User>({
     accessToken,
     method: 'PATCH',
@@ -116,7 +116,7 @@ export const verifyUserEmail = async (verificationToken: string): Promise<Nullab
 }
 
 export const requestUserEmailVerification = async (): Promise<string> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const { errorMessage } = await fetchWrapper<void>({
     accessToken,
     path: `${USER}/${REQUEST_EMAIL_VERIFICATION}`,
@@ -130,7 +130,7 @@ export const createUserConsent = async (payload: {
   consentType: ConsentType
 }): Promise<string> => {
   const response = await fetchWrapper({
-    accessToken: getAccessToken(),
+    accessToken: await getAccessToken(),
     method: 'POST',
     path: `${USER}/${PRIVACY_CONSENT}/${CREATE}`,
     body: payload,

@@ -7,9 +7,9 @@ import { RoutePath } from '@/enums/routePath'
 import { ArrowRightIcon } from 'lucide-react'
 import { PrivacyConsentSwitch } from './ConsentSwitch'
 import { toast } from '../ui/toast'
-import { useEffect } from 'react'
+import { useActionState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormStatus } from 'react-dom'
 import { dataAnalyticsConsentSwitch, marketingConsentSwitch } from '@/constants/keys'
 import { createConsentsAction } from '@/app/lib/actions/profile/create-consent'
 
@@ -22,7 +22,7 @@ export const PrivacySettings: React.FC<Props> = ({
   initialDataAnalyticsConsentGiven,
   initialMarketingConsentGiven,
 }) => {
-  const [state, action] = useFormState(
+  const [state, action] = useActionState(
     createConsentsAction.bind(null, {
       isDataAnalyticsConsentGiven: initialDataAnalyticsConsentGiven,
       isMarketingConsentGiven: initialMarketingConsentGiven,

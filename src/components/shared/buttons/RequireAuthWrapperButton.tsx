@@ -2,7 +2,7 @@
 
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { Button, type ButtonProps } from '@/components/ui/Button'
-import { useState, type MouseEvent } from 'react'
+import { useState, useTransition, type MouseEvent } from 'react'
 import { RequireAuthDialog } from '../dialogs/RequireAuthenticationDialog'
 
 type Props = React.PropsWithChildren &
@@ -10,25 +10,25 @@ type Props = React.PropsWithChildren &
 
 export const RequireAuthWrapperButton: React.FC<Props> = ({ children, onClick, ...props }) => {
   const [showRequireAuthDialog, setShowRequireAuthDialog] = useState<boolean>(false)
-  const [isDisabled, setIsDisabled] = useState<boolean>(false)
-  const submitWrapper = async (event: MouseEvent<HTMLButtonElement>) => {
+  const [pending, startTransition] = useTransition()
+  const submitWrapper = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    if (!onClick || isDisabled) {
+    if (!onClick || pending) {
       return
     }
-    setIsDisabled(true)
-    const me = await fetchMe()
-    if (!me) {
-      setIsDisabled(false)
-      setShowRequireAuthDialog(true)
-      return
-    }
-    await onClick(event)
-    setIsDisabled(false)
+    startTransition(async () => {
+      const me = await fetchMe()
+      if (!me) {
+        setShowRequireAuthDialog(true)
+        return
+      }
+      await onClick(event)
+    })
   }
+
   return (
     <>
-      <Button {...props} onClick={submitWrapper} aria-disabled={isDisabled} disabled={isDisabled}>
+      <Button {...props} onClick={submitWrapper} disabled={pending}>
         {children}
       </Button>
       <RequireAuthDialog

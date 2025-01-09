@@ -9,7 +9,7 @@ import { baseApiUrl } from '@/constants/general'
 const { AUTH, WALLET, CONNECT, DISCONNECT, REQUEST_PASSWORD, USER, REFRESH_TOKEN } = AUTH_QUERY_KEYS
 
 export const connectUserWallet = async (data: ConnectWalletData): Promise<{ errorMessage?: string }> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<void>({
     accessToken,
     path: `${AUTH}/${WALLET}/${CONNECT}`,
@@ -20,7 +20,7 @@ export const connectUserWallet = async (data: ConnectWalletData): Promise<{ erro
 }
 
 export const disconnectUserWallet = async (address: string): Promise<{ errorMessage?: string }> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   return await fetchWrapper<void>({
     accessToken,
     path: `${AUTH}/${WALLET}/${DISCONNECT}/${address}`,
@@ -29,7 +29,7 @@ export const disconnectUserWallet = async (address: string): Promise<{ errorMess
 }
 
 export const requestWalletPassword = async (address: string): Promise<string> => {
-  const accessToken = getAccessToken()
+  const accessToken = await getAccessToken()
   const response = await fetchWrapper<string>({
     accessToken,
     path: `${AUTH}/${WALLET}/${REQUEST_PASSWORD}/${address}`,

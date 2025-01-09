@@ -1,9 +1,9 @@
 'use client'
 
 import { Button, Input, Label, toast } from '@/components/ui'
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense, useActionState, useEffect } from 'react'
 import { loginAction } from '@/app/lib/actions/auth/login'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormStatus } from 'react-dom'
 import { useSearchParams } from 'next/navigation'
 import { REDIRECT_TO_KEY } from '@/constants/general'
 import { Loader } from '../shared/Loader'
@@ -21,7 +21,7 @@ const SubmitButton: React.FC = () => {
 const Form: React.FC = () => {
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get(REDIRECT_TO_KEY)
-  const [state, action] = useFormState(loginAction.bind(null, redirectTo), null)
+  const [state, action] = useActionState(loginAction.bind(null, redirectTo), null)
 
   useEffect(() => {
     if (state?.error) {

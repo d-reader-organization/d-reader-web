@@ -4,8 +4,6 @@ import { CarouselSlide } from '@/models/carousel/carouselSlide'
 import { PartialGenre } from '@/models/genre'
 import { Project } from '@/models/project'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
-import { ImageResponse } from 'next/og'
-import { METADATA_IMAGE_SIZE } from '../constants/general'
 
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -171,8 +169,4 @@ export const getTokenPrice = (basePrice: number, decimals: number) => {
   const price = parseFloat((basePrice / denominator).toFixed(3))
 
   return price
-}
-
-export const generateMetadataImage = (Component: React.ReactElement) => {
-  return new ImageResponse(Component, METADATA_IMAGE_SIZE)
 }

@@ -9,16 +9,17 @@ import { RoutePath } from '@/enums/routePath'
 import { getAccessToken } from '@/app/lib/utils/auth'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-export default async function ExpressInterestPage({ params }: Props) {
+export default async function ExpressInterestPage(props: Props) {
+  const params = await props.params
   const { data: project, errorMessage } = await fetchProject(params.slug)
 
   if (!project || errorMessage) {
     return notFound()
   }
-
+  const accessToken = await getAccessToken()
   return (
     <BaseLayout>
       {project.funding.isUserInterested ? (
@@ -56,7 +57,7 @@ export default async function ExpressInterestPage({ params }: Props) {
               We want to understand how many people are interested in this story. This action won&apos;t start the
               investment process. Expressing interest will incur a $1 fee to prevent spam.
             </Text>
-            <ExpressInterestSection accessToken={getAccessToken()} slug={params.slug} />
+            <ExpressInterestSection accessToken={accessToken} slug={params.slug} />
             <Text as='p' styleVariant='body-xsmall' className='text-grey-100' italic>
               *A person&apos;s indication of interest involves no obligation or commitment of any kind. No money or
               other consideration is being solicited, and if sent in response, will not be accepted.
