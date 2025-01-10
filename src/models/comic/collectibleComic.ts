@@ -11,14 +11,8 @@ export type CollectibleComic = {
   isUsed: boolean
   isSigned: boolean
   rarity: ComicRarity
-  comicName: string
-  comicIssueName: string
   comicIssueId: number
-  attributes: CollectibleComicAttributesDto[]
   isListed: boolean
-}
-
-type CollectibleComicAttributesDto = {
-  trait: string
-  value: string
+  comicName?: string
+  comicIssueName?: string
 }

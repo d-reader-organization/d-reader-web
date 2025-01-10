@@ -1,7 +1,7 @@
 import { CandyMachineCoupon, CouponCurrencySetting, CouponType } from '@/models/candyMachine/candyMachineCoupon'
 import { SplToken } from '@/models/settings/splToken'
-import { WRAPPED_SOL_MINT } from '@metaplex-foundation/js'
 import { getTokenPrice } from './helpers'
+import { SOL_ADDRESS } from '@/constants/general'
 
 export type TokenDetail = {
   label: string
@@ -54,7 +54,7 @@ export const getCouponDiscount = (coupons: CandyMachineCoupon[], currentCoupon: 
   if (!publicCoupon) return 0
 
   const getSolPrice = (coupon: CandyMachineCoupon) =>
-    coupon.prices.find((price) => price.splTokenAddress === WRAPPED_SOL_MINT.toString())?.mintPrice || 0
+    coupon.prices.find((price) => price.splTokenAddress === SOL_ADDRESS)?.mintPrice || 0
   const publicCouponPrice = getSolPrice(publicCoupon)
   const currentCouponPrice = getSolPrice(currentCoupon)
 
@@ -101,13 +101,13 @@ export const isComicVaultCoupon = (coupon: CandyMachineCoupon) => {
 
 export const getCurrencySetting = ({
   coupon,
-  splTokenAddress = WRAPPED_SOL_MINT.toString(),
+  splTokenAddress = SOL_ADDRESS.toString(),
 }: {
   coupon?: CandyMachineCoupon
   splTokenAddress?: string
 }) => {
   return (
     coupon?.prices.find((price) => price.splTokenAddress === splTokenAddress) ??
-    coupon?.prices.find((price) => price.splTokenAddress === WRAPPED_SOL_MINT.toString())
+    coupon?.prices.find((price) => price.splTokenAddress === SOL_ADDRESS.toString())
   )
 }

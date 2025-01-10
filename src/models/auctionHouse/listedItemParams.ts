@@ -1,6 +1,6 @@
 import { Pagination } from '@/models/pagination'
 
-export interface ListedItemsParams extends Pagination {
-  isSold: boolean
-  comicIssueId: number
+export type ListedItemsParams = Pagination & {
+  isSold?: boolean
+  collectionAddress: string
 }

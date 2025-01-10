@@ -40,7 +40,9 @@ export default async function MintPage(props: ComicIssuePageParams) {
   const params = await props.params
   const accessToken = await getAccessToken()
   const comicIssue = await fetchPublicComicIssue(params.id)
-  if (!comicIssue) return null
+
+  if (!comicIssue || !comicIssue.comic) return null
+
   const pages = await fetchComicIssuePages({ id: comicIssue.id, accessToken })
   const candyMachine = await fetchCandyMachine({
     params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
@@ -54,7 +56,7 @@ export default async function MintPage(props: ComicIssuePageParams) {
         <div className='flex flex-col gap-6 w-full max-w-[800px]'>
           <div className='flex flex-col max-md:self-center gap-4'>
             <div className='flex gap-12 text-base md:text-lg font-medium leading-[22.4px] md:leading-[25.2px] text-grey-100'>
-              <span>{comicIssue.comic?.title}</span>
+              <span>{comicIssue.comic.title}</span>
               <span>EP {comicIssue.number}</span>
             </div>
             <Text as='h3' styleVariant='primary-heading'>

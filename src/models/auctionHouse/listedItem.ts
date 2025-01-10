@@ -1,17 +1,11 @@
-import { ComicRarity } from '@/enums/comicRarity'
-import { AssetAttribute } from '@/models/asset/assetAttribute'
 import { WalletIdentity } from '@/models/wallet/walletIdentity'
+import { CollectibleComic } from '../comic/collectibleComic'
 
-export interface ListedAssetItem {
+export interface ListedItem {
   id: number
-  assetAddress: string
-  name: string
-  cover: string
+  collectibleComic: CollectibleComic
   seller: WalletIdentity
-  tokenAddress: string
+  splTokenAddress: string
   price: number
-  attributes: AssetAttribute[]
-  isUsed: boolean
-  isSigned: boolean
-  rarity: ComicRarity
+  createdAt: Date
 }

@@ -5,8 +5,10 @@ import { UseComicIssueAssetParams } from '@/models/transaction/useComicIssueAsse
 import { MintParams } from '@/models/transaction/mint'
 import { ExpressInterestParams } from '@/models/transaction/expressInterest'
 import { TRANSACTION_QUERY_KEYS } from './keys'
+import { MultipleBuyParams } from '@/models/transaction/instantBuy'
+import { ListParams } from '@/models/transaction/list'
 
-const { TRANSACTION, MINT, USE_COMIC_ISSUE_ASSET, EXPRESS_INTEREST } = TRANSACTION_QUERY_KEYS
+const { TRANSACTION, MINT, USE_COMIC_ISSUE_ASSET, EXPRESS_INTEREST, DIRECT_BUY, LIST } = TRANSACTION_QUERY_KEYS
 
 export const fetchMintTransaction = async ({
   params,
@@ -56,4 +58,43 @@ export const fetchExpressInterestTransaction = async ({
     isTextResponse: true,
   })
   return response
+}
+
+export const fetchDirectBuyTransaction = async ({
+  params,
+  accessToken,
+}: {
+  params: MultipleBuyParams
+  accessToken: string
+}): Promise<{ data: string[]; error?: string }> => {
+  const response = await fetchWrapper<string[]>({
+    accessToken,
+    path: `${TRANSACTION}/${DIRECT_BUY}`,
+    params,
+    timeoutInMiliseconds: 40000,
+  })
+  if (response.errorMessage) {
+    return { data: [], error: response.errorMessage }
+  }
+  return { data: JSON.parse(JSON.stringify(response.data ?? [])) }
+}
+
+export const fetchListAssetTransaction = async ({
+  params,
+  accessToken,
+}: {
+  params: ListParams
+  accessToken: string
+}): Promise<{ data: string; error?: string }> => {
+  const response = await fetchWrapper<string>({
+    accessToken,
+    path: `${TRANSACTION}/${LIST}`,
+    params,
+    timeoutInMiliseconds: 40000,
+    isTextResponse: true,
+  })
+  if (response.errorMessage) {
+    return { data: '', error: response.errorMessage }
+  }
+  return { data: response.data || '' }
 }

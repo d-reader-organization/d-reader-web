@@ -62,8 +62,12 @@ export const OwnedIssuesContent: React.FC<Props> = ({ comicIssue, ownedIssues })
                 </ButtonLink>
               </div>
               <div className='flex flex-wrap gap-6 md:gap-10 w-full'>
-                {ownedIssue.collectibles.map((asset) => (
-                  <OwnedAssetPreview key={asset.address} asset={asset} comicIssue={comicIssue} />
+                {ownedIssue.collectibles.map((collectibleComic) => (
+                  <OwnedAssetPreview
+                    key={collectibleComic.address}
+                    collectibleComic={collectibleComic}
+                    comicIssue={comicIssue}
+                  />
                 ))}
               </div>
             </div>
