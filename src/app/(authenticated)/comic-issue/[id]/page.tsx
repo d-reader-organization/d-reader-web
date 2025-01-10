@@ -19,6 +19,7 @@ import { FavouritiseButton } from '@/components/shared/buttons/FavouritiseButton
 import { ShareButton } from '@/components/shared/buttons/ShareButton'
 import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
+import { SecondaryMarketplace } from '@/components/comicIssue/secondary/SecondaryMarketplace'
 
 export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const params = await props.params
@@ -42,8 +43,11 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
 
   const accessToken = await getAccessToken()
   const comicIssue = await fetchComicIssue({ accessToken, id })
+
   if (!comicIssue || !comicIssue.stats) return null
+
   const pages = await fetchComicIssuePages({ accessToken, id: comicIssue.id })
+
   const candyMachine = await fetchCandyMachine({
     params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
   })
@@ -102,6 +106,12 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
           </CandyMachineStoreProvider>
         </div>
       </div>
+      {comicIssue.collectibleInfo?.isSecondarySaleActive && (
+        <SecondaryMarketplace
+          collectionAddress={comicIssue.collectibleInfo?.collectionAddress}
+          accessToken={accessToken}
+        />
+      )}
     </BaseLayout>
   )
 }

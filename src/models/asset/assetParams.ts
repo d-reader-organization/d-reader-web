@@ -5,4 +5,5 @@ export type AssetParams = Partial<Pagination> & {
   comicSlug?: string
   userId?: string | number
   comicIssueId?: string | number
+  collectionAddress?: string
 }

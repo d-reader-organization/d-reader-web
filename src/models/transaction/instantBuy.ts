@@ -1,6 +1,8 @@
 export type InstantBuyParams = {
   buyerAddress: string
-  mintAccount: string
-  price: number
-  sellerAddress: string
+  assetAddress: string
+}
+
+export type MultipleBuyParams = {
+  instantBuyParamsArray: string[]
 }
