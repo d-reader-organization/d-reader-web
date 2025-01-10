@@ -1,4 +1,4 @@
-import { fetchComicIssue } from '@/app/lib/api/comicIssue/queries'
+import { fetchComicIssue, fetchComicIssuePages } from '@/app/lib/api/comicIssue/queries'
 import { ComicIssueBanner } from '@/components/comicIssue/Banner'
 import { ComicIssuePageParams } from '@/models/common'
 import React from 'react'
