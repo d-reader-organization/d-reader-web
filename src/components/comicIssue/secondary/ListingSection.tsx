@@ -69,7 +69,7 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined; a
     const { data: transactions, error } = await fetchDirectBuyTransaction({
       accessToken,
       params: {
-        instantBuyParamsArray: instantBuyParamsArray.map((item) => JSON.stringify(item)), /// JSON stringify to pass array as params in get request
+        instantBuyParamsArray: JSON.stringify(instantBuyParamsArray), /// JSON stringify to pass array as params in get request
       },
     })
 
@@ -94,8 +94,8 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined; a
       }
 
       toast({ description: 'Purchase compelete', variant: 'success' })
-    } catch (e) {
-      toast({ description: 'Error while sending buy transaction, try again!', variant: 'error' })
+    } catch (_) {
+      toast({ description: `Error while sending buy transaction, try again!`, variant: 'error' })
     } finally {
       toggleLoader()
     }
@@ -144,14 +144,14 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined; a
         <TableBody>
           {splTokens
             ? listings.map((listing) => (
-              <ListedAssetRow
-                key={listing.id}
-                listing={listing}
-                splTokens={splTokens}
-                onSelectListing={handleSelectListing}
-                isSelected={selectedListings.includes(listing)}
-              />
-            ))
+                <ListedAssetRow
+                  key={listing.id}
+                  listing={listing}
+                  splTokens={splTokens}
+                  onSelectListing={handleSelectListing}
+                  isSelected={selectedListings.includes(listing)}
+                />
+              ))
             : null}
         </TableBody>
       </Table>

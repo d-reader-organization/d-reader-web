@@ -58,7 +58,7 @@ export const WalletAssetSection: React.FC<Props> = ({ collectionAddress, accessT
       await connection.sendTransaction(signedTransaction, { skipPreflight: true })
 
       toast({ description: 'Item listed succesfully', variant: 'success' })
-    } catch (e) {
+    } catch (_) {
       toast({ description: 'Error while sending buy transaction, try again!', variant: 'error' })
     }
   }
