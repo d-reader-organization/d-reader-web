@@ -39,42 +39,47 @@ export const LibraryTabsWrapper: React.FC<Props> = async ({ children }) => {
 
   return (
     <BaseLayout showFooter>
-      <Tabs defaultValue={tabs.at(0)?.title.toLowerCase()} className='w-full max-w-screen-xl md:p-4'>
-        <TabsList className='w-full justify-between items-start'>
-          <div className='flex gap-[20px] md:gap-[40px] w-full'>
-            {tabs.map((tab) => (
-              <TabsTrigger
-                key={tab.title}
-                className={cn(
-                  'flex flex-col sm:flex-row sm:gap-2 w-fit text-grey-200 data-[state=active]:text-white pb-4 md:px-0',
-                  tab.isComingSoon && 'pointer-events-none'
-                )}
-                value={tab.value}
-              >
-                <Text as='h4' styleVariant='secondary-heading' className='text-base'>
-                  {tab.title}
-                </Text>
-                {tab.isComingSoon && <SoonTag />}
-              </TabsTrigger>
-            ))}
-          </div>
-        </TabsList>
-        {children}
-        <TabsContent className='mt-0 pt-4 border-t border-grey-300' value='favorites'>
-          {favoriteComics.length ? (
-            <ComicsContent comics={favoriteComics} ComicCard={DefaultComicCard} />
-          ) : (
-            <EmptyLibrarySection emptySectionState={EMPTY_SECTION_STATES.favorites} />
-          )}
-        </TabsContent>
-        <TabsContent className='mt-0 pt-4 border-t border-grey-300' value='creators'>
-          {followedCreators.length ? (
-            <CreatorsContent creators={followedCreators} />
-          ) : (
-            <EmptyLibrarySection emptySectionState={EMPTY_SECTION_STATES.creators} />
-          )}
-        </TabsContent>
-      </Tabs>
+      <div className='flex flex-col max-w-screen-xl w-full gap-5'>
+        <Text as='h1' styleVariant='primary-heading' className='max-sm:text-20'>
+          My Library
+        </Text>
+        <Tabs defaultValue={tabs.at(0)?.title.toLowerCase()}>
+          <TabsList className='w-full justify-between items-start'>
+            <div className='flex gap-[20px] md:gap-[40px] w-full'>
+              {tabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.title}
+                  className={cn(
+                    'flex flex-col sm:flex-row sm:gap-2 w-fit text-grey-200 data-[state=active]:text-white pb-4 md:px-0',
+                    tab.isComingSoon && 'pointer-events-none'
+                  )}
+                  value={tab.value}
+                >
+                  <Text as='h4' styleVariant='secondary-heading' className='text-base'>
+                    {tab.title}
+                  </Text>
+                  {tab.isComingSoon && <SoonTag />}
+                </TabsTrigger>
+              ))}
+            </div>
+          </TabsList>
+          {children}
+          <TabsContent className='mt-0 pt-4 border-t border-grey-300' value='favorites'>
+            {favoriteComics.length ? (
+              <ComicsContent comics={favoriteComics} ComicCard={DefaultComicCard} />
+            ) : (
+              <EmptyLibrarySection emptySectionState={EMPTY_SECTION_STATES.favorites} />
+            )}
+          </TabsContent>
+          <TabsContent className='mt-0 pt-4 border-t border-grey-300' value='creators'>
+            {followedCreators.length ? (
+              <CreatorsContent creators={followedCreators} />
+            ) : (
+              <EmptyLibrarySection emptySectionState={EMPTY_SECTION_STATES.creators} />
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
     </BaseLayout>
   )
 }

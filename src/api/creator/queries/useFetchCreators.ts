@@ -22,11 +22,9 @@ export const useFetchCreators = ({
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length >= params.take) return allPages.length
     },
-    //staleTime: 1000 * 60 * 60 * 1, // stale for 1 hour
+    staleTime: 1000 * 60 * 60 * 1, // stale for 1 hour
     enabled: enabled && !!params.take,
     throwOnError: onQueryError,
-    refetchOnMount:true,
-    refetchOnWindowFocus:true
   })
 
   const { data } = infiniteQuery

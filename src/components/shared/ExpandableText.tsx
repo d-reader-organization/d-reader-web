@@ -27,7 +27,7 @@ export const ExpandableText = ({ className, text, maxLines = 2 }: ExpandableText
   }
 
   return (
-    <div className={cn('relative text-base font-medium', className)}>
+    <div className={cn('relative text-sm sm:text-base font-medium', className)}>
       <p
         ref={textRef}
         className={cn(

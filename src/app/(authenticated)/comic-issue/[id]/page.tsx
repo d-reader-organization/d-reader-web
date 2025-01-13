@@ -3,7 +3,7 @@ import { ComicIssueBanner } from '@/components/comicIssue/Banner'
 import { ComicIssuePageParams } from '@/models/common'
 import React from 'react'
 import { BaseLayout } from '@/components/layout/BaseLayout'
-import { CoverCarousel } from '@/components/mint/CoverCarousel'
+import { ComicIssueCoverCarousel } from '@/components/comicIssue/CoverCarousel'
 import { AboutIssueSection } from '@/components/comicIssue/AboutSection'
 import { Metadata } from 'next'
 import { getAccessToken } from '@/app/lib/utils/auth'
@@ -50,7 +50,7 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
           icon={ChevronLeft}
           className='self-center w-min sm:px-0 max-md:hidden'
         /> */}
-        <CoverCarousel candyMachine={candyMachine} covers={comicIssue.statelessCovers ?? []} />
+        <ComicIssueCoverCarousel candyMachine={candyMachine} covers={comicIssue.statelessCovers ?? []} />
         <AboutIssueSection comicIssue={comicIssue} />
         <IssueStatsSection comicIssue={comicIssue} className='max-1160:hidden' />
         {/* <ButtonLink
@@ -63,11 +63,13 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
           className='self-center w-min sm:px-0 max-md:hidden'
         /> */}
       </div>
-      <IssueStatsSection
-        comicIssue={comicIssue}
-        className='1160:hidden self-start md:px-16 w-full'
-        statsContainerClassName='sm:max-w-full'
-      />
+      <IssueStatsSection comicIssue={comicIssue} className='1160:hidden self-start w-full pt-4' />
+      {/* {comicIssue.collectibleInfo?.isSecondarySaleActive && (
+        <SecondaryMarketplace
+          collectionAddress={comicIssue.collectibleInfo?.collectionAddress}
+          accessToken={accessToken}
+        />
+      )} */}
     </BaseLayout>
   )
 }

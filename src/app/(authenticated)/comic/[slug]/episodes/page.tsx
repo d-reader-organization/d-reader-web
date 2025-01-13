@@ -31,7 +31,7 @@ export default async function ComicEpisodesPage(props: Props) {
   return (
     <BaseLayout transparent>
       <ComicBanner banner={comic.banner} cover={comic.cover} logo={comic.logo} />
-      <div className='flex flex-col gap-3 px-1 w-full max-w-screen-xl sm:px-2 sm:gap-7 mt-[360px] sm:mt-[350px]'>
+      <div className='flex flex-col gap-3 px-1 w-full max-w-screen-xl sm:px-2 sm:gap-7 mt-[360px] sm:mt-[300px]'>
         <ComicHeader comic={comic} />
         <Tabs tabs={tabs} />
         <div className='grid grid-cols-2 md:grid-cols-3 1160:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-9'>

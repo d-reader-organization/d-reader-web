@@ -13,7 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   statsContainerClassName?: string
 }
 
-export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className, statsContainerClassName, ...props }) => {
+export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className, ...props }) => {
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <div className='flex gap-3 max-1160:justify-start 1160:justify-end'>
@@ -29,7 +29,7 @@ export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className, stat
         />
         <ShareButton title={comicIssue.title} text={comicIssue.description} />
       </div>
-      <StatsContainer className={statsContainerClassName}>
+      <StatsContainer className='sm:max-w-full'>
         <StatsItem label='pages' value={comicIssue.stats?.totalPagesCount ?? ''} />
         <StatsItem label='copies' value={comicIssue.stats?.totalIssuesCount ?? ''} />
         <StatsItem label='floor price' value={comicIssue.stats?.price ?? ''} />
@@ -37,12 +37,11 @@ export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className, stat
       <ButtonLink
         href={RoutePath.ReadComicIssue(comicIssue.id)}
         prefetch={false}
-        variant={comicIssue.myStats?.canRead ? 'primary' : 'secondary'}
+        variant={comicIssue.isFreeToRead ? 'primary' : 'secondary'}
         size={'lg'}
-        className='bg-opacity-30'
         target='_blank'
       >
-        <Text as='span' styleVariant='body-normal' fontWeight='bold'>
+        <Text as='span' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-sm'>
           {comicIssue.isFreeToRead ? 'Read for Free!' : comicIssue.myStats?.canRead ? 'Read' : 'Preview'}
         </Text>
       </ButtonLink>

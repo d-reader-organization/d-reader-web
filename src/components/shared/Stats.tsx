@@ -20,7 +20,7 @@ export const StatsContainer: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 
 export const StatsItem: React.FC<Props> = ({ label, value }) => (
   <div className='flex justify-between'>
-    <Text as='span' styleVariant='body-small' className='text-grey-100 uppercase max-sm:text-xs'>
+    <Text as='span' styleVariant='body-small' fontWeight='medium' className='text-grey-100 uppercase max-sm:text-xs'>
       {label}
     </Text>
     <Text as='span' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-sm'>

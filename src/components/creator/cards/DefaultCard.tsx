@@ -1,12 +1,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Text } from '@/components/ui'
-
 import { AvatarImage } from '@/components/shared/AvatarImage'
 import { Creator } from '@/models/creator'
 import { RoutePath } from '@/enums/routePath'
 import { CREATOR_BANNER_SIZE } from '@/constants/imageSizes'
-
 import { pluralizeString } from '@/utils/helpers'
 import { cn } from '@/lib/utils'
 import { FollowCreatorButton } from '@/components/shared/buttons/FollowCreatorButton'
