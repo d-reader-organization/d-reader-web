@@ -1,4 +1,4 @@
-import { fetchComicIssue, fetchComicIssuePages } from '@/app/lib/api/comicIssue/queries'
+import { fetchComicIssue } from '@/app/lib/api/comicIssue/queries'
 import { ComicIssueBanner } from '@/components/comicIssue/Banner'
 import { ComicIssuePageParams } from '@/models/common'
 import React from 'react'
@@ -36,8 +36,6 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
 
   if (!comicIssue || !comicIssue.stats) return null
 
-  const pages = await fetchComicIssuePages({ accessToken, id: comicIssue.id })
-
   const candyMachine = await fetchCandyMachine({
     params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
   })
@@ -69,12 +67,6 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
         /> */}
       </div>
       <IssueStatsSection comicIssue={comicIssue} className='1160:hidden self-start w-full pt-4' />
-      {/* {comicIssue.collectibleInfo?.isSecondarySaleActive && (
-        <SecondaryMarketplace
-          collectionAddress={comicIssue.collectibleInfo?.collectionAddress}
-          accessToken={accessToken}
-        />
-      )} */}
       {/* Todo: remove 'false' flag to activate secondary sales */}
       {false && comicIssue?.collectibleInfo?.isSecondarySaleActive && (
         <SecondaryMarketplace
