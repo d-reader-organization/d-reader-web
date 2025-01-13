@@ -7,6 +7,8 @@ import { DefaultComicIssueCard } from '@/components/comicIssue/cards/DefaultCard
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { Tabs } from '@/components/shared/Tabs'
 import { comicPageTabs } from '@/constants/tabs'
+import { SortOrder } from '@/enums/sortOrder'
+import { ComicIssueSortTag } from '@/models/comicIssue/comicIssueParams'
 import React from 'react'
 
 type Props = {
@@ -26,7 +28,13 @@ export default async function ComicEpisodesPage(props: Props) {
   }
 
   const tabs = comicPageTabs(slug)
-  const comicIssues = await fetchComicIssues({ comicSlug: slug, skip: 0, take: 6 })
+  const comicIssues = await fetchComicIssues({
+    comicSlug: slug,
+    skip: 0,
+    take: 6,
+    sortOrder: SortOrder.ASC,
+    sortTag: ComicIssueSortTag.Latest,
+  })
 
   return (
     <BaseLayout>
