@@ -20,6 +20,7 @@ export const StateChip: React.FC<Props> = ({ className, state, text }) => (
       state === 'used' ? 'bg-blue-100' : '',
       className
     )}
+    title={state}
   >
     {state === 'mint' ? <MintIcon className='text-black' /> : null}
     {state === 'signed' ? <SignedIcon className='text-black' /> : null}

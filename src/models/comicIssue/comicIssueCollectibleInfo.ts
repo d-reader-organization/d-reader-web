@@ -3,6 +3,7 @@ export interface ComicIssueCollectibleInfo {
   activeCandyMachineAddress?: string
   startsAt?: Date
   sellerFee: number
+  // isPrimarySaleActive: boolean
   isSecondarySaleActive: boolean
   creatorAddress: string
 }

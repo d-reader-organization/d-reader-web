@@ -1,6 +1,5 @@
 export type ListParams = {
-  sellerAddress: string
-  mintAccount: string
+  splTokenAddress: string
+  assetAddress: string
   price: number
-  printReceipt?: string
 }
