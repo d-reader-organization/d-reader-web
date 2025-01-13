@@ -106,9 +106,10 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
           </CandyMachineStoreProvider>
         </div>
       </div>
-      {comicIssue.collectibleInfo?.isSecondarySaleActive && (
+      {/* Todo: remove 'false' flag to activate secondary sales */}
+      {false && comicIssue?.collectibleInfo?.isSecondarySaleActive && (
         <SecondaryMarketplace
-          collectionAddress={comicIssue.collectibleInfo?.collectionAddress}
+          collectionAddress={comicIssue?.collectibleInfo?.collectionAddress}
           accessToken={accessToken}
         />
       )}
