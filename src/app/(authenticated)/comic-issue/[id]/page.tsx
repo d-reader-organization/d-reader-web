@@ -31,7 +31,6 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
   const params = await props.params
   const { id } = params
   const accessToken = await getAccessToken()
-
   const comicIssue = await fetchComicIssue({ accessToken, id })
 
   if (!comicIssue || !comicIssue.stats) return null

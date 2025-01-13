@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   comicIssue: ComicIssue
-  statsContainerClassName?: string
 }
 
 export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className, ...props }) => {
@@ -27,7 +26,11 @@ export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className, ...p
           isFavourite={comicIssue.myStats?.isFavourite}
           favouritesCount={comicIssue.stats?.favouritesCount}
         />
-        <ShareButton title={comicIssue.title} text={comicIssue.description} />
+        <ShareButton
+          title={comicIssue.title}
+          text={comicIssue.description}
+          className='border-none bg-grey-400 bg-opacity-100 shadow-none'
+        />
       </div>
       <StatsContainer className='sm:max-w-full'>
         <StatsItem label='pages' value={comicIssue.stats?.totalPagesCount ?? ''} />
