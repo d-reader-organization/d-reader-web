@@ -4,7 +4,7 @@ import React from 'react'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/Dialog'
 import { OwnedAssetCard } from './OwnedAssetCard'
 import { toast } from '../ui/toast'
-import { Brush, Circle, Copy, ExternalLink } from 'lucide-react'
+import { Circle, Copy, ExternalLink } from 'lucide-react'
 import { Text } from '../ui/Text'
 import { shortenAssetName, shortenSolanaAddress } from '@/utils/helpers'
 import { GenreTags } from '../shared/GenresList'
@@ -23,6 +23,7 @@ import { Button } from '../ui'
 import { useToggle } from '@/hooks'
 import { requestAutograph } from '@/app/lib/api/asset/mutations'
 import { Loader } from '../shared/Loader'
+import SignedIcon from 'public/assets/vector-icons/signed-icon.svg'
 
 type Props = {
   collectibleComic: CollectibleComic
@@ -39,7 +40,7 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
       if (errorMessage) {
         toast({ description: errorMessage, variant: 'error' })
       } else {
-        toast({ description: 'Autograph requested successfully, wait for creator to sign it ✍️' })
+        toast({ description: 'Autograph requested successfully, wait for creator to sign it ✍️', variant: 'success' })
       }
     } catch (e) {
       console.error(e)
@@ -81,16 +82,6 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
                 Read
               </Text>
             </Link>
-            {!collectibleComic.isSigned && (
-              <Button
-                variant='white'
-                className='min-w-fit items-center h-10 sm:h-[52px] rounded-xl'
-                title='Request Autograph'
-                onClick={handleRequestAutograph}
-              >
-                {showLoader ? <Loader /> : <Brush color='black' />}
-              </Button>
-            )}
           </div>
         </div>
         <div className='flex flex-col gap-2 w-full max-w-fit'>
@@ -142,7 +133,28 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
               {collectibleComic.isSigned ? <StateChip state='signed' text='SIGNED' /> : null}
             </div>
             <Divider />
-            <CreatorInfoLink creator={comicIssue?.creator} />
+            <div className='flex justify-between'>
+              <CreatorInfoLink creator={comicIssue?.creator} />
+              {!collectibleComic.isSigned && (
+                <Button
+                  variant='secondary'
+                  onClick={handleRequestAutograph}
+                  disabled={showLoader}
+                  className='w-full max-w-48'
+                >
+                  {showLoader ? (
+                    <Loader />
+                  ) : (
+                    <div className='flex gap-2 items-center'>
+                      <SignedIcon />
+                      <Text as='p' styleVariant='body-small' fontWeight='semibold'>
+                        Request signature
+                      </Text>
+                    </div>
+                  )}
+                </Button>
+              )}
+            </div>
             <Divider />
             <AddressContainer address={collectibleComic.ownerAddress} title='Owner' />
             <AddressContainer address={collectibleComic.address} title='Asset Address' />
