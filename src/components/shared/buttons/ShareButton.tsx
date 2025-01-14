@@ -9,7 +9,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   text?: string
 }
 
-export const ShareButton: React.FC<Props> = ({ title = '', text = '', ...props }) => {
+export const ShareButton: React.FC<Props> = ({ title = '', text = '' }) => {
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -27,5 +27,5 @@ export const ShareButton: React.FC<Props> = ({ title = '', text = '', ...props }
     }
   }
 
-  return <Button onClick={handleShare} size={'md'} icon={Share2} iconOnly variant='secondary' {...props} />
+  return <Button onClick={handleShare} size={'md'} icon={Share2} iconOnly variant='secondary' />
 }

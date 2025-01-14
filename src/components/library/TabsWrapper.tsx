@@ -6,35 +6,31 @@ import { LIBRARY_PAGE_TABS as tabs } from '@/constants/tabs'
 import { TabsContent } from '@radix-ui/react-tabs'
 import { fetchFavoriteComics } from '@/app/lib/api/comic/queries'
 import { fetchFollowedCreators } from '@/app/lib/api/creator/queries'
-import { EMPTY_SECTION_STATES } from '@/constants/library'
 import { SortOrder } from '@/enums/sortOrder'
 import { ComicSortTag } from '@/models/comic/comicParams'
 import { CreatorSortTag } from '@/models/creator/creatorParams'
 import { DefaultComicCard } from '../comic/cards/DefaultCard'
-import { ComicsContent } from './ComicsContent'
+import { ComicsByAlphabet } from './ComicsByAlphabet'
 import { CreatorsContent } from './CreatorsContent'
 import { EmptyLibrarySection } from './EmptySection'
-import { fetchMe } from '@/app/lib/api/user/queries'
 import { BaseLayout } from '../layout/BaseLayout'
+import { RoutePath } from '@/enums/routePath'
 
 interface Props extends React.PropsWithChildren {
+  userId: number
   isComingSoon?: boolean
   title?: string
   value?: string
 }
 
-export const LibraryTabsWrapper: React.FC<Props> = async ({ children }) => {
-  const me = await fetchMe()
-
-  if (!me) return null
-
+export const LibraryTabsWrapper: React.FC<Props> = async ({ children, userId }) => {
   const favoriteComics = await fetchFavoriteComics({
     params: { skip: 0, take: 20, sortTag: ComicSortTag.Title, sortOrder: SortOrder.DESC },
-    userId: me.id,
+    userId: userId,
   })
   const followedCreators = await fetchFollowedCreators({
     params: { skip: 0, take: 20, sortTag: CreatorSortTag.Name, sortOrder: SortOrder.DESC },
-    userId: me.id,
+    userId: userId,
   })
 
   return (
@@ -66,16 +62,26 @@ export const LibraryTabsWrapper: React.FC<Props> = async ({ children }) => {
           {children}
           <TabsContent className='mt-0 pt-4 border-t border-grey-300' value='favorites'>
             {favoriteComics.length ? (
-              <ComicsContent comics={favoriteComics} ComicCard={DefaultComicCard} />
+              <ComicsByAlphabet comics={favoriteComics} ComicCard={DefaultComicCard} />
             ) : (
-              <EmptyLibrarySection emptySectionState={EMPTY_SECTION_STATES.favorites} />
+              <EmptyLibrarySection
+                title='You have no comics bookmarked.'
+                subtitle='Explore comics and mark some as favorite!'
+                href={RoutePath.DiscoverComics}
+                buttonLinkText='Discover Comics'
+              />
             )}
           </TabsContent>
           <TabsContent className='mt-0 pt-4 border-t border-grey-300' value='creators'>
             {followedCreators.length ? (
               <CreatorsContent creators={followedCreators} />
             ) : (
-              <EmptyLibrarySection emptySectionState={EMPTY_SECTION_STATES.creators} />
+              <EmptyLibrarySection
+                title="You don't follow any creators."
+                subtitle='Explore creators and mark some as favorite!'
+                buttonLinkText='Discover Creators'
+                href={RoutePath.DiscoverCreators}
+              />
             )}
           </TabsContent>
         </Tabs>

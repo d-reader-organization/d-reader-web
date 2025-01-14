@@ -4,7 +4,7 @@ import { fetchPublicComicIssue } from '@/app/lib/api/comicIssue/queries'
 import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { MintAboutIssueSection } from '@/components/mint/AboutIssueSection'
-import { CoverCarousel } from '@/components/mint/CoverCarousel'
+import { CoverCarousel } from '@/components/shared/CoverCarousel'
 import { PagesPreview } from '@/components/mint/PagesPreview'
 import { CandyMachineDetails } from '@/components/shared/CandyMachineDetails'
 import { MintPageWelcomeDialog } from '@/components/shared/dialogs/MintPageWelcomeDialog'
@@ -41,13 +41,16 @@ export default async function MintPage(props: ComicIssuePageParams) {
   const accessToken = await getAccessToken()
   const comicIssue = await fetchPublicComicIssue(params.id)
 
-  if (!comicIssue || !comicIssue.comic) return null
+  if (!comicIssue || !comicIssue.comic) {
+    return null
+  }
 
   const pages = await fetchComicIssuePages({ id: comicIssue.id, accessToken })
   const candyMachine = await fetchCandyMachine({
     params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
   })
   const isAuthenticated = await isAuthenticatedUser()
+
   return (
     <BaseLayout>
       <MintPageWelcomeDialog />

@@ -1,5 +1,5 @@
 import { fetchComic } from '@/app/lib/api/comic/queries'
-import { generateMetadataImage } from '@/utils/metadata'
+import { generateMetadataImage } from '@/utils/helpers'
 import { DefaultMetadataImage } from '@/components/metadata/DefaultImage'
 import { FallbackMetadataImage } from '@/components/metadata/FallbackImage'
 

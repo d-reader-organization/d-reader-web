@@ -3,7 +3,7 @@ import { ComicIssueBanner } from '@/components/comicIssue/Banner'
 import { ComicIssuePageParams } from '@/models/common'
 import React from 'react'
 import { BaseLayout } from '@/components/layout/BaseLayout'
-import { ComicIssueCoverCarousel } from '@/components/comicIssue/CoverCarousel'
+import { CoverCarousel } from '@/components/shared/CoverCarousel'
 import { AboutIssueSection } from '@/components/comicIssue/AboutSection'
 import { Metadata } from 'next'
 import { getAccessToken } from '@/app/lib/utils/auth'
@@ -33,7 +33,9 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
   const accessToken = await getAccessToken()
   const comicIssue = await fetchComicIssue({ accessToken, id })
 
-  if (!comicIssue || !comicIssue.stats) return null
+  if (!comicIssue || !comicIssue.stats) {
+    return null
+  }
 
   const candyMachine = await fetchCandyMachine({
     params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
@@ -52,7 +54,7 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
           icon={ChevronLeft}
           className='self-center w-min sm:px-0 max-md:hidden'
         /> */}
-        <ComicIssueCoverCarousel candyMachine={candyMachine} covers={comicIssue.statelessCovers ?? []} />
+        <CoverCarousel candyMachine={candyMachine} covers={comicIssue.statelessCovers ?? []} className='self-center' />
         <AboutIssueSection comicIssue={comicIssue} />
         <IssueStatsSection comicIssue={comicIssue} className='max-1160:hidden' />
         {/* <ButtonLink

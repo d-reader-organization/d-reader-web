@@ -47,7 +47,6 @@ export const fetchFollowedCreators = async ({ params, userId }: { params: Creato
   const response = await fetchWrapper<Creator[]>({
     params,
     path: `${CREATOR}/${GET}/${FOLLOWED_BY_USER}/${userId}`,
-    //revalidateCacheInSeconds: 10,
   })
 
   return response.data ?? []

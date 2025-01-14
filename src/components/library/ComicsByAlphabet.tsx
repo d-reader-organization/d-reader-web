@@ -12,12 +12,12 @@ interface Props {
 
 type ComicCardComponent = typeof DefaultComicCard | typeof OwnedComicCard
 
-export const ComicsContent: React.FC<Props> = ({ comics, ComicCard }) => {
+export const ComicsByAlphabet: React.FC<Props> = ({ comics, ComicCard }) => {
   const comicsMappedByLetter = getComicsMappedByLetter(comics)
 
   return (
     <>
-      <div className='md:hidden grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-6'>
+      <div className='md:hidden grid grid-cols-2 sm:grid-cols-2 gap-5 sm:gap-6'>
         {comics.map((comic) => (
           <ComicCard key={comic.slug} comic={comic} className='max-md:max-h-fit' />
         ))}

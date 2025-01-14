@@ -1,5 +1,5 @@
 import { fetchCreator } from '@/app/lib/api/creator/queries'
-import { generateMetadataImage } from '@/utils/metadata'
+import { generateMetadataImage } from '@/utils/helpers'
 import { CreatorMetadataImage } from '@/components/metadata/CreatorImage'
 import { FallbackMetadataImage } from '@/components/metadata/FallbackImage'
 

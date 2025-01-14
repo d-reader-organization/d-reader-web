@@ -7,14 +7,15 @@ import { Text } from '../ui'
 import { ButtonLink } from '../ui/ButtonLink'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
+import { formatCurrency } from '@/utils/numbers'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   comicIssue: ComicIssue
 }
 
-export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className, ...props }) => {
+export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className }) => {
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)}>
       <div className='flex gap-3 max-1160:justify-start 1160:justify-end'>
         <RateButton
           comicIssueId={comicIssue.id}
@@ -35,7 +36,10 @@ export const IssueStatsSection: React.FC<Props> = ({ comicIssue, className, ...p
       <StatsContainer className='sm:max-w-full'>
         <StatsItem label='pages' value={comicIssue.stats?.totalPagesCount ?? ''} />
         <StatsItem label='copies' value={comicIssue.stats?.totalIssuesCount ?? ''} />
-        <StatsItem label='floor price' value={comicIssue.stats?.price ?? ''} />
+        <StatsItem
+          label='floor price'
+          value={formatCurrency({ value: comicIssue.stats?.price ?? 0, currency: '◎', fractionDigits: 0, divisor: 9 })}
+        />
       </StatsContainer>
       <ButtonLink
         href={RoutePath.ReadComicIssue(comicIssue.id)}

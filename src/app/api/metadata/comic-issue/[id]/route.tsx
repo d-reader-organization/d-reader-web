@@ -1,5 +1,5 @@
 import { fetchComicIssue } from '@/app/lib/api/comicIssue/queries'
-import { generateMetadataImage } from '@/utils/metadata'
+import { generateMetadataImage } from '@/utils/helpers'
 import { getStatelessCoverFromComicIssue } from '@/utils/covers'
 import { DefaultMetadataImage } from '@/components/metadata/DefaultImage'
 import { FallbackMetadataImage } from '@/components/metadata/FallbackImage'
