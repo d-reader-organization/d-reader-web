@@ -9,7 +9,6 @@ import { CopiesCount } from '@/components/shared/CopiesCount'
 import { MoreHorizontalIcon } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { COMIC_COVER_SIZE } from '@/constants/imageSizes'
-import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
@@ -18,9 +17,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 
 export const OwnedComicCard: React.FC<Props> = ({ comic, className }) => {
   return (
-    <Link
-      href={RoutePath.Comic(comic.slug)}
-      prefetch={false}
+    <div
       className={cn(
         'flex flex-col gap-2 relative max-md:min-w-[156px] w-full h-full max-md:max-h-[222px] hover:brightness-110 p-2 border border-grey-300 rounded-2xl',
         className
@@ -81,6 +78,6 @@ export const OwnedComicCard: React.FC<Props> = ({ comic, className }) => {
           />
         </div>
       </div>
-    </Link>
+    </div>
   )
 }
