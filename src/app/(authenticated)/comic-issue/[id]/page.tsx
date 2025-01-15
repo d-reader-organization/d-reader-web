@@ -44,7 +44,7 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
   return (
     <BaseLayout transparent>
       <ComicIssueBanner cover={comicIssue.cover} />
-      <div className='flex flex-col w-full max-w-screen-xl mt-28 md:mt-24 md:flex-row md:justify-center gap-2 md:gap-6 lg:gap-10'>
+      <div className='flex flex-col w-full max-w-screen-xl mt-28 md:mt-24 md:flex-row md:justify-center gap-5 md:gap-6 lg:gap-10'>
         {/* <ButtonLink
           href='#'
           prefetch={false}
@@ -56,7 +56,8 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
         /> */}
         <CoverCarousel candyMachine={candyMachine} covers={comicIssue.statelessCovers ?? []} className='self-center' />
         <AboutIssueSection comicIssue={comicIssue} />
-        <IssueStatsSection comicIssue={comicIssue} className='max-1160:hidden' />
+        {/* <IssueStatsSection comicIssue={comicIssue} className='max-1160:hidden' /> */}
+        <IssueStatsSection comicIssue={comicIssue} className='max-md:self-start max-md:w-full' />
         {/* <ButtonLink
           href='#'
           prefetch={false}
@@ -67,7 +68,7 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
           className='self-center w-min sm:px-0 max-md:hidden'
         /> */}
       </div>
-      <IssueStatsSection comicIssue={comicIssue} className='1160:hidden self-start w-full pt-4' />
+      {/* <IssueStatsSection comicIssue={comicIssue} className='1160:hidden self-start w-full' /> */}
       {/* Todo: remove 'false' flag to activate secondary sales */}
       {false && comicIssue?.collectibleInfo?.isSecondarySaleActive && (
         <SecondaryMarketplace
