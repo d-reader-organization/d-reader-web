@@ -10,6 +10,7 @@ import { MoreHorizontalIcon } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { COMIC_COVER_SIZE } from '@/constants/imageSizes'
 import { cn } from '@/lib/utils'
+import { CardBorderWrapper } from '@/components/shared/CardBorderWrapper'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   comic: Comic
@@ -17,9 +18,9 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 
 export const OwnedComicCard: React.FC<Props> = ({ comic, className }) => {
   return (
-    <div
+    <CardBorderWrapper
       className={cn(
-        'flex flex-col gap-2 relative max-md:min-w-[156px] w-full h-full max-md:max-h-[222px] hover:brightness-110 p-2 border border-grey-300 rounded-2xl',
+        'flex flex-col gap-2 relative max-md:min-w-[156px] max-md:max-h-[222px] hover:brightness-110',
         className
       )}
     >
@@ -78,6 +79,6 @@ export const OwnedComicCard: React.FC<Props> = ({ comic, className }) => {
           />
         </div>
       </div>
-    </div>
+    </CardBorderWrapper>
   )
 }
