@@ -136,12 +136,7 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
             <div className='flex justify-between'>
               <CreatorInfoLink creator={comicIssue?.creator} />
               {!collectibleComic.isSigned && (
-                <Button
-                  variant='secondary'
-                  onClick={handleRequestAutograph}
-                  disabled={showLoader}
-                  className='w-full sm:max-w-48 xs:max-w-40'
-                >
+                <Button variant='white' onClick={handleRequestAutograph} disabled={showLoader} className='min-w-44'>
                   {showLoader ? (
                     <Loader />
                   ) : (
