@@ -103,7 +103,7 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
               {collectibleComic.comicIssueName}
             </Text>
             <GenreTags className='bg-grey-400' genres={comicIssue?.genres ?? []} />
-            <ExpandableText className='max-w-[440px] lg:max-w-[486px]' text={collectibleComic.description} />
+            <ExpandableText className='max-w-[440px] lg:max-w-[486px]' text={comicIssue.description} />
             <div className='flex justify-between'>
               <div className='flex gap-4 items-center'>
                 <div className='text-base font-medium leading-[22.4px]'>
@@ -140,12 +140,12 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
                   variant='secondary'
                   onClick={handleRequestAutograph}
                   disabled={showLoader}
-                  className='w-full max-w-48'
+                  className='w-full sm:max-w-48 xs:max-w-40'
                 >
                   {showLoader ? (
                     <Loader />
                   ) : (
-                    <div className='flex gap-2 items-center'>
+                    <div className='flex sm:gap-2 xs:gap-1 items-center'>
                       <SignedIcon />
                       <Text as='p' styleVariant='body-small' fontWeight='semibold'>
                         Request signature
