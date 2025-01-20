@@ -9,3 +9,9 @@ export type SlugParamsProps = {
 export type FileUploadRef = {
   reset: () => void
 }
+
+export type DailyDropCardType = {
+  id: number
+  title: string
+  image: string
+}

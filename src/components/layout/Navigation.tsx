@@ -17,6 +17,7 @@ import { NavItemLink } from './NavItemLink'
 import { GenesisNavigation } from './GenesisNavigation'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { useWallet } from '@solana/wallet-adapter-react'
+import { DailyDropButton } from '../daily-drops/Button'
 
 type Props = {
   me: User | null
@@ -64,35 +65,38 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
               <NavItemLink activeColor='text-yellow-300' href={RoutePath.Marketplace} isActive={isMarketplace} title='Marketplace' isComingSoon disabled />
             </div> */}
           </div>
-          {me ? (
-            <div className='flex items-center gap-8'>
-              <NavItemLink
-                activeColor='text-yellow-300'
-                href={RoutePath.Library}
-                isActive={isLibrary}
-                title='My Library'
-              />
-              <button
-                className='flex items-center cursor-pointer'
-                onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}
-              >
-                <div className='bg-white bg-opacity-15 rounded-xl flex items-center justify-center gap-1.5 px-2 h-10'>
-                  <Image
-                    alt='avatar'
-                    src={me.avatar || PLACEHOLDER_AVATAR}
-                    width={28}
-                    height={28}
-                    className='size-7 object-cover rounded-full border border-black'
-                  />
-                  <ChevronDownIcon className='w-6 h-6 text-grey-100' />
-                </div>
-              </button>
-            </div>
-          ) : (
-            <Button variant='white' size='md' onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}>
-              {!!publicKey ? 'Sign in' : 'Connect'}
-            </Button>
-          )}
+          <div className='flex items-center gap-2'>
+            <DailyDropButton />
+            {me ? (
+              <div className='flex items-center gap-8'>
+                <NavItemLink
+                  activeColor='text-yellow-300'
+                  href={RoutePath.Library}
+                  isActive={isLibrary}
+                  title='My Library'
+                />
+                <button
+                  className='flex items-center cursor-pointer'
+                  onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}
+                >
+                  <div className='bg-white bg-opacity-15 rounded-xl flex items-center justify-center gap-1.5 px-2 h-10'>
+                    <Image
+                      alt='avatar'
+                      src={me.avatar || PLACEHOLDER_AVATAR}
+                      width={28}
+                      height={28}
+                      className='size-7 object-cover rounded-full border border-black'
+                    />
+                    <ChevronDownIcon className='w-6 h-6 text-grey-100' />
+                  </div>
+                </button>
+              </div>
+            ) : (
+              <Button variant='white' size='md' onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}>
+                Connect
+              </Button>
+            )}
+          </div>
         </div>
       </div>
       <ProfileSheet

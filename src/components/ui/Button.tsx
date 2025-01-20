@@ -22,7 +22,7 @@ const buttonVariants = cva(
       size: {
         sm: 'h-9 min-w-[80px] text-xs py-0.5 px-2 sm:py-1 sm:px-4 rounded-lg gap-1',
         md: 'h-[42px] min-w-[100px] text-sm py-1 px-3 sm:py-2 sm:px-5 rounded-[10px] gap-2',
-        lg: 'h-[52px] min-w-[110px] text-base py-2 px-4 sm:py-4 sm:px-6 rounded-xl gap-2',
+        lg: 'h-[42px] sm:h-[52px] min-w-[110px] text-base py-2 px-4 sm:py-4 sm:px-6 rounded-xl gap-2',
       },
       iconPosition: {
         left: 'flex-row',
@@ -122,7 +122,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className={cn(
             buttonVariants({ variant, subVariant, size, iconPosition, className }),
             'min-w-9 px-0 py-0',
-            size === 'sm' ? 'size-9' : size === 'md' ? 'size-[42px]' : 'size-[52px]'
+            size === 'sm' ? 'size-9' : size === 'md' ? 'size-[42px]' : 'size-[42px] sm:size-[52px]'
           )}
           ref={ref}
           {...props}
