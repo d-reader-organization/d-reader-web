@@ -18,6 +18,7 @@ import { GenesisNavigation } from './GenesisNavigation'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { DailyDropButton } from '../daily-drops/Button'
+import { useWallet } from '@solana/wallet-adapter-react'
 
 type Props = {
   me: User | null
@@ -93,7 +94,7 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
               </div>
             ) : (
               <Button variant='white' size='md' onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}>
-                Connect
+         {!!publicKey ? 'Sign in' : 'Connect'}
               </Button>
             )}
           </div>
