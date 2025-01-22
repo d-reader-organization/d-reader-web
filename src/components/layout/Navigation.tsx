@@ -16,6 +16,7 @@ import { User } from '@/models/user'
 import { NavItemLink } from './NavItemLink'
 import { GenesisNavigation } from './GenesisNavigation'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
+import { useWallet } from '@solana/wallet-adapter-react'
 
 type Props = {
   me: User | null
@@ -29,9 +30,9 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
   const isInvest = pathname.startsWith(RoutePath.Invest)
   // const isMarketplace = pathname.startsWith(RoutePath.Marketplace)
   const isLibrary = pathname.startsWith(RoutePath.Library)
+  const { publicKey } = useWallet()
 
   if (isInvest) return <GenesisNavigation me={me} />
-
   return (
     <>
       <MobileNav user={me} />
@@ -89,7 +90,7 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
             </div>
           ) : (
             <Button variant='white' size='md' onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}>
-              Connect
+              {!!publicKey ? 'Sign in' : 'Connect'}
             </Button>
           )}
         </div>
