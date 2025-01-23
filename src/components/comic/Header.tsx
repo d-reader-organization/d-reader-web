@@ -26,7 +26,7 @@ export const ComicHeader: React.FC<Props> = ({ comic }) => (
 
 const LeftSection: React.FC<Props> = ({ comic }) => (
   <div className='flex flex-col gap-3 sm:gap-7 w-full sm:max-w-[500px] lg:max-w-[680px] max-sm:items-start sm:justify-end'>
-    <Socials website={comic.website} instagram={comic.instagram} twitter={comic.twitter} className='sm:hidden' />
+    <Socials website={comic.website} instagram={comic.instagram} twitter={comic.twitter} className='sm:hidden mb-1' />
     <Text as='h3' styleVariant='primary-heading'>
       {comic.title}
     </Text>

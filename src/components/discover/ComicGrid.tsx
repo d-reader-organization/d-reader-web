@@ -3,7 +3,7 @@
 import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { useFetchComics } from '@/api/comic/queries'
 import { DefaultComicCard } from '../comic/cards/DefaultCard'
-import { ShowMoreButton } from './ShowMoreButton'
+import { ShowMoreButton } from '@/components/discover/ShowMoreButton'
 import { Loader } from '../shared/Loader'
 
 export const ComicGrid: React.FC = () => {

@@ -4,7 +4,7 @@ import { Button, toast } from '@/components/ui'
 import { Share2 } from 'lucide-react'
 import React from 'react'
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   title?: string
   text?: string
 }

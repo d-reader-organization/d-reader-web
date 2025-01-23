@@ -1,8 +1,11 @@
 import { fetchComicIssue, fetchOwnedComicIssues } from '@/app/lib/api/comicIssue/queries'
 import { fetchMe } from '@/app/lib/api/user/queries'
-import { BaseLayout } from '@/components/layout/BaseLayout'
-import { LibraryTabs } from '@/components/library/Tabs'
+import { EmptyLibrarySection } from '@/components/library/EmptySection'
+import { OwnedIssuesContent } from '@/components/library/OwnedIssuesContent'
+import { LibraryTabsWrapper } from '@/components/library/TabsWrapper'
+import { RoutePath } from '@/enums/routePath'
 import { SlugParamsProps } from '@/lib/types'
+import { TabsContent } from '@radix-ui/react-tabs'
 
 export default async function OwnedIssuesPage(props: SlugParamsProps) {
   const params = await props.params
@@ -20,8 +23,19 @@ export default async function OwnedIssuesPage(props: SlugParamsProps) {
   const comicIssue = await fetchComicIssue({ id: comicIssueId ?? '' })
 
   return (
-    <BaseLayout showFooter>
-      <LibraryTabs comicIssue={comicIssue} ownedIssues={ownedIssues} />
-    </BaseLayout>
+    <LibraryTabsWrapper userId={me.id}>
+      <TabsContent className='mt-0 pt-4 border-t border-grey-300' value='owned'>
+        {comicIssue && ownedIssues.length ? (
+          <OwnedIssuesContent comicIssue={comicIssue} ownedIssues={ownedIssues} />
+        ) : (
+          <EmptyLibrarySection
+            title='Your library is empty'
+            subtitle='Your collectibles will be shown here once you own any.'
+            href={RoutePath.DiscoverComicIssues}
+            buttonLinkText='Discover Collectibles'
+          />
+        )}
+      </TabsContent>
+    </LibraryTabsWrapper>
   )
 }

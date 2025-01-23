@@ -6,35 +6,43 @@ import Image from 'next/image'
 import { Text } from '@/components/ui'
 import { RoutePath } from '@/enums/routePath'
 import { CopiesCount } from '@/components/shared/CopiesCount'
-import { CardBorderWrapper } from '@/components/shared/CardBorderWrapper'
 import { MoreHorizontalIcon } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/ButtonLink'
+import { COMIC_COVER_SIZE } from '@/constants/imageSizes'
+import { cn } from '@/lib/utils'
+import { CardBorderWrapper } from '@/components/shared/CardBorderWrapper'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   comic: Comic
 }
 
-export const OwnedComicCard: React.FC<Props> = ({ comic }) => {
+export const OwnedComicCard: React.FC<Props> = ({ comic, className }) => {
   return (
-    <CardBorderWrapper className='flex flex-col  size-fit h-[262px] w-[156px] sm:h-[361px] sm:w-[226px]'>
-      <div className='relative size-full max-h-[233px]'>
+    <CardBorderWrapper
+      className={cn(
+        'flex flex-col gap-2 relative max-md:min-w-[156px] max-md:max-h-[222px] hover:brightness-110',
+        className
+      )}
+    >
+      <Image
+        src={comic.cover}
+        priority
+        alt={`Comic cover ${comic.title}`}
+        className='rounded-2xl h-auto aspect-comic-cover object-cover opacity-50'
+        {...COMIC_COVER_SIZE}
+      />
+      <div className='absolute w-[70%] m-auto -top-16 bottom-14 left-0 right-0 max-w-[180px] max-h-[180px]'>
         <Image
-          alt=''
-          src={comic.cover}
-          width={1000}
-          height={900}
-          className='object-cover rounded-xl h-[155px] sm:h-[233px] w-full opacity-50'
-        />
-        <Image
+          priority
           alt=''
           src={comic.logo}
-          width={120}
-          height={120}
-          className='object-cover h-120 w-auto absolute m-auto top-0 bottom-0 left-0 right-0 pointer-events-none'
+          fill
+          className='object-contain pointer-events-none'
+          sizes='(max-width: 600px) 100%, 120px'
         />
-        <CopiesCount count={comic.myStats?.collectiblesCount ?? 0} className='absolute top-2 right-2' />
       </div>
-      <div className='flex flex-col p-2'>
+      <CopiesCount count={comic.myStats?.collectiblesCount ?? 0} className='absolute top-3 right-3' />
+      <div className='flex flex-col p-2 gap-2'>
         <Text
           as='span'
           styleVariant='body-normal'
@@ -51,25 +59,25 @@ export const OwnedComicCard: React.FC<Props> = ({ comic }) => {
         >
           by&nbsp;{comic.creator?.name}
         </Text>
-      </div>
-      <div className='flex gap-2 sm:p-2'>
-        <ButtonLink
-          className='w-full'
-          variant='secondary'
-          subVariant={1}
-          href={RoutePath.ReadComic(comic.slug)}
-          prefetch={false}
-        >
-          Read
-        </ButtonLink>
-        <ButtonLink
-          variant='outline'
-          subVariant={1}
-          href={RoutePath.OwnedAssets(comic.slug)}
-          prefetch={false}
-          icon={MoreHorizontalIcon}
-          iconOnly
-        />
+        <div className='flex gap-2 pt-1'>
+          <ButtonLink
+            className='w-full'
+            variant='secondary'
+            subVariant={1}
+            href={RoutePath.ReadComic(comic.slug)}
+            prefetch={false}
+          >
+            Read
+          </ButtonLink>
+          <ButtonLink
+            variant='outline'
+            subVariant={1}
+            href={RoutePath.OwnedAssets(comic.slug)}
+            prefetch={false}
+            icon={MoreHorizontalIcon}
+            iconOnly
+          />
+        </div>
       </div>
     </CardBorderWrapper>
   )

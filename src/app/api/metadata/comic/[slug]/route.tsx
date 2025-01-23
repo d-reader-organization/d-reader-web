@@ -1,5 +1,5 @@
 import { fetchComic } from '@/app/lib/api/comic/queries'
-import { generateMetadataImage } from '@/utils/metadata'
+import { generateMetadataImage } from '@/utils/helpers'
 import { DefaultMetadataImage } from '@/components/metadata/DefaultImage'
 import { FallbackMetadataImage } from '@/components/metadata/FallbackImage'
 
@@ -12,10 +12,11 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
   return generateMetadataImage(
     <DefaultMetadataImage
       title={comic.title}
-      caption={comic.creator?.name}
+      body={`by ${comic.creator?.name}`}
       image={comic.cover}
       backgroundImage={comic.banner}
-      logo
+      altBodyColor
+      withLogo
     />
   )
 }

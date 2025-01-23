@@ -4,8 +4,8 @@ import { fetchPublicComicIssue } from '@/app/lib/api/comicIssue/queries'
 import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
 import { CandyMachineClaimDetails } from '@/components/claim/CandyMachineClaimDetails'
 import { BaseLayout } from '@/components/layout/BaseLayout'
-import { AboutIssueSection } from '@/components/mint/AboutIssueSection'
-import { CoverCarousel } from '@/components/mint/CoverCarousel'
+import { MintAboutIssueSection } from '@/components/mint/AboutIssueSection'
+import { CoverCarousel } from '@/components/shared/CoverCarousel'
 import { PagesPreview } from '@/components/mint/PagesPreview'
 import { ClaimPageHintDialog } from '@/components/shared/dialogs/ClaimPageHintDialog'
 import { Divider } from '@/components/shared/Divider'
@@ -75,7 +75,7 @@ export default async function ClaimPage(props: ComicIssuePageParams) {
           />
           <Divider className='max-md:hidden' />
           <div className='flex flex-col 1160:flex-row gap-10 justify-between'>
-            <AboutIssueSection comicIssue={comicIssue} targetBlank />
+            <MintAboutIssueSection comicIssue={comicIssue} />
             {pages.length ? <PagesPreview comicIssueId={comicIssue.id} pages={pages} /> : null}
           </div>
         </div>

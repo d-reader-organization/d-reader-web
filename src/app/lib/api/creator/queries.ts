@@ -4,7 +4,7 @@ import { fetchWrapper } from '../../fetchWrapper'
 import { CREATOR_QUERY_KEYS } from '@/api/creator/creatorKeys'
 import { Nullable } from '@/models/common'
 
-const { CREATOR, GET, SEARCH } = CREATOR_QUERY_KEYS
+const { CREATOR, GET, SEARCH, FOLLOWED_BY_USER } = CREATOR_QUERY_KEYS
 
 export const fetchCreator = async ({
   slug,
@@ -41,4 +41,13 @@ export const searchCreators = async (params: CreatorParams): Promise<SearchResul
     path: `${CREATOR}/${SEARCH}`,
   })
   return data ?? []
+}
+
+export const fetchFollowedCreators = async ({ params, userId }: { params: CreatorParams; userId: number }) => {
+  const response = await fetchWrapper<Creator[]>({
+    params,
+    path: `${CREATOR}/${GET}/${FOLLOWED_BY_USER}/${userId}`,
+  })
+
+  return response.data ?? []
 }

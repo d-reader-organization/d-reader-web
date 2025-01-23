@@ -24,8 +24,9 @@ interface Props {
   caption?: string
   image: string
   backgroundImage: string
-  logo?: boolean
+  withLogo?: boolean
   isMinting?: boolean
+  altBodyColor?: boolean
 }
 
 export const DefaultMetadataImage: React.FC<Props> = ({
@@ -34,10 +35,11 @@ export const DefaultMetadataImage: React.FC<Props> = ({
   caption,
   image,
   backgroundImage,
-  logo,
+  withLogo,
   isMinting,
+  altBodyColor,
 }) => (
-  <MetadataImageBase image={backgroundImage} logo={logo}>
+  <MetadataImageBase image={backgroundImage} withLogo={withLogo}>
     <img
       src={image}
       alt=''
@@ -56,7 +58,7 @@ export const DefaultMetadataImage: React.FC<Props> = ({
     >
       {title}
     </p>
-    <p style={{ ...textStyles, top: 290 }}>{body}</p>
+    <p style={{ ...textStyles, top: 290, color: altBodyColor ? '#c2c5ce' : 'white' }}>{body}</p>
     {isMinting && (
       <p
         style={{

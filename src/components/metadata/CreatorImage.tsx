@@ -21,11 +21,11 @@ interface Props {
   name: string
   banner: string
   avatar: string
-  logo?: boolean
+  withLogo?: boolean
 }
 
-export const CreatorMetadataImage: React.FC<Props> = ({ name, banner, avatar, logo }) => (
-  <MetadataImageBase image={banner} logo={logo}>
+export const CreatorMetadataImage: React.FC<Props> = ({ name, banner, avatar, withLogo }) => (
+  <MetadataImageBase image={banner} withLogo={withLogo}>
     <img
       src={avatar}
       alt=''

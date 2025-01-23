@@ -18,12 +18,13 @@ import { GenesisNavigation } from './GenesisNavigation'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { useWallet } from '@solana/wallet-adapter-react'
 
-type Props = {
+type Props = React.HtmlHTMLAttributes<HTMLDivElement> & {
   me: User | null
   hideSearch?: boolean
+  transparent?: boolean
 }
 
-export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
+export const Navigation: React.FC<Props> = ({ me, hideSearch, transparent }) => {
   const [isProfileSheetOpen, setOpenProfileSheet] = React.useState<boolean>(false)
   const pathname = usePathname()
   const isDiscover = pathname.startsWith(RoutePath.Discover)
@@ -40,7 +41,8 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
         className={cn(
           'max-md:hidden max-h-20 bg-grey-600 bg-opacity-85 backdrop-blur-[25px] w-full flex justify-center',
           'fixed top-0 z-50',
-          isProfileSheetOpen && 'z-10'
+          isProfileSheetOpen && 'z-10',
+          transparent && 'bg-opacity-0 bg-transparent backdrop-blur-none'
         )}
       >
         <div className='flex items-center justify-between p-4 max-w-screen-xl w-full'>

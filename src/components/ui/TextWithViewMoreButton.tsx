@@ -25,7 +25,7 @@ export const TextWithViewMoreButton: React.FC<Props> = ({ maxLength = 150, child
         <Button
           variant='ghost'
           onClick={() => setIsExpanded(true)}
-          className='ml-1 sm:ml-2 w-fit text-white underline p-0 py-0 sm:py-0 sm:px-0 min-w-fit max-sm:h-[28px]'
+          className='ml-1 sm:ml-2 w-fit text-white underline p-0 py-0 sm:py-0 sm:px-0 min-w-fit h-min'
         >
           <Text {...props} className='text-white underline max-sm:text-sm'>
             view more
@@ -36,7 +36,7 @@ export const TextWithViewMoreButton: React.FC<Props> = ({ maxLength = 150, child
         <Button
           variant='ghost'
           onClick={() => setIsExpanded(false)}
-          className='ml-1 sm:ml-2 w-fit text-white underline p-0 py-0 sm:py-0 sm:px-0 min-w-fit max-sm:h-[28px]'
+          className='ml-1 sm:ml-2 w-fit text-white underline p-0 py-0 sm:py-0 sm:px-0 min-w-fit h-min'
         >
           <Text {...props} className='text-white underline max-sm:text-sm'>
             view less

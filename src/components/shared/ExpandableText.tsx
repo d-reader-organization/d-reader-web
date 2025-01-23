@@ -8,6 +8,7 @@ type ExpandableTextProps = {
   maxLines?: number
 } & React.HTMLAttributes<HTMLDivElement>
 
+//TODO: refactor this component to use the Text component
 export const ExpandableText = ({ className, text, maxLines = 2 }: ExpandableTextProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [showToggle, setShowToggle] = useState(false)
@@ -26,7 +27,7 @@ export const ExpandableText = ({ className, text, maxLines = 2 }: ExpandableText
   }
 
   return (
-    <div className={cn('relative text-base font-medium', className)}>
+    <div className={cn('relative text-sm sm:text-base font-medium', className)}>
       <p
         ref={textRef}
         className={cn(

@@ -12,10 +12,10 @@ import { RoutePath } from '@/enums/routePath'
 
 type Props = {
   comicIssue: ComicIssue
-  targetBlank?: boolean
 }
 
-export const AboutIssueSection: React.FC<Props> = ({ comicIssue, targetBlank }) => (
+//TODO: Check if this component is getting updated with the new UI for comic issues page, update variable names/refactor the code accordingly
+export const MintAboutIssueSection: React.FC<Props> = ({ comicIssue }) => (
   <div className='flex flex-col gap-6'>
     <h5 className='text-xl font-semibold leading-[20px] tracking-[0.04px]'>Description</h5>
     <GenreTags genres={comicIssue.genres ?? []} />
@@ -33,7 +33,7 @@ export const AboutIssueSection: React.FC<Props> = ({ comicIssue, targetBlank }) 
           className='max-h-9 px-3 py-2 flex gap-2 justify-center items-center rounded-lg bg-grey-500'
           href={RoutePath.Comic(comicIssue.comicSlug)}
           prefetch={false}
-          target={targetBlank ? '_blank' : undefined}
+          target='_blank'
         >
           <ExternalLink className='text-grey-100' size={20} />
           <span className='text-base font-medium leading-[22.4px] text-grey-100'>Explore series</span>

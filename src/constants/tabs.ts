@@ -44,3 +44,18 @@ export const comicPageTabs = (slug: string): Tab[] => [
     disabled: true,
   },
 ]
+
+export const LIBRARY_PAGE_TABS: { title: string; value: string; isComingSoon?: boolean }[] = [
+  {
+    title: 'Owned',
+    value: 'owned',
+  },
+  {
+    title: 'Favorites',
+    value: 'favorites',
+  },
+  {
+    title: 'Creators',
+    value: 'creators',
+  },
+]

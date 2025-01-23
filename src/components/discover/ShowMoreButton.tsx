@@ -1,6 +1,6 @@
 'use client'
 
-import { Text } from '../ui'
+import { Text } from '@/components/ui'
 import LoadingSpinner from 'public/assets/vector-icons/loading-spinner.svg'
 import ChevronDownIcon from 'public/assets/vector-icons/chevron-down.svg'
 import { pluralizeString } from '@/utils/helpers'
