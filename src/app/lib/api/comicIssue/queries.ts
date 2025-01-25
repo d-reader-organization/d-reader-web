@@ -1,9 +1,10 @@
-import { ComicIssue, OwnedComicIssue } from '@/models/comicIssue'
+import { ComicIssue } from '@/models/comicIssue'
 import { ComicIssueParams } from '@/models/comicIssue/comicIssueParams'
 import { fetchWrapper } from '../../fetchWrapper'
 import { COMIC_ISSUE_QUERY_KEYS } from '@/api/comicIssue/comicIssueKeys'
 import { Nullable } from '@/models/common'
 import { ComicPage } from '@/models/comic/comicPage'
+import { OwnedCollectibleComic } from '@/models/comic/collectibleComic'
 
 const { BY_OWNER, COMIC_ISSUE, GET, GET_PUBLIC, PAGES } = COMIC_ISSUE_QUERY_KEYS
 
@@ -46,14 +47,14 @@ export const fetchPublicComicIssue = async (id: string | number): Promise<Nullab
   return response.data
 }
 
-export const fetchOwnedComicIssues = async ({
+export const fetchOwnedCollectibleComics = async ({
   params,
   userId,
 }: {
   params: ComicIssueParams
   userId: number
-}): Promise<OwnedComicIssue[]> => {
-  const response = await fetchWrapper<OwnedComicIssue[]>({
+}): Promise<OwnedCollectibleComic[]> => {
+  const response = await fetchWrapper<OwnedCollectibleComic[]>({
     path: `${COMIC_ISSUE}/${GET}/${BY_OWNER}/${userId}`,
     params,
     revalidateCacheInSeconds: 10,

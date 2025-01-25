@@ -5,17 +5,18 @@ import { Button } from '@/components/ui/Button'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Text } from '@/components/ui/Text'
 import { RoutePath } from '@/enums/routePath'
-import { ComicIssue, OwnedComicIssue } from '@/models/comicIssue'
+import { OwnedCollectibleComic } from '@/models/comic/collectibleComic'
+import { ComicIssue } from '@/models/comicIssue'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
 type Props = {
   comicIssue: ComicIssue
-  ownedIssues: OwnedComicIssue[]
+  ownedCollectibles: OwnedCollectibleComic[]
 }
 
-export const OwnedIssuesContent: React.FC<Props> = ({ comicIssue, ownedIssues }) => {
+export const OwnedComicCollectiblesContent: React.FC<Props> = ({ comicIssue, ownedCollectibles }) => {
   const { back } = useRouter()
 
   return (
@@ -23,18 +24,18 @@ export const OwnedIssuesContent: React.FC<Props> = ({ comicIssue, ownedIssues })
       <Button className='flex items-center gap-3 w-fit px-0 sm:px-0 py-4 sm:py-8' variant='ghost' onClick={back}>
         <ArrowLeft className='size-8' />
         <Text as='h3' styleVariant='secondary-heading'>
-          {ownedIssues.at(0)?.collectibles.at(0)?.comicName}
+          {ownedCollectibles.at(0)?.collectibles.at(0)?.comicName}
         </Text>
       </Button>
 
-      {!ownedIssues.length ? (
+      {!ownedCollectibles.length ? (
         <div className='flex flex-col justify-center items-center h-full self-center'>
           <Text as='h5' styleVariant='primary-heading'>
             No owned assets for given comic series
           </Text>
         </div>
       ) : (
-        ownedIssues.map((ownedIssue) => {
+        ownedCollectibles.map((ownedIssue) => {
           return (
             <div
               key={ownedIssue.title}

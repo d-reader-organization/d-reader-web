@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
 import { RarityChip } from '@/components/shared/chips/RarityChip'
-import { StateChip } from '../shared/chips/State'
 import { CardBorderWrapper } from '../shared/CardBorderWrapper'
 import { shortenAssetName } from '@/utils/helpers'
 import { CollectibleComic } from '@/models/comic/collectibleComic'

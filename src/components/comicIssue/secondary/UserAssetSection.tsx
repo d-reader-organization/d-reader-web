@@ -30,6 +30,7 @@ export const WalletAssetSection: React.FC<Props> = ({ collectionAddress, accessT
     enabled,
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleListingAsset = async (assetAddress: string) => {
     if (!publicKey) {
       toast({ description: 'Connect you wallet to purchase', variant: 'error' })

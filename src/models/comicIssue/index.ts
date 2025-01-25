@@ -7,7 +7,6 @@ import { ComicIssueCollaborator } from './comicIssueCollaborator'
 import { StatefulCover } from './statefulCover'
 import { StatelessCover } from './statelessCover'
 import { RoyaltyWallet } from './royaltyWallet'
-import { CollectibleComic } from '../comic/collectibleComic'
 import { ComicIssueCollectibleInfo } from './comicIssueCollectibleInfo'
 
 export interface BasicComicIssue {
@@ -83,14 +82,4 @@ export type UpdateComicIssueFilesData = Partial<{
 
 export type ComicIssueInfoProps = {
   comicIssue: ComicIssue
-}
-
-export type OwnedComicIssue = {
-  id: number
-  number: number
-  title: string
-  slug: string
-  cover: string
-  collectibles: CollectibleComic[]
-  ownedCopiesCount: number
 }

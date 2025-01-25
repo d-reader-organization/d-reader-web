@@ -75,8 +75,7 @@ const signatureRequests: SignatureRequest[] = [
   // Add more sample data as needed
 ]
 
-// TODO: each table is missing Title elements
-export function SignatureRequestsTable() {
+export function ProductsTable() {
   const [currentPage, setCurrentPage] = useState(1)
   const [status, setStatus] = useState<RequestStatus>('pending')
   const totalPages = 10
@@ -235,4 +234,4 @@ export function SignatureRequestsTable() {
   )
 }
 
-export default SignatureRequestsTable
+export default ProductsTable

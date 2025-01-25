@@ -27,3 +27,13 @@ export type BasicCollectibleComic = Pick<
   comicIssueTitle: ComicIssue['title']
   episodeNumber: ComicIssue['number']
 }
+
+export type OwnedCollectibleComic = {
+  id: number
+  number: number
+  title: string
+  slug: string
+  cover: string
+  collectibles: CollectibleComic[]
+  ownedCopiesCount: number
+}
