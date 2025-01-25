@@ -1,5 +1,4 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../ui/Table'
-import { ComicRarity } from '@/enums/comicRarity'
 import Image from 'next/image'
 import { useToggle } from '@/hooks'
 import { useFetchCollectibleComicListings } from '@/api/auctionHouse/queries'
@@ -8,7 +7,7 @@ import { ListedItem } from '@/models/auctionHouse/listedItem'
 import { CollectibleComic } from '@/models/comic/collectibleComic'
 import { useFetchSupportedTokens } from '@/api/settings/queries/useFetchSupportedTokens'
 import { SplToken } from '@/models/settings/splToken'
-import { getTokenPrice, shortenSolanaAddress } from '@/utils/helpers'
+import { getTokenPrice, shortenAssetName, shortenSolanaAddress } from '@/utils/helpers'
 import { format } from 'date-fns'
 import { fetchDirectBuyTransaction } from '@/app/lib/api/transaction/queries'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
@@ -22,8 +21,10 @@ import { Button, Text, toast } from '../../ui'
 import { PLACEHOLDER_AVATAR, SOLANA_EXPLORER_BASE_LINK } from '@/constants/general'
 import { useState } from 'react'
 import CHECK_CIRCLE from 'public/assets/vector-icons/check-circle.svg'
-import { RarityChip } from '@/components/shared/chips/Rarity'
-import { StateChip } from '@/components/shared/chips/State'
+import { RarityChip } from '@/components/shared/chips/RarityChip'
+import { SignedTraitChip } from '@/components/shared/chips/SignedTraitChip'
+import { UsedTraitChip } from '@/components/shared/chips/UsedTraitChip'
+import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 
 export const ListingSection: React.FC<{ collectionAddress: string | undefined; accessToken: string }> = ({
   collectionAddress,
@@ -202,11 +203,11 @@ const ListedAssetRow: React.FC<{
         <CollectibleComicImageCell collectibleComic={collectibleComic} />
       </TableCell>
       <TableCell>
-        <CollectibleComicMetadataCell
-          isSigned={collectibleComic.isSigned}
-          isUsed={collectibleComic.isUsed}
-          rarity={collectibleComic.rarity}
-        />
+        <div className='flex flex-wrap gap-1 '>
+          <UsedTraitChip used={collectibleComic.isUsed} />
+          <SignedTraitChip signed={collectibleComic.isSigned} />
+          <RarityChip rarity={collectibleComic.rarity} />
+        </div>
       </TableCell>
       <TableCell>
         <div className='flex gap-1 items-center'>
@@ -261,31 +262,14 @@ const CollectibleComicImageCell: React.FC<{ collectibleComic: CollectibleComic }
     <div className='flex gap-1 items-center'>
       <Image
         src={collectibleComic.image}
-        width='0'
-        height='0'
+        {...COMIC_ISSUE_COVER_SIZE}
         alt={collectibleComic.rarity + ' cover'}
         sizes='(max-width: 30px) 100vw'
         className='rounded-sm max-w-7 object-cover'
       />
       <Text as='p' styleVariant='body-normal' fontWeight='bold'>
-        #{collectibleComic.name.split('#')[1]}
+        {shortenAssetName(collectibleComic.name)}
       </Text>
-    </div>
-  )
-}
-
-type CollectibleComicMetadataProps = {
-  isUsed: boolean
-  isSigned: boolean
-  rarity: ComicRarity
-}
-
-const CollectibleComicMetadataCell: React.FC<CollectibleComicMetadataProps> = ({ isUsed, isSigned, rarity }) => {
-  return (
-    <div className='flex flex-wrap gap-1 '>
-      {isUsed ? <StateChip state='used' /> : <StateChip state='mint' />}
-      {isSigned ? <StateChip state='signed' /> : null}
-      {rarity && <RarityChip rarity={rarity} />}
     </div>
   )
 }

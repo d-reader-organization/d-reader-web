@@ -44,7 +44,6 @@ export const CoverCarousel: React.FC<Props> = ({ candyMachine, covers }) => {
                 totalSupply={candyMachine?.supply ?? 0}
                 key={`${cover.rarity}-${index}`}
                 onClick={() => toggleCoverPreview()}
-                hideRarityChip={!hasCoverVariants}
               />
             ))}
           </div>

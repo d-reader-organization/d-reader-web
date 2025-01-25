@@ -19,10 +19,11 @@ import { ProductTypeChip } from '../shared/chips/ProductType'
 import { useDebouncedCallback } from 'use-debounce'
 import LoadingSpinner from 'public/assets/vector-icons/loading-spinner.svg'
 import { cn } from '@/lib/utils'
+import { useRerender } from '@/hooks/useRerender'
 
 export type TransactionItem = {
   id: string
-  date: string
+  date: string // TODO: replace with 'finalizedAt' or 'confirmedAt'?
   buyer: {
     username?: string
     displayName: string // enforce 'Guest' for unregistered buyers
@@ -144,6 +145,7 @@ const transactions: TransactionItem[] = [
 ]
 
 // TODO: "items per page" select
+// TODO: edge cases (ie. no results found for specified parameters OR no results found at all)
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Props = {}
@@ -152,8 +154,9 @@ export const TransactionHistoryTable: React.FC<Props> = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [, setTimeUpdate] = useState(0)
   const totalPages = 10
+
+  useRerender(30000)
 
   const debouncedSearch = useDebouncedCallback(async (value) => {
     if (value) {
@@ -170,15 +173,6 @@ export const TransactionHistoryTable: React.FC<Props> = () => {
 
   const clearSearch = useCallback(() => {
     setSearchTerm('')
-  }, [])
-
-  /** rerender the component every 30 seconds to update the relative time */
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeUpdate((prev) => prev + 1)
-    }, 30000)
-
-    return () => clearInterval(interval)
   }, [])
 
   return (
@@ -220,6 +214,7 @@ export const TransactionHistoryTable: React.FC<Props> = () => {
             icon={Upload}
             size='md'
             onClick={() => {
+              // TODO: export csv
               console.log('Export button clicked!')
             }}
           />

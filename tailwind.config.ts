@@ -30,6 +30,8 @@ const config = {
         'creator-avatar': '500/500',
       },
       borderWidth: {
+        '1': '1px',
+        '2': '2px',
         '3': '3px',
       },
       fontSize: {
@@ -149,6 +151,7 @@ const config = {
       },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar')],
 } satisfies Config
 

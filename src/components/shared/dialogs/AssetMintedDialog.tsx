@@ -12,14 +12,14 @@ import { UnwrapWarningDialog } from './UnwrapWarningDialog'
 import { CommonDialogProps } from '@/models/common'
 import { useFetchTwitterIntentComicMinted } from '@/api/twitter/queries/useFetchIntentComicMinted'
 import { UtmSource } from '@/models/twitter/twitterIntentComicMintedParams'
-import { RarityChip } from '../chips/Rarity'
+import { RarityChip } from '../chips/RarityChip'
 import { AssetEventData } from '@/models/asset/assetMintEvent'
 import { Arrow } from '../Arrow'
 import useEmblaCarousel from 'embla-carousel-react'
 import { fetchUseComicIssueAssetTransaction } from '@/app/lib/api/transaction/queries'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { toast } from '@/components/ui'
-import { sleep } from '@/utils/helpers'
+import { shortenAssetName, sleep } from '@/utils/helpers'
 import { useRouter } from 'next/navigation'
 import { Loader } from 'lucide-react'
 import { LOCAL_STORAGE } from '@/constants/general'
@@ -133,7 +133,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
                 {comicIssue.title} &nbsp;&bull;&nbsp; EP&nbsp;{comicIssue.number}
               </p>
               <p className='text-white sm:text-[32px] xs:text-[26px] font-obviouslyNarrow font-semibold leading-8'>
-                Congrats! You got #{assets[selectedIndex].name.split('#')[1]}
+                Congrats! You got #{shortenAssetName(assets[selectedIndex].name)}
               </p>
               <RarityChip className='-mt-3.5' rarity={assets[selectedIndex].rarity} />
               {/* <p className='text-grey-100 text-base sm:text-[16px] xs:text-[14px] leading-5 text-center'>

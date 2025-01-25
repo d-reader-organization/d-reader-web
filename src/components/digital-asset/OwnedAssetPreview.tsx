@@ -1,6 +1,6 @@
-import { RarityChip } from '@/components/shared/chips/Rarity'
-import Image from 'next/image'
 import React from 'react'
+import Image from 'next/image'
+import { RarityChip } from '@/components/shared/chips/RarityChip'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/Dialog'
 import { OwnedAssetCard } from './OwnedAssetCard'
 import { toast } from '../ui/toast'
@@ -125,11 +125,7 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
             <div className='flex items-center gap-2 flex-wrap'>
               <RoyaltyChip royalty={collectibleComic.royalties} />
               <RarityChip rarity={collectibleComic.rarity} />
-              {collectibleComic.isUsed ? (
-                <StateChip state='used' text='USED' />
-              ) : (
-                <StateChip state='mint' text='MINT' />
-              )}
+              <StateChip state={collectibleComic.isUsed ? 'used' : 'mint'} />
               {collectibleComic.isSigned ? <StateChip state='signed' text='SIGNED' /> : null}
             </div>
             <Divider />
