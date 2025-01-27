@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import { ChevronDown, ChevronLeft, ChevronRight, Copy, ListFilter, Search, Settings2, Upload, X } from 'lucide-react'
+import { ChevronDown, Copy, ListFilter, Search, Settings2, Upload, X } from 'lucide-react'
 import React, { useState, useEffect, useCallback } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
@@ -18,23 +18,34 @@ import { useDebouncedCallback } from 'use-debounce'
 import LoadingSpinner from 'public/assets/vector-icons/loading-spinner.svg'
 import { cn } from '@/lib/utils'
 import { useRerender } from '@/hooks/useRerender'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { transactions } from '@/constants/dummyData'
 import { downloadTransactionsReportCSV } from '@/utils/csv'
+import { usePaginationControls } from '@/hooks/usePaginationControls'
+// import { TransactionHistoryItem } from '@/models/transaction/transactionHistory'
 
-// TODO: edge cases (ie. no results found for specified parameters OR no results found at all)
-// TODO: prepare API endpoints with mock const data & params (filter, sort, and page)
+// TODO: prepare API endpoints params (filter, sort, and pagination)
+// TODO: change table data based on the selected tab
+// TODO: edge cases: no results at all, no results from specified parameters
 // TODO: filter (all?) tables by comics, episodes, and creators
-
+// TODO: extract the logic from the SearchInput component
+// TODO: fetch the full data report for CSV, unpaginated. Add the .splToken property to the TransactionHistoryItem
+// TODO: finish 'My Products' table
+// TODO: work on the chart table, get Athar to sort out the backend ASAP
+// TODO: table responsiveness
+// TODO: ICONS (Matan)
 type Props = { title: string }
 
+// const transactions: TransactionHistoryItem[] = []
+
 export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
-  const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const totalPages = 104
+  const isTableEmpty = transactions.length === 0
+  const { PaginationControls, skip, take } = usePaginationControls({ totalItems: transactions.length })
 
   useRerender(30000)
+
+  console.log('TRANSACTION HISTORY: ', { skip, take })
 
   const debouncedSearch = useDebouncedCallback(async (value) => {
     if (value) {
@@ -60,7 +71,6 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
       <div className='space-y-4 bg-grey-600 text-grey-100 border-2 border-grey-400 py-4 rounded-xl'>
         <div className='flex items-center justify-between px-4'>
           <div className='relative z-10'>
-            {/* TODO: extract the logic from the SearchInput component and use it here */}
             {searchTerm ? (
               <button className='absolute top-3 left-3' onClick={clearSearch}>
                 <X className='size-[18px] text-white' />
@@ -95,8 +105,6 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
               icon={Upload}
               size='md'
               onClick={() => {
-                // TODO: fetch the full data report, unpaginated
-                // add the .splToken property to the TransactionHistoryItem
                 downloadTransactionsReportCSV(transactions)
               }}
             />
@@ -145,7 +153,10 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
                 </TableCell>
                 <TableCell>
                   <span title={new Date(transaction.confirmedAt).toLocaleString()}>
-                    {formatDistanceToNow(new Date(transaction.confirmedAt), { addSuffix: true, includeSeconds: true })}
+                    {formatDistanceToNow(new Date(transaction.confirmedAt), {
+                      addSuffix: true,
+                      includeSeconds: true,
+                    })}
                   </span>
                 </TableCell>
                 <TableCell>
@@ -193,47 +204,13 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
           </TableBody>
         </Table>
 
-        <div className='flex items-center justify-between px-4 select-none'>
-          <div className='flex items-center gap-2'>
-            <Button
-              className='min-w-10'
-              variant='secondary'
-              size='sm'
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className='h-4 w-4' />
-            </Button>
-            <div className='flex items-center gap-2 mx-2'>
-              <Text as='span' styleVariant='body-small'>
-                {currentPage} / <span className='text-grey-200'>{totalPages}</span>
-              </Text>
-            </div>
-            <Button
-              className='min-w-10'
-              variant='secondary'
-              size='sm'
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-            >
-              <ChevronRight className='h-4 w-4' />
-            </Button>
-          </div>
-          <div className='flex items-center gap-2'>
-            <span className='text-sm text-grey-200'>Items per page</span>
-            <Select defaultValue='10'>
-              <SelectTrigger className='w-16 bg-grey-300 bg-opacity-30 border-t border-white border-opacity-10 text-grey-100'>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className='bg-grey-300 text-grey-100 outline-none'>
-                <SelectItem value='5'>5</SelectItem>
-                <SelectItem value='10'>10</SelectItem>
-                <SelectItem value='20'>20</SelectItem>
-                <SelectItem value='50'>50</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        {isTableEmpty ? (
+          <Text as='p' styleVariant='secondary-heading' className='text-center text-white py-12'>
+            Nothing to see here... yet ;)
+          </Text>
+        ) : (
+          <PaginationControls />
+        )}
       </div>
     </div>
   )

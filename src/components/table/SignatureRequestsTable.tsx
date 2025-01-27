@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import { ChevronDown, ChevronLeft, ChevronRight, Settings2, Trash2, Pencil } from 'lucide-react'
+import { ChevronDown, Settings2, Trash2, Pencil } from 'lucide-react'
 import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
@@ -15,8 +15,8 @@ import Image from 'next/image'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 import { TextWithOverflow } from '../ui/TextWithOverflow'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { signatureRequests } from '@/constants/dummyData'
+import { usePaginationControls } from '@/hooks/usePaginationControls'
 
 enum SignatureRequestsTab {
   Pending = 'Pending',
@@ -26,11 +26,13 @@ enum SignatureRequestsTab {
 type Props = { title: string }
 
 export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
-  const [currentPage, setCurrentPage] = useState(1)
   const [tab, setTab] = useState<SignatureRequestsTab>(SignatureRequestsTab.Pending)
-  const totalPages = 10
+  const isTableEmpty = signatureRequests.length === 0
+  const { PaginationControls, skip, take } = usePaginationControls({ totalItems: signatureRequests.length })
 
   useRerender(30000)
+
+  console.log('SIGNATURE REQUESTS: ', { skip, take, tab })
 
   return (
     <div className='w-full max-w-screen-lg'>
@@ -143,7 +145,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                       size='sm'
                       className='h-8 w-8 p-0'
                       onClick={() => {
-                        console.log('Edit clicked')
+                        console.log('Comic signed!')
                       }}
                     >
                       <Pencil className='h-4 w-4' />
@@ -153,7 +155,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                       size='sm'
                       className='h-8 w-8 p-0'
                       onClick={() => {
-                        console.log('Delete clicked')
+                        console.log('Signature rejected!')
                       }}
                     >
                       <Trash2 className='h-4 w-4' />
@@ -164,47 +166,13 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
             ))}
           </TableBody>
         </Table>
-        <div className='flex items-center justify-between px-4 select-none'>
-          <div className='flex items-center gap-2'>
-            <Button
-              className='min-w-10'
-              variant='secondary'
-              size='sm'
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className='h-4 w-4' />
-            </Button>
-            <div className='flex items-center gap-2 mx-2'>
-              <Text as='span' styleVariant='body-small'>
-                {currentPage} / <span className='text-grey-200'>{totalPages}</span>
-              </Text>
-            </div>
-            <Button
-              className='min-w-10'
-              variant='secondary'
-              size='sm'
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-            >
-              <ChevronRight className='h-4 w-4' />
-            </Button>
-          </div>
-          <div className='flex items-center gap-2'>
-            <span className='text-sm text-grey-200'>Items per page</span>
-            <Select defaultValue='10'>
-              <SelectTrigger className='w-16 bg-grey-300 bg-opacity-30 border-t border-white border-opacity-10 text-grey-100'>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className='bg-grey-300 text-grey-100 outline-none'>
-                <SelectItem value='5'>5</SelectItem>
-                <SelectItem value='10'>10</SelectItem>
-                <SelectItem value='20'>20</SelectItem>
-                <SelectItem value='50'>50</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        {isTableEmpty ? (
+          <Text as='p' styleVariant='secondary-heading' className='text-center text-white py-12'>
+            No user requested a signature from you!
+          </Text>
+        ) : (
+          <PaginationControls />
+        )}
       </div>
     </div>
   )
