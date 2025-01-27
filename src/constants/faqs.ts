@@ -8,7 +8,7 @@ export interface FAQItemType {
 const FAQ = Object.freeze({
   WHERE_DO_I_START: {
     question: 'I love comics! Where do I start?',
-    answer: 'TODO',
+    answer: 'Start by joining our community on Discord or looking into our social media channels!',
   },
   CAN_I_PUBLISH: {
     question: 'Can I publish my own comics?',

@@ -7,11 +7,11 @@ import React from 'react'
 export function DashboardPage() {
   return (
     <CreatorDashboardLayout>
-      <ProductsTable />
+      <ProductsTable title='My products' />
       <div className='my-6' />
-      <SignatureRequestsTable />
+      <SignatureRequestsTable title='Signature requests' />
       <div className='my-6' />
-      <TransactionHistoryTable />
+      <TransactionHistoryTable title='Transactions' />
     </CreatorDashboardLayout>
   )
 }

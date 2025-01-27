@@ -78,13 +78,11 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
                   className='max-w-[486px]'
                 />
               </FormControl>
-              {/* TODO: standardize ALL forms */}
-              {/* {!state?.success && <FormErrorMessage message={state?.error} />} */}
-              {/* OTHER UNRELATED TODO COMMENTS:
+              {/* TODO:
+              - standardize ALL forms
               - refactor form inputs (UpdateUserDetailsForm)
-              - cache SOL balance
-              - improve RemovePhotoWarningDialog
-              */}
+              - improve RemovePhotoWarningDialog */}
+              {/* {!state?.success && <FormErrorMessage message={state?.error} />} */}
               <Text as='p' styleVariant='body-small' className='text-grey-200'>
                 8 characters minimum. At least 1 lowercase, 1 uppercase and 1 number
               </Text>

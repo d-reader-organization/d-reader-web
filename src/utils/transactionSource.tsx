@@ -1,5 +1,5 @@
-import SaleIcon from 'public/assets/vector-icons/common-rarity-icon.svg'
-import RoyaltyIcon from 'public/assets/vector-icons/uncommon-rarity-icon.svg'
+import SaleIcon from 'public/assets/vector-icons/sale-icon.svg'
+import RoyaltyIcon from 'public/assets/vector-icons/royalty-icon.svg'
 import { TransactionSource } from '@/enums/transactionSource'
 
 export const getTransactionSourceIcon = (source: TransactionSource) => {

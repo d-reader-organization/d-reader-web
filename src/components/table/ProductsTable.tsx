@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
+import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
 import { ChevronDown, ChevronLeft, ChevronRight, Settings2, Trash2, Pencil } from 'lucide-react'
 import React, { useState } from 'react'
@@ -12,9 +13,9 @@ import { RarityChip } from '../shared/chips/RarityChip'
 import { formatDistanceToNow } from 'date-fns'
 import { useRerender } from '@/hooks/useRerender'
 import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
-import Image from 'next/image'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
+import Image from 'next/image'
 
 interface SignatureRequest {
   asset: BasicCollectibleComic
@@ -74,7 +75,9 @@ const signatureRequests: SignatureRequest[] = [
   },
 ]
 
-export function ProductsTable() {
+type Props = { title: string }
+
+export const ProductsTable: React.FC<Props> = ({ title }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [status, setStatus] = useState<RequestStatus>('pending')
   const totalPages = 10
@@ -82,149 +85,154 @@ export function ProductsTable() {
   useRerender(30000)
 
   return (
-    <div className='w-full max-w-screen-lg space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
-      <div className='flex items-center justify-between px-4'>
-        <div className='flex gap-1 border-grey-300 border-1 box-border rounded-xl px-1 items-center h-[42px]'>
-          <Button
-            variant={status === 'pending' ? 'secondary' : 'ghost'}
-            onClick={() => setStatus('pending')}
-            className='h-8 font-bold'
-          >
-            Pending
-          </Button>
-          <Button
-            variant={status === 'resolved' ? 'secondary' : 'ghost'}
-            onClick={() => setStatus('resolved')}
-            className='h-8 font-bold'
-          >
-            Resolved
-          </Button>
+    <div className='w-full max-w-screen-lg'>
+      <Text styleVariant='secondary-heading' as='h3' className='pb-4'>
+        {title}
+      </Text>
+      <div className='w-full max-w-screen-lg space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
+        <div className='flex items-center justify-between px-4'>
+          <div className='flex gap-1 border-grey-300 border-1 box-border rounded-xl px-1 items-center h-[42px]'>
+            <Button
+              variant={status === 'pending' ? 'secondary' : 'ghost'}
+              onClick={() => setStatus('pending')}
+              className='h-8 font-bold'
+            >
+              Pending
+            </Button>
+            <Button
+              variant={status === 'resolved' ? 'secondary' : 'ghost'}
+              onClick={() => setStatus('resolved')}
+              className='h-8 font-bold'
+            >
+              Resolved
+            </Button>
+          </div>
+          <div className='flex items-center gap-2'>
+            <Button
+              className='relative rounded-lg min-w-10 sm:px-0'
+              variant='secondary'
+              size='md'
+              onClick={() => {
+                console.log('Filter clicked')
+              }}
+            >
+              <Settings2 className='h-4 w-4' />
+            </Button>
+            <Button
+              variant='secondary'
+              className='w-max min-w-10 sm:px-2 rounded-lg flex justify-center items-center gap-2'
+              size='md'
+            >
+              <span className='max-md:hidden'>Sort by: Newest</span>
+              <ChevronDown className='h-4 w-4' />
+            </Button>
+          </div>
         </div>
-        <div className='flex items-center gap-2'>
-          <Button
-            className='relative rounded-lg min-w-10 sm:px-0'
-            variant='outline'
-            size='md'
-            onClick={() => {
-              console.log('Filter clicked')
-            }}
-          >
-            <Settings2 className='h-4 w-4' />
-          </Button>
-          <Button
-            variant='outline'
-            className='w-max min-w-10 sm:px-2 rounded-lg flex justify-center items-center gap-2'
-            size='md'
-          >
-            <span className='max-md:hidden'>Sort by: Newest</span>
-            <ChevronDown className='h-4 w-4' />
-          </Button>
-        </div>
-      </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow className='border-grey-400 bg-grey-500'>
-            <TableHead className='pl-4'>Asset</TableHead>
-            <TableHead>Date Requested</TableHead>
-            <TableHead>User</TableHead>
-            <TableHead>Traits</TableHead>
-            <TableHead className='pr-4'>Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {signatureRequests.map(({ asset, requestedAt, user }) => (
-            <TableRow key={asset.address} className='border-grey-400'>
-              <TableCell className='pl-4'>
-                <div className='flex items-center gap-3'>
-                  <Image
-                    src={asset.image}
-                    alt=''
-                    {...COMIC_ISSUE_COVER_SIZE}
-                    className='rounded-sm h-auto w-10 aspect-comic-issue-cover'
-                  />
-                  <div className='flex flex-col'>
-                    <span className='text-grey-200'>
-                      {asset.comicTitle} • EP {asset.episodeNumber}
-                    </span>
-                    <span className='font-medium'>{asset.comicIssueTitle}</span>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell>
-                <span title={new Date(requestedAt).toLocaleString()}>
-                  {formatDistanceToNow(new Date(requestedAt), { addSuffix: true, includeSeconds: true })}
-                </span>
-              </TableCell>
-              <TableCell>
-                <div className='flex items-center gap-2'>
-                  <Avatar className='h-6 w-6'>
-                    <AvatarImage src={user.avatar} />
-                    <AvatarFallback>{user.username[0]}</AvatarFallback>
-                  </Avatar>
-                  {user.displayName}
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className='flex gap-2'>
-                  <RarityChip rarity={asset.rarity} compactOnMobile />
-                  <UsedTraitChip used={asset.isUsed} compactOnMobile />
-                  <SignedTraitChip signed={asset.isSigned} compactOnMobile />
-                </div>
-              </TableCell>
-              <TableCell className='pr-4'>
-                <div className='gap-2'>
-                  <Button
-                    variant='ghost'
-                    size='sm'
-                    className='h-8 w-8 p-0'
-                    onClick={() => {
-                      console.log('Edit clicked')
-                    }}
-                  >
-                    <Pencil className='h-4 w-4' />
-                  </Button>
-                  <Button
-                    variant='ghost'
-                    size='sm'
-                    className='h-8 w-8 p-0'
-                    onClick={() => {
-                      console.log('Delete clicked')
-                    }}
-                  >
-                    <Trash2 className='h-4 w-4' />
-                  </Button>
-                </div>
-              </TableCell>
+        <Table>
+          <TableHeader>
+            <TableRow className='border-grey-400 bg-grey-500'>
+              <TableHead className='pl-4'>Asset</TableHead>
+              <TableHead>Date Requested</TableHead>
+              <TableHead>User</TableHead>
+              <TableHead>Traits</TableHead>
+              <TableHead className='pr-4'>Status</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {signatureRequests.map(({ asset, requestedAt, user }) => (
+              <TableRow key={asset.address} className='border-grey-400'>
+                <TableCell className='pl-4'>
+                  <div className='flex items-center gap-3'>
+                    <Image
+                      src={asset.image}
+                      alt=''
+                      {...COMIC_ISSUE_COVER_SIZE}
+                      className='rounded-sm h-auto w-10 aspect-comic-issue-cover'
+                    />
+                    <div className='flex flex-col'>
+                      <span className='text-grey-200'>
+                        {asset.comicTitle} • EP {asset.episodeNumber}
+                      </span>
+                      <span className='font-medium'>{asset.comicIssueTitle}</span>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <span title={new Date(requestedAt).toLocaleString()}>
+                    {formatDistanceToNow(new Date(requestedAt), { addSuffix: true, includeSeconds: true })}
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <div className='flex items-center gap-2'>
+                    <Avatar className='h-6 w-6'>
+                      <AvatarImage src={user.avatar} />
+                      <AvatarFallback>{user.username[0]}</AvatarFallback>
+                    </Avatar>
+                    {user.displayName}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className='flex gap-2'>
+                    <RarityChip rarity={asset.rarity} compactOnMobile />
+                    <UsedTraitChip used={asset.isUsed} compactOnMobile />
+                    <SignedTraitChip signed={asset.isSigned} compactOnMobile />
+                  </div>
+                </TableCell>
+                <TableCell className='pr-4'>
+                  <div className='gap-2'>
+                    <Button
+                      variant='ghost'
+                      size='sm'
+                      className='h-8 w-8 p-0'
+                      onClick={() => {
+                        console.log('Edit clicked')
+                      }}
+                    >
+                      <Pencil className='h-4 w-4' />
+                    </Button>
+                    <Button
+                      variant='ghost'
+                      size='sm'
+                      className='h-8 w-8 p-0'
+                      onClick={() => {
+                        console.log('Delete clicked')
+                      }}
+                    >
+                      <Trash2 className='h-4 w-4' />
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
 
-      <div className='flex items-center justify-center gap-2'>
-        <Button
-          className='min-w-10'
-          variant='secondary'
-          size='sm'
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-          disabled={currentPage === 1}
-        >
-          <ChevronLeft className='h-4 w-4' />
-        </Button>
-        <div className='flex items-center gap-2 mx-2'>
-          <span>
-            {currentPage} / <span className='text-grey-200'>{totalPages}</span>
-          </span>
+        <div className='flex items-center justify-center gap-2'>
+          <Button
+            className='min-w-10'
+            variant='secondary'
+            size='sm'
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className='h-4 w-4' />
+          </Button>
+          <div className='flex items-center gap-2 mx-2'>
+            <span>
+              {currentPage} / <span className='text-grey-200'>{totalPages}</span>
+            </span>
+          </div>
+          <Button
+            className='min-w-10'
+            variant='secondary'
+            size='sm'
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight className='h-4 w-4' />
+          </Button>
         </div>
-        <Button
-          className='min-w-10'
-          variant='secondary'
-          size='sm'
-          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-          disabled={currentPage === totalPages}
-        >
-          <ChevronRight className='h-4 w-4' />
-        </Button>
       </div>
     </div>
   )

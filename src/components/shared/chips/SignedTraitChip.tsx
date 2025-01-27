@@ -2,6 +2,7 @@ import React from 'react'
 import { cn } from '@/lib/utils'
 import { Text } from '@/components/ui'
 import SignedIcon from 'public/assets/vector-icons/signed-icon.svg'
+import UnsignedIcon from 'public/assets/vector-icons/unsigned-icon.svg'
 
 type Props = {
   signed: boolean
@@ -21,7 +22,7 @@ export const SignedTraitChip: React.FC<Props> = ({
 }) => {
   const text = signed ? 'SIGNED' : 'UNSIGNED'
   const title = signed ? 'This asset is signed by the creator' : 'This asset is not signed by the creator'
-  const Icon = signed ? SignedIcon : SignedIcon // TODO: potentially change the icon for unsigned state
+  const Icon = signed ? SignedIcon : UnsignedIcon
 
   // only display the Chip if the asset is signed
   if (hideSecondaryTrait && !signed) return null
