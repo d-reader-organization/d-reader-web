@@ -2,15 +2,12 @@ import SaleIcon from 'public/assets/vector-icons/common-rarity-icon.svg'
 import RoyaltyIcon from 'public/assets/vector-icons/uncommon-rarity-icon.svg'
 import { ProductType } from '@/enums/productType'
 
-/** TODO: product type icons */
 export const getProductTypeIcon = (source: ProductType) => {
   switch (source) {
     case ProductType.Comic:
       return <SaleIcon />
     case ProductType.DigitalArt:
       return <RoyaltyIcon />
-    default:
-      return <SaleIcon />
   }
 }
 

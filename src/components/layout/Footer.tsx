@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Divider } from '../shared/Divider'
 import DReaderSymbol from 'public/assets/vector-icons/logo-symbol.svg'
 import { RoutePath } from '@/enums/routePath'
-import { GOOGLE_PLAY_APP_LINK } from '@/constants/general'
+import { LINK } from '@/constants/general'
 import GooglePlayIcon from 'public/assets/vector-icons/footer/google.svg'
 import AppStoreIcon from 'public/assets/vector-icons/footer/app-store.svg'
 import { SoonTag } from '../shared/Tags'
@@ -88,7 +88,7 @@ const MobileAppsColumn: React.FC = () => (
       Get the most out of dReader with a mobile app!
     </Text>
     <div className='flex items-center gap-4'>
-      <Link href={GOOGLE_PLAY_APP_LINK} target='_blank'>
+      <Link href={LINK.GOOGLE_PLAY} target='_blank'>
         <GooglePlayIcon />
       </Link>
       <div className='flex flex-col items-center relative'>

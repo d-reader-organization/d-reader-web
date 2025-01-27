@@ -19,9 +19,9 @@ import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 interface SignatureRequest {
   asset: BasicCollectibleComic
   requestedAt: string
-  resolvedAt?: string // TODO: should 'rejected' be considered a resolution?
+  resolvedAt?: string
   user: {
-    username: string // TODO: add BasicCustomerDetails?
+    username: string
     displayName: string
     avatar: string
   }
@@ -33,7 +33,7 @@ const signatureRequests: SignatureRequest[] = [
   {
     asset: {
       address: '1',
-      name: 'Into the Grasslands #1032', // TODO: should we replace "name" with "numeration"? #1032
+      name: 'Into the Grasslands #1032',
       image:
         'https://d323dls9ny69nf.cloudfront.net/comics/the-farmer-1722522111521/issues/into-the-grasslands-1722879335442/cover-uncommon-1723141682738.jpg',
       comicTitle: 'The Farmer',
@@ -72,7 +72,6 @@ const signatureRequests: SignatureRequest[] = [
       avatar: PLACEHOLDER_AVATAR,
     },
   },
-  // Add more sample data as needed
 ]
 
 export function ProductsTable() {
@@ -82,8 +81,6 @@ export function ProductsTable() {
 
   useRerender(30000)
 
-  // TODO: filter (all?) tables by comics, episodes, and creators
-  // TODO: https://www.geeksforgeeks.org/css-box-model/
   return (
     <div className='w-full max-w-screen-lg space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
       <div className='flex items-center justify-between px-4'>
@@ -148,7 +145,6 @@ export function ProductsTable() {
                   />
                   <div className='flex flex-col'>
                     <span className='text-grey-200'>
-                      {/* TODO: replace comicTitle & comicIssueTitle with <TextWithOverflow /> */}
                       {asset.comicTitle} • EP {asset.episodeNumber}
                     </span>
                     <span className='font-medium'>{asset.comicIssueTitle}</span>

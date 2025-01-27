@@ -8,7 +8,7 @@ import DiscordIcon from 'public/assets/vector-icons/discord-icon.svg'
 import TwitterIcon from 'public/assets/vector-icons/twitter-icon.svg'
 import InstagramIcon from 'public/assets/vector-icons/instagram-icon.svg'
 import MailIconInverse from 'public/assets/vector-icons/mail-icon-inverse.svg'
-import { SUPPORT_LINK, DISCORD_LINK, INSTAGRAM_LINK, TWITTER_LINK, SUPPORT_EMAIL } from '@/constants/general'
+import { LINK, SUPPORT_EMAIL } from '@/constants/general'
 import RabbitHole from 'public/assets/images/rabbit-hole.png'
 import { RoutePath } from '@/enums/routePath'
 
@@ -47,7 +47,7 @@ export default function NotFound() {
         <div className='flex w-full justify-center gap-1 pt-1 sm:gap-2 text-grey-100'>
           <IconLink
             className='bg-grey-500 rounded-lg sm:rounded-xl gap-2'
-            href={SUPPORT_LINK}
+            href={LINK.MAIL_TO_SUPPORT}
             Icon={MailIconInverse}
             blank
           >
@@ -58,21 +58,21 @@ export default function NotFound() {
           </IconLink>
           <IconLink
             className='bg-grey-500 rounded-lg sm:rounded-xl'
-            href={TWITTER_LINK}
+            href={LINK.TWITTER}
             Icon={TwitterIcon}
             iconClassName='w-[13.09px]'
             blank
           />
           <IconLink
             className='bg-grey-500 rounded-lg sm:rounded-xl'
-            href={INSTAGRAM_LINK}
+            href={LINK.INSTAGRAM}
             Icon={InstagramIcon}
             iconClassName='w-[14px]'
             blank
           />
           <IconLink
             className='bg-grey-500 rounded-lg sm:rounded-xl'
-            href={DISCORD_LINK}
+            href={LINK.DISCORD}
             Icon={DiscordIcon}
             iconClassName='w-[16px]'
             blank

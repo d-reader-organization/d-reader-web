@@ -4,7 +4,7 @@ import { Text } from '../../ui/Text'
 import { Comic } from '@/models/comic'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
-import { COMIC_COVER_SIZE } from '@/constants/imageSizes'
+import { ASPECT_RATIO } from '@/constants/imageSizes'
 import { CopiesCount } from '@/components/shared/CopiesCount'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
@@ -27,7 +27,7 @@ export const DefaultComicCard: React.FC<Props> = ({ comic, className }) => {
         src={comic.cover}
         alt={`Comic cover ${comic.title}`}
         className='rounded-2xl h-auto aspect-comic-cover object-cover opacity-50'
-        {...COMIC_COVER_SIZE}
+        {...ASPECT_RATIO.COMIC_COVER}
       />
       <div className='absolute w-[70%] m-auto -top-2 bottom-14 left-0 right-0 max-w-[180px] max-h-[180px]'>
         <Image

@@ -24,7 +24,7 @@ export const OwnedComicCollectiblesContent: React.FC<Props> = ({ comicIssue, own
       <Button className='flex items-center gap-3 w-fit px-0 sm:px-0 py-4 sm:py-8' variant='ghost' onClick={back}>
         <ArrowLeft className='size-8' />
         <Text as='h3' styleVariant='secondary-heading'>
-          {ownedCollectibles.at(0)?.collectibles.at(0)?.comicName}
+          {ownedCollectibles.at(0)?.collectibles.at(0)?.comicTitle}
         </Text>
       </Button>
 

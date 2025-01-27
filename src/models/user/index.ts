@@ -13,6 +13,8 @@ export interface User {
   hasPassword: boolean
 }
 
+export type BasicUser = Pick<User, 'id' | 'avatar' | 'username' | 'displayName'>
+
 export interface UpdateUserData extends Partial<Pick<User, 'email' | 'username' | 'displayName'>> {
   referrer?: string
 }

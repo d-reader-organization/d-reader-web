@@ -20,18 +20,13 @@ import { useDebouncedCallback } from 'use-debounce'
 import LoadingSpinner from 'public/assets/vector-icons/loading-spinner.svg'
 import { cn } from '@/lib/utils'
 import { useRerender } from '@/hooks/useRerender'
+import { BasicUser } from '@/models/user'
 
 export type TransactionItem = {
   id: string
-  date: string // TODO: replace with 'finalizedAt' or 'confirmedAt'?
-  buyer: {
-    username?: string
-    displayName: string // enforce 'Guest' for unregistered buyers
-    avatar?: string // enforce fallback image from backend for unregistered buyers?
-    address: string // do we need the wallet address here, or do we lift it one level up?
-    // should we enforce avatars for registered users?
-    // should unregistered users have a unique 'Guest' avatar?
-  }
+  confirmedAt: string
+  buyer?: BasicUser
+  buyerAddress: string
   source: TransactionSource
   product: ProductType
   amount: string
@@ -40,104 +35,102 @@ export type TransactionItem = {
 const transactions: TransactionItem[] = [
   {
     id: 'drea1sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu76aAzn',
-    date: '2025-01-25T12:00:00Z',
+    confirmedAt: '2025-01-25T12:00:00Z',
     buyer: {
+      id: 1,
       username: 'studio_nx',
       displayName: 'Studio NX',
       avatar: PLACEHOLDER_AVATAR,
-      address: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     },
+    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     source: TransactionSource.Royalty,
     product: ProductType.Comic,
     amount: '200.67',
   },
   {
     id: 'drea2sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu7LoZy',
-    date: '2025-01-23T12:00:00Z',
+    confirmedAt: '2025-01-23T12:00:00Z',
     buyer: {
+      id: 2,
       username: 'josipv',
       displayName: 'josipv',
       avatar: '/assets/images/invest/degen-apes-avatar.png',
-      address: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     },
+    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     source: TransactionSource.Royalty,
     product: ProductType.Comic,
     amount: '200.67',
   },
   {
     id: 'drea3sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu7GhT6',
-    date: '2025-01-11T12:00:00Z',
+    confirmedAt: '2025-01-11T12:00:00Z',
     buyer: {
+      id: 3,
       username: 'athar',
       displayName: 'Athar',
       avatar: PLACEHOLDER_AVATAR,
-      address: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     },
+    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     source: TransactionSource.Sale,
     product: ProductType.Comic,
     amount: '200.67',
   },
   {
     id: 'drea4sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu76af1i',
-    date: '2024-12-22T12:00:00Z',
-    buyer: {
-      username: undefined,
-      displayName: 'Guest',
-      avatar: undefined,
-      address: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
-    },
+    confirmedAt: '2024-12-22T12:00:00Z',
+    buyer: undefined,
+    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     source: TransactionSource.Sale,
     product: ProductType.DigitalArt,
     amount: '200.67',
   },
   {
     id: 'drea1sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu76aBz1',
-    date: '2025-01-25T12:00:00Z',
+    confirmedAt: '2025-01-25T12:00:00Z',
     buyer: {
+      id: 4,
       username: 'studio_nx',
       displayName: 'Studio NX',
       avatar: PLACEHOLDER_AVATAR,
-      address: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     },
+    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     source: TransactionSource.Royalty,
     product: ProductType.Comic,
     amount: '200.67',
   },
   {
     id: 'drea2sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu7LF6ZW',
-    date: '2025-01-23T12:00:00Z',
-    buyer: {
-      username: undefined,
-      displayName: 'Guest',
-      avatar: undefined,
-      address: '8rT9uC6zrM6W63r5HMK83hRbwkmtsDh7CQXSwVTxeXwQ',
-    },
+    confirmedAt: '2025-01-23T12:00:00Z',
+    buyer: undefined,
+    buyerAddress: '8rT9uC6zrM6W63r5HMK83hRbwkmtsDh7CQXSwVTxeXwQ',
     source: TransactionSource.Sale,
     product: ProductType.Comic,
     amount: '200.67',
   },
   {
     id: 'drea3sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu7Gki9',
-    date: '2025-01-11T12:00:00Z',
+    confirmedAt: '2025-01-11T12:00:00Z',
     buyer: {
+      id: 6,
       username: 'athar',
       displayName: 'Athar',
       avatar: '/assets/logo.png',
-      address: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     },
+    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     source: TransactionSource.Sale,
     product: ProductType.Comic,
     amount: '200.67',
   },
   {
     id: 'drea4sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu76aUz1',
-    date: '2024-12-22T12:00:00Z',
+    confirmedAt: '2024-12-22T12:00:00Z',
     buyer: {
-      username: 'guest',
-      displayName: 'Guest',
+      id: 8,
+      username: 'johndoe1',
+      displayName: 'John Doe',
       avatar: PLACEHOLDER_AVATAR,
-      address: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     },
+    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
     source: TransactionSource.Royalty,
     product: ProductType.DigitalArt,
     amount: '200.67',
@@ -146,6 +139,9 @@ const transactions: TransactionItem[] = [
 
 // TODO: "items per page" select
 // TODO: edge cases (ie. no results found for specified parameters OR no results found at all)
+// TODO: each table is missing Title elements
+// TODO: prepare API endpoints with mock const data
+// TODO: filter (all?) tables by comics, episodes, and creators
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Props = {}
@@ -262,17 +258,21 @@ export const TransactionHistoryTable: React.FC<Props> = () => {
                 </div>
               </TableCell>
               <TableCell>
-                <span title={new Date(transaction.date).toLocaleString()}>
-                  {formatDistanceToNow(new Date(transaction.date), { addSuffix: true, includeSeconds: true })}
+                <span title={new Date(transaction.confirmedAt).toLocaleString()}>
+                  {formatDistanceToNow(new Date(transaction.confirmedAt), { addSuffix: true, includeSeconds: true })}
                 </span>
               </TableCell>
               <TableCell>
                 <div className='flex items-center gap-2'>
                   <Avatar className='h-6 w-6'>
-                    <AvatarImage src={transaction.buyer.avatar} />
-                    <AvatarFallback>{transaction.buyer.displayName[0]}</AvatarFallback>
+                    {/* TODO: handle "no customer" vs "customer with no avatar" cases on backend? */}
+                    <AvatarImage src={transaction.buyer?.avatar} />
+                    <AvatarFallback>
+                      {/** fallback to 'G' as guest */}
+                      {transaction.buyer?.displayName[0] || 'G'}
+                    </AvatarFallback>
                   </Avatar>
-                  {transaction.buyer.displayName}
+                  {transaction.buyer?.displayName || 'Guest'}
                 </div>
               </TableCell>
               <TableCell>

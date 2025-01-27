@@ -87,11 +87,11 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
         <div className='flex flex-col gap-2 w-full max-w-fit'>
           <div className='flex items-center gap-4 flex-wrap'>
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-              {collectibleComic.comicName}
+              {collectibleComic.comicTitle}
             </Text>
             <Circle className='size-2' fill='#D9D9D9' />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-              {collectibleComic.comicIssueName}
+              {collectibleComic.comicIssueTitle}
             </Text>
             <Circle className='size-2' fill='#D9D9D9' />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
@@ -100,7 +100,7 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
           </div>
           <div className='flex flex-col gap-3'>
             <Text as='h3' styleVariant='primary-heading' className='line-clamp-1 text-ellipsis'>
-              {collectibleComic.comicIssueName}
+              {collectibleComic.comicIssueTitle}
             </Text>
             <GenreTags className='bg-grey-400' genres={comicIssue?.genres ?? []} />
             <ExpandableText className='max-w-[440px] lg:max-w-[486px]' text={comicIssue.description} />

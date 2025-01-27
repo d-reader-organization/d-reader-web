@@ -15,16 +15,14 @@ import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import Image from 'next/image'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
+import { BasicUser } from '@/models/user'
 
 interface SignatureRequest {
   asset: BasicCollectibleComic
   requestedAt: string
-  resolvedAt?: string // TODO: should 'rejected' be considered a resolution?
-  user: {
-    username: string // TODO: add BasicCustomerDetails?
-    displayName: string
-    avatar: string
-  }
+  resolvedAt?: string
+  // TODO: status: SignatureRequestStatus
+  user: BasicUser
 }
 
 type RequestStatus = 'pending' | 'resolved'
@@ -33,7 +31,7 @@ const signatureRequests: SignatureRequest[] = [
   {
     asset: {
       address: '1',
-      name: 'Into the Grasslands #1032', // TODO: should we replace "name" with "numeration"? #1032
+      name: 'Into the Grasslands #1032',
       image:
         'https://d323dls9ny69nf.cloudfront.net/comics/the-farmer-1722522111521/issues/into-the-grasslands-1722879335442/cover-uncommon-1723141682738.jpg',
       comicTitle: 'The Farmer',
@@ -46,6 +44,7 @@ const signatureRequests: SignatureRequest[] = [
     requestedAt: '2025-01-25T21:38:00Z',
     resolvedAt: undefined,
     user: {
+      id: 1,
       username: 'studionx',
       displayName: 'Studio NX',
       avatar: PLACEHOLDER_AVATAR,
@@ -67,15 +66,14 @@ const signatureRequests: SignatureRequest[] = [
     requestedAt: '2025-01-25T12:00:00Z',
     resolvedAt: undefined,
     user: {
+      id: 2,
       username: 'studionx',
       displayName: 'Studio NX',
       avatar: PLACEHOLDER_AVATAR,
     },
   },
-  // Add more sample data as needed
 ]
 
-// TODO: each table is missing Title elements
 export function SignatureRequestsTable() {
   const [currentPage, setCurrentPage] = useState(1)
   const [status, setStatus] = useState<RequestStatus>('pending')
@@ -83,8 +81,6 @@ export function SignatureRequestsTable() {
 
   useRerender(30000)
 
-  // TODO: filter (all?) tables by comics, episodes, and creators
-  // TODO: https://www.geeksforgeeks.org/css-box-model/
   return (
     <div className='w-full max-w-screen-lg space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
       <div className='flex items-center justify-between px-4'>

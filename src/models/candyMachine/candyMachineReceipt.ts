@@ -1,9 +1,10 @@
 import { Asset } from '@/models/asset'
-import { WalletIdentity } from '@/models/wallet/walletIdentity'
+import { BasicUser } from '../user'
 
 export interface CandyMachineReceipt {
   asset: Pick<Asset, 'address' | 'name'>
-  buyer: WalletIdentity
+  buyer?: BasicUser
+  buyerAddress: string
   candyMachineAddress: string
   price: number
   timestamp: string

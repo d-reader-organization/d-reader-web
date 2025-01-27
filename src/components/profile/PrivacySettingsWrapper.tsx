@@ -1,14 +1,18 @@
 import { PrivacySettings } from './PrivacySettings'
 import { fetchUserConsents } from '@/app/lib/api/user/queries'
-import { ConsentType } from '@/models/user'
+import { ConsentType, UserConsent } from '@/models/user'
+
+const findConsentState = (userConsents: UserConsent[], consentType: ConsentType) => {
+  const consent = userConsents.find((consent) => consent.consentType === consentType)
+  const consentState = consent?.isConsentGiven ?? false
+  return consentState
+}
 
 export const PrivacySettingsWrapper: React.FC = async () => {
   const userConsents = await fetchUserConsents()
 
-  const initialMarketingConsentGiven =
-    userConsents.find((consent) => consent.consentType === ConsentType.Marketing)?.isConsentGiven ?? false
-  const initialDataAnalyticsConsentGiven =
-    userConsents.find((consent) => consent.consentType === ConsentType.DataAnalytics)?.isConsentGiven ?? false
+  const initialMarketingConsentGiven = findConsentState(userConsents, ConsentType.Marketing)
+  const initialDataAnalyticsConsentGiven = findConsentState(userConsents, ConsentType.DataAnalytics)
 
   return (
     <PrivacySettings

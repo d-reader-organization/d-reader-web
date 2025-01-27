@@ -14,7 +14,7 @@ export const jwtCookieProps = {
   maxAge: 100 * 24 * 60 * 60,
 }
 
-export const LOCAL_STORAGE = {
+export const LOCAL_STORAGE = Object.freeze({
   IS_UNWRAP_HINT_READ: 'is-unwrap-hint-read',
   IS_INVESTMENT_DISCLAIMER_READ: 'is-investment-disclaimer-read',
   IS_PROJECT_INVEST_DISCLAIMER_READ: 'is-project-invest-disclaimer-read',
@@ -22,20 +22,29 @@ export const LOCAL_STORAGE = {
   IS_MINT_PAGE_VISITED: 'is-mint-page-visited',
   IS_CLAIM_HINT_READ: 'is-claim-hint-read',
   IS_CLAIM_WALKTHROUGH_COMPELETE: 'is-claim-walkthrough-compelete',
-}
+})
 
-// links
-export const TWITTER_LINK = 'https://x.com/dReaderApp'
-export const DISCORD_LINK = 'https://discord.gg/PBW84NaEE2'
-export const GOOGLE_PLAY_LINK = 'https://play.google.com/store/apps/details?id=io.app.dreader'
-export const INSTAGRAM_LINK = 'https://www.instagram.com/d_reader_app'
-export const TENSOR_LINK = 'https://www.tensor.trade/creator/dreader'
-export const GOOGLE_PLAY_APP_LINK = 'https://play.google.com/store/apps/details?id=io.app.dreader'
-export const LINKTREE_LINK = 'https://dreader.io/links'
-export const D_PUBLISHER_LINK = 'https://www.dpublisher.app'
-export const D_READER_LINK = 'https://www.dreader.app'
 export const SUPPORT_EMAIL = 'support@dreader.io'
-export const SUPPORT_LINK = 'mailto:' + SUPPORT_EMAIL
+
+export const LINK = Object.freeze({
+  TWITTER: 'https://x.com/dReaderApp',
+  DISCORD: 'https://discord.gg/PBW84NaEE2',
+  GOOGLE_PLAY: 'https://play.google.com/store/apps/details?id=io.app.dreader',
+  INSTAGRAM: 'https://www.instagram.com/d_reader_app',
+  TENSOR: 'https://www.tensor.trade/creator/dreader',
+  GOOGLE_PLAY_APP: 'https://play.google.com/store/apps/details?id=io.app.dreader',
+  LINKTREE: 'https://dreader.io/links',
+  D_PUBLISHER: 'https://www.dpublisher.app',
+  D_READER: 'https://www.dreader.app',
+  MAIL_TO_SUPPORT: 'mailto:' + SUPPORT_EMAIL,
+})
+
+// user consents
+export const USER_CONSENT = Object.freeze({
+  MARKETING: 'marketing-consent-switch',
+  DATA_ANALYTICS: 'data-analytics-consent-switch',
+})
+
 export const PLACEHOLDER_AVATAR = `/assets/images/default-avatar.png`
 
 // metadata
@@ -44,6 +53,8 @@ export const SIGNED_TRAIT = 'signed'
 export const DEFAULT_COMIC_ISSUE_USED = 'false'
 export const DEFAULT_COMIC_ISSUE_IS_SIGNED = 'false'
 export const RARITY_TRAIT = 'rarity'
+
+// open graph metadata
 export const METADATA_IMAGE_SIZE = { width: 1200, height: 630 }
 
 // wallet

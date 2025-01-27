@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { ArrowRightIcon } from 'lucide-react'
 import { PrivacyConsentSwitch } from './ConsentSwitch'
-import { dataAnalyticsConsentSwitch, marketingConsentSwitch } from '@/constants/keys'
+import { USER_CONSENT } from '@/constants/general'
 import { ConsentType } from '@/models/user'
 
 type Props = {
@@ -30,7 +30,7 @@ export const PrivacySettings: React.FC<Props> = ({
         <PrivacyConsentSwitch
           consentType={ConsentType.Marketing}
           defaultChecked={initialMarketingConsentGiven}
-          name={marketingConsentSwitch}
+          name={USER_CONSENT.MARKETING}
           title='Marketing and Advertisement'
         />
         <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-200 font-medium'>
@@ -41,7 +41,7 @@ export const PrivacySettings: React.FC<Props> = ({
         <PrivacyConsentSwitch
           consentType={ConsentType.DataAnalytics}
           defaultChecked={initialDataAnalyticsConsentGiven}
-          name={dataAnalyticsConsentSwitch}
+          name={USER_CONSENT.DATA_ANALYTICS}
           title='Data Analytics'
         />
         <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-200 font-medium'>

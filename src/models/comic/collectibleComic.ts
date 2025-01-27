@@ -15,8 +15,8 @@ export type CollectibleComic = {
   rarity: ComicRarity
   comicIssueId: number
   isListed: boolean
-  comicName?: string // TODO: rename this to comicTitle
-  comicIssueName?: string // TODO: rename this to comicIssueTitle
+  comicTitle?: string
+  comicIssueTitle?: string
 }
 
 export type BasicCollectibleComic = Pick<

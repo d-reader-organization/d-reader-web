@@ -218,7 +218,7 @@ const ListedAssetRow: React.FC<{
         </div>
       </TableCell>
       <TableCell>
-        <OwnerDetailsCell sellerAddress={listing.seller.address} />
+        <OwnerDetailsCell sellerAddress={listing.sellerAddress} />
       </TableCell>
       <TableCell className='flex py-1 justify-end'>
         {isSelected ? (

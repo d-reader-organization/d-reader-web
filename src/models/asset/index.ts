@@ -10,8 +10,8 @@ export interface Asset {
   royalties: number
   isUsed: boolean
   isSigned: boolean
-  comicName: string
-  comicIssueName: string
+  comicTitle: string
+  comicIssueTitle: string
   comicIssueId: number
   isListed: boolean
   rarity: ComicRarity

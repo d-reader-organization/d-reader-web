@@ -1,6 +1,5 @@
 import Link, { LinkProps } from 'next/link'
 import { cn } from '@/lib/utils'
-import { DEFAULT_ICON_CLASSNAME } from '@/constants/imageSizes'
 
 type Props = LinkProps &
   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & {
@@ -34,7 +33,7 @@ export const IconLink: React.FC<Props> = ({
       {...props}
       prefetch={false}
     >
-      {children || (Icon && <Icon className={cn(iconClassName ? iconClassName : DEFAULT_ICON_CLASSNAME)} />)}
+      {children || (Icon && <Icon className={cn(iconClassName ? iconClassName : 'w-4 sm:w-5')} />)}
     </Link>
   )
 }

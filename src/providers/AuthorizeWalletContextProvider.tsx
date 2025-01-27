@@ -106,9 +106,9 @@ export function AuthorizeWalletProvider({ children }: { children: ReactNode }) {
     if (!isAuthorizing) {
       authorizeWallet()
     }
-    // TODO: I've included the 'isAuthorizing' flag in the dependency array bcs of the linter error
-    // I hope it won't cause any unwanted side effects
-  }, [authorizeWallet, isAuthorizing])
+    // don't add the 'isAuthorizing' flag in the dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authorizeWallet])
 
   return <AuthorizeWalletContext.Provider value={value}>{children}</AuthorizeWalletContext.Provider>
 }

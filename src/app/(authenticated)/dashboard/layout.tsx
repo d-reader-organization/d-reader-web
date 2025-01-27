@@ -3,13 +3,14 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'dReader - Creator Dashboard',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL as string),
-  description: 'TODO',
+  description:
+    'Publish your comic, manga, webcomic, or a graphic novel. Start engaging with your readers and monetizing your work!',
   keywords: 'NFT, asset, dReader, dPublisher, Comic, Solana, SOL, mint, collection, manga, manwha',
   openGraph: {
     type: 'website',
     title: 'dReader - Creator Dashboard',
     description:
-      'Find answers to most common questions regarding dReader - next generation platform for digital comics!',
+      'Publish your comic, manga, webcomic, or a graphic novel. Start engaging with your readers and monetizing your work!',
     images: '/assets/images/metadata-home.jpg',
     url: process.env.NEXT_PUBLIC_SITE_URL + '/dashboard',
     siteName: 'dReader',
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     title: 'dReader - Creator Dashboard',
     description:
-      'Find answers to most common questions regarding dReader - next generation platform for digital comics!',
+      'Publish your comic, manga, webcomic, or a graphic novel. Start engaging with your readers and monetizing your work!',
     card: 'summary_large_image',
     site: '@dReaderApp',
     creator: '@dReaderApp',
