@@ -1,4 +1,4 @@
-import { fetchComicIssue, fetchOwnedComicIssues } from '@/app/lib/api/comicIssue/queries'
+import { fetchComicIssue, fetchOwnedCollectibleComics } from '@/app/lib/api/comicIssue/queries'
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { LibraryTabs } from '@/components/library/Tabs'
@@ -15,13 +15,16 @@ export default async function OwnedIssuesPage(props: SlugParamsProps) {
     return null
   }
 
-  const ownedIssues = await fetchOwnedComicIssues({ params: { skip: 0, take: 20, comicSlug }, userId: me.id })
-  const comicIssueId = ownedIssues.at(0)?.collectibles.at(0)?.comicIssueId
+  const ownedCollectibles = await fetchOwnedCollectibleComics({
+    params: { skip: 0, take: 20, comicSlug },
+    userId: me.id,
+  })
+  const comicIssueId = ownedCollectibles.at(0)?.collectibles.at(0)?.comicIssueId
   const comicIssue = await fetchComicIssue({ id: comicIssueId ?? '' })
 
   return (
     <BaseLayout showFooter>
-      <LibraryTabs comicIssue={comicIssue} ownedIssues={ownedIssues} />
+      <LibraryTabs comicIssue={comicIssue} ownedCollectibles={ownedCollectibles} />
     </BaseLayout>
   )
 }

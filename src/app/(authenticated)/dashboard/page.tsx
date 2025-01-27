@@ -4,7 +4,7 @@ import SignatureRequestsTable from '@/components/table/SignatureRequestsTable'
 import TransactionHistoryTable from '@/components/table/TransactionHistoryTable'
 import React from 'react'
 
-export function DashboardPage() {
+export default function DashboardPage() {
   return (
     <CreatorDashboardLayout>
       <ProductsTable title='My products' />
@@ -15,5 +15,3 @@ export function DashboardPage() {
     </CreatorDashboardLayout>
   )
 }
-
-export default DashboardPage
