@@ -4,7 +4,7 @@ import { Text } from '../../ui/Text'
 import { Comic } from '@/models/comic'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
-import { ASPECT_RATIO } from '@/constants/imageSizes'
+import { ASPECT_RATIO } from '@/constants/general'
 import { CopiesCount } from '@/components/shared/CopiesCount'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {

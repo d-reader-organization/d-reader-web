@@ -6,8 +6,6 @@ import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@
 import { ChevronDown, ChevronLeft, ChevronRight, Settings2, Trash2, Pencil } from 'lucide-react'
 import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { ComicRarity } from '@/enums/comicRarity'
-import { BasicCollectibleComic } from '@/models/comic/collectibleComic'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { RarityChip } from '../shared/chips/RarityChip'
 import { formatDistanceToNow } from 'date-fns'
@@ -16,90 +14,9 @@ import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import Image from 'next/image'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
-import { BasicUser } from '@/models/user'
-import { SignatureRequestStatus } from '@/enums/signatureRequest'
 import { TextWithOverflow } from '../ui/TextWithOverflow'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-
-interface SignatureRequest {
-  asset: BasicCollectibleComic
-  user: BasicUser
-  requestedAt: string
-  resolvedAt?: string
-  status: SignatureRequestStatus
-}
-
-const signatureRequests: SignatureRequest[] = [
-  {
-    asset: {
-      address: '1',
-      name: 'Into the Grasslands #1032',
-      image:
-        'https://d323dls9ny69nf.cloudfront.net/comics/the-farmer-1722522111521/issues/into-the-grasslands-1722879335442/cover-uncommon-1723141682738.jpg',
-      comicTitle: 'The Farmer',
-      comicIssueTitle: 'Into the Grasslands',
-      episodeNumber: 1,
-      isSigned: false,
-      isUsed: false,
-      rarity: ComicRarity.Legendary,
-    },
-    user: {
-      id: 1,
-      username: 'studionx',
-      displayName: 'Studio NX',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    status: SignatureRequestStatus.Approved,
-    requestedAt: '2025-01-25T21:38:00Z',
-    resolvedAt: '2025-01-26T21:38:00Z',
-  },
-  {
-    asset: {
-      address: '2',
-      name: 'Into the Grasslands #1033',
-      image:
-        'https://d323dls9ny69nf.cloudfront.net/comics/the-farmer-1722522111521/issues/into-the-grasslands-1722879335442/cover-uncommon-1723141682738.jpg',
-      comicTitle: 'The Farmer',
-      comicIssueTitle: 'Into the Grasslands',
-      episodeNumber: 1,
-      isSigned: true,
-      isUsed: true,
-      rarity: ComicRarity.Rare,
-    },
-    user: {
-      id: 2,
-      username: 'studionx',
-      displayName: 'Studio NX',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    status: SignatureRequestStatus.Rejected,
-    requestedAt: '2025-01-25T12:00:00Z',
-    resolvedAt: '2025-01-26T12:00:00Z',
-  },
-  {
-    asset: {
-      address: '3',
-      name: 'Into the Grasslands #1034',
-      image:
-        'https://d323dls9ny69nf.cloudfront.net/comics/the-farmer-1722522111521/issues/into-the-grasslands-1722879335442/cover-uncommon-1723141682738.jpg',
-      comicTitle: 'The Farmer',
-      comicIssueTitle: 'Into the Grasslands',
-      episodeNumber: 1,
-      isSigned: false,
-      isUsed: false,
-      rarity: ComicRarity.Rare,
-    },
-    user: {
-      id: 3,
-      username: 'johndoe',
-      displayName: 'John Doe',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    status: SignatureRequestStatus.Pending,
-    requestedAt: '2025-01-20T12:00:00Z',
-    resolvedAt: undefined,
-  },
-]
+import { signatureRequests } from '@/constants/dummyData'
 
 enum SignatureRequestsTab {
   Pending = 'Pending',
@@ -199,10 +116,17 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                 <TableCell>
                   <div className='flex items-center gap-2'>
                     <Avatar className='h-6 w-6'>
-                      <AvatarImage src={user.avatar} />
-                      <AvatarFallback>{user.username[0]}</AvatarFallback>
+                      <AvatarImage src={user.avatar || PLACEHOLDER_AVATAR} />
+                      <AvatarFallback>
+                        {/** fallback to 'G' as guest */}
+                        {user.displayName[0] || 'G'}
+                      </AvatarFallback>
                     </Avatar>
                     {user.displayName}
+                    {/* <div className='flex flex-col max-w-[200px]'>
+                      <span>{user.displayName}</span>
+                      <span className='font-medium text-grey-200'>@{user.username}</span>
+                    </div> */}
                   </div>
                 </TableCell>
                 <TableCell>

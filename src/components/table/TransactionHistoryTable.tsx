@@ -10,133 +10,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import SolanaIcon from 'public/assets/vector-icons/solana-icon.svg'
 import { TransactionSourceChip } from '../shared/chips/TransactionSource'
-import { TransactionSource } from '@/enums/transactionSource'
 import { formatDistanceToNow } from 'date-fns'
 import { toast } from '../ui/toast'
 import { shortenString, sleep } from '@/utils/helpers'
-import { ProductType } from '@/enums/productType'
 import { ProductTypeChip } from '../shared/chips/ProductType'
 import { useDebouncedCallback } from 'use-debounce'
 import LoadingSpinner from 'public/assets/vector-icons/loading-spinner.svg'
 import { cn } from '@/lib/utils'
 import { useRerender } from '@/hooks/useRerender'
-import { BasicUser } from '@/models/user'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-
-export type TransactionItem = {
-  id: string
-  confirmedAt: string
-  buyer?: BasicUser
-  buyerAddress: string
-  source: TransactionSource
-  product: ProductType
-  amount: string
-}
-
-const transactions: TransactionItem[] = [
-  {
-    id: 'drea1sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu76aAzn',
-    confirmedAt: '2025-01-25T12:00:00Z',
-    buyer: {
-      id: 1,
-      username: 'studio_nx',
-      displayName: 'Studio NX',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
-    source: TransactionSource.Royalty,
-    product: ProductType.Comic,
-    amount: '200.67',
-  },
-  {
-    id: 'drea2sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu7LoZy',
-    confirmedAt: '2025-01-23T12:00:00Z',
-    buyer: {
-      id: 2,
-      username: 'josipv',
-      displayName: 'josipv',
-      avatar: '/assets/images/invest/degen-apes-avatar.png',
-    },
-    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
-    source: TransactionSource.Royalty,
-    product: ProductType.Comic,
-    amount: '200.67',
-  },
-  {
-    id: 'drea3sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu7GhT6',
-    confirmedAt: '2025-01-11T12:00:00Z',
-    buyer: {
-      id: 3,
-      username: 'athar',
-      displayName: 'Athar',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
-    source: TransactionSource.Sale,
-    product: ProductType.Comic,
-    amount: '200.67',
-  },
-  {
-    id: 'drea4sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu76af1i',
-    confirmedAt: '2024-12-22T12:00:00Z',
-    buyer: undefined,
-    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
-    source: TransactionSource.Sale,
-    product: ProductType.DigitalArt,
-    amount: '200.67',
-  },
-  {
-    id: 'drea1sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu76aBz1',
-    confirmedAt: '2025-01-25T12:00:00Z',
-    buyer: {
-      id: 4,
-      username: 'studio_nx',
-      displayName: 'Studio NX',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
-    source: TransactionSource.Royalty,
-    product: ProductType.Comic,
-    amount: '200.67',
-  },
-  {
-    id: 'drea2sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu7LF6ZW',
-    confirmedAt: '2025-01-23T12:00:00Z',
-    buyer: undefined,
-    buyerAddress: '8rT9uC6zrM6W63r5HMK83hRbwkmtsDh7CQXSwVTxeXwQ',
-    source: TransactionSource.Sale,
-    product: ProductType.Comic,
-    amount: '200.67',
-  },
-  {
-    id: 'drea3sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu7Gki9',
-    confirmedAt: '2025-01-11T12:00:00Z',
-    buyer: {
-      id: 6,
-      username: 'athar',
-      displayName: 'Athar',
-      avatar: '/assets/logo.png',
-    },
-    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
-    source: TransactionSource.Sale,
-    product: ProductType.Comic,
-    amount: '200.67',
-  },
-  {
-    id: 'drea4sS7aLBCrbn4jDNSxLLJYRRnKbkqA5cu76aUz1',
-    confirmedAt: '2024-12-22T12:00:00Z',
-    buyer: {
-      id: 8,
-      username: 'johndoe1',
-      displayName: 'John Doe',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    buyerAddress: '7aLBCrbn4jDNSxLLJYRRnKbkqA5cuaeaAzn74xS7eKPD',
-    source: TransactionSource.Royalty,
-    product: ProductType.DigitalArt,
-    amount: '200.67',
-  },
-]
+import { transactions } from '@/constants/dummyData'
+import { downloadTransactionsReportCSV } from '@/utils/csv'
 
 // TODO: edge cases (ie. no results found for specified parameters OR no results found at all)
 // TODO: prepare API endpoints with mock const data & params (filter, sort, and page)
@@ -211,8 +95,9 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
               icon={Upload}
               size='md'
               onClick={() => {
-                // TODO: export csv
-                console.log('Export button clicked!')
+                // TODO: fetch the full data report, unpaginated
+                // add the .splToken property to the TransactionHistoryItem
+                downloadTransactionsReportCSV(transactions)
               }}
             />
             <Button
@@ -266,8 +151,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
                 <TableCell>
                   <div className='flex items-center gap-2'>
                     <Avatar className='h-6 w-6'>
-                      {/* TODO: handle "no customer" vs "customer with no avatar" cases on backend? */}
-                      <AvatarImage src={transaction.buyer?.avatar} />
+                      <AvatarImage src={transaction.buyer?.avatar || PLACEHOLDER_AVATAR} />
                       <AvatarFallback>
                         {/** fallback to 'G' as guest */}
                         {transaction.buyer?.displayName[0] || 'G'}

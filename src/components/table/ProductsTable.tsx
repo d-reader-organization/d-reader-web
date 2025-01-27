@@ -15,8 +15,8 @@ import { useRerender } from '@/hooks/useRerender'
 import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
-import Image from 'next/image'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import Image from 'next/image'
 
 interface SignatureRequest {
   asset: BasicCollectibleComic
@@ -29,7 +29,7 @@ interface SignatureRequest {
   }
 }
 
-const signatureRequests: SignatureRequest[] = [
+const myProducts: SignatureRequest[] = [
   {
     asset: {
       address: '1',
@@ -152,7 +152,7 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {signatureRequests.map(({ asset, requestedAt, user }) => (
+            {myProducts.map(({ asset, requestedAt, user }) => (
               <TableRow key={asset.address} className='border-grey-400'>
                 <TableCell className='pl-4'>
                   <div className='flex items-center gap-3'>
@@ -178,8 +178,11 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
                 <TableCell>
                   <div className='flex items-center gap-2'>
                     <Avatar className='h-6 w-6'>
-                      <AvatarImage src={user.avatar} />
-                      <AvatarFallback>{user.username[0]}</AvatarFallback>
+                      <AvatarImage src={user.avatar || PLACEHOLDER_AVATAR} />
+                      <AvatarFallback>
+                        {/** fallback to 'G' as guest */}
+                        {user.displayName[0] || 'G'}
+                      </AvatarFallback>
                     </Avatar>
                     {user.displayName}
                   </div>
