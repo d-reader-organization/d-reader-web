@@ -16,6 +16,7 @@ import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 import Image from 'next/image'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 interface SignatureRequest {
   asset: BasicCollectibleComic
@@ -27,8 +28,6 @@ interface SignatureRequest {
     avatar: string
   }
 }
-
-type RequestStatus = 'pending' | 'resolved'
 
 const signatureRequests: SignatureRequest[] = [
   {
@@ -75,11 +74,17 @@ const signatureRequests: SignatureRequest[] = [
   },
 ]
 
+enum ProductsTab {
+  Series = 'Series',
+  Releases = 'Releases',
+  DigitalArt = 'Digital Art',
+}
+
 type Props = { title: string }
 
 export const ProductsTable: React.FC<Props> = ({ title }) => {
   const [currentPage, setCurrentPage] = useState(1)
-  const [status, setStatus] = useState<RequestStatus>('pending')
+  const [tab, setTab] = useState<ProductsTab>(ProductsTab.Series)
   const totalPages = 10
 
   useRerender(30000)
@@ -93,18 +98,25 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
         <div className='flex items-center justify-between px-4'>
           <div className='flex gap-1 border-grey-300 border-1 box-border rounded-xl px-1 items-center h-[42px]'>
             <Button
-              variant={status === 'pending' ? 'secondary' : 'ghost'}
-              onClick={() => setStatus('pending')}
+              variant={tab === ProductsTab.Series ? 'secondary' : 'ghost'}
+              onClick={() => setTab(ProductsTab.Series)}
               className='h-8 font-bold'
             >
-              Pending
+              {ProductsTab.Series}
             </Button>
             <Button
-              variant={status === 'resolved' ? 'secondary' : 'ghost'}
-              onClick={() => setStatus('resolved')}
+              variant={tab === ProductsTab.Releases ? 'secondary' : 'ghost'}
+              onClick={() => setTab(ProductsTab.Releases)}
               className='h-8 font-bold'
             >
-              Resolved
+              {ProductsTab.Releases}
+            </Button>
+            <Button
+              variant={tab === ProductsTab.DigitalArt ? 'secondary' : 'ghost'}
+              onClick={() => setTab(ProductsTab.DigitalArt)}
+              className='h-8 font-bold'
+            >
+              {ProductsTab.DigitalArt}
             </Button>
           </div>
           <div className='flex items-center gap-2'>
@@ -208,30 +220,46 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
           </TableBody>
         </Table>
 
-        <div className='flex items-center justify-center gap-2'>
-          <Button
-            className='min-w-10'
-            variant='secondary'
-            size='sm'
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-          >
-            <ChevronLeft className='h-4 w-4' />
-          </Button>
-          <div className='flex items-center gap-2 mx-2'>
-            <span>
-              {currentPage} / <span className='text-grey-200'>{totalPages}</span>
-            </span>
+        <div className='flex items-center justify-between px-4 select-none'>
+          <div className='flex items-center gap-2'>
+            <Button
+              className='min-w-10'
+              variant='secondary'
+              size='sm'
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className='h-4 w-4' />
+            </Button>
+            <div className='flex items-center gap-2 mx-2'>
+              <Text as='span' styleVariant='body-small'>
+                {currentPage} / <span className='text-grey-200'>{totalPages}</span>
+              </Text>
+            </div>
+            <Button
+              className='min-w-10'
+              variant='secondary'
+              size='sm'
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+            >
+              <ChevronRight className='h-4 w-4' />
+            </Button>
           </div>
-          <Button
-            className='min-w-10'
-            variant='secondary'
-            size='sm'
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-          >
-            <ChevronRight className='h-4 w-4' />
-          </Button>
+          <div className='flex items-center gap-2'>
+            <span className='text-sm text-grey-200'>Items per page</span>
+            <Select defaultValue='10'>
+              <SelectTrigger className='w-16 bg-grey-300 bg-opacity-30 border-t border-white border-opacity-10 text-grey-100'>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className='bg-grey-300 text-grey-100 outline-none'>
+                <SelectItem value='5'>5</SelectItem>
+                <SelectItem value='10'>10</SelectItem>
+                <SelectItem value='20'>20</SelectItem>
+                <SelectItem value='50'>50</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
     </div>

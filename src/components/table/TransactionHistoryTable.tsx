@@ -21,6 +21,7 @@ import LoadingSpinner from 'public/assets/vector-icons/loading-spinner.svg'
 import { cn } from '@/lib/utils'
 import { useRerender } from '@/hooks/useRerender'
 import { BasicUser } from '@/models/user'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 export type TransactionItem = {
   id: string
@@ -137,9 +138,8 @@ const transactions: TransactionItem[] = [
   },
 ]
 
-// TODO: "items per page" select
 // TODO: edge cases (ie. no results found for specified parameters OR no results found at all)
-// TODO: prepare API endpoints with mock const data & params
+// TODO: prepare API endpoints with mock const data & params (filter, sort, and page)
 // TODO: filter (all?) tables by comics, episodes, and creators
 
 type Props = { title: string }
@@ -148,7 +148,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const totalPages = 10
+  const totalPages = 104
 
   useRerender(30000)
 
@@ -309,30 +309,46 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
           </TableBody>
         </Table>
 
-        <div className='flex items-center justify-center gap-2'>
-          <Button
-            className='min-w-10'
-            variant='secondary'
-            size='sm'
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-          >
-            <ChevronLeft className='h-4 w-4' />
-          </Button>
-          <div className='flex items-center gap-2 mx-2'>
-            <Text as='span' styleVariant='body-small'>
-              {currentPage} / <span className='text-grey-200'>{totalPages}</span>
-            </Text>
+        <div className='flex items-center justify-between px-4 select-none'>
+          <div className='flex items-center gap-2'>
+            <Button
+              className='min-w-10'
+              variant='secondary'
+              size='sm'
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className='h-4 w-4' />
+            </Button>
+            <div className='flex items-center gap-2 mx-2'>
+              <Text as='span' styleVariant='body-small'>
+                {currentPage} / <span className='text-grey-200'>{totalPages}</span>
+              </Text>
+            </div>
+            <Button
+              className='min-w-10'
+              variant='secondary'
+              size='sm'
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+            >
+              <ChevronRight className='h-4 w-4' />
+            </Button>
           </div>
-          <Button
-            className='min-w-10'
-            variant='secondary'
-            size='sm'
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-          >
-            <ChevronRight className='h-4 w-4' />
-          </Button>
+          <div className='flex items-center gap-2'>
+            <span className='text-sm text-grey-200'>Items per page</span>
+            <Select defaultValue='10'>
+              <SelectTrigger className='w-16 bg-grey-300 bg-opacity-30 border-t border-white border-opacity-10 text-grey-100'>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className='bg-grey-300 text-grey-100 outline-none'>
+                <SelectItem value='5'>5</SelectItem>
+                <SelectItem value='10'>10</SelectItem>
+                <SelectItem value='20'>20</SelectItem>
+                <SelectItem value='50'>50</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
     </div>

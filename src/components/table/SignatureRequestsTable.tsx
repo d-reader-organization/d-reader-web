@@ -18,6 +18,8 @@ import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 import { BasicUser } from '@/models/user'
 import { SignatureRequestStatus } from '@/enums/signatureRequest'
+import { TextWithOverflow } from '../ui/TextWithOverflow'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 interface SignatureRequest {
   asset: BasicCollectibleComic
@@ -26,8 +28,6 @@ interface SignatureRequest {
   resolvedAt?: string
   status: SignatureRequestStatus
 }
-
-type RequestStatus = 'pending' | 'resolved'
 
 const signatureRequests: SignatureRequest[] = [
   {
@@ -101,11 +101,16 @@ const signatureRequests: SignatureRequest[] = [
   },
 ]
 
+enum SignatureRequestsTab {
+  Pending = 'Pending',
+  Resolved = 'Resolved',
+}
+
 type Props = { title: string }
 
 export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
   const [currentPage, setCurrentPage] = useState(1)
-  const [status, setStatus] = useState<RequestStatus>('pending')
+  const [tab, setTab] = useState<SignatureRequestsTab>(SignatureRequestsTab.Pending)
   const totalPages = 10
 
   useRerender(30000)
@@ -119,18 +124,18 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
         <div className='flex items-center justify-between px-4'>
           <div className='flex gap-1 border-grey-300 border-1 box-border rounded-xl px-1 items-center h-[42px]'>
             <Button
-              variant={status === 'pending' ? 'secondary' : 'ghost'}
-              onClick={() => setStatus('pending')}
+              variant={tab === SignatureRequestsTab.Pending ? 'secondary' : 'ghost'}
+              onClick={() => setTab(SignatureRequestsTab.Pending)}
               className='h-8 font-bold'
             >
-              Pending
+              {SignatureRequestsTab.Pending}
             </Button>
             <Button
-              variant={status === 'resolved' ? 'secondary' : 'ghost'}
-              onClick={() => setStatus('resolved')}
+              variant={tab === SignatureRequestsTab.Resolved ? 'secondary' : 'ghost'}
+              onClick={() => setTab(SignatureRequestsTab.Resolved)}
               className='h-8 font-bold'
             >
-              Resolved
+              {SignatureRequestsTab.Resolved}
             </Button>
           </div>
           <div className='flex items-center gap-2'>
@@ -169,19 +174,20 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
             {signatureRequests.map(({ asset, requestedAt, user }) => (
               <TableRow key={asset.address} className='border-grey-400'>
                 <TableCell className='pl-4'>
-                  <div className='flex items-center gap-3'>
+                  <div className='flex items-center gap-3 relative'>
                     <Image
                       src={asset.image}
                       alt=''
                       {...COMIC_ISSUE_COVER_SIZE}
                       className='rounded-sm h-auto w-10 aspect-comic-issue-cover'
                     />
-                    <div className='flex flex-col'>
-                      <span className='text-grey-200'>
-                        {/* TODO: replace comicTitle & comicIssueTitle with <TextWithOverflow /> */}
-                        {asset.comicTitle} • EP {asset.episodeNumber}
-                      </span>
-                      <span className='font-medium'>{asset.comicIssueTitle}</span>
+                    <div className='flex flex-col max-w-[200px]'>
+                      <TextWithOverflow as='span' styleVariant='body-small' className='text-grey-200'>
+                        {asset.comicTitle}
+                      </TextWithOverflow>
+                      <TextWithOverflow as='span' styleVariant='body-small' fontWeight='medium'>
+                        {asset.name}
+                      </TextWithOverflow>
                     </div>
                   </div>
                 </TableCell>
@@ -234,31 +240,46 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
             ))}
           </TableBody>
         </Table>
-
-        <div className='flex items-center justify-center gap-2'>
-          <Button
-            className='min-w-10'
-            variant='secondary'
-            size='sm'
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-          >
-            <ChevronLeft className='h-4 w-4' />
-          </Button>
-          <div className='flex items-center gap-2 mx-2'>
-            <span>
-              {currentPage} / <span className='text-grey-200'>{totalPages}</span>
-            </span>
+        <div className='flex items-center justify-between px-4 select-none'>
+          <div className='flex items-center gap-2'>
+            <Button
+              className='min-w-10'
+              variant='secondary'
+              size='sm'
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className='h-4 w-4' />
+            </Button>
+            <div className='flex items-center gap-2 mx-2'>
+              <Text as='span' styleVariant='body-small'>
+                {currentPage} / <span className='text-grey-200'>{totalPages}</span>
+              </Text>
+            </div>
+            <Button
+              className='min-w-10'
+              variant='secondary'
+              size='sm'
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+            >
+              <ChevronRight className='h-4 w-4' />
+            </Button>
           </div>
-          <Button
-            className='min-w-10'
-            variant='secondary'
-            size='sm'
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-          >
-            <ChevronRight className='h-4 w-4' />
-          </Button>
+          <div className='flex items-center gap-2'>
+            <span className='text-sm text-grey-200'>Items per page</span>
+            <Select defaultValue='10'>
+              <SelectTrigger className='w-16 bg-grey-300 bg-opacity-30 border-t border-white border-opacity-10 text-grey-100'>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className='bg-grey-300 text-grey-100 outline-none'>
+                <SelectItem value='5'>5</SelectItem>
+                <SelectItem value='10'>10</SelectItem>
+                <SelectItem value='20'>20</SelectItem>
+                <SelectItem value='50'>50</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
     </div>

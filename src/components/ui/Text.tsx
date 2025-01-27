@@ -60,8 +60,8 @@ export type TextRef = HTMLSpanElement | HTMLParagraphElement | HTMLHeadingElemen
 export type TextProps<T extends Variant = Variant> = {
   as: T
   styleVariant: StyleVariant
-  className?: string
   children: React.ReactNode
+  className?: string
   fontWeight?: FontWeight
   italic?: boolean
 } & React.HTMLAttributes<JSX.IntrinsicElements[T]>
@@ -80,6 +80,7 @@ export const Text = React.forwardRef<TextRef, TextProps>(
           italic && 'italic',
           className
         )}
+        title
         {...props}
       >
         {children}

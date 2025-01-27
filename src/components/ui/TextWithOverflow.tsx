@@ -22,9 +22,10 @@ const createRefForVariant = (variant: TextProps['as']): RefObject<TextRef | null
   }
 }
 
-export const TextWithOverflow: React.FC<TextProps> = ({ as: variant, children, className, ...props }) => {
+export const TextWithOverflow: React.FC<TextProps> = ({ as: variant, children, className, title, ...props }) => {
   const textRef = createRefForVariant(variant)
   const [isOverflowing, setIsOverflowing] = useState(false)
+  const titleText = title || children?.toString()
 
   const handleMouseEnter = () => {
     if (textRef.current) {
@@ -39,7 +40,7 @@ export const TextWithOverflow: React.FC<TextProps> = ({ as: variant, children, c
       as={variant}
       className={cn('line-clamp-1 overflow-ellipsis whitespace-nowrap block', className)}
       onMouseEnter={handleMouseEnter}
-      title={isOverflowing ? children?.toString() : ''}
+      title={isOverflowing ? titleText : ''}
       {...props}
     >
       {children}
