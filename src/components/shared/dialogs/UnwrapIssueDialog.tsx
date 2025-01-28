@@ -1,14 +1,14 @@
 'use client'
 
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/ui/Dialog'
-import { Asset } from '@/models/asset'
 import { UnwrapIssueDialogItem } from '@/components/comicIssue/UnwrapIssueDialogItem'
 import { useToggle } from '@/hooks/useToggle'
 import { Text } from '@/components/ui'
+import { CollectibleComic } from '@/models/comic/collectibleComic'
 
 type Props = {
   accessToken: string
-  assets: Asset[]
+  assets: CollectibleComic[]
   showUnwrapButton?: boolean
 }
 

@@ -2,20 +2,20 @@ import { useMemo } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { onQueryError } from '@/components/ui/toast/use-toast'
 import { assetKeys } from './assetKeys'
-import { AssetParams } from '@/models/asset/assetParams'
-import { fetchAssets } from '@/app/lib/api/asset/queries'
+import { CollectibleComicFilterParams } from '@/models/asset/collectibleComicFilterParams'
+import { fetchCollectibleComics } from '@/app/lib/api/asset/queries'
 
 type Input = {
   enabled?: boolean
-  params: AssetParams
+  params: CollectibleComicFilterParams
 }
 
-export const useFetchAssets = ({ enabled = true, params }: Input) => {
+export const useFetchCollectibleComics = ({ enabled = true, params }: Input) => {
   const take = params.take || 20
   const infiniteQuery = useInfiniteQuery({
     initialPageParam: 0,
-    queryKey: assetKeys.getAssets(params),
-    queryFn: ({ pageParam = 0 }) => fetchAssets({ ...params, skip: pageParam * take, take }),
+    queryKey: assetKeys.getCollectibleComics(params),
+    queryFn: ({ pageParam = 0 }) => fetchCollectibleComics({ ...params, skip: pageParam * take, take }),
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length >= take) return allPages.length
     },

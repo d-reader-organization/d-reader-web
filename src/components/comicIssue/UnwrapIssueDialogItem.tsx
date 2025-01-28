@@ -2,7 +2,6 @@
 
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import useToggle from '@/hooks/useToggle'
-import { Asset } from '@/models/asset'
 import React from 'react'
 import { useHandleUnwrap } from '@/hooks/useHandleUnwrap'
 import { getRarityIcon } from '@/utils/rarity'
@@ -15,8 +14,9 @@ import { ComicRarity } from '@/enums/comicRarity'
 import { UnwrapButtonListItem } from '../shared/buttons/UnwrapButtonListItem'
 import { LOCAL_STORAGE } from '@/constants/general'
 import { Button } from '../ui/Button'
+import { CollectibleComic } from '@/models/comic/collectibleComic'
 
-type Props = { accessToken: string; asset: Asset; closeDialog: VoidFunction }
+type Props = { accessToken: string; asset: CollectibleComic; closeDialog: VoidFunction }
 
 export const UnwrapIssueDialogItem: React.FC<Props> = ({ accessToken, asset, closeDialog }) => {
   const [isDialogRead] = useLocalStorage(LOCAL_STORAGE.IS_UNWRAP_HINT_READ, false)

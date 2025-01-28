@@ -1,4 +1,4 @@
-import { useFetchAssets } from '@/api/asset/queries'
+import { useFetchCollectibleComics } from '@/api/asset/queries'
 import { fetchListAssetTransaction } from '@/app/lib/api/transaction/queries'
 import { OwnedAssetCard } from '@/components/digital-asset/OwnedAssetCard'
 import { ShowMoreButton } from '@/components/discover/ShowMoreButton'
@@ -25,7 +25,7 @@ export const WalletAssetSection: React.FC<Props> = ({ collectionAddress, accessT
     hasNextPage,
     isFetching,
     isFetched,
-  } = useFetchAssets({
+  } = useFetchCollectibleComics({
     params: { skip: 0, take: 10, collectionAddress: collectionAddress || '', ownerAddress: publicKey?.toString() },
     enabled,
   })

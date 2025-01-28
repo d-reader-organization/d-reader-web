@@ -1,19 +1,19 @@
 'use client'
 
-import { Asset } from '@/models/asset'
 import { useRouter } from 'next/navigation'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { sleep } from '@/utils/helpers'
 import { confirmingTransaction, toast } from '@/components/ui/toast/use-toast'
 import { fetchUseComicIssueAssetTransaction } from '@/app/lib/api/transaction/queries'
 import { useState } from 'react'
+import { CollectibleComic } from '@/models/comic/collectibleComic'
 
 type ReturnType = {
   handleUnwrap: (accessToken: string) => Promise<void>
   isUnwrapLoading: boolean
 }
 
-export const useHandleUnwrap = ({ asset, onSuccess }: { asset: Asset; onSuccess: () => void }): ReturnType => {
+export const useHandleUnwrap = ({ asset, onSuccess }: { asset: CollectibleComic; onSuccess: () => void }): ReturnType => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const { refresh } = useRouter()

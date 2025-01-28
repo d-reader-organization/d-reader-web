@@ -1,6 +1,6 @@
 import { Pagination } from '@/models/pagination'
 
-export type AssetParams = Partial<Pagination> & {
+export type CollectibleComicFilterParams = Partial<Pagination> & {
   ownerAddress?: string
   comicSlug?: string
   userId?: string | number

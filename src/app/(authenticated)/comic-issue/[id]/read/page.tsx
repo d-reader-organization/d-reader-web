@@ -1,4 +1,4 @@
-import { fetchAssets } from '@/app/lib/api/asset/queries'
+import { fetchCollectibleComics } from '@/app/lib/api/asset/queries'
 import { fetchComicIssue, fetchComicIssuePages } from '@/app/lib/api/comicIssue/queries'
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { getAccessToken } from '@/app/lib/utils/auth'
@@ -19,7 +19,7 @@ export default async function ReadComicIssuePage(props: ComicIssuePageParams) {
 
   if (!pages || !comicIssue) return null
 
-  const assets = await fetchAssets({
+  const assets = await fetchCollectibleComics({
     comicIssueId: params.id,
     userId: me?.id,
   })
