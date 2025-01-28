@@ -4,7 +4,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/
 import { UnwrapIssueDialogItem } from '@/components/comicIssue/UnwrapIssueDialogItem'
 import { useToggle } from '@/hooks/useToggle'
 import { Text } from '@/components/ui'
-import { CollectibleComic } from '@/models/comic/collectibleComic'
+import { CollectibleComic } from '@/models/asset'
 
 type Props = {
   accessToken: string

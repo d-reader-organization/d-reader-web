@@ -3,7 +3,7 @@ import { CollectibleComicFilterParams } from '@/models/asset/collectibleComicFil
 export const ASSET_QUERY_KEYS = Object.freeze({
   ASSET: 'asset',
   GET: 'get',
-  COLLECTIBLE_COMIC: 'collectible-comic'
+  COLLECTIBLE_COMIC: 'collectible-comic',
 })
 
 export const assetKeys = Object.freeze({

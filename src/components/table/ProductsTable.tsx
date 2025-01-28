@@ -7,7 +7,6 @@ import { ChevronDown, Settings2, Trash2, Pencil } from 'lucide-react'
 import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { ComicRarity } from '@/enums/comicRarity'
-import { BasicCollectibleComic } from '@/models/comic/collectibleComic'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { RarityChip } from '../shared/chips/RarityChip'
 import { formatDistanceToNow } from 'date-fns'
@@ -16,6 +15,7 @@ import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 import Image from 'next/image'
 import { usePaginationControls } from '@/hooks/usePaginationControls'
+import { BasicCollectibleComic } from '@/models/asset'
 
 interface SignatureRequest {
   asset: BasicCollectibleComic

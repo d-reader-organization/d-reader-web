@@ -14,7 +14,7 @@ import { ComicRarity } from '@/enums/comicRarity'
 import { UnwrapButtonListItem } from '../shared/buttons/UnwrapButtonListItem'
 import { LOCAL_STORAGE } from '@/constants/general'
 import { Button } from '../ui/Button'
-import { CollectibleComic } from '@/models/comic/collectibleComic'
+import { CollectibleComic } from '@/models/asset'
 
 type Props = { accessToken: string; asset: CollectibleComic; closeDialog: VoidFunction }
 

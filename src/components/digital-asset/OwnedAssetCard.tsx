@@ -3,9 +3,9 @@ import Image from 'next/image'
 import { RarityChip } from '@/components/shared/chips/RarityChip'
 import { CardBorderWrapper } from '../shared/CardBorderWrapper'
 import { shortenAssetName } from '@/utils/helpers'
-import { CollectibleComic } from '@/models/comic/collectibleComic'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
+import { CollectibleComic } from '@/models/asset'
 
 type Props = {
   asset: CollectibleComic

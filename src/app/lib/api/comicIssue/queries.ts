@@ -4,7 +4,7 @@ import { fetchWrapper } from '../../fetchWrapper'
 import { COMIC_ISSUE_QUERY_KEYS } from '@/api/comicIssue/comicIssueKeys'
 import { Nullable } from '@/models/common'
 import { ComicPage } from '@/models/comic/comicPage'
-import { OwnedCollectibleComic } from '@/models/comic/collectibleComic'
+import { OwnedCollectibleComic } from '@/models/asset'
 
 const { BY_OWNER, COMIC_ISSUE, GET, GET_PUBLIC, PAGES } = COMIC_ISSUE_QUERY_KEYS
 

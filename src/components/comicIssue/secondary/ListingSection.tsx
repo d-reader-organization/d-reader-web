@@ -4,7 +4,6 @@ import { useToggle } from '@/hooks'
 import { useFetchCollectibleComicListings } from '@/api/auctionHouse/queries'
 import { ShowMoreButton } from '../../discover/ShowMoreButton'
 import { ListedItem } from '@/models/auctionHouse/listedItem'
-import { CollectibleComic } from '@/models/comic/collectibleComic'
 import { useFetchSupportedTokens } from '@/api/settings/queries/useFetchSupportedTokens'
 import { SplToken } from '@/models/settings/splToken'
 import { getTokenPrice, shortenAssetName, shortenSolanaAddress } from '@/utils/helpers'
@@ -25,6 +24,7 @@ import { RarityChip } from '@/components/shared/chips/RarityChip'
 import { SignedTraitChip } from '@/components/shared/chips/SignedTraitChip'
 import { UsedTraitChip } from '@/components/shared/chips/UsedTraitChip'
 import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
+import { CollectibleComic } from '@/models/asset'
 
 export const ListingSection: React.FC<{ collectionAddress: string | undefined; accessToken: string }> = ({
   collectionAddress,

@@ -1,5 +1,5 @@
 import { ComicRarity } from '@/enums/comicRarity'
-import { CandyMachineReceipt } from '../candyMachine/candyMachineReceipt'
+import { BasicUser } from '../user'
 
 export interface AssetEventData {
   name: string
@@ -10,6 +10,12 @@ export interface AssetEventData {
   image: string
 }
 
-export interface AssetMintEvent extends CandyMachineReceipt {
+export interface AssetMintEvent {
   assets: AssetEventData[]
+  buyer?: BasicUser
+  buyerAddress: string
+  candyMachineAddress: string
+  price: number
+  timestamp: string
+  splTokenAddress: string
 }
