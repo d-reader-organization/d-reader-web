@@ -24,6 +24,8 @@ import { useToggle } from '@/hooks'
 import { requestAutograph } from '@/app/lib/api/asset/mutations'
 import { Loader } from '../shared/Loader'
 import SignedIcon from 'public/assets/vector-icons/signed-icon.svg'
+import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
+import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 
 type Props = {
   collectibleComic: CollectibleComic
@@ -125,8 +127,8 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
             <div className='flex items-center gap-2 flex-wrap'>
               <RoyaltyChip royalty={collectibleComic.royalties} />
               <RarityChip rarity={collectibleComic.rarity} />
-              <StateChip state={collectibleComic.isUsed ? 'used' : 'mint'} />
-              {collectibleComic.isSigned ? <StateChip state='signed' text='SIGNED' /> : null}
+              <UsedTraitChip used={collectibleComic.isUsed} />
+              <SignedTraitChip signed={collectibleComic.isSigned} />
             </div>
             <Divider />
             <div className='flex justify-between'>

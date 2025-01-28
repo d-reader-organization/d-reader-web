@@ -80,7 +80,6 @@ export const Text = React.forwardRef<TextRef, TextProps>(
           italic && 'italic',
           className
         )}
-        title
         {...props}
       >
         {children}

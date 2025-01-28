@@ -31,7 +31,7 @@ export const OwnedComicCollectiblesContent: React.FC<Props> = ({ comicIssue, own
       {!ownedCollectibles.length ? (
         <div className='flex flex-col justify-center items-center h-full self-center'>
           <Text as='h5' styleVariant='primary-heading'>
-            No owned assets for given comic series
+            You don&apos;t own any assets from these series
           </Text>
         </div>
       ) : (
