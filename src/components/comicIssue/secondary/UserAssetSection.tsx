@@ -1,6 +1,6 @@
-import { useFetchAssets } from '@/api/asset/queries'
+import { useFetchCollectibleComics } from '@/api/asset/queries'
 import { fetchListAssetTransaction } from '@/app/lib/api/transaction/queries'
-import { OwnedAssetCard } from '@/components/digital-asset/OwnedAssetCard'
+import { OwnedCollectibleComicCard } from '@/components/digital-asset/OwnedCollectibleComicCard'
 import { ShowMoreButton } from '@/components/discover/ShowMoreButton'
 import { Loader } from '@/components/shared/Loader'
 import { toast } from '@/components/ui'
@@ -20,12 +20,12 @@ export const WalletAssetSection: React.FC<Props> = ({ collectionAddress, accessT
 
   const enabled = !!(collectionAddress && publicKey)
   const {
-    flatData: assets,
+    flatData: collectibleComics,
     fetchNextPage,
     hasNextPage,
     isFetching,
     isFetched,
-  } = useFetchAssets({
+  } = useFetchCollectibleComics({
     params: { skip: 0, take: 10, collectionAddress: collectionAddress || '', ownerAddress: publicKey?.toString() },
     enabled,
   })
@@ -75,15 +75,15 @@ export const WalletAssetSection: React.FC<Props> = ({ collectionAddress, accessT
   return (
     <Fragment>
       <div className='grid grid-cols-3 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-4 pt-1 sm:pt-2'>
-        {assets.map((asset, index) => (
-          <OwnedAssetCard key={index} asset={asset} />
+        {collectibleComics.map((collectibleComic, index) => (
+          <OwnedCollectibleComicCard key={index} collectibleComic={collectibleComic} />
         ))}
       </div>
       <div className='flex flex-col items-center pt-2 sm:pt-3'>
         <ShowMoreButton
           onClick={fetchNextPage}
           isFetching={isFetching}
-          itemsFound={assets.length}
+          itemsFound={collectibleComics.length}
           hasNextPage={hasNextPage}
         />
       </div>

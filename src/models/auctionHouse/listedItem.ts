@@ -1,4 +1,4 @@
-import { CollectibleComic } from '../comic/collectibleComic'
+import { CollectibleComic } from '../asset'
 import { BasicUser } from '../user'
 
 export interface ListedItem {

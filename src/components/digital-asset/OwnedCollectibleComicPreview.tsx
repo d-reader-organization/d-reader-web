@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { RarityChip } from '@/components/shared/chips/RarityChip'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/Dialog'
-import { OwnedAssetCard } from './OwnedAssetCard'
+import { OwnedCollectibleComicCard } from './OwnedCollectibleComicCard'
 import { toast } from '../ui/toast'
 import { Circle, Copy, ExternalLink } from 'lucide-react'
 import { Text } from '../ui/Text'
@@ -14,11 +14,9 @@ import { AudienceWidget } from '../shared/AudienceWidget'
 import { AudienceType } from '@/enums/audienceType'
 import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
-import { StateChip } from '../shared/chips/State'
 import { RoyaltyChip } from '../shared/chips/Royalty'
 import { CreatorInfoLink } from '../creator/InfoLink'
 import { ComicIssue } from '@/models/comicIssue'
-import { CollectibleComic } from '@/models/comic/collectibleComic'
 import { Button } from '../ui'
 import { useToggle } from '@/hooks'
 import { requestAutograph } from '@/app/lib/api/asset/mutations'
@@ -26,13 +24,14 @@ import { Loader } from '../shared/Loader'
 import SignedIcon from 'public/assets/vector-icons/signed-icon.svg'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
+import { CollectibleComic } from '@/models/asset'
 
 type Props = {
   collectibleComic: CollectibleComic
   comicIssue: ComicIssue
 }
 
-export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssue }) => {
+export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic, comicIssue }) => {
   const [showLoader, toggleLoader] = useToggle()
 
   const handleRequestAutograph = async () => {
@@ -55,7 +54,7 @@ export const OwnedAssetPreview: React.FC<Props> = ({ collectibleComic, comicIssu
   return (
     <Dialog>
       <DialogTrigger>
-        <OwnedAssetCard asset={collectibleComic} />
+        <OwnedCollectibleComicCard collectibleComic={collectibleComic} />
       </DialogTrigger>
       <DialogContent
         className='bg-grey-500 rounded-3xl justify-start max-w-screen-md flex flex-col items-center gap-6 md:flex-row md:justify-center md:items-start md:gap-10 w-full p-4 md:p-10 max-h-full'

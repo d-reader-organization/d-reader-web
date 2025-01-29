@@ -2,7 +2,6 @@
 
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import useToggle from '@/hooks/useToggle'
-import { Asset } from '@/models/asset'
 import React from 'react'
 import { useHandleUnwrap } from '@/hooks/useHandleUnwrap'
 import { getRarityIcon } from '@/utils/rarity'
@@ -15,15 +14,16 @@ import { ComicRarity } from '@/enums/comicRarity'
 import { UnwrapButtonListItem } from '../shared/buttons/UnwrapButtonListItem'
 import { LOCAL_STORAGE } from '@/constants/general'
 import { Button } from '../ui/Button'
+import { CollectibleComic } from '@/models/asset'
 
-type Props = { accessToken: string; asset: Asset; closeDialog: VoidFunction }
+type Props = { accessToken: string; collectibleComic: CollectibleComic; closeDialog: VoidFunction }
 
-export const UnwrapIssueDialogItem: React.FC<Props> = ({ accessToken, asset, closeDialog }) => {
+export const UnwrapIssueDialogItem: React.FC<Props> = ({ accessToken, collectibleComic, closeDialog }) => {
   const [isDialogRead] = useLocalStorage(LOCAL_STORAGE.IS_UNWRAP_HINT_READ, false)
   const [unwrapWarningDialog, toggleUnwrapWarningDialog, closeUnwrapWarningDialog] = useToggle(false)
 
   const { handleUnwrap, isUnwrapLoading } = useHandleUnwrap({
-    asset,
+    collectibleComic,
     onSuccess: () => {
       closeUnwrapWarningDialog()
       closeDialog()
@@ -37,28 +37,28 @@ export const UnwrapIssueDialogItem: React.FC<Props> = ({ accessToken, asset, clo
   return (
     <div className='flex justify-between w-full border-t stroke-grey-300 items-end pt-5'>
       <div>
-        <p className='text-left font-bold text-lg'>{asset.name}</p>
+        <p className='text-left font-bold text-lg'>{collectibleComic.name}</p>
         <div className='flex flex-wrap h-5 gap-2 mt-2'>
-          {asset.rarity && (
+          {collectibleComic.rarity && (
             <div
               className={cn(
                 traitLabelStyle,
-                asset.rarity === ComicRarity.Common && 'border-white',
-                asset.rarity === ComicRarity.Uncommon && 'border-yellow-50',
-                asset.rarity === ComicRarity.Rare && 'border-blue-500',
-                asset.rarity === ComicRarity.Epic && 'border-pink-500',
-                asset.rarity === ComicRarity.Legendary && 'border-purple-500'
+                collectibleComic.rarity === ComicRarity.Common && 'border-white',
+                collectibleComic.rarity === ComicRarity.Uncommon && 'border-yellow-50',
+                collectibleComic.rarity === ComicRarity.Rare && 'border-blue-500',
+                collectibleComic.rarity === ComicRarity.Epic && 'border-pink-500',
+                collectibleComic.rarity === ComicRarity.Legendary && 'border-purple-500'
               )}
             >
-              {getRarityIcon(asset.rarity)} {asset.rarity}
+              {getRarityIcon(collectibleComic.rarity)} {collectibleComic.rarity}
             </div>
           )}
-          {!asset.isUsed && (
+          {!collectibleComic.isUsed && (
             <div className={cn(traitLabelStyle, 'border-green-500')}>
               <MintIcon /> Mint
             </div>
           )}
-          {asset.isSigned && (
+          {collectibleComic.isSigned && (
             <div className={cn(traitLabelStyle, 'border-orange-500')}>
               <SignedIcon /> Signed
             </div>

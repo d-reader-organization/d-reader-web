@@ -1,6 +1,6 @@
 import { SignatureRequestStatus } from '@/enums/signatureRequest'
-import { BasicCollectibleComic } from '../comic/collectibleComic'
 import { BasicUser } from '../user'
+import { BasicCollectibleComic } from '../asset'
 
 export interface SignatureRequest {
   asset: BasicCollectibleComic

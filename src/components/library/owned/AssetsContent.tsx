@@ -1,11 +1,11 @@
 'use client'
 
-import { OwnedAssetPreview } from '@/components/digital-asset/OwnedAssetPreview'
+import { OwnedCollectibleComicPreview } from '@/components/digital-asset/OwnedCollectibleComicPreview'
 import { Button } from '@/components/ui/Button'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Text } from '@/components/ui/Text'
 import { RoutePath } from '@/enums/routePath'
-import { OwnedCollectibleComic } from '@/models/comic/collectibleComic'
+import { OwnedCollectibleComic } from '@/models/asset'
 import { ComicIssue } from '@/models/comicIssue'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -65,7 +65,7 @@ export const OwnedComicCollectiblesContent: React.FC<Props> = ({ comicIssue, own
               </div>
               <div className='flex flex-wrap gap-6 md:gap-10 w-full'>
                 {ownedIssue.collectibles.map((collectibleComic) => (
-                  <OwnedAssetPreview
+                  <OwnedCollectibleComicPreview
                     key={collectibleComic.address}
                     collectibleComic={collectibleComic}
                     comicIssue={comicIssue}

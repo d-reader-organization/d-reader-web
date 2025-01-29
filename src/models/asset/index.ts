@@ -1,6 +1,8 @@
 import { ComicRarity } from '@/enums/comicRarity'
+import { ComicIssue } from '../comicIssue'
+import { Comic } from '../comic'
 
-export interface Asset {
+export type CollectibleComic = {
   address: string
   uri: string
   image: string
@@ -10,9 +12,28 @@ export interface Asset {
   royalties: number
   isUsed: boolean
   isSigned: boolean
-  comicTitle: string
-  comicIssueTitle: string
+  rarity: ComicRarity
   comicIssueId: number
   isListed: boolean
-  rarity: ComicRarity
+  comicTitle?: string
+  comicIssueTitle?: string
+}
+
+export type BasicCollectibleComic = Pick<
+  CollectibleComic,
+  'address' | 'image' | 'name' | 'isUsed' | 'isSigned' | 'rarity'
+> & {
+  comicTitle: Comic['title']
+  comicIssueTitle: ComicIssue['title']
+  episodeNumber: ComicIssue['number']
+}
+
+export type OwnedCollectibleComic = {
+  id: number
+  number: number
+  title: string
+  slug: string
+  cover: string
+  collectibles: CollectibleComic[]
+  ownedCopiesCount: number
 }

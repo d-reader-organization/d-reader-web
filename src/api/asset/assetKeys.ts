@@ -1,12 +1,13 @@
-import { AssetParams } from '@/models/asset/assetParams'
+import { CollectibleComicFilterParams } from '@/models/asset/collectibleComicFilterParams'
 
 export const ASSET_QUERY_KEYS = Object.freeze({
   ASSET: 'asset',
   GET: 'get',
+  COLLECTIBLE_COMIC: 'collectible-comic',
 })
 
 export const assetKeys = Object.freeze({
-  getAssets: (params: AssetParams) => [
+  getCollectibleComics: (params: CollectibleComicFilterParams) => [
     ASSET_QUERY_KEYS.ASSET,
     ASSET_QUERY_KEYS.GET,
     params.collectionAddress,

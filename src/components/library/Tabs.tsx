@@ -8,7 +8,7 @@ import { OwnedComicsContent } from './owned/ComicsContent'
 import { OwnedComicCollectiblesContent } from './owned/AssetsContent'
 import { ComicIssue } from '@/models/comicIssue'
 import { Nullable } from '@/models/common'
-import { OwnedCollectibleComic } from '@/models/comic/collectibleComic'
+import { OwnedCollectibleComic } from '@/models/asset'
 
 const tabs: { title: string; value: string; isComingSoon?: boolean }[] = [
   {
