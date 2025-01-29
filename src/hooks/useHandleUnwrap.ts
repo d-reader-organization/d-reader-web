@@ -14,10 +14,10 @@ type ReturnType = {
 }
 
 export const useHandleUnwrap = ({
-  asset,
+  collectibleComic,
   onSuccess,
 }: {
-  asset: CollectibleComic
+  collectibleComic: CollectibleComic
   onSuccess: () => void
 }): ReturnType => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -31,7 +31,7 @@ export const useHandleUnwrap = ({
       setIsLoading(true)
       const unwrapTransaction = await fetchUseComicIssueAssetTransaction({
         accessToken,
-        params: { assetAddress: asset.address, ownerAddress: asset.ownerAddress },
+        params: { assetAddress: collectibleComic.address, ownerAddress: collectibleComic.ownerAddress },
       })
       if (unwrapTransaction) {
         if (!signTransaction) return

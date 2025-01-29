@@ -19,12 +19,12 @@ export default async function ReadComicIssuePage(props: ComicIssuePageParams) {
 
   if (!pages || !comicIssue) return null
 
-  const assets = await fetchCollectibleComics({
+  const collectibleComics = await fetchCollectibleComics({
     comicIssueId: params.id,
     userId: me?.id,
   })
 
-  const hasUnusedAssets = assets.some((asset) => !asset.isUsed)
+  const hasUnusedCollectibleComics = collectibleComics.some((collectibleComic) => !collectibleComic.isUsed)
   return (
     <>
       <EReaderNavigation comicIssue={comicIssue} />
@@ -46,8 +46,8 @@ export default async function ReadComicIssuePage(props: ComicIssuePageParams) {
               {!!me && (
                 <UnwrapIssueDialog
                   accessToken={accessToken}
-                  assets={assets}
-                  showUnwrapButton={hasUnusedAssets && !comicIssue.myStats?.canRead}
+                  collectibleComics={collectibleComics}
+                  showUnwrapButton={hasUnusedCollectibleComics && !comicIssue.myStats?.canRead}
                 />
               )}
               {!comicIssue.isFullyUploaded && (

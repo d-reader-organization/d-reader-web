@@ -8,13 +8,13 @@ import { CollectibleComic } from '@/models/asset'
 
 type Props = {
   accessToken: string
-  assets: CollectibleComic[]
+  collectibleComics: CollectibleComic[]
   showUnwrapButton?: boolean
 }
 
-export const UnwrapIssueDialog: React.FC<Props> = ({ accessToken, assets, showUnwrapButton = true }) => {
+export const UnwrapIssueDialog: React.FC<Props> = ({ accessToken, collectibleComics, showUnwrapButton = true }) => {
   const [unwrapIssueDialog, toggleDialog, closeDialog] = useToggle()
-  const unusedAssets = assets.filter((asset) => !asset.isUsed)
+  const unusedCollectibleComics = collectibleComics.filter((collectibleComic) => !collectibleComic.isUsed)
   return (
     <Dialog open={unwrapIssueDialog} onOpenChange={toggleDialog}>
       {showUnwrapButton && (
@@ -34,11 +34,11 @@ export const UnwrapIssueDialog: React.FC<Props> = ({ accessToken, assets, showUn
           This episode is a digital collectible, In order to read the full episode you need to &quot;unwrap&quot; at
           least one copy. This action is irreversible and will make the selected copy lose the mint condition.
         </Text>
-        {unusedAssets.map((asset) => (
+        {unusedCollectibleComics.map((collectibleComic) => (
           <UnwrapIssueDialogItem
             accessToken={accessToken}
-            key={asset.address}
-            asset={asset}
+            key={collectibleComic.address}
+            collectibleComic={collectibleComic}
             closeDialog={closeDialog}
           />
         ))}
