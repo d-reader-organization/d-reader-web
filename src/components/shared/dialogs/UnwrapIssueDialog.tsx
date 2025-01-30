@@ -7,12 +7,11 @@ import { Text } from '@/components/ui'
 import { CollectibleComic } from '@/models/asset'
 
 type Props = {
-  accessToken: string
   collectibleComics: CollectibleComic[]
   showUnwrapButton?: boolean
 }
 
-export const UnwrapIssueDialog: React.FC<Props> = ({ accessToken, collectibleComics, showUnwrapButton = true }) => {
+export const UnwrapIssueDialog: React.FC<Props> = ({ collectibleComics, showUnwrapButton = true }) => {
   const [unwrapIssueDialog, toggleDialog, closeDialog] = useToggle()
   const unusedCollectibleComics = collectibleComics.filter((collectibleComic) => !collectibleComic.isUsed)
   return (
@@ -36,7 +35,6 @@ export const UnwrapIssueDialog: React.FC<Props> = ({ accessToken, collectibleCom
         </Text>
         {unusedCollectibleComics.map((collectibleComic) => (
           <UnwrapIssueDialogItem
-            accessToken={accessToken}
             key={collectibleComic.address}
             collectibleComic={collectibleComic}
             closeDialog={closeDialog}

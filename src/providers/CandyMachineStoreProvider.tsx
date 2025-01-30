@@ -11,21 +11,21 @@ import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 import { fetchSupportedTokens } from '@/app/lib/api/settings/queries'
 import { isTokenValid } from '@/app/lib/utils/jwt'
 import { SOL_ADDRESS } from '@/constants/general'
+import { useAuthStore } from './AuthStoreProvider'
 
 export type CandyMachineStoreApi = ReturnType<typeof createCandyMachineStore>
 
 export const CandyMachineStoreContext = createContext<CandyMachineStoreApi | undefined>(undefined)
 
 export type CandyMachineStoreProviderProps = {
-  accessToken: string
   comicIssue: ComicIssue
   children: ReactNode
 }
 
-export const CandyMachineStoreProvider = ({ accessToken, comicIssue, children }: CandyMachineStoreProviderProps) => {
+export const CandyMachineStoreProvider = ({ comicIssue, children }: CandyMachineStoreProviderProps) => {
   const { publicKey } = useWallet()
   const storeRef = useRef<CandyMachineStoreApi>(null)
-
+  const accessToken = useAuthStore((state) => state.accessToken)
   if (!storeRef.current) {
     storeRef.current = createCandyMachineStore({
       coupons: [],
@@ -79,11 +79,11 @@ export const CandyMachineStoreProvider = ({ accessToken, comicIssue, children }:
 }
 
 export const useCandyMachineStore = <T,>(selector: (store: CandyMachineStore) => T): T => {
-  const counterStoreContext = useContext(CandyMachineStoreContext)
+  const candyMachineStoreContext = useContext(CandyMachineStoreContext)
 
-  if (!counterStoreContext) {
+  if (!candyMachineStoreContext) {
     throw new Error(`useCandyMachineStore must be used within CandyMachineStoreProvider`)
   }
 
-  return useStore(counterStoreContext, selector)
+  return useStore(candyMachineStoreContext, selector)
 }

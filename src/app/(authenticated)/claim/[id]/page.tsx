@@ -1,7 +1,7 @@
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 import { fetchComicIssuePages } from '@/app/lib/api/comicIssue/queries'
 import { fetchPublicComicIssue } from '@/app/lib/api/comicIssue/queries'
-import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
+import { getAccessToken } from '@/app/lib/utils/auth'
 import { CandyMachineClaimDetails } from '@/components/claim/CandyMachineClaimDetails'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { AboutIssueSection } from '@/components/mint/AboutIssueSection'
@@ -68,11 +68,7 @@ export default async function ClaimPage(props: ComicIssuePageParams) {
               {comicIssue.title}
             </Text>
           </div>
-          <CandyMachineClaimDetails
-            accessToken={accessToken}
-            comicIssue={comicIssue}
-            isAuthenticated={await isAuthenticatedUser()}
-          />
+          <CandyMachineClaimDetails comicIssue={comicIssue} />
           <Divider className='max-md:hidden' />
           <div className='flex flex-col 1160:flex-row gap-10 justify-between'>
             <AboutIssueSection comicIssue={comicIssue} targetBlank />

@@ -7,11 +7,10 @@ import { StatsSection } from './StatsSection'
 import { WalletAssetSection } from './UserAssetSection'
 
 type Props = {
-  accessToken: string
   collectionAddress: string | undefined
 }
 
-export const SecondaryMarketplace: React.FC<Props> = ({ collectionAddress, accessToken }) => {
+export const SecondaryMarketplace: React.FC<Props> = ({ collectionAddress }) => {
   return (
     <div className='flex flex-col gap-4 w-full max-w-screen-lg'>
       <Text as='h4' styleVariant='primary-heading'>
@@ -30,13 +29,13 @@ export const SecondaryMarketplace: React.FC<Props> = ({ collectionAddress, acces
           </TabsTrigger>
         </TabsList>
         <TabsContent value='1'>
-          <ListingSection collectionAddress={collectionAddress} accessToken={accessToken} />
+          <ListingSection collectionAddress={collectionAddress} />
         </TabsContent>
         <TabsContent value='2'>
           <StatsSection collectionAddress={collectionAddress} />
         </TabsContent>
         <TabsContent value='3'>
-          <WalletAssetSection collectionAddress={collectionAddress} accessToken={accessToken} />
+          <WalletAssetSection collectionAddress={collectionAddress} />
         </TabsContent>
       </Tabs>
     </div>

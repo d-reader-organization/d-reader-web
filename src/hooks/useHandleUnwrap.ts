@@ -7,9 +7,10 @@ import { confirmingTransaction, toast } from '@/components/ui/toast/use-toast'
 import { fetchUseComicIssueAssetTransaction } from '@/app/lib/api/transaction/queries'
 import { useState } from 'react'
 import { CollectibleComic } from '@/models/asset'
+import { useAuthStore } from '@/providers/AuthStoreProvider'
 
 type ReturnType = {
-  handleUnwrap: (accessToken: string) => Promise<void>
+  handleUnwrap: () => Promise<void>
   isUnwrapLoading: boolean
 }
 
@@ -25,8 +26,9 @@ export const useHandleUnwrap = ({
   const { refresh } = useRouter()
   const { signTransaction } = useWallet()
   const { connection } = useConnection()
+  const accessToken = useAuthStore((state) => state.accessToken)
 
-  const handleUnwrap = async (accessToken: string) => {
+  const handleUnwrap = async () => {
     try {
       setIsLoading(true)
       const unwrapTransaction = await fetchUseComicIssueAssetTransaction({

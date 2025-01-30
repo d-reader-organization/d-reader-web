@@ -5,12 +5,10 @@ import { useFetchCreators } from '@/api/creator/queries/useFetchCreators'
 import { DefaultCreatorCard } from '../creator/cards/DefaultCard'
 import { ShowMoreButton } from './ShowMoreButton'
 import { Loader } from '../shared/Loader'
+import { useAuthStore } from '@/providers/AuthStoreProvider'
 
-type Props = {
-  accessToken: string
-}
-
-export const CreatorGrid: React.FC<Props> = ({ accessToken }) => {
+export const CreatorGrid: React.FC = () => {
+  const accessToken = useAuthStore((state) => state.accessToken)
   const creatorParams = useDiscoverQueryStore((state) => state.creatorParams)
   const {
     flatData: creators,

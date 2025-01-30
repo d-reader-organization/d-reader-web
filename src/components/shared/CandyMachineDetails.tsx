@@ -20,20 +20,12 @@ import { useCandyMachineStore } from '@/providers/CandyMachineStoreProvider'
 const normalise = (value: number, MAX: number): number => (value * 100) / MAX
 type DetailsProps = { candyMachine: CandyMachine }
 type CandyMachineDetailsProps = {
-  accessToken: string
   comicIssue: ComicIssue
-  isAuthenticated: boolean
   bounce?: boolean
   onMint?: VoidFunction
 }
 
-export const CandyMachineDetails: React.FC<CandyMachineDetailsProps> = ({
-  accessToken,
-  comicIssue,
-  isAuthenticated,
-  bounce = false,
-  onMint,
-}) => {
+export const CandyMachineDetails: React.FC<CandyMachineDetailsProps> = ({ comicIssue, bounce = false, onMint }) => {
   const { candyMachine, selectedCoupon, isLoading, coupons } = useCandyMachineStore((state) => state)
 
   return isLoading ? (
@@ -47,13 +39,7 @@ export const CandyMachineDetails: React.FC<CandyMachineDetailsProps> = ({
             <UserDetails candyMachine={candyMachine} />
             <ProgressBar value={normalise(candyMachine.itemsMinted, candyMachine.supply)} />
             <ComicVault />
-            <PurchaseRow
-              accessToken={accessToken}
-              comicIssue={comicIssue}
-              isAuthenticated={isAuthenticated}
-              bounce={bounce}
-              onMint={onMint}
-            />
+            <PurchaseRow comicIssue={comicIssue} bounce={bounce} onMint={onMint} />
           </div>
         )}
         {coupons.length ? (
@@ -194,21 +180,12 @@ const ComicVault: React.FC = () => (
 )
 
 type PurchaseRowProps = {
-  accessToken: string
   comicIssue: ComicIssue
-  isAuthenticated: boolean
   bounce?: boolean
   onMint?: VoidFunction
 } & React.HTMLAttributes<HTMLDivElement>
 
-export const PurchaseRow: React.FC<PurchaseRowProps> = ({
-  accessToken,
-  comicIssue,
-  className,
-  isAuthenticated,
-  bounce = false,
-  onMint,
-}) => {
+export const PurchaseRow: React.FC<PurchaseRowProps> = ({ comicIssue, className, bounce = false, onMint }) => {
   return (
     <div
       className={cn(
@@ -217,13 +194,7 @@ export const PurchaseRow: React.FC<PurchaseRowProps> = ({
       )}
     >
       <NumberOfItemsWidget />
-      <MintButton
-        accessToken={accessToken}
-        comicIssue={comicIssue}
-        isAuthenticated={isAuthenticated}
-        bounce={bounce}
-        onMint={onMint}
-      />
+      <MintButton comicIssue={comicIssue} bounce={bounce} onMint={onMint} />
     </div>
   )
 }

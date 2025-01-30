@@ -21,16 +21,16 @@ import { AssetMintEvent } from '@/models/asset/assetMintEvent'
 import { ConnectButton } from './ConnectButton'
 import { cn } from '@/lib/utils'
 import { getTokenPrice } from '@/utils/helpers'
+import { useAuthStore } from '@/providers/AuthStoreProvider'
 
 type Props = {
-  accessToken: string
   comicIssue: ComicIssue
-  isAuthenticated: boolean
   bounce?: boolean
   onMint?: VoidFunction
 }
 
-export const MintButton: React.FC<Props> = ({ accessToken, comicIssue, isAuthenticated, bounce = false, onMint }) => {
+export const MintButton: React.FC<Props> = ({ comicIssue, bounce = false, onMint }) => {
+  const { accessToken, isAuthenticated } = useAuthStore((state) => state)
   const { candyMachine, selectedCoupon, numberOfItems, selectedCurrency, supportedTokens, refetchCandyMachine } =
     useCandyMachineStore((state) => state)
   const [showAssetMinted, toggleAssetMinted] = useToggle()
@@ -246,7 +246,6 @@ export const MintButton: React.FC<Props> = ({ accessToken, comicIssue, isAuthent
       )}
       {assetMintEventData ? (
         <AssetMintedDialog
-          accessToken={accessToken}
           assets={assetMintEventData.assets}
           comicIssue={comicIssue}
           isAuthenticated={isAuthenticated}

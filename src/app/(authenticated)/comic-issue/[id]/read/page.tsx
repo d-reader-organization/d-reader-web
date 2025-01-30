@@ -45,7 +45,6 @@ export default async function ReadComicIssuePage(props: ComicIssuePageParams) {
               )}
               {!!me && (
                 <UnwrapIssueDialog
-                  accessToken={accessToken}
                   collectibleComics={collectibleComics}
                   showUnwrapButton={hasUnusedCollectibleComics && !comicIssue.myStats?.canRead}
                 />

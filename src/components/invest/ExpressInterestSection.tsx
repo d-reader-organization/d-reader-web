@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import { RoutePath } from '@/enums/routePath'
 import { Loader } from '../shared/Loader'
 import { ExpressedInterestDialog } from '../shared/dialogs/ExpressedInterestDialog'
+import { useAuthStore } from '@/providers/AuthStoreProvider'
 
 interface Option {
   label: string
@@ -29,11 +30,10 @@ const EXPRESS_INTEREST_OPTIONS: Option[] = [
 ]
 
 type Props = {
-  accessToken: string
   slug: string
 }
 
-export const ExpressInterestSection: React.FC<Props> = ({ accessToken, slug }) => {
+export const ExpressInterestSection: React.FC<Props> = ({ slug }) => {
   const [selectedOption, setOption] = useState<Option | undefined>(DEFAULT_OPTION)
   const { publicKey, signTransaction } = useWallet()
   const [isLoading, toggleLoading] = useToggle()
@@ -42,7 +42,7 @@ export const ExpressInterestSection: React.FC<Props> = ({ accessToken, slug }) =
   // "other" option should open a text input
   // we need to pull in the data from the project
   const { push, refresh } = useRouter()
-
+  const accessToken = useAuthStore((state) => state.accessToken)
   const onSubmit = async () => {
     // send API request with the selected amount
     if (!selectedOption) {

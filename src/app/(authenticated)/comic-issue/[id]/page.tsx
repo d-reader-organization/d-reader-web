@@ -17,7 +17,7 @@ import { Metadata } from 'next'
 import { RateButton } from '@/components/shared/buttons/RateButton'
 import { FavouritiseButton } from '@/components/shared/buttons/FavouritiseButton'
 import { ShareButton } from '@/components/shared/buttons/ShareButton'
-import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
+import { getAccessToken } from '@/app/lib/utils/auth'
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 import { SecondaryMarketplace } from '@/components/comicIssue/secondary/SecondaryMarketplace'
 
@@ -97,20 +97,13 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
             {pages.length ? <PagesPreview comicIssueId={comicIssue.id} pages={pages} /> : null}
           </div>
           <Divider className='max-md:hidden' />
-          <CandyMachineStoreProvider comicIssue={comicIssue} accessToken={accessToken}>
-            <CandyMachineDetails
-              accessToken={accessToken}
-              comicIssue={comicIssue}
-              isAuthenticated={await isAuthenticatedUser()}
-            />
+          <CandyMachineStoreProvider comicIssue={comicIssue}>
+            <CandyMachineDetails comicIssue={comicIssue} />
           </CandyMachineStoreProvider>
         </div>
       </div>
       {false && comicIssue?.collectibleInfo?.isSecondarySaleActive && (
-        <SecondaryMarketplace
-          collectionAddress={comicIssue?.collectibleInfo?.collectionAddress}
-          accessToken={accessToken}
-        />
+        <SecondaryMarketplace collectionAddress={comicIssue?.collectibleInfo?.collectionAddress} />
       )}
     </BaseLayout>
   )

@@ -5,19 +5,19 @@ import { ShowMoreButton } from '@/components/discover/ShowMoreButton'
 import { Loader } from '@/components/shared/Loader'
 import { toast } from '@/components/ui'
 import { SOL_ADDRESS } from '@/constants/general'
+import { useAuthStore } from '@/providers/AuthStoreProvider'
 import { versionedTransactionFromBs64 } from '@/utils/transactions'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { Fragment } from 'react'
 
 type Props = {
   collectionAddress: string | undefined
-  accessToken: string
 }
 
-export const WalletAssetSection: React.FC<Props> = ({ collectionAddress, accessToken }) => {
+export const WalletAssetSection: React.FC<Props> = ({ collectionAddress }) => {
   const { publicKey, signTransaction } = useWallet()
   const { connection } = useConnection()
-
+  const accessToken = useAuthStore((state) => state.accessToken)
   const enabled = !!(collectionAddress && publicKey)
   const {
     flatData: collectibleComics,

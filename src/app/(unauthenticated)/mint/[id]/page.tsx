@@ -1,7 +1,7 @@
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 import { fetchComicIssuePages } from '@/app/lib/api/comicIssue/queries'
 import { fetchPublicComicIssue } from '@/app/lib/api/comicIssue/queries'
-import { getAccessToken, isAuthenticatedUser } from '@/app/lib/utils/auth'
+import { getAccessToken } from '@/app/lib/utils/auth'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { AboutIssueSection } from '@/components/mint/AboutIssueSection'
 import { CoverCarousel } from '@/components/mint/CoverCarousel'
@@ -47,7 +47,6 @@ export default async function MintPage(props: ComicIssuePageParams) {
   const candyMachine = await fetchCandyMachine({
     params: { candyMachineAddress: comicIssue.collectibleInfo?.activeCandyMachineAddress ?? '' },
   })
-  const isAuthenticated = await isAuthenticatedUser()
   return (
     <BaseLayout>
       <MintPageWelcomeDialog />
@@ -63,8 +62,8 @@ export default async function MintPage(props: ComicIssuePageParams) {
               {comicIssue.title}
             </Text>
           </div>
-          <CandyMachineStoreProvider accessToken={accessToken} comicIssue={comicIssue}>
-            <CandyMachineDetails accessToken={accessToken} comicIssue={comicIssue} isAuthenticated={isAuthenticated} />
+          <CandyMachineStoreProvider comicIssue={comicIssue}>
+            <CandyMachineDetails comicIssue={comicIssue} />
           </CandyMachineStoreProvider>
           <Divider className='max-md:hidden' />
           <div className='flex flex-col 1160:flex-row gap-10 justify-between'>

@@ -23,9 +23,9 @@ import { shortenAssetName, sleep } from '@/utils/helpers'
 import { useRouter } from 'next/navigation'
 import { Loader } from 'lucide-react'
 import { LOCAL_STORAGE } from '@/constants/general'
+import { useAuthStore } from '@/providers/AuthStoreProvider'
 
 type Props = {
-  accessToken: string
   comicIssue: ComicIssue
   isAuthenticated: boolean
 } & CommonDialogProps
@@ -39,7 +39,6 @@ export const AssetMintedDetails: React.FC<{ asset: AssetEventData }> = ({ asset 
 }
 
 export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> = ({
-  accessToken,
   assets,
   comicIssue,
   isAuthenticated,
@@ -56,6 +55,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
 
   const { push } = useRouter()
   const { connection } = useConnection()
+  const accessToken = useAuthStore((state) => state.accessToken)
 
   const { data: twitterIntentComicMinted } = useFetchTwitterIntentComicMinted({
     comicAddress: assets[selectedIndex].address ?? '',

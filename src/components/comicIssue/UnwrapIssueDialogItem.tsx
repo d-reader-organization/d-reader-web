@@ -16,9 +16,9 @@ import { LOCAL_STORAGE } from '@/constants/general'
 import { Button } from '../ui/Button'
 import { CollectibleComic } from '@/models/asset'
 
-type Props = { accessToken: string; collectibleComic: CollectibleComic; closeDialog: VoidFunction }
+type Props = { collectibleComic: CollectibleComic; closeDialog: VoidFunction }
 
-export const UnwrapIssueDialogItem: React.FC<Props> = ({ accessToken, collectibleComic, closeDialog }) => {
+export const UnwrapIssueDialogItem: React.FC<Props> = ({ collectibleComic, closeDialog }) => {
   const [isDialogRead] = useLocalStorage(LOCAL_STORAGE.IS_UNWRAP_HINT_READ, false)
   const [unwrapWarningDialog, toggleUnwrapWarningDialog, closeUnwrapWarningDialog] = useToggle(false)
 
@@ -69,7 +69,7 @@ export const UnwrapIssueDialogItem: React.FC<Props> = ({ accessToken, collectibl
         <Button
           className={unwrapButtonStyle}
           onClick={async () => {
-            await handleUnwrap(accessToken)
+            await handleUnwrap()
           }}
         >
           {isUnwrapLoading ? <Loader /> : 'Open'}
@@ -81,7 +81,7 @@ export const UnwrapIssueDialogItem: React.FC<Props> = ({ accessToken, collectibl
         open={unwrapWarningDialog}
         toggleDialog={toggleUnwrapWarningDialog}
         handleUnwrap={async () => {
-          await handleUnwrap(accessToken)
+          await handleUnwrap()
         }}
         isLoading={isUnwrapLoading}
       />

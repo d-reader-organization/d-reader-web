@@ -3,6 +3,8 @@ import './globals.css'
 import { Toaster } from '@/components/ui/toast/Toaster'
 import ClientContextProvider from '@/providers/ClientContextProvider'
 import { obviouslyNarrow, satoshi } from './fonts'
+import { getAccessToken, isAuthenticatedUser } from './lib/utils/auth'
+import { AuthStoreProvider } from '@/providers/AuthStoreProvider'
 
 export const metadata: Metadata = {
   title: 'dReader',
@@ -35,18 +37,21 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const [accessToken, isAuthenticated] = await Promise.all([getAccessToken(), isAuthenticatedUser()])
   return (
     <html className='max-md:scrollbar-none' lang='en'>
       <body className={`${satoshi.className} ${obviouslyNarrow.variable}`}>
-        <ClientContextProvider>
-          {children}
-          <Toaster />
-        </ClientContextProvider>
+        <AuthStoreProvider accessToken={accessToken} isAuthenticated={isAuthenticated}>
+          <ClientContextProvider>
+            {children}
+            <Toaster />
+          </ClientContextProvider>
+        </AuthStoreProvider>
       </body>
     </html>
   )

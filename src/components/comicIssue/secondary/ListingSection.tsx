@@ -25,16 +25,16 @@ import { SignedTraitChip } from '@/components/shared/chips/SignedTraitChip'
 import { UsedTraitChip } from '@/components/shared/chips/UsedTraitChip'
 import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import { CollectibleComic } from '@/models/asset'
+import { useAuthStore } from '@/providers/AuthStoreProvider'
 
-export const ListingSection: React.FC<{ collectionAddress: string | undefined; accessToken: string }> = ({
-  collectionAddress,
-  accessToken,
-}) => {
+export const ListingSection: React.FC<{ collectionAddress: string | undefined }> = ({ collectionAddress }) => {
   const { data: splTokens } = useFetchSupportedTokens()
   const [showLoader, toggleLoader] = useToggle()
   const { publicKey, signAllTransactions } = useWallet()
   const { connection } = useConnection()
   const [selectedListings, onSelectListing] = useState<ListedItem[]>([])
+
+  const accessToken = useAuthStore((state) => state.accessToken)
 
   const handleSelectListing = (listing: ListedItem) => {
     onSelectListing((prev) => {
