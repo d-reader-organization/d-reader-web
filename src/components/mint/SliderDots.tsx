@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils'
 import { getRarityColor, getRarityTextColor } from '@/utils/rarity'
 import React from 'react'
-import RarityIcon from 'public/assets/vector-icons/rarity-icon.svg'
 import { StatelessCover } from '@/models/comicIssue/statelessCover'
+import { RarityIcon } from '../icons/rarity/RarityIcon'
 
 type DotsProps = {
   emblaApi?: { scrollTo: (index: number) => void }
@@ -27,6 +27,7 @@ export const SliderDots: React.FC<DotsProps> = ({ emblaApi, slides, selectedInde
               getRarityTextColor(currentRarity)
             )}
           />
+
           <span
             className={cn(
               'flex w-full',

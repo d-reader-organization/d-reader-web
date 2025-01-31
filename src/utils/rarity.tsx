@@ -1,8 +1,8 @@
-import RareRarityIcon from 'public/assets/vector-icons/rare-rarity-icon.svg'
-import LegendaryRarityIcon from 'public/assets/vector-icons/legendary-rarity-icon.svg'
-import EpicRarityIcon from 'public/assets/vector-icons/epic-rarity-icon.svg'
-import CommonRarityIcon from 'public/assets/vector-icons/common-rarity-icon.svg'
-import UncommonRarityIcon from 'public/assets/vector-icons/uncommon-rarity-icon.svg'
+import { CommonRarityIcon } from '@/components/icons/rarity/CommonRarityIcon'
+import { EpicRarityIcon } from '@/components/icons/rarity/EpicRarityIcon'
+import { LegendaryRarityIcon } from '@/components/icons/rarity/LegendaryRarityIcon'
+import { RareRarityIcon } from '@/components/icons/rarity/RareRarityIcon'
+import { UncommonRarityIcon } from '@/components/icons/rarity/UncommonRarityIcon'
 import { ComicRarity } from '@/enums/comicRarity'
 
 export const getRarityIcon = (rarity: string) => {

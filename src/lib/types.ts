@@ -9,3 +9,5 @@ export type SlugParamsProps = {
 export type FileUploadRef = {
   reset: () => void
 }
+
+export type SvgIconProps = React.SVGProps<SVGSVGElement>

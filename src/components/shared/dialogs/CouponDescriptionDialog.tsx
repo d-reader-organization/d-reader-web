@@ -1,8 +1,6 @@
 import { CommonDialogProps } from '@/models/common'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/Dialog'
 import React from 'react'
-import CHECK_CIRCLE_ICON from 'public/assets/vector-icons/check-circle.svg'
-import CROSS_CIRCLE_ICON from 'public/assets/vector-icons/cross-circle.svg'
 import { CouponType } from '@/models/candyMachine/candyMachineCoupon'
 import { useCandyMachineStore } from '@/providers/CandyMachineStoreProvider'
 import { getCouponDiscount } from '@/utils/mint'
@@ -13,6 +11,7 @@ import { ConnectButton } from '../buttons/ConnectButton'
 import Link from 'next/link'
 import { Text } from '@/components/ui'
 import { withRedirect } from '@/lib/utils'
+import { CheckCircle2Icon, CircleX } from 'lucide-react'
 
 export const CouponDescriptionDialog: React.FC<CommonDialogProps & { comicIssue: ComicIssue }> = ({
   open,
@@ -55,7 +54,13 @@ export const CouponDescriptionDialog: React.FC<CommonDialogProps & { comicIssue:
             const isEligible = coupon.stats.isEligible
             return (
               <div className='rounded-xl bg-grey-500 p-4 gap-4 flex max-w-[437px]' key={index}>
-                <div className='size-5'>{isEligible ? <CHECK_CIRCLE_ICON /> : <CROSS_CIRCLE_ICON />}</div>
+                <div className='size-5'>
+                  {isEligible ? (
+                    <CheckCircle2Icon className='size-5 text-green-500' />
+                  ) : (
+                    <CircleX className='size-5 text-red-500' />
+                  )}
+                </div>
                 <div className='inline-block gap-2 w-full max-w-[369px]'>
                   <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
                     {coupon.name} {discount ? `-${discount}% off` : null}

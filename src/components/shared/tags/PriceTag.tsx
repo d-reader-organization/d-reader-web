@@ -1,5 +1,3 @@
-import SolanaIcon from 'public/assets/vector-icons/solana-icon.svg'
-import SolanaColoredIcon from 'public/assets/vector-icons/solana-colored-icon.svg'
 import { formatPrice } from '@/utils/helpers'
 import { isNil } from 'lodash'
 import { roundNumber } from '@/utils/numbers'
@@ -8,6 +6,8 @@ import clsx from 'clsx'
 import React from 'react'
 import { TextProps } from '../../ui'
 import { cn } from '@/lib/utils'
+import { SolanaIcon } from '@/components/icons/SolanaIcon'
+import { SolanaColoredIcon } from '@/components/icons/SolanaColoredIcon'
 
 interface Props extends Partial<TextProps> {
   price?: number | null

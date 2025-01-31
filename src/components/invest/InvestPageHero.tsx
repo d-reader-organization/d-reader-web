@@ -2,12 +2,12 @@
 
 import React from 'react'
 import { Text } from '../ui'
-import GenesisHeroFooter from 'public/assets/vector-icons/genesis-hero-footer.svg'
 import { PlayIcon } from 'lucide-react'
 import { YoutubeVideoDialog } from '../shared/dialogs/YoutubeVideoDialog'
 import { useToggle } from '@/hooks'
 import InvestHeroCta from 'public/assets/images/invest/invest-cta.jpg'
 import Image from 'next/image'
+import { GenesisHeroFooterIcon } from '../icons/genesis/HeroFooterIcon'
 
 export const InvestPageHero: React.FC = () => {
   const [showVideoDialog, toggleVideoDialog] = useToggle()
@@ -25,7 +25,7 @@ export const InvestPageHero: React.FC = () => {
         </Text>
       </div>
       <div className='relative w-full bg-grey-600'>
-        <GenesisHeroFooter className='absolute min-w-full fill-green-genesis' />
+        <GenesisHeroFooterIcon className='absolute min-w-full fill-green-genesis' />
         <Image
           alt=''
           src={InvestHeroCta}

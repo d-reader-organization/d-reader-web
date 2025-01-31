@@ -2,14 +2,14 @@ import React from 'react'
 import { Text } from '../ui'
 import Link from 'next/link'
 import { Divider } from '../shared/Divider'
-import DReaderSymbol from 'public/assets/vector-icons/logo-symbol.svg'
 import { RoutePath } from '@/enums/routePath'
 import { LINK } from '@/constants/general'
-import GooglePlayIcon from 'public/assets/vector-icons/footer/google.svg'
-import AppStoreIcon from 'public/assets/vector-icons/footer/app-store.svg'
 import { SoonTag } from '../shared/Tags'
 import { cn } from '@/lib/utils'
 import { ESSENTIAL_LINKS, MAIN_LINKS, NavigationLink, SOCIAL_LINKS } from '@/constants/navigationLinks'
+import { LogoSymbolIcon } from '../icons/logo/LogoSymbolIcon'
+import { GooglePlayIcon } from '../icons/platform/GooglePlayIcon'
+import { AppStoreIcon } from '../icons/platform/AppStoreIcon'
 
 export const Footer: React.FC = () => (
   <div className='bg-black min-h-[220px] h-full flex justify-center items-center'>
@@ -22,7 +22,7 @@ export const Footer: React.FC = () => (
       </div>
       <Divider className='md:mt-8 bg-grey-400' />
       <div className='flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 md:gap-16'>
-        <DReaderSymbol className='text-grey-200' />
+        <LogoSymbolIcon className='text-grey-200' />
         <Text as='span' className='text-grey-200' styleVariant='body-normal'>
           &#169; Decentralized Reader, ltd
         </Text>

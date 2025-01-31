@@ -1,11 +1,11 @@
 'use client'
 
-import UserPlusIcon from 'public/assets/vector-icons/user-plus-icon.svg'
 import { Text } from '@/components/ui/Text'
 import { useRouter } from 'next/navigation'
 import { followCreator } from '@/app/lib/api/creator/mutations'
 import { cn } from '@/lib/utils'
 import { RequireAuthWrapperButton } from './RequireAuthWrapperButton'
+import { UserPlusIcon } from 'lucide-react'
 
 type Props = React.HTMLAttributes<HTMLButtonElement> & {
   isFollowing?: boolean
@@ -27,7 +27,7 @@ export const FollowCreatorButton: React.FC<Props> = ({ isFollowing = false, crea
       variant={isFollowing ? 'outline' : 'white'}
       onClick={handleFollow}
     >
-      <UserPlusIcon className='w-[18px]' />
+      <UserPlusIcon className='w-5' />
       <Text as='span' styleVariant='body-small' fontWeight='bold' className='max-sm:text-xs'>
         {isFollowing ? 'Unfollow' : 'Follow'}
       </Text>

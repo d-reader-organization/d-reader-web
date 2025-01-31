@@ -1,9 +1,9 @@
-import LogoWithTextIcon from 'public/assets/vector-icons/logo-with-text.svg'
 import { RoutePath } from '@/enums/routePath'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { verifyUserEmail } from '@/app/lib/api/user/mutations'
 import { ArrowRight } from 'lucide-react'
 import { Text } from '@/components/ui'
+import { LogoWithTextIcon } from '@/components/icons/logo/LogoWithTextIcon'
 
 type Params = {
   verificationToken: string

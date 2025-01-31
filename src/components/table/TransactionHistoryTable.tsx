@@ -4,23 +4,22 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import { ChevronDown, Copy, ListFilter, Search, Settings2, Upload, X } from 'lucide-react'
+import { ChevronDown, Copy, ListFilter, LoaderCircle, Search, Settings2, Upload, X } from 'lucide-react'
 import React, { useState, useEffect, useCallback } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
-import SolanaIcon from 'public/assets/vector-icons/solana-icon.svg'
 import { TransactionSourceChip } from '../shared/chips/TransactionSource'
 import { formatDistanceToNow } from 'date-fns'
 import { toast } from '../ui/toast'
 import { shortenString, sleep } from '@/utils/helpers'
 import { ProductTypeChip } from '../shared/chips/ProductType'
 import { useDebouncedCallback } from 'use-debounce'
-import LoadingSpinner from 'public/assets/vector-icons/loading-spinner.svg'
 import { cn } from '@/lib/utils'
 import { useRerender } from '@/hooks/useRerender'
 import { transactions } from '@/constants/dummyData'
 import { downloadTransactionsReportCSV } from '@/utils/csv'
 import { usePaginationControls } from '@/hooks/usePaginationControls'
+import { SolanaIcon } from '../icons/SolanaIcon'
 // import { TransactionHistoryItem } from '@/models/transaction/transactionHistory'
 
 // TODO: prepare API endpoints params (filter, sort, and pagination)
@@ -85,7 +84,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
               className='pl-10 max-w-sm'
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <LoadingSpinner
+            <LoaderCircle
               className={cn('size-[18px] animate-spin absolute top-3 right-3 text-grey-200', isLoading ? '' : 'hidden')}
             />
           </div>

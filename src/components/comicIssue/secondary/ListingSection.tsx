@@ -14,12 +14,11 @@ import { versionedTransactionFromBs64 } from '@/utils/transactions'
 import { Loader } from '../../shared/Loader'
 import { ConnectButton } from '../../shared/buttons/ConnectButton'
 import Link from 'next/link'
-import { ExternalLink } from 'lucide-react'
+import { CheckCircle2, ExternalLink } from 'lucide-react'
 import { InstantBuyParams } from '@/models/transaction/instantBuy'
 import { Button, Text, toast } from '../../ui'
 import { PLACEHOLDER_AVATAR, SOLANA_EXPLORER_BASE_LINK } from '@/constants/general'
 import { useState } from 'react'
-import CHECK_CIRCLE from 'public/assets/vector-icons/check-circle.svg'
 import { RarityChip } from '@/components/shared/chips/RarityChip'
 import { SignedTraitChip } from '@/components/shared/chips/SignedTraitChip'
 import { UsedTraitChip } from '@/components/shared/chips/UsedTraitChip'
@@ -222,7 +221,7 @@ const ListedAssetRow: React.FC<{
       </TableCell>
       <TableCell className='flex py-1 justify-end'>
         {isSelected ? (
-          <CHECK_CIRCLE />
+          <CheckCircle2 className='size-5 text-green-500' />
         ) : (
           <Text as='p' styleVariant='body-small' fontWeight='medium'>
             {format(listing.createdAt, 'dd MMM yyyy')}

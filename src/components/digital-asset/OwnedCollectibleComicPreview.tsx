@@ -21,10 +21,10 @@ import { Button } from '../ui'
 import { useToggle } from '@/hooks'
 import { requestAutograph } from '@/app/lib/api/asset/mutations'
 import { Loader } from '../shared/Loader'
-import SignedIcon from 'public/assets/vector-icons/signed-icon.svg'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 import { CollectibleComic } from '@/models/asset'
+import { SignedIcon } from '../icons/digital-asset/SignedIcon'
 
 type Props = {
   collectibleComic: CollectibleComic

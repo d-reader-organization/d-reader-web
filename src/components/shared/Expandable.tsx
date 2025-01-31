@@ -2,13 +2,12 @@
 
 import React, { DetailedHTMLProps, HTMLAttributes, useCallback, useEffect, useState } from 'react'
 import clsx from 'clsx'
-
-import ChevronDownIcon from 'public/assets/vector-icons/chevron-down.svg'
 import useEventListener from '@/hooks/useEventListener'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { TokenDetail } from '@/utils/mint'
 import { useCountdown } from '@/hooks/useCountdown'
+import { ChevronDown } from 'lucide-react'
 
 interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string
@@ -60,7 +59,7 @@ export const Expandable: React.FC<Props> = ({
       >
         {titleComponent ?? title}
         {hideArrow ? null : (
-          <ChevronDownIcon
+          <ChevronDown
             className={clsx('w-6 h-6 text-white transition transform duration-150 ease-in-out', {
               'transform -rotate-180': isExpanded,
             })}
@@ -147,7 +146,7 @@ export const CurrencyExpandable: React.FC<CurrencyExpandableProps> = ({
               className='w-6 h-6'
             />
             {disableExpand ? null : (
-              <ChevronDownIcon
+              <ChevronDown
                 className={clsx('transition transform duration-150 ease-in-out', {
                   'transform -rotate-180': isExpanded,
                 })}

@@ -4,13 +4,13 @@ import { Text } from '@/components/ui'
 import { MoveLeft } from 'lucide-react'
 import { IconLink } from '@/components/shared/IconLink'
 import { BaseLayout } from '@/components/layout/BaseLayout'
-import DiscordIcon from 'public/assets/vector-icons/discord-icon.svg'
-import TwitterIcon from 'public/assets/vector-icons/twitter-icon.svg'
-import InstagramIcon from 'public/assets/vector-icons/instagram-icon.svg'
-import MailIconInverse from 'public/assets/vector-icons/mail-icon-inverse.svg'
 import { LINK, SUPPORT_EMAIL } from '@/constants/general'
 import BunBunUnderConstruction from 'public/assets/images/site-under-construction.png'
 import { RoutePath } from '@/enums/routePath'
+import { DiscordIcon } from '../icons/social/DiscordIcon'
+import { InstagramIcon } from '../icons/social/InstagramIcon'
+import { TwitterIcon } from '../icons/social/TwitterIcon'
+import { MailInverseIcon } from '../icons/social/MailInverseIcon'
 
 export default function UnderConstruction() {
   return (
@@ -52,10 +52,10 @@ export default function UnderConstruction() {
           <IconLink
             className='bg-grey-500 rounded-lg sm:rounded-xl gap-2'
             href={LINK.MAIL_TO_SUPPORT}
-            Icon={MailIconInverse}
+            Icon={MailInverseIcon}
             blank
           >
-            <MailIconInverse className='w-[16.67px]' />
+            <MailInverseIcon className='w-[16.67px]' />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='max-sm:text-xs'>
               {SUPPORT_EMAIL}
             </Text>

@@ -3,8 +3,6 @@
 import React from 'react'
 import { RoutePath } from '@/enums/routePath'
 import { usePathname } from 'next/navigation'
-import DReaderLogo from 'public/assets/vector-icons/full-logo.svg'
-import ChevronDownIcon from 'public/assets/vector-icons/chevron-down.svg'
 import { Button } from '../ui'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -17,6 +15,8 @@ import { NavItemLink } from './NavItemLink'
 import { GenesisNavigation } from './GenesisNavigation'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { useWallet } from '@solana/wallet-adapter-react'
+import { ChevronDown } from 'lucide-react'
+import { LogoWithTextIcon } from '../icons/logo/LogoWithTextIcon'
 
 type Props = {
   me: User | null
@@ -46,7 +46,7 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
         <div className='flex items-center justify-between p-4 max-w-screen-xl w-full'>
           <div className='flex items-center gap-8'>
             <Link href={RoutePath.Home} prefetch={false}>
-              <DReaderLogo className='h-8 min-w-fit fill-white ml-2' />
+              <LogoWithTextIcon className='h-8 min-w-fit fill-white ml-2' />
             </Link>
             {!hideSearch && <SearchInput />}
             <div className='flex items-center gap-10'>
@@ -84,7 +84,7 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
                     height={28}
                     className='size-7 object-cover rounded-full border border-black'
                   />
-                  <ChevronDownIcon className='w-6 h-6 text-grey-100' />
+                  <ChevronDown className='w-6 h-6 text-grey-100' />
                 </div>
               </button>
             </div>

@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react'
-import Logo from 'public/assets/vector-icons/logo.svg'
+import { LogoSymbolIcon } from '../icons/logo/LogoSymbolIcon'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   image: string
@@ -29,7 +29,13 @@ export const MetadataImageBase: React.FC<Props> = ({ image, logo, children, ...p
     />
     {children}
     {logo && (
-      <Logo fill='white' color='white' width='41' height='40' style={{ position: 'absolute', bottom: 60, right: 60 }} />
+      <LogoSymbolIcon
+        fill='white'
+        color='white'
+        width='41'
+        height='40'
+        style={{ position: 'absolute', bottom: 60, right: 60 }}
+      />
     )}
   </div>
 )

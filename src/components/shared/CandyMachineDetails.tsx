@@ -4,13 +4,12 @@ import { CandyMachine } from '@/models/candyMachine'
 import React from 'react'
 import { ProgressBar } from './ProgressBar'
 import { CurrencyExpandable, Expandable } from './Expandable'
-import LockIcon from 'public/assets/vector-icons/lock.svg'
 import { MintButton } from './buttons/MintButton'
 import { ComicIssue } from '@/models/comicIssue'
 import { CouponCurrencySetting } from '@/models/candyMachine/candyMachineCoupon'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { MinusIcon, PlusIcon } from 'lucide-react'
+import { LockKeyholeIcon, MinusIcon, PlusIcon } from 'lucide-react'
 import { Skeleton } from '../ui/Skeleton'
 import { checkIfCouponIsActive, getTokenMap, getTotalItemsMintedByUser, TokenDetail } from '@/utils/mint'
 import { Divider } from './Divider'
@@ -166,7 +165,7 @@ const ComicVault: React.FC = () => (
     title='Comic Vault'
     titleComponent={
       <div className='flex gap-2 items-center text-sm sm:text-base font-medium leading-5 text-grey-100'>
-        <LockIcon className='size-4' />
+        <LockKeyholeIcon className='size-4' />
         <span className='text-base font-medium leading-[22.4px] text-grey-100'>Comic Vault</span>
       </div>
     }

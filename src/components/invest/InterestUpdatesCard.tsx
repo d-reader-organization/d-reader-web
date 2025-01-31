@@ -3,11 +3,11 @@
 import { formatDate } from 'date-fns'
 import { Text } from '../ui'
 import { Divider } from '../shared/Divider'
-import ACTIVITY_ICON from 'public/assets/vector-icons/activity-icon.svg'
 import { UserInterestedReceipt } from '@/models/project'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import clsx from 'clsx'
 import Image from 'next/image'
+import { ActivityIcon } from 'lucide-react'
 
 type Props = {
   receipts: UserInterestedReceipt[]
@@ -27,7 +27,7 @@ export const InterestUpdatesCard: React.FC<Props> = ({ className, receipts }) =>
           <Text as='h5' styleVariant='primary-heading' className='text-20'>
             Campaign Activity
           </Text>
-          <ACTIVITY_ICON />
+          <ActivityIcon />
         </div>
         <div className='bg-grey-300 overflow-y-auto max-h-[362px]'>
           <div className='flex flex-col gap-6 p-6 pl-4 pr-2 bg-grey-500'>

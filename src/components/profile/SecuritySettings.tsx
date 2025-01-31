@@ -1,9 +1,9 @@
 import React from 'react'
 import { UpdatePasswordForm } from '../form/UpdatePasswordForm'
 import { Text } from '../ui'
-import LockIcon from 'public/assets/vector-icons/filled-lock-icon.svg'
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { ResetPasswordButton } from '../shared/buttons/ResetPasswordButton'
+import { LockKeyholeIcon } from 'lucide-react'
 
 export const SecuritySettings: React.FC = async () => {
   const me = await fetchMe()
@@ -25,7 +25,7 @@ export const SecuritySettings: React.FC = async () => {
 
       <div className='flex items-start border border-grey-300 p-5 rounded-xl gap-7 max-w-[607px]'>
         <div className='border border-grey-300 p-4 rounded-lg'>
-          <LockIcon className='text-white' />
+          <LockKeyholeIcon className='size-5 text-white' />
         </div>
 
         <div className='flex flex-col gap-1'>

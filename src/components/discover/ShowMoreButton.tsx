@@ -1,9 +1,8 @@
 'use client'
 
 import { Text } from '../ui'
-import LoadingSpinner from 'public/assets/vector-icons/loading-spinner.svg'
-import ChevronDownIcon from 'public/assets/vector-icons/chevron-down.svg'
 import { pluralizeString } from '@/utils/helpers'
+import { ChevronDown, LoaderCircle } from 'lucide-react'
 
 type Props = {
   isFetching: boolean
@@ -24,7 +23,7 @@ export const ShowMoreButton: React.FC<Props> = ({ isFetching, hasNextPage, onCli
   return (
     <>
       {isFetching ? (
-        <LoadingSpinner className='size-6 animate-spin sm:size-8' />
+        <LoaderCircle className='size-6 animate-spin sm:size-8' />
       ) : (
         <button
           onClick={onClick}
@@ -33,7 +32,7 @@ export const ShowMoreButton: React.FC<Props> = ({ isFetching, hasNextPage, onCli
           <Text as='span' styleVariant='body-normal' fontWeight='bold' className='max-md:text-sm'>
             Show more
           </Text>
-          <ChevronDownIcon className='w-4 h-4 md:w-6 md:h-6' />
+          <ChevronDown className='w-4 h-4 md:w-6 md:h-6' />
         </button>
       )}
     </>

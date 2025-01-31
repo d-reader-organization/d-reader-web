@@ -3,9 +3,9 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
-import AnnouncementIcon from 'public/assets/vector-icons/announcement.svg'
 import { cn } from '@/lib/utils'
 import { SectionSlider } from '../shared/SectionSlider'
+import { AnnouncementIcon } from '../icons/AnnouncementIcon'
 
 type Props = {
   data: InterestProject[]

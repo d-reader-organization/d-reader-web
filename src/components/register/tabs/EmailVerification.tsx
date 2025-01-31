@@ -1,11 +1,11 @@
 import React from 'react'
 import { Text } from '../../ui/Text'
-import MailIcon from 'public/assets/vector-icons/mail-icon.svg'
 import { Button } from '../../ui/Button'
 import { ButtonLink } from '../../ui/ButtonLink'
 import { toast } from '../../ui/toast'
 import { RoutePath } from '@/enums/routePath'
 import { requestUserEmailVerification } from '@/app/lib/api/user/mutations'
+import { Mail } from 'lucide-react'
 
 type Props = {
   redirectTo: string | null
@@ -14,7 +14,7 @@ type Props = {
 export const EmailVerificationContent: React.FC<Props> = ({ redirectTo }) => (
   <main className='container flex flex-col items-center max-w-md mb-8'>
     <Text as='h2' styleVariant='primary-heading' className='flex items-center text-center my-4 sm:my-8'>
-      <MailIcon className='h-auto w-12 md:w-14 mr-2' />
+      <Mail className='h-auto w-12 mr-2' />
       Check your mail
     </Text>
     <Text as='p' styleVariant='body-normal' className='text-center'>

@@ -2,9 +2,6 @@
 
 import React from 'react'
 import { RoutePath } from '@/enums/routePath'
-import GenesisLogo from 'public/assets/vector-icons/genesis-logo.svg'
-import DReaderLogo from 'public/assets/vector-icons/full-logo.svg'
-import ChevronDownIcon from 'public/assets/vector-icons/chevron-down.svg'
 import { Button } from '../ui'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -12,9 +9,11 @@ import Image from 'next/image'
 import { MobileNav } from './MobileNavigation'
 import { ProfileSheet } from '../shared/sheets/profile/ProfileSheet'
 import { User } from '@/models/user'
-import { MoveLeft } from 'lucide-react'
+import { ChevronDown, MoveLeft } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
+import { GenesisLogoIcon } from '../icons/logo/GenesisLogoIcon'
+import { LogoWithTextIcon } from '../icons/logo/LogoWithTextIcon'
 
 type Props = {
   me: User | null
@@ -38,7 +37,7 @@ export const GenesisNavigation: React.FC<Props> = ({ me }) => {
       >
         <div className='flex items-center justify-between p-4 max-w-screen-xl w-full'>
           <Link href={RoutePath.Invest}>
-            <GenesisLogo className='h-8 min-w-fit fill-white ml-4' />
+            <GenesisLogoIcon className='h-8 min-w-fit fill-white ml-4' />
           </Link>
           <div className='flex items-center gap-2'>
             <Link
@@ -47,7 +46,7 @@ export const GenesisNavigation: React.FC<Props> = ({ me }) => {
               prefetch={false}
             >
               <MoveLeft size={16} />
-              <DReaderLogo className='h-6 min-w-fit fill-white ml-4' />
+              <LogoWithTextIcon className='h-6 min-w-fit fill-white ml-4' />
             </Link>
             {me ? (
               <button
@@ -62,7 +61,7 @@ export const GenesisNavigation: React.FC<Props> = ({ me }) => {
                     height={28}
                     className='size-7 object-cover rounded-full border border-black'
                   />
-                  <ChevronDownIcon className='text-grey-100 w-6 h-6' />
+                  <ChevronDown className='text-grey-100 w-6 h-6' />
                 </div>
               </button>
             ) : (
