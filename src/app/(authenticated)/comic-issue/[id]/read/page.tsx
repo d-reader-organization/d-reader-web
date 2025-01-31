@@ -3,11 +3,11 @@ import { fetchComicIssue, fetchComicIssuePages } from '@/app/lib/api/comicIssue/
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { getAccessToken } from '@/app/lib/utils/auth'
 import { ComicIssuePages } from '@/components/comicIssue/Pages'
+import { PreviewPagesBackgroundIcon } from '@/components/icons/PreviewPagesBackgroundIcon'
 import { EReaderNavigation } from '@/components/layout/EReaderNavigation'
 import { ReadMoreButton } from '@/components/shared/buttons/ReadMoreButton'
 import { UnwrapIssueDialog } from '@/components/shared/dialogs/UnwrapIssueDialog'
 import { ComicIssuePageParams } from '@/models/common'
-import PreviewPagesIcon from 'public/assets/vector-icons/preview-pages-icon.svg'
 import React from 'react'
 
 export default async function ReadComicIssuePage(props: ComicIssuePageParams) {
@@ -32,7 +32,7 @@ export default async function ReadComicIssuePage(props: ComicIssuePageParams) {
         <ComicIssuePages pages={pages} />
         {(!comicIssue.myStats?.canRead || !comicIssue.isFullyUploaded) && (
           <div className='rounded-2xl relative m-4 w-full border-2 border-grey-300 p-4 min-h-80'>
-            <PreviewPagesIcon className='w-full h-auto brightness-50' />
+            <PreviewPagesBackgroundIcon className='w-full h-auto brightness-50' />
             <div className='flex flex-col gap-2 absolute text-center p-4 top-1/2 left-1/2 w-full max-w-[380px] transform -translate-x-1/2 -translate-y-1/2'>
               {!me && <ReadMoreButton />}
               {!!me && !comicIssue.myStats?.canRead && (
@@ -43,12 +43,8 @@ export default async function ReadComicIssuePage(props: ComicIssuePageParams) {
                   </p>
                 </>
               )}
-              {!!me && (
-                <UnwrapIssueDialog
-                  collectibleComics={collectibleComics}
-                  showUnwrapButton={hasUnusedCollectibleComics && !comicIssue.myStats?.canRead}
-                />
-              )}
+              <UnwrapIssueDialog collectibleComics={collectibleComics} showUnwrapButton />
+              {!!me && <UnwrapIssueDialog collectibleComics={collectibleComics} showUnwrapButton />}
               {!comicIssue.isFullyUploaded && (
                 <p className='preview-message-text'>
                   This comic is not yet fully uploaded. New chapters/pages might be added weekly.

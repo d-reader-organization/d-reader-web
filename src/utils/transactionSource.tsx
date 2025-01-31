@@ -1,6 +1,6 @@
-import SaleIcon from 'public/assets/vector-icons/sale-icon.svg'
-import RoyaltyIcon from 'public/assets/vector-icons/royalty-icon.svg'
 import { TransactionSource } from '@/enums/transactionSource'
+import { SaleIcon } from '@/components/icons/SaleIcon'
+import { RoyaltyIcon } from '@/components/icons/RoyaltyIcon'
 
 export const getTransactionSourceIcon = (source: TransactionSource) => {
   switch (source) {

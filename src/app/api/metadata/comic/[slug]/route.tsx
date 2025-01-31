@@ -8,7 +8,7 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
   const comic = await fetchComic({ slug: params.slug })
 
   if (!comic) return generateMetadataImage(<FallbackMetadataImage />)
-
+  console.log(`return here`)
   return generateMetadataImage(
     <DefaultMetadataImage
       title={comic.title}

@@ -1,4 +1,3 @@
-import SunIcon from 'public/assets/vector-icons/sun.svg'
 import { MetadataImageBase } from './MetadataImageBase'
 
 const textStyles: React.CSSProperties = {
@@ -74,7 +73,16 @@ export const DefaultMetadataImage: React.FC<Props> = ({
           backdropFilter: 'blur(25px)',
         }}
       >
-        <SunIcon />
+        <svg viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'>
+          <path d='M9.08759 21.6247H14.4937' stroke='black' stroke-width='2.70306' stroke-linecap='round' />
+          <path d='M21.7019 9.0105V14.4166' stroke='black' stroke-width='2.70306' stroke-linecap='round' />
+          <path d='M34.3162 21.6249H28.91' stroke='black' stroke-width='2.70306' stroke-linecap='round' />
+          <path d='M21.7019 34.239V28.8329' stroke='black' stroke-width='2.70306' stroke-linecap='round' />
+          <path d='M12.7819 30.5443L16.6046 26.7216' stroke='black' stroke-width='2.70306' stroke-linecap='round' />
+          <path d='M12.7819 12.7052L16.6046 16.5279' stroke='black' stroke-width='2.70306' stroke-linecap='round' />
+          <path d='M30.622 12.7052L26.7993 16.5279' stroke='black' stroke-width='2.70306' stroke-linecap='round' />
+          <path d='M30.622 30.5443L26.7993 26.7216' stroke='black' stroke-width='2.70306' stroke-linecap='round' />
+        </svg>
         MINTING LIVE
       </p>
     )}

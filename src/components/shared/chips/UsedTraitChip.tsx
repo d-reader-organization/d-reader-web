@@ -1,8 +1,8 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { Text } from '@/components/ui'
-import MintIcon from 'public/assets/vector-icons/mint-icon.svg'
-import UsedIcon from 'public/assets/vector-icons/used-icon.svg'
+import { UsedIcon } from '@/components/icons/digital-asset/UsedIcon'
+import { MintIcon } from '@/components/icons/digital-asset/MintIcon'
 
 type Props = {
   used: boolean

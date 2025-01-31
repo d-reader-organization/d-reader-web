@@ -1,7 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import DReaderSymbol from 'public/assets/vector-icons/logo.svg'
-import GenesisSymbol from 'public/assets/vector-icons/genesis-logo.svg'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
 import { ButtonLink } from '../ui/ButtonLink'
@@ -17,6 +15,8 @@ import { NavConnectButton } from '../shared/buttons/ConnectButton'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { NavItemLink } from './NavItemLink'
 import { ConnectedWalletBox } from '../shared/sheets/profile/WalletSection'
+import { LogoSymbolIcon } from '../icons/logo/LogoSymbolIcon'
+import { GenesisLogoIcon } from '../icons/logo/GenesisLogoIcon'
 
 type Props = {
   user?: User | null
@@ -52,10 +52,10 @@ export const GenesisMobileNavigation: React.FC<Props> = ({ user }) => {
           <>
             <div className={cn('flex justify-between items-center px-4 h-20', isOpen && 'hidden')}>
               <Link href={RoutePath.Home} prefetch={false}>
-                <DReaderSymbol className='size-6 fill-white' />
+                <LogoSymbolIcon className='size-6 fill-white' />
               </Link>
               <Link href={RoutePath.Invest} prefetch={false}>
-                <GenesisSymbol className='size-6 fill-white' />
+                <GenesisLogoIcon className='size-6 fill-white' />
               </Link>
               <button onClick={() => setIsOpen(!isOpen)}>{isOpen ? <X size={24} /> : <Menu size={24} />}</button>
             </div>

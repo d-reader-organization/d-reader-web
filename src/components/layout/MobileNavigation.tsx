@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import DReaderSymbol from 'public/assets/vector-icons/logo.svg'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
 import { ButtonLink } from '../ui/ButtonLink'
@@ -17,6 +16,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { NavItemLink } from './NavItemLink'
 import { ConnectedWalletBox } from '../shared/sheets/profile/WalletSection'
 import { GenesisMobileNavigation } from './GenesisMobileNavigation'
+import { LogoSymbolIcon } from '../icons/logo/LogoSymbolIcon'
 
 type Props = {
   user?: User | null
@@ -59,7 +59,7 @@ export const MobileNav: React.FC<Props> = ({ user }) => {
                 <Search size={24} />
               </button>
               <Link href={RoutePath.Home} prefetch={false}>
-                <DReaderSymbol className='size-6 fill-white' />
+                <LogoSymbolIcon className='size-[22px] fill-white' />
               </Link>
               <button onClick={() => setIsOpen(!isOpen)}>{isOpen ? <X size={24} /> : <Menu size={24} />}</button>
             </div>

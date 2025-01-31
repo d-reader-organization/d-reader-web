@@ -5,8 +5,6 @@ import useToggle from '@/hooks/useToggle'
 import React from 'react'
 import { useHandleUnwrap } from '@/hooks/useHandleUnwrap'
 import { getRarityIcon } from '@/utils/rarity'
-import MintIcon from 'public/assets/vector-icons/mint-icon.svg'
-import SignedIcon from 'public/assets/vector-icons/signed-icon.svg'
 import { Loader } from '../shared/Loader'
 import { UnwrapWarningDialog } from '../shared/dialogs/UnwrapWarningDialog'
 import { cn } from '@/lib/utils'
@@ -15,6 +13,8 @@ import { UnwrapButtonListItem } from '../shared/buttons/UnwrapButtonListItem'
 import { LOCAL_STORAGE } from '@/constants/general'
 import { Button } from '../ui/Button'
 import { CollectibleComic } from '@/models/asset'
+import { MintIcon } from '../icons/digital-asset/MintIcon'
+import { SignedIcon } from '../icons/digital-asset/SignedIcon'
 
 type Props = { collectibleComic: CollectibleComic; closeDialog: VoidFunction }
 

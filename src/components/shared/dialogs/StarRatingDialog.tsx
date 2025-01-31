@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/Dialog'
-import { StarIcon } from '../icons/StarIcon'
+import { StarIconButton } from '../buttons/StarIconButton'
 import { Button, toast } from '@/components/ui'
 import { useRouter } from 'next/navigation'
 import { rateComic } from '@/app/lib/api/comic/mutations'
@@ -59,7 +59,7 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
           Tap a star to give a rating!
           <div className='mt-4 flex gap-3 [&>*]:text-yellow-300'>
             {[1, 2, 3, 4, 5].map((star) => (
-              <StarIcon
+              <StarIconButton
                 style={{ cursor: 'pointer' }}
                 size='xl'
                 key={star}

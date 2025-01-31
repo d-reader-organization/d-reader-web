@@ -1,5 +1,5 @@
-import ComicProductIcon from 'public/assets/vector-icons/comic-product-icon.svg'
-import DigitalArtIcon from 'public/assets/vector-icons/digital-art-icon.svg'
+import { ComicProductIcon } from '@/components/icons/ComicProductIcon'
+import { DigitalArtIcon } from '@/components/icons/DigitalArtIcon'
 import { ProductType } from '@/enums/productType'
 
 export const getProductTypeIcon = (source: ProductType) => {

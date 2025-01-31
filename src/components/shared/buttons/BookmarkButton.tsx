@@ -5,7 +5,7 @@ import { bookmarkComic } from '@/app/lib/api/comic/mutations'
 import { RequireAuthWrapperButton } from './RequireAuthWrapperButton'
 import { Text } from '@/components/ui'
 import { cn } from '@/lib/utils'
-import BookmarkIcon from 'public/assets/vector-icons/bookmark.svg'
+import { BookmarkIcon } from '@/components/icons/BookmarkIcon'
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   comicSlug: string

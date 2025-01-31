@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils'
 import { Text } from '@/components/ui'
 import React from 'react'
-import MintIcon from 'public/assets/vector-icons/mint-icon.svg'
-import UsedIcon from 'public/assets/vector-icons/used-icon.svg'
-import SignedIcon from 'public/assets/vector-icons/signed-icon.svg'
+import { MintIcon } from '@/components/icons/digital-asset/MintIcon'
+import { SignedIcon } from '@/components/icons/digital-asset/SignedIcon'
+import { UsedIcon } from '@/components/icons/digital-asset/UsedIcon'
 
 type Props = {
   state: 'mint' | 'signed' | 'used'

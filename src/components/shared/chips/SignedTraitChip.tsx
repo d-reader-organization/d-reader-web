@@ -1,8 +1,8 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { Text } from '@/components/ui'
-import SignedIcon from 'public/assets/vector-icons/signed-icon.svg'
-import UnsignedIcon from 'public/assets/vector-icons/unsigned-icon.svg'
+import { SignedIcon } from '@/components/icons/digital-asset/SignedIcon'
+import { UnsignedIcon } from '@/components/icons/digital-asset/UnsignedIcon'
 
 type Props = {
   signed: boolean

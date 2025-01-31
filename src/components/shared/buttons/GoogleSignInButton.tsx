@@ -1,9 +1,9 @@
 'use client'
 
 import { Button } from '../../ui/Button'
-import GoogleLogoIcon from 'public/assets/vector-icons/google-logo.svg'
 import { signIn } from 'next-auth/react'
 import { Text } from '@/components/ui/Text'
+import { GoogleLogoIcon } from '@/components/icons/platform/GoogleLogoIcon'
 
 type Props = {
   buttonText?: string

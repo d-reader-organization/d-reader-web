@@ -7,6 +7,10 @@ import { BaseLayout } from '@/components/layout/BaseLayout'
 import { ComicSectionSlider } from '@/components/comic/Slider'
 import { fetchLaunchpads } from './lib/api/candyMachine/queries'
 import { LaunchpadSectionSlider } from '@/components/comicIssue/LaunchpadSectionSlider'
+import { PriceTag } from '@/components/shared/tags/PriceTag'
+import { SolanaIcon } from '@/components/icons/SolanaIcon'
+import { getProductTypeIcon } from '@/utils/productType'
+import { ProductType } from '@/enums/productType'
 
 const TAKE_COMICS = 18
 const TAKE_TOP_PICKS = 10
@@ -27,9 +31,31 @@ export default async function HomePage() {
       <div className='w-full flex flex-col items-center gap-10 px-2 sm:px-4 max-w-screen-md md:max-w-screen-xl'>
         <div className='flex flex-col gap-8 w-full max-sm:px-2 py-4 md:py-6 lg:py-8'>
           <div className='flex flex-col'>
+            <div className='flex flex-wrap w-2.5 h-auto mr-2'>{getProductTypeIcon(ProductType.Comic)}</div>
+            <div className='flex flex-wrap w-2.5 h-auto mr-2'>{getProductTypeIcon(ProductType.DigitalArt)}</div>
+            <SolanaIcon className='w-4 h-auto' />
+            <PriceTag
+              styleVariant='body-small'
+              fontWeight='bold'
+              inline={false}
+              icon
+              price={500000000000}
+              className='max-sm:text-xs'
+              size='medium'
+            />
+            <PriceTag
+              styleVariant='body-small'
+              fontWeight='bold'
+              inline={false}
+              colorfulIcon
+              price={500000000000}
+              className='max-sm:text-xs'
+              size='medium'
+            />
             <h1 className='text-32 md:text-64 lg:text-[120px] text-white md:text-grey-400 font-obviouslyNarrow font-semibold leading-1/2 tracking-024 uppercase relative top-8 md:top-[66px] lg:top-[68px] w-fit'>
               Top 10 picks
             </h1>
+
             <ComicSectionSlider cardType='large' comics={topPickComics} title='' />
           </div>
           <ComicSectionSlider cardType='default' comics={popularComics} title='Featured Comic Series' />

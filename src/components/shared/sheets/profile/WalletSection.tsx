@@ -6,8 +6,8 @@ import { toast } from '@/components/ui/toast/use-toast'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { ConnectButton } from '../../buttons/ConnectButton'
 import { shortenSolanaAddress } from '@/utils/helpers'
-import ConnectWalletIcons from 'public/assets/vector-icons/connect-wallet-sidebar.svg'
 import { ButtonIconWrapper } from '../../buttons/IconWrapper'
+import { WalletsIcon } from '@/components/icons/WalletsIcon'
 
 export const WalletSection: React.FC = () => {
   const { publicKey } = useWallet()
@@ -20,7 +20,7 @@ export const WalletSection: React.FC = () => {
         <span className='font-bold'>Quick connect&nbsp;</span>
         <span>your wallet.</span>
       </div>
-      <ConnectWalletIcons />
+      <WalletsIcon />
       <ConnectButton />
     </div>
   )

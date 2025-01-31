@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import ChevronRight from 'public/assets/vector-icons/chevron-right.svg'
 import { cn } from '@/lib/utils'
+import { ChevronRight } from 'lucide-react'
 
 type ArrowOrientation = 'TOP' | 'RIGHT' | 'BOTTOM' | 'LEFT'
 
@@ -27,7 +27,7 @@ export const Arrow: React.FC<Props> = ({ arrowOrientation, className, onClick })
       name={`Arrow ${arrowOrientation}`}
       onClick={onClick}
     >
-      <ChevronRight className={orientationClasses[arrowOrientation]} />
+      <ChevronRight className={cn(orientationClasses[arrowOrientation], 'text-grey-100')} />
     </button>
   )
 }

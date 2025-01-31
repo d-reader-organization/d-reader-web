@@ -1,8 +1,8 @@
+import { RarityIcon } from '@/components/icons/rarity/RarityIcon'
 import { Text } from '@/components/ui'
 import { ComicRarity } from '@/enums/comicRarity'
 import { cn } from '@/lib/utils'
 import { getRarityColor } from '@/utils/rarity'
-import RarityIcon from 'public/assets/vector-icons/rarity-icon.svg'
 import React from 'react'
 
 type Props = {
