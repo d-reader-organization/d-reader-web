@@ -8,32 +8,32 @@ import MetricCard from './MetricCard'
 import MetricChart from './MetricChart'
 
 enum ChartsTab {
+  Audience = 'Audience',
   Revenue = 'Revenue',
   Collectors = 'Collectors',
-  Followers = 'Followers',
 }
 
 export const CreatorMetrics: React.FC = () => {
-  const [tab, setTab] = useState<ChartsTab>(ChartsTab.Revenue)
+  const [tab, setTab] = useState<ChartsTab>(ChartsTab.Audience)
 
   return (
-    <div className='w-full max-w-screen-lg'>
-      <div className='w-full max-w-screen-lg space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
+    <div className='w-full'>
+      <div className='w-full space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
         <div className='flex items-center justify-between px-4'>
           <div className='flex gap-1 border-grey-300 border-1 box-border rounded-xl px-1 items-center h-[42px]'>
+            <Button
+              variant={tab === ChartsTab.Audience ? 'secondary' : 'ghost'}
+              onClick={() => setTab(ChartsTab.Audience)}
+              className='h-8 font-bold'
+            >
+              {ChartsTab.Audience}
+            </Button>
             <Button
               variant={tab === ChartsTab.Revenue ? 'secondary' : 'ghost'}
               onClick={() => setTab(ChartsTab.Revenue)}
               className='h-8 font-bold'
             >
               {ChartsTab.Revenue}
-            </Button>
-            <Button
-              variant={tab === ChartsTab.Followers ? 'secondary' : 'ghost'}
-              onClick={() => setTab(ChartsTab.Followers)}
-              className='h-8 font-bold'
-            >
-              {ChartsTab.Followers}
             </Button>
             <Button
               variant={tab === ChartsTab.Collectors ? 'secondary' : 'ghost'}

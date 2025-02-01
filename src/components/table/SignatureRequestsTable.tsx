@@ -35,11 +35,11 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
   console.log('SIGNATURE REQUESTS: ', { skip, take, tab })
 
   return (
-    <div className='w-full max-w-screen-lg'>
-      <Text styleVariant='secondary-heading' as='h3' className='pb-4'>
+    <div className='w-full'>
+      <Text styleVariant='secondary-heading' as='h4' className='pb-4'>
         {title}
       </Text>
-      <div className='w-full max-w-screen-lg space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
+      <div className='w-full space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
         <div className='flex items-center justify-between px-4'>
           <div className='flex gap-1 border-grey-300 border-1 box-border rounded-xl px-1 items-center h-[42px]'>
             <Button

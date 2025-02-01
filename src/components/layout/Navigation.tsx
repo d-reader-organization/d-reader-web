@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { RoutePath } from '@/enums/routePath'
 import { usePathname } from 'next/navigation'
 import { Button } from '../ui'
@@ -24,7 +24,7 @@ type Props = {
 }
 
 export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
-  const [isProfileSheetOpen, setOpenProfileSheet] = React.useState<boolean>(false)
+  const [isProfileSheetOpen, setOpenProfileSheet] = useState(false)
   const pathname = usePathname()
   const isDiscover = pathname.startsWith(RoutePath.Discover)
   const isInvest = pathname.startsWith(RoutePath.Invest)
@@ -33,6 +33,7 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
   const { publicKey } = useWallet()
 
   if (isInvest) return <GenesisNavigation me={me} />
+
   return (
     <>
       <MobileNav user={me} />

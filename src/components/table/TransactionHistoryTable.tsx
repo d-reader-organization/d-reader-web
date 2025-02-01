@@ -63,8 +63,8 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
   }, [])
 
   return (
-    <div className='w-full max-w-screen-lg'>
-      <Text styleVariant='secondary-heading' as='h3' className='pb-4'>
+    <div className='w-full'>
+      <Text styleVariant='secondary-heading' as='h4' className='pb-4'>
         {title}
       </Text>
       <div className='space-y-4 bg-grey-600 text-grey-100 border-2 border-grey-400 py-4 rounded-xl'>

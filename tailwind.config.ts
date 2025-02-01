@@ -12,12 +12,12 @@ const config = {
       },
     },
     screens: {
+      '320': '320px',
+      '660': '660px',
+      '1160': '1160px',
       xs: '0px',
-      320: '320px',
       sm: '580px',
-      660: '660px',
       md: '900px',
-      1160: '1160px',
       lg: '1200px',
       xl: '1536px',
     },
@@ -33,14 +33,10 @@ const config = {
         '1': '1px',
         '2': '2px',
         '3': '3px',
+        '4': '4px',
+        '5': '5px',
       },
       fontSize: {
-        xxs: ['10px', '1.25'],
-        xs: ['12px', '1.25'],
-        sm: ['14px', '1.25'],
-        base: ['16px', '1.4'],
-        lg: ['18px', '1.4'],
-        xl: ['20px', '1.4'],
         '16': '16px',
         '20': '20px',
         '24': '24px',
@@ -48,6 +44,12 @@ const config = {
         '40': '40px',
         '48': '48px',
         '64': '64px',
+        xxs: ['10px', '1.25'],
+        xs: ['12px', '1.25'],
+        sm: ['14px', '1.25'],
+        base: ['16px', '1.4'],
+        lg: ['18px', '1.4'],
+        xl: ['20px', '1.4'],
       },
       letterSpacing: {
         '0096': '0.096px',
@@ -63,68 +65,86 @@ const config = {
       },
       colors: {
         grey: {
-          50: '#ebedf3',
-          100: '#c2c5ce',
-          200: '#777d8c',
-          300: '#414756',
-          400: '#2f333e',
-          500: '#1f222a',
-          600: '#15171c', // main
-          700: '#12141c',
-          900: '#212121',
+          '50': '#ebedf3',
+          '100': '#c2c5ce',
+          '200': '#777d8c',
+          '300': '#414756',
+          '400': '#2f333e',
+          '500': '#1f222a',
+          '600': '#15171c',
+          '700': '#12141c',
+          '900': '#212121',
         },
         green: {
-          100: '#88C169',
-          400: '#5fe1a2',
-          500: '#49c187', // main
-          600: '#34a26d',
+          '100': '#88C169',
+          '400': '#5fe1a2',
+          '500': '#49c187',
+          '600': '#34a26d',
           genesis: '#08CC77',
           accent: '#07BD74',
         },
         yellow: {
-          50: '#FFFCE3',
-          100: '#FFF8B8',
-          200: '#FFF387',
-          300: '#FCEB54', // main
-          400: '#CEC149',
-          500: '#A0963E',
-          600: '#716C32',
-          700: '#434127',
+          '50': '#FFFCE3',
+          '100': '#FFF8B8',
+          '200': '#FFF387',
+          '300': '#FCEB54',
+          '400': '#CEC149',
+          '500': '#A0963E',
+          '600': '#716C32',
+          '700': '#434127',
         },
         orange: {
-          100: '#FFBF78',
-          200: '#FC835D',
-          300: '#E15456',
-          400: '#F2CA63',
-          500: '#e9a860', //main
+          '100': '#FFBF78',
+          '200': '#FC835D',
+          '300': '#E15456',
+          '400': '#F2CA63',
+          '500': '#e9a860',
         },
         red: {
-          100: '#cf5656',
-          500: '#e3635b', // main
+          '100': '#cf5656',
+          '500': '#e3635b',
         },
         blue: {
-          100: '#87C7E4',
-          500: '#3926b4', // main
+          '100': '#87C7E4',
+          '500': '#3926b4',
         },
         purple: {
-          100: '#FFABC4',
-          500: '#8377f2', // main
+          '100': '#FFABC4',
+          '500': '#8377f2',
         },
         pink: {
-          500: '#c413e0', // main
+          '500': '#c413e0',
         },
         'important-color': '#fceb54',
         'text-color': '#fafafa',
         'text-black': '#17191D',
+        // sidebar: {
+        //   DEFAULT: 'hsl(var(--sidebar-background))',
+        //   foreground: 'hsl(var(--sidebar-foreground))',
+        //   primary: 'hsl(var(--sidebar-primary))',
+        //   'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+        //   accent: 'hsl(var(--sidebar-accent))',
+        //   'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+        //   border: 'hsl(var(--sidebar-border))',
+        //   ring: 'hsl(var(--sidebar-ring))',
+        // },
       },
       keyframes: {
         'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
+          from: {
+            height: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+          },
         },
         'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+          to: {
+            height: '0',
+          },
         },
       },
       animation: {
@@ -132,7 +152,7 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       boxShadow: {
-        3: '3px 3px 3px #15171c',
+        '3': '3px 3px 3px #15171c',
         'issue-cover': '6px 6px 0px 0px #000',
       },
       gradientColorStopPositions: {

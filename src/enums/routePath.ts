@@ -32,4 +32,10 @@ export const RoutePath = Object.freeze({
   Payout: (slug: string) => `/invest/payout/${slug}`,
   ExpressInterest: (slug: string) => `/invest/${slug}/express-interest`,
   InvestCheckout: (slug: string) => `/invest/${slug}/check-out`,
+  Dashboard: '/dashboard',
+  DashboardProducts: '/dashboard/products',
+  DashboardPayments: '/dashboard/payments',
+  DashboardProfile: '/dashboard/profile',
+  DashboardHelpCenter: '/dashboard/help-center',
+  DashboardSettings: '/dashboard/settings',
 })
