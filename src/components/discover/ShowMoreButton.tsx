@@ -2,7 +2,8 @@
 
 import { Text } from '../ui'
 import { pluralizeString } from '@/utils/helpers'
-import { ChevronDown, LoaderCircle } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
+import { ChevronDown } from '@/components/icons/theme/ChevronDown'
 
 type Props = {
   isFetching: boolean

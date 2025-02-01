@@ -21,7 +21,7 @@ export const RateButton: React.FC<Props> = ({ comicSlug, comicIssueId, rating, a
   return (
     <>
       <RequireAuthWrapperButton
-        icon={Star}
+        Icon={Star}
         size='md'
         onClick={() => toggleStarRating()}
         variant='outline'

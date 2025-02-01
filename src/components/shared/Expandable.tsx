@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { TokenDetail } from '@/utils/mint'
 import { useCountdown } from '@/hooks/useCountdown'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown } from '@/components/icons/theme/ChevronDown'
 
 interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string

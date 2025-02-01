@@ -9,11 +9,12 @@ import Image from 'next/image'
 import { GenesisMobileNavigation } from './GenesisMobileNavigation'
 import { ProfileSheet } from '../shared/sheets/profile/ProfileSheet'
 import { User } from '@/models/user'
-import { ChevronDown, MoveLeft } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
-import { GenesisLogoIcon } from '../icons/logo/GenesisLogoIcon'
-import { LogoWithTextIcon } from '../icons/logo/LogoWithTextIcon'
+import { GenesisLogoIcon } from '@/components/icons/logo/GenesisLogoIcon'
+import { LogoWithTextIcon } from '@/components/icons/logo/LogoWithTextIcon'
+import { ArrowLeftIcon } from '@/components/icons/theme/ArrowLeftIcon'
+import { ChevronDown } from '@/components/icons/theme/ChevronDown'
 
 type Props = {
   me: User | null
@@ -46,8 +47,8 @@ export const GenesisNavigation: React.FC<Props> = ({ me }) => {
               href={RoutePath.Home}
               prefetch={false}
             >
-              <MoveLeft size={16} />
-              <LogoWithTextIcon className='h-6 min-w-fit fill-white ml-4' />
+              <ArrowLeftIcon className='w-5 h-5' />
+              <LogoWithTextIcon className='h-6 min-w-fit fill-white ml-2' />
             </Link>
             {me ? (
               <button

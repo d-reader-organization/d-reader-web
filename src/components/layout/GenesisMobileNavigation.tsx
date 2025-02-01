@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
 import { ButtonLink } from '../ui/ButtonLink'
-import { Menu, X } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { Sheet, SheetContent, SheetTitle } from '../ui/sheet'
 import { User } from '@/models/user'
 import { ProfileWidget } from '../shared/ProfileWidget'
@@ -16,6 +16,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { NavigationItem } from './NavigationItem'
 import { ConnectedWalletBox } from '../shared/sheets/profile/WalletSection'
 import { GenesisLogoIcon } from '../icons/logo/GenesisLogoIcon'
+import { CloseIcon } from '@/components/icons/theme/CloseIcon'
 
 type Props = {
   user?: User | null
@@ -38,7 +39,9 @@ export const GenesisMobileNavigation: React.FC<Props> = ({ user, background }) =
         <Link href={RoutePath.Invest} prefetch={false}>
           <GenesisLogoIcon className='w-auto h-full fill-white' />
         </Link>
-        <button onClick={() => setIsOpen(!isOpen)}>{isOpen ? <X size={24} /> : <Menu size={24} />}</button>
+        <button onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <CloseIcon className='w-6 h-6' /> : <Menu size={24} />}
+        </button>
       </div>
 
       <div className='md:hidden'>
@@ -50,7 +53,7 @@ export const GenesisMobileNavigation: React.FC<Props> = ({ user, background }) =
                 <div className='flex justify-between w-full'>
                   <NavigationItem activeColor='text-green-genesis' href={RoutePath.Home} title='Home' />
                   <button onClick={() => setIsOpen(false)}>
-                    <X className='size-6 text-grey-100' />
+                    <CloseIcon className='w-6 h-6 text-grey-100' />
                   </button>
                 </div>
                 <NavigationItem

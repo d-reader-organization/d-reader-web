@@ -2,14 +2,14 @@ import { cn } from '@/lib/utils'
 import Link, { type LinkProps } from 'next/link'
 import { buttonVariants } from './Button'
 import { type VariantProps } from 'class-variance-authority'
-import { type LucideIcon } from 'lucide-react'
 import { forwardRef } from 'react'
+import { VariantSvgIconProps } from '@/lib/types'
 
 export interface ButtonLinkProps
   extends LinkProps,
     VariantProps<typeof buttonVariants>,
     Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> {
-  icon?: LucideIcon
+  Icon?: React.FC<VariantSvgIconProps>
   iconOnly?: boolean
 }
 
@@ -23,7 +23,7 @@ export interface ButtonLinkProps
  * @param {1 | 2 | 3} [props.subVariant=1] - The sub-variant of the chosen main variant
  * @param {'sm' | 'md' | 'lg'} [props.size='md'] - The size of the link
  * @param {'left' | 'right'} [props.iconPosition='left'] - The position of the icon relative to the text
- * @param {LucideIcon} [props.icon] - An optional Lucide icon component
+ * @param {Icon} [props.icon] - An optional icon component.
  * @param {boolean} [props.iconOnly] - Whether the link should only display an icon
  * @param {string} props.href - The URL to navigate to when the link is clicked
  *
@@ -38,18 +38,15 @@ export interface ButtonLinkProps
  * @example
  * // With icon
  * import { Mail } from 'lucide-react';
- * <Link href="/contact" icon={Mail}>Contact Us</Link>
+ * <Link href="/contact" Icon={Mail}>Contact Us</Link>
  */
 const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
-  (
-    { className, variant, subVariant, size = 'md', iconPosition, icon: Icon, iconOnly, href, children, ...props },
-    ref
-  ) => {
-    const iconSize = size === 'sm' ? 16 : size === 'md' ? 18 : 20
+  ({ className, variant, subVariant, size = 'md', iconPosition, Icon, iconOnly, href, children, ...props }, ref) => {
+    const iconSize = size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-[18px] h-[18px]' : 'w-5 h-5'
 
     const linkContent = (
       <>
-        {Icon && <Icon size={iconSize} className={cn('shrink-0')} />}
+        {Icon && <Icon className={cn(iconSize, 'shrink-0')} />}
         {!iconOnly && children}
       </>
     )

@@ -13,8 +13,8 @@ import { User } from '@/models/user'
 import { NavigationItem } from './NavigationItem'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { ChevronDown } from 'lucide-react'
-import { LogoWithTextIcon } from '../icons/logo/LogoWithTextIcon'
+import { ChevronDown } from '@/components/icons/theme/ChevronDown'
+import { LogoWithTextIcon } from '@/components/icons/logo/LogoWithTextIcon'
 
 type Props = {
   me: User | null

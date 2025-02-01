@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import { ChevronDown, Settings2, Trash2, Pencil } from 'lucide-react'
+import { Trash2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { ComicRarity } from '@/enums/comicRarity'
@@ -16,6 +16,10 @@ import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 import Image from 'next/image'
 import { usePaginationControls } from '@/hooks/usePaginationControls'
 import { BasicCollectibleComic } from '@/models/asset'
+import { PencilIcon } from '@/components/icons/theme/PencilIcon'
+import { ChevronDown } from '@/components/icons/theme/ChevronDown'
+import { FilterIcon } from '@/components/icons/theme/FilterIcon'
+import { SortIcon } from '@/components/icons/theme/SortIcon'
 
 interface SignatureRequest {
   asset: BasicCollectibleComic
@@ -127,7 +131,7 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
                 console.log('Filter clicked')
               }}
             >
-              <Settings2 className='h-4 w-4' />
+              <FilterIcon className='h-4 w-4' />
             </Button>
             <Button
               variant='secondary'
@@ -135,7 +139,8 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
               size='md'
             >
               <span className='max-md:hidden'>Sort by: Newest</span>
-              <ChevronDown className='h-4 w-4' />
+              <SortIcon className='h-[20px] w-[20px] md:hidden' />
+              <ChevronDown className='h-4 w-4 max-md:hidden' />
             </Button>
           </div>
         </div>
@@ -203,7 +208,7 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
                         console.log('Comic signed!')
                       }}
                     >
-                      <Pencil className='h-4 w-4' />
+                      <PencilIcon className='h-4 w-4' solid />
                     </Button>
                     <Button
                       variant='ghost'

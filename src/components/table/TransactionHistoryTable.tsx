@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import { ChevronDown, Copy, ListFilter, LoaderCircle, Search, Settings2, Upload, X } from 'lucide-react'
+import { Copy, LoaderCircle, Search, Upload } from 'lucide-react'
 import React, { useState, useEffect, useCallback } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
@@ -20,6 +20,11 @@ import { transactions } from '@/constants/dummyData'
 import { downloadTransactionsReportCSV } from '@/utils/csv'
 import { usePaginationControls } from '@/hooks/usePaginationControls'
 import { SolanaIcon } from '../icons/SolanaIcon'
+import { SortIcon } from '@/components/icons/theme/SortIcon'
+import { ChevronDown } from '@/components/icons/theme/ChevronDown'
+import { FilterIcon } from '@/components/icons/theme/FilterIcon'
+import { CloseIcon } from '@/components/icons/theme/CloseIcon'
+
 // import { TransactionHistoryItem } from '@/models/transaction/transactionHistory'
 
 // TODO: prepare API endpoints params (filter, sort, and pagination)
@@ -72,7 +77,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
           <div className='relative z-10'>
             {searchTerm ? (
               <button className='absolute top-3 left-3' onClick={clearSearch}>
-                <X className='size-[18px] text-white' />
+                <CloseIcon className='size-[18px] text-white' />
               </button>
             ) : (
               <Search className='size-[18px] absolute top-3 left-3 text-grey-200' />
@@ -92,8 +97,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
             <Button
               className='relative rounded-lg min-w-10 sm:px-0'
               variant='secondary'
-              icon={Settings2}
-              size='md'
+              Icon={FilterIcon}
               onClick={() => {
                 console.log('Filter button clicked!')
               }}
@@ -101,8 +105,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
             <Button
               className='relative rounded-lg min-w-10 sm:px-0'
               variant='secondary'
-              icon={Upload}
-              size='md'
+              Icon={Upload}
               onClick={() => {
                 downloadTransactionsReportCSV(transactions)
               }}
@@ -113,8 +116,8 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
               size='md'
             >
               <span className='max-md:hidden'>Sort by: Newest</span>
-              <ListFilter className='md:hidden' />
-              <ChevronDown className='max-md:hidden' />
+              <SortIcon className='h-[20px] w-[20px] md:hidden' />
+              <ChevronDown className='h-4 w-4 max-md:hidden' />
             </Button>
           </div>
         </div>

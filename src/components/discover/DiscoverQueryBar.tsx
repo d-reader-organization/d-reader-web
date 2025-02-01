@@ -4,7 +4,7 @@ import { Text } from '@/components/ui'
 import { DiscoverSearchBar } from './DiscoverSearchBar'
 import React from 'react'
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown } from '@/components/icons/theme/ChevronDown'
 import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
@@ -44,7 +44,7 @@ export const DiscoverQueryBar: React.FC = () => {
           <Text as='p' styleVariant='body-small' className='max-md:hidden'>
             Sort by
           </Text>
-          <ChevronDown size={18} className='max-md:hidden' />
+          <ChevronDown className='w-[18px] h-[18px] max-md:hidden' />
           <ListFilter size={16} className='md:hidden' />
         </Button> */}
       </div>
@@ -126,7 +126,7 @@ export const DiscoverQueryBySingleTag = ({ queryCriteria }: DiscoverQueryBySingl
         <Text as='p' styleVariant='body-large' fontWeight='bold' className='max-sm:text-base'>
           {queryCriteria.label}
         </Text>
-        <ChevronDown size={18} />
+        <ChevronDown className='w-[18px] h-[18px]' />
       </button>
       <div
         ref={contentRef}
@@ -194,7 +194,7 @@ export const DiscoverQueryByGenres: React.FC = () => {
         <Text as='span' styleVariant='body-large' fontWeight='bold' className='max-sm:text-base'>
           Genres
         </Text>
-        <ChevronDown size={18} />
+        <ChevronDown className='w-[18px] h-[18px]' />
       </button>
       <div
         ref={contentRef}

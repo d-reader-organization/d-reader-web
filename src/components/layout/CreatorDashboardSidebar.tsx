@@ -79,7 +79,7 @@ export const CreatorDashboardSidebar: React.FC<Props> = ({ activePath }) => {
 
         <Divider className='my-6' />
         <Button
-          icon={Plus}
+          Icon={Plus}
           className='w-full bg-yellow-300 text-base font-bold text-black border-5 border-yellow-400 hover:bg-yellow-200 hover:border-yellow-300'
         >
           Create New

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Text } from '@/components/ui'
-import { Settings2 } from 'lucide-react'
+import { FilterIcon } from '@/components/icons/theme/FilterIcon'
 import { cn } from '@/lib/utils'
 
 type FilterButtonProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -20,7 +20,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
   <Button
     className={cn('relative rounded-[10px]', withLabel ? 'min-w-[100px]' : 'min-w-10 sm:px-0', className)}
     variant='secondary'
-    icon={Settings2}
+    Icon={FilterIcon}
     size='md'
     onClick={() => setFilterSheetOpen(!isFilterSheetOpen)}
   >

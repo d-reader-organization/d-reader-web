@@ -1,7 +1,7 @@
 import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
-import { type LucideIcon } from 'lucide-react'
+import { VariantSvgIconProps } from '@/lib/types'
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center font-bold rounded-md shadow-[0px_16px_32px_-4px_rgba(0,0,0,0.10),0px_2px_4px_0px_rgba(0,0,0,0.04)] transition-colors hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
@@ -68,7 +68,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   iconOnly?: boolean
-  icon?: LucideIcon
+  Icon?: React.FC<VariantSvgIconProps>
   iconClassname?: string
 }
 
@@ -82,7 +82,7 @@ export interface ButtonProps
  * @param {1 | 2 | 3} [props.subVariant=1] - The sub-variant of the chosen main variant.
  * @param {'sm' | 'md' | 'lg'} [props.size='md'] - The size of the button.
  * @param {'left' | 'right'} [props.iconPosition='left'] - The position of the icon relative to the text.
- * @param {LucideIcon} [props.icon] - An optional Lucide icon component.
+ * @param {Icon} [props.icon] - An optional icon component.
  * @param {string} [props.className] - Additional CSS classes to apply to the button.
  *
  * @example
@@ -96,25 +96,14 @@ export interface ButtonProps
  * @example
  * // With icon
  * import { Mail } from 'lucide-react';
- * <Button icon={Mail}>Send Email</Button>
+ * <Button Icon={Mail}>Send Email</Button>
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      className,
-      iconClassname,
-      variant,
-      subVariant,
-      size = 'md',
-      iconPosition,
-      icon: Icon,
-      iconOnly,
-      children,
-      ...props
-    },
+    { className, iconClassname, variant, subVariant, size = 'md', iconPosition, Icon, iconOnly, children, ...props },
     ref
   ) => {
-    const iconSize = size === 'sm' ? 16 : size === 'md' ? 18 : 20
+    const iconSize = size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-[18px] h-[18px]' : 'w-5 h-5'
 
     if (iconOnly && Icon) {
       return (
@@ -127,7 +116,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           ref={ref}
           {...props}
         >
-          <Icon size={iconSize} className={cn('shrink-0', iconClassname)} />
+          <Icon className={cn(iconSize, iconClassname, 'shrink-0')} />
         </button>
       )
     }
@@ -141,7 +130,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {Icon && <Icon size={iconSize} className={cn('shrink-0', iconClassname)} />}
+        {Icon && <Icon className={cn(iconSize, iconClassname, 'shrink-0')} />}
         {children}
       </button>
     )

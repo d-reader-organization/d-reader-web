@@ -4,7 +4,7 @@ import { fetchProject } from '@/app/lib/api/invest/queries'
 import { notFound } from 'next/navigation'
 import { ExpressInterestSection } from '@/components/invest/ExpressInterestSection'
 import Link from 'next/link'
-import { MoveLeft } from 'lucide-react'
+import { ArrowLeftIcon } from '@/components/icons/theme/ArrowLeftIcon'
 import { RoutePath } from '@/enums/routePath'
 
 type Props = {
@@ -30,7 +30,7 @@ export default async function ExpressInterestPage(props: Props) {
             href={RoutePath.Invest}
             prefetch={false}
           >
-            <MoveLeft size={16} />
+            <ArrowLeftIcon className='w-5 h-5' />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='max-sm:text-xs'>
               Go back
             </Text>

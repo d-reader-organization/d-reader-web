@@ -1,11 +1,14 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
-import { ChevronDown, Coins, Crown, DollarSign } from 'lucide-react'
 import React, { useState } from 'react'
 import { Card, CardContent } from '../ui/card'
 import MetricCard from './MetricCard'
 import MetricChart from './MetricChart'
+import { MoneyPouchIcon } from '@/components/icons/theme/MoneyPouchIcon'
+import { RoyaltyIcon } from '@/components/icons/theme/RoyaltyIcon'
+import { CoinsIcon } from '@/components/icons/theme/CoinsIcon'
+import { ChevronDown } from '@/components/icons/theme/ChevronDown'
 
 enum ChartsTab {
   Audience = 'Audience',
@@ -57,9 +60,9 @@ export const CreatorMetrics: React.FC = () => {
         <Card className='border-0 text-white'>
           <CardContent className='p-6'>
             <div className='mb-8 grid gap-4 md:grid-cols-3'>
-              <MetricCard icon={DollarSign} title='Total sales' value={285342} />
-              <MetricCard icon={Crown} title='Total royalties' value={25342} />
-              <MetricCard icon={Coins} title='Other' value={2342} />
+              <MetricCard Icon={MoneyPouchIcon} title='Total sales' value={285342} />
+              <MetricCard Icon={RoyaltyIcon} title='Total royalties' value={25342} />
+              <MetricCard Icon={CoinsIcon} title='Other' value={2342} />
             </div>
             <div className='h-[400px]'>
               <MetricChart />

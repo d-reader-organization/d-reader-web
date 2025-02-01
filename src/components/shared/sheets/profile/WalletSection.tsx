@@ -47,7 +47,7 @@ export const ConnectedWalletBox: React.FC<ConnectedWalletBoxProps> = ({ address 
           >
             <Copy className='sm:size-5' />
           </ButtonIconWrapper>
-          <ConnectButton iconOnly icon={Power} size='lg' className='min-w-fit px-2 py-0' />
+          <ConnectButton iconOnly Icon={Power} size='lg' className='min-w-fit px-2 py-0' />
         </div>
       </div>
     </div>

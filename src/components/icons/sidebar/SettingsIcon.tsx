@@ -2,7 +2,7 @@ import { VariantSvgIconProps } from '@/lib/types'
 import React from 'react'
 
 export const SettingsIcon = React.forwardRef<SVGSVGElement, VariantSvgIconProps>(
-  ({ className, solid, ...props }, ref) => {
+  ({ className, solid = false, ...props }, ref) => {
     return (
       <svg
         ref={ref}

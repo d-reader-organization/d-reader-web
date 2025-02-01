@@ -35,7 +35,7 @@ export const FavouritiseButton: React.FC<Props> = ({
 
   return (
     <RequireAuthWrapperButton
-      icon={Heart}
+      Icon={Heart}
       variant='outline'
       onClick={handleSubmit}
       className={cn(

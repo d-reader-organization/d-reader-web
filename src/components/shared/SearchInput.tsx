@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Input } from '../ui/Input'
-import { LoaderCircle, Search, X } from 'lucide-react'
+import { LoaderCircle, Search } from 'lucide-react'
 import { SearchResultComic } from '@/models/comic'
 import { SearchResultCreator } from '@/models/creator'
 import { useDebouncedCallback } from 'use-debounce'
@@ -13,6 +13,7 @@ import { RoutePath } from '@/enums/routePath'
 import Link from 'next/link'
 import { useSearchComics } from '@/api/comic/queries/useSearchComics'
 import { useSearchCreators } from '@/api/creator/queries/useSearchCreators'
+import { CloseIcon } from '@/components/icons/theme/CloseIcon'
 
 type Props = React.InputHTMLAttributes<HTMLInputElement>
 
@@ -104,7 +105,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
     <div className={cn('relative z-10', className)} ref={searchRef}>
       {searchTerm ? (
         <button className='absolute top-3 left-3' onClick={clearInput}>
-          <X className='size-[18px] text-white' />
+          <CloseIcon className='size-[18px] text-white' />
         </button>
       ) : (
         <Search className='size-[18px] absolute top-3 left-3 text-grey-200' />

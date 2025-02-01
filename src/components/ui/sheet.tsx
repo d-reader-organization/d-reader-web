@@ -3,7 +3,7 @@
 import * as React from 'react'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { X } from 'lucide-react'
+import { CloseIcon } from '@/components/icons/theme/CloseIcon'
 
 import { cn } from '@/lib/utils'
 
@@ -63,7 +63,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
         {children}
         {showCloseIcon && (
           <SheetPrimitive.Close className='absolute right-6 top-6 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 dark:ring-offset-slate-950 dark:focus:ring-slate-300 dark:data-[state=open]:bg-slate-800'>
-            <X className='size-6' />
+            <CloseIcon className='w-6 h-6' />
             <span className='sr-only'>Close</span>
           </SheetPrimitive.Close>
         )}

@@ -1,16 +1,16 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Text } from '@/components/ui'
-import { MoveLeft } from 'lucide-react'
-import { IconLink } from '@/components/shared/IconLink'
+import { ArrowLeftIcon } from '@/components/icons/theme/ArrowLeftIcon'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { LINK, SUPPORT_EMAIL } from '@/constants/general'
 import BunBunUnderConstruction from 'public/assets/images/site-under-construction.png'
 import { RoutePath } from '@/enums/routePath'
-import { DiscordIcon } from '../icons/social/DiscordIcon'
-import { InstagramIcon } from '../icons/social/InstagramIcon'
-import { TwitterIcon } from '../icons/social/TwitterIcon'
-import { MailInverseIcon } from '../icons/social/MailInverseIcon'
+import { DiscordIcon } from '@/components/icons/social/DiscordIcon'
+import { InstagramIcon } from '@/components/icons/social/InstagramIcon'
+import { TwitterIcon } from '@/components/icons/social/TwitterIcon'
+import { MailInverseIcon } from '@/components/icons/social/MailInverseIcon'
+import { IconLink } from '@/components/shared/IconLink'
 
 export default function UnderConstruction() {
   return (
@@ -86,7 +86,7 @@ export default function UnderConstruction() {
           className='flex items-center gap-1 pt-7 sm:pt-9 sm:gap-2 border-b-2 text-grey-100 border-grey-100'
           href={RoutePath.Home}
         >
-          <MoveLeft size={16} />
+          <ArrowLeftIcon className='w-5 h-5' />
           <Text as='p' styleVariant='body-normal' fontWeight='medium' className='max-sm:text-xs'>
             Go back
           </Text>

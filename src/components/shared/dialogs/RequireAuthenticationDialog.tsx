@@ -44,7 +44,7 @@ export const RequireAuthDialog: React.FC<Props> = ({ showDialog = false, closeDi
               href={withRedirect(RoutePath.Register, pathname)}
               variant='outline'
               size='lg'
-              icon={Mail}
+              Icon={Mail}
             >
               Continue with Email
             </ButtonLink>

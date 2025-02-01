@@ -2,12 +2,13 @@
 
 import React from 'react'
 import { Input } from '@/components/ui/Input'
-import { Search, X } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { RoutePath } from '@/enums/routePath'
 import { usePathname } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
+import { CloseIcon } from '@/components/icons/theme/CloseIcon'
 
 type Props = React.InputHTMLAttributes<HTMLInputElement>
 
@@ -43,7 +44,7 @@ export const DiscoverSearchBar: React.FC<Props> = ({ className }) => {
     <div className={cn('relative z-10 w-full', className)} ref={searchRef}>
       {localSearchTerm ? (
         <button className='absolute top-3 left-3' onClick={handleClearInput}>
-          <X className='size-[18px] text-white' />
+          <CloseIcon className='w-[18px] h-[18px] text-white' />
         </button>
       ) : (
         <Search className='size-[18px] absolute top-3 left-3 text-grey-200' />

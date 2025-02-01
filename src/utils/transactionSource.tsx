@@ -1,11 +1,11 @@
 import { TransactionSource } from '@/enums/transactionSource'
-import { SaleIcon } from '@/components/icons/SaleIcon'
-import { RoyaltyIcon } from '@/components/icons/RoyaltyIcon'
+import { MoneyPouchIcon } from '@/components/icons/theme/MoneyPouchIcon'
+import { RoyaltyIcon } from '@/components/icons/theme/RoyaltyIcon'
 
 export const getTransactionSourceIcon = (source: TransactionSource) => {
   switch (source) {
     case TransactionSource.Sale:
-      return <SaleIcon />
+      return <MoneyPouchIcon />
     case TransactionSource.Royalty:
       return <RoyaltyIcon />
   }

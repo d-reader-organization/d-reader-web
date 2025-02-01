@@ -67,7 +67,7 @@ export const OwnedComicCard: React.FC<Props> = ({ comic }) => {
           subVariant={1}
           href={RoutePath.OwnedAssets(comic.slug)}
           prefetch={false}
-          icon={MoreHorizontalIcon}
+          Icon={MoreHorizontalIcon}
           iconOnly
         />
       </div>

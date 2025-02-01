@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
 import { ButtonLink } from '../ui/ButtonLink'
-import { Menu, Search, X } from 'lucide-react'
+import { Menu, Search } from 'lucide-react'
 import { Sheet, SheetContent, SheetTitle } from '../ui/sheet'
 import { User } from '@/models/user'
 import { ProfileWidget } from '../shared/ProfileWidget'
@@ -15,6 +15,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { NavigationItem } from './NavigationItem'
 import { ConnectedWalletBox } from '../shared/sheets/profile/WalletSection'
 import { LogoSymbolIcon } from '../icons/logo/LogoSymbolIcon'
+import { CloseIcon } from '@/components/icons/theme/CloseIcon'
 
 type Props = {
   user?: User | null
@@ -36,7 +37,7 @@ export const MobileNav: React.FC<Props> = ({ user }) => {
         <div className={cn('flex items-center gap-6 h-20 px-4')}>
           <SearchInput className='w-full' />
           <button onClick={() => setIsSearchOpen(false)}>
-            <X className='size-[18px]' />
+            <CloseIcon className='w-[18px] h-[18px]' />
           </button>
         </div>
       ) : (
@@ -48,7 +49,9 @@ export const MobileNav: React.FC<Props> = ({ user }) => {
             <Link href={RoutePath.Home} prefetch={false}>
               <LogoSymbolIcon className='size-[22px] fill-white' />
             </Link>
-            <button onClick={() => setIsOpen(!isOpen)}>{isOpen ? <X size={24} /> : <Menu size={24} />}</button>
+            <button onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <CloseIcon className='w-6 h-6' /> : <Menu size={24} />}
+            </button>
           </div>
 
           <div className='md:hidden'>
@@ -61,7 +64,7 @@ export const MobileNav: React.FC<Props> = ({ user }) => {
                       {/* <Link href={RoutePath.Discover}>Discover</Link> */}
                       <NavigationItem href={RoutePath.Home} title='Home' />
                       <button onClick={() => setIsOpen(false)}>
-                        <X className='size-6 text-grey-100' />
+                        <CloseIcon className='w-6 h-6 text-grey-100' />
                       </button>
                     </div>
                     <NavigationItem href={RoutePath.Discover} title='Discover' />

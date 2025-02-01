@@ -7,8 +7,9 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import CreatorDashboardSidebar from './CreatorDashboardSidebar'
 import { cookies } from 'next/headers'
 import { Text } from '@/components/ui/Text'
-import { Button } from '@/components/ui/Button'
-import { Undo2 } from 'lucide-react'
+import { ButtonLink } from '@/components/ui/ButtonLink'
+import { BackIcon } from '@/components/icons/theme/BackIcon'
+import { RoutePath } from '@/enums/routePath'
 
 type Props = React.PropsWithChildren & {
   title?: string
@@ -44,9 +45,9 @@ export const CreatorDashboardLayout: React.FC<Props> = async ({
           <Text as='h4' styleVariant='secondary-heading' className='w-full'>
             {title}
           </Text>
-          <Button icon={Undo2} variant='outline' className='whitespace-nowrap'>
+          <ButtonLink href={RoutePath.Home} Icon={BackIcon} variant='outline' className='whitespace-nowrap'>
             Back to App
-          </Button>
+          </ButtonLink>
         </div>
 
         {children}
