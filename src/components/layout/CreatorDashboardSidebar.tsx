@@ -1,7 +1,4 @@
-'use client'
-
-import { Box, CircleHelp, Home, LogOut, Plus, Settings, User, Wallet } from 'lucide-react'
-import Link from 'next/link'
+import { Plus } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
@@ -11,18 +8,26 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { StudioLogo } from '../icons/logo/StudioLogo'
 import { Divider } from '../shared/Divider'
 import { RoutePath } from '@/enums/routePath'
-import { usePathname } from 'next/navigation'
+import { SidebarMenuLink } from './SidebarMenuLink'
+import { PLACEHOLDER_AVATAR } from '@/constants/general'
+import { StudioLogo } from '@/components/icons/logo/StudioLogo'
+import { HomeIcon } from '@/components/icons/sidebar/HomeIcon'
+import { ProductIcon } from '@/components/icons/sidebar/ProductIcon'
+import { WalletIcon } from '@/components/icons/sidebar/WalletIcon'
+import { ProfileIcon } from '@/components/icons/sidebar/ProfileIcon'
+import { HelpCenterIcon } from '@/components/icons/sidebar/HelpCenterIcon'
+import { SettingsIcon } from '@/components/icons/sidebar/SettingsIcon'
+import { SidebarLogoutButton } from '../shared/buttons/SidebarLogoutButton'
 
-export function CreatorDashboardSidebar() {
-  const pathname = usePathname()
-  const isHome = pathname.startsWith(RoutePath.Discover)
+type Props = {
+  activePath?: string
+}
 
+export const CreatorDashboardSidebar: React.FC<Props> = ({ activePath }) => {
   return (
     <Sidebar variant='inset' className='bg-grey-500 p-3'>
       <SidebarHeader className='w-full max-w-[180px] h-auto'>
@@ -31,54 +36,44 @@ export function CreatorDashboardSidebar() {
       <SidebarContent className='py-4'>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size='lg' asChild className='text-grey-100 hover:bg-grey-600 hover:text-white'>
-              <Link href={RoutePath.Dashboard}>
-                <Home className='h-5 w-5' />
-                <Text styleVariant='body-normal' fontWeight='medium' as='span'>
-                  Home {isHome ? 'active' : 'inactive'}
-                </Text>
-              </Link>
-            </SidebarMenuButton>
+            <SidebarMenuLink
+              isActive={activePath === RoutePath.Dashboard}
+              href={RoutePath.Dashboard}
+              title='Home'
+              Icon={HomeIcon}
+            />
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className='text-grey-100 hover:bg-grey-600 hover:text-white'>
-              <Link href='#'>
-                <Box className='h-5 w-5' />
-                <Text styleVariant='body-normal' fontWeight='medium' as='span'>
-                  My Products
-                </Text>
-              </Link>
-            </SidebarMenuButton>
+            <SidebarMenuLink
+              isActive={activePath === RoutePath.DashboardProducts}
+              href={RoutePath.DashboardProducts}
+              title='My Products'
+              Icon={ProductIcon}
+            />
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className='text-grey-100 hover:bg-grey-600 hover:text-white'>
-              <Link href='#'>
-                <Wallet className='h-5 w-5' />
-                <Text styleVariant='body-normal' fontWeight='medium' as='span'>
-                  Payments
-                </Text>
-              </Link>
-            </SidebarMenuButton>
+            <SidebarMenuLink
+              isActive={activePath === RoutePath.DashboardPayments}
+              href={RoutePath.DashboardPayments}
+              title='Payments'
+              Icon={WalletIcon}
+            />
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className='text-grey-100 hover:bg-grey-600 hover:text-white'>
-              <Link href='#'>
-                <User className='h-5 w-5' />
-                <Text styleVariant='body-normal' fontWeight='medium' as='span'>
-                  Profile
-                </Text>
-              </Link>
-            </SidebarMenuButton>
+            <SidebarMenuLink
+              isActive={activePath === RoutePath.DashboardProfile}
+              href={RoutePath.DashboardProfile}
+              title='Profile'
+              Icon={ProfileIcon}
+            />
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className='text-grey-100 hover:bg-grey-600 hover:text-white'>
-              <Link href='#'>
-                <CircleHelp className='h-5 w-5' />
-                <Text styleVariant='body-normal' fontWeight='medium' as='span'>
-                  Help Center
-                </Text>
-              </Link>
-            </SidebarMenuButton>
+            <SidebarMenuLink
+              isActive={activePath === RoutePath.DashboardHelpCenter}
+              href={RoutePath.DashboardHelpCenter}
+              title='Help Center'
+              Icon={HelpCenterIcon}
+            />
           </SidebarMenuItem>
         </SidebarMenu>
 
@@ -94,30 +89,21 @@ export function CreatorDashboardSidebar() {
       <SidebarFooter className='mt-auto'>
         <SidebarMenu className='border-1 border-grey-300 rounded-lg'>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className='text-grey-100 hover:bg-grey-600 hover:text-white'>
-              <Link href='#'>
-                <Settings className='h-5 w-5' />
-                <Text styleVariant='body-normal' fontWeight='medium' as='span'>
-                  Settings
-                </Text>
-              </Link>
-            </SidebarMenuButton>
+            <SidebarMenuLink
+              isActive={activePath === RoutePath.DashboardSettings}
+              href={RoutePath.DashboardSettings}
+              title='Settings'
+              Icon={SettingsIcon}
+            />
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className='text-grey-100 hover:bg-grey-600 hover:text-white'>
-              <Link href='#'>
-                <LogOut className='h-5 w-5' />
-                <Text styleVariant='body-normal' fontWeight='medium' as='span'>
-                  Log Out
-                </Text>
-              </Link>
-            </SidebarMenuButton>
+            <SidebarLogoutButton />
           </SidebarMenuItem>
         </SidebarMenu>
 
         <Button variant='outline' className='w-full flex flex-row justify-start gap-2 rounded-lg hover:bg-grey-700'>
           <Avatar className='h-8 w-8'>
-            <AvatarImage src='/placeholder.svg' />
+            <AvatarImage src={PLACEHOLDER_AVATAR} />
             <AvatarFallback>JS</AvatarFallback>
           </Avatar>
           <Text styleVariant='body-small' as='span' fontWeight='bold' className='text-grey-100'>

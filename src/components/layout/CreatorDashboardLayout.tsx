@@ -10,12 +10,18 @@ import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
 import { Undo2 } from 'lucide-react'
 
-type Props = React.PropsWithChildren & { title?: string; mainClassName?: string; showFooter?: boolean }
+type Props = React.PropsWithChildren & {
+  title?: string
+  mainClassName?: string
+  showFooter?: boolean
+  activePath?: string
+}
 
 export const CreatorDashboardLayout: React.FC<Props> = async ({
   children,
   title,
   mainClassName,
+  activePath,
   showFooter = false,
 }) => {
   const me = await fetchMe()
@@ -26,7 +32,7 @@ export const CreatorDashboardLayout: React.FC<Props> = async ({
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      <CreatorDashboardSidebar />
+      <CreatorDashboardSidebar activePath={activePath} />
       <main
         className={cn(
           'flex flex-col min-h-screen h-full w-full gap-8 p-4 md:p-6 lg:p-8 flex-1 relative',

@@ -31,7 +31,7 @@ export default function UnderConstruction() {
         </Text>
         <Image
           src={BunBunUnderConstruction.src}
-          alt='dReader Page not found'
+          alt='Page not found'
           className='w-[214px] mr-4 -mt-16 h-auto pointer-events-none'
           width={400}
           height={430}

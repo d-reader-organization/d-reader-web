@@ -6,7 +6,7 @@ import { Button } from '../ui'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { MobileNav } from './MobileNavigation'
+import { GenesisMobileNavigation } from './GenesisMobileNavigation'
 import { ProfileSheet } from '../shared/sheets/profile/ProfileSheet'
 import { User } from '@/models/user'
 import { ChevronDown, MoveLeft } from 'lucide-react'
@@ -23,15 +23,16 @@ export const GenesisNavigation: React.FC<Props> = ({ me }) => {
   const [isProfileSheetOpen, setOpenProfileSheet] = React.useState<boolean>(false)
   const pathname = usePathname()
   const isInvest = pathname.endsWith(RoutePath.Invest)
+  const backgroundColor = isInvest ? 'bg-green-genesis' : 'bg-grey-600'
 
   return (
     <>
-      <MobileNav user={me} />
+      <GenesisMobileNavigation background={backgroundColor} user={me} />
       <div
         className={cn(
           'max-md:hidden max-h-20 bg-opacity-85 backdrop-blur-[25px] w-full flex justify-center',
           'fixed top-0 z-50',
-          isInvest ? 'bg-green-genesis' : 'bg-grey-600',
+          backgroundColor,
           isProfileSheetOpen && 'z-10'
         )}
       >

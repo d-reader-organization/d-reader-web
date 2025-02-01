@@ -1,11 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import { Text, Variant } from '../ui/Text'
 import { cn } from '@/lib/utils'
 import { SoonTag } from '../shared/Tags'
+import { usePathname } from 'next/navigation'
 
 export type NavigationLinkProps = {
   href: string
-  isActive: boolean
   activeColor?: string
   isComingSoon?: boolean
   disabled?: boolean
@@ -13,22 +15,23 @@ export type NavigationLinkProps = {
   title: string
 }
 
-export const NavItemLink: React.FC<NavigationLinkProps> = ({
+export const NavigationItem: React.FC<NavigationLinkProps> = ({
   href,
-  isActive,
   title,
   activeColor = 'text-yellow-300',
-  as = 'p',
+  as = 'h4',
   isComingSoon = false,
   disabled = false,
 }) => {
+  const pathname = usePathname()
+  const isActive = href === '/' ? pathname === href : pathname.startsWith(href)
+
   return (
     <Link
       className={cn(
         'flex items-center gap-1 text-base font-bold leading-[22.4px] text-grey-100',
         isActive && activeColor,
-        disabled && 'text-grey-300',
-        !disabled && 'hover:text-white'
+        disabled ? 'text-grey-300' : 'hover:text-white'
       )}
       href={disabled ? '#' : href}
       prefetch={false}

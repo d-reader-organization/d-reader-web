@@ -1,4 +1,4 @@
-import { BaseLayout } from '@/components/layout/BaseLayout'
+import { GenesisLayout } from '@/components/layout/GenesisLayout'
 import { ProjectHeader } from '@/components/shared/ProjectHeader'
 import { ProjectBanner } from '@/components/shared/ProjectBanner'
 import { ProjectCreatorSection } from '@/components/shared/ProjectCreatorSection'
@@ -57,7 +57,7 @@ export default async function ProjectInvestPage(props: Props) {
   const receipts = await fetchUserInterestedReceipts(project.slug)
   const isAuthenticated = await isAuthenticatedUser()
   return (
-    <BaseLayout showFooter>
+    <GenesisLayout showFooter>
       <div className='flex flex-col max-w-screen-xl w-full'>
         <ProjectHeader title={project.title} subtitle={project.subtitle} className='max-md:hidden' />
         <div className='flex flex-col md:flex-row w-full h-full gap-6 md:gap-10'>
@@ -91,6 +91,6 @@ export default async function ProjectInvestPage(props: Props) {
         </div>
       </div>
       <ProjectInvestDialog />
-    </BaseLayout>
+    </GenesisLayout>
   )
 }

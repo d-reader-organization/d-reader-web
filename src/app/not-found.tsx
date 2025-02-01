@@ -45,12 +45,7 @@ export default function NotFound() {
           There is nothing significant inside but at least it&apos;s cozy.
         </Text>
         <div className='flex w-full justify-center gap-1 pt-1 sm:gap-2 text-grey-100'>
-          <IconLink
-            className='bg-grey-500 rounded-lg sm:rounded-xl gap-2'
-            href={LINK.MAIL_TO_SUPPORT}
-            Icon={MailInverseIcon}
-            blank
-          >
+          <IconLink className='bg-grey-500 rounded-lg sm:rounded-xl gap-2' href={LINK.MAIL_TO_SUPPORT} blank>
             <MailInverseIcon className='w-[16.67px]' />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='max-sm:text-xs'>
               {SUPPORT_EMAIL}

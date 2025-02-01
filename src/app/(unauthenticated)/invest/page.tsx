@@ -4,7 +4,7 @@ import { fetchHighInterestProjects, fetchSuccessfulProjects } from '@/app/lib/ap
 import FaqSection from '@/components/invest/FaqSection'
 import { ProjectsSection } from '@/components/invest/ProjectsSection'
 import { InvestSection } from '@/components/invest/Section'
-import { BaseLayout } from '@/components/layout/BaseLayout'
+import { GenesisLayout } from '@/components/layout/GenesisLayout'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { InvestPageHero } from '@/components/invest/InvestPageHero'
@@ -59,7 +59,7 @@ export default async function InvestPage() {
   return (
     <>
       <InvestPageHero />
-      <BaseLayout showFooter>
+      <GenesisLayout showFooter>
         <div className='flex flex-col gap-10 max-w-screen-xl w-full'>
           <InvestSection data={firstHalf} title='Gauging Interest' />
           <ProjectsSection projects={successfulProjects} title='Recent Successful Projects' />
@@ -67,7 +67,7 @@ export default async function InvestPage() {
           <InvestSection data={secondHalf} title='You Might Like' />
           <FaqSection items={GENESIS_FAQ_ITEMS} />
         </div>
-      </BaseLayout>
+      </GenesisLayout>
     </>
   )
 }

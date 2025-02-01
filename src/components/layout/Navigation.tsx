@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import { RoutePath } from '@/enums/routePath'
-import { usePathname } from 'next/navigation'
 import { Button } from '../ui'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -11,8 +10,7 @@ import { MobileNav } from './MobileNavigation'
 import { ProfileSheet } from '../shared/sheets/profile/ProfileSheet'
 import { SearchInput } from '../shared/SearchInput'
 import { User } from '@/models/user'
-import { NavItemLink } from './NavItemLink'
-import { GenesisNavigation } from './GenesisNavigation'
+import { NavigationItem } from './NavigationItem'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { ChevronDown } from 'lucide-react'
@@ -25,14 +23,7 @@ type Props = {
 
 export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
   const [isProfileSheetOpen, setOpenProfileSheet] = useState(false)
-  const pathname = usePathname()
-  const isDiscover = pathname.startsWith(RoutePath.Discover)
-  const isInvest = pathname.startsWith(RoutePath.Invest)
-  // const isMarketplace = pathname.startsWith(RoutePath.Marketplace)
-  const isLibrary = pathname.startsWith(RoutePath.Library)
   const { publicKey } = useWallet()
-
-  if (isInvest) return <GenesisNavigation me={me} />
 
   return (
     <>
@@ -51,28 +42,18 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
             </Link>
             {!hideSearch && <SearchInput />}
             <div className='flex items-center gap-10'>
-              <NavItemLink
-                activeColor='text-yellow-300'
-                href={RoutePath.Discover}
-                isActive={isDiscover}
-                title='Discover'
-              />
+              <NavigationItem as='p' activeColor='text-yellow-300' href={RoutePath.Discover} title='Discover' />
             </div>
             {/* <div className='flex items-center gap-10'>
-              <NavItemLink activeColor='text-yellow-300' href={RoutePath.Invest} isActive={isInvest} title='Invest' />
+              <NavigationItem as='p' activeColor='text-yellow-300' href={RoutePath.Invest} title='Invest' />
               </div> */}
             {/* <div className='flex items-center gap-10'>
-              <NavItemLink activeColor='text-yellow-300' href={RoutePath.Marketplace} isActive={isMarketplace} title='Marketplace' isComingSoon disabled />
+              <NavigationItem as='p' activeColor='text-yellow-300' href={RoutePath.Marketplace} title='Marketplace' isComingSoon disabled />
             </div> */}
           </div>
           {me ? (
             <div className='flex items-center gap-8'>
-              <NavItemLink
-                activeColor='text-yellow-300'
-                href={RoutePath.Library}
-                isActive={isLibrary}
-                title='My Library'
-              />
+              <NavigationItem as='p' activeColor='text-yellow-300' href={RoutePath.Library} title='My Library' />
               <button
                 className='flex items-center cursor-pointer'
                 onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}

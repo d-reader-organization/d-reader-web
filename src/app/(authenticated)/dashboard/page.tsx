@@ -4,6 +4,7 @@ import { CreatorDashboardLayout } from '@/components/layout/CreatorDashboardLayo
 import ProductsTable from '@/components/table/ProductsTable'
 import SignatureRequestsTable from '@/components/table/SignatureRequestsTable'
 import TransactionHistoryTable from '@/components/table/TransactionHistoryTable'
+import { RoutePath } from '@/enums/routePath'
 import React from 'react'
 
 export const DashboardPage: React.FC = async () => {
@@ -12,7 +13,7 @@ export const DashboardPage: React.FC = async () => {
   if (!me) return null
 
   return (
-    <CreatorDashboardLayout title={`Welcome back ${me.displayName}!`}>
+    <CreatorDashboardLayout title={`Welcome back ${me.displayName}!`} activePath={RoutePath.Dashboard}>
       <CreatorMetrics />
       <ProductsTable title='My products' />
       <SignatureRequestsTable title='Signature requests' />
