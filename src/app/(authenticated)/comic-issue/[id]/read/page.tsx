@@ -43,8 +43,12 @@ export default async function ReadComicIssuePage(props: ComicIssuePageParams) {
                   </p>
                 </>
               )}
-              <UnwrapIssueDialog collectibleComics={collectibleComics} showUnwrapButton />
-              {!!me && <UnwrapIssueDialog collectibleComics={collectibleComics} showUnwrapButton />}
+              {!!me && (
+                <UnwrapIssueDialog
+                  collectibleComics={collectibleComics}
+                  showUnwrapButton={hasUnusedCollectibleComics && !comicIssue.myStats?.canRead}
+                />
+              )}
               {!comicIssue.isFullyUploaded && (
                 <p className='preview-message-text'>
                   This comic is not yet fully uploaded. New chapters/pages might be added weekly.

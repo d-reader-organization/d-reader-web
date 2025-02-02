@@ -33,7 +33,7 @@ export const CreatorDashboardSidebar: React.FC<Props> = ({ activePath }) => {
       <SidebarHeader className='w-full max-w-[180px] h-auto'>
         <StudioLogo />
       </SidebarHeader>
-      <SidebarContent className='py-4'>
+      <SidebarContent className='py-6'>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuLink

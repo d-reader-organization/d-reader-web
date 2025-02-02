@@ -5,7 +5,7 @@ import Image from 'next/image'
 import React from 'react'
 import { RoutePath } from '@/enums/routePath'
 
-export const HelpCenter: React.FC = async () => {
+export default async function HelpCenterPage() {
   const me = await fetchMe()
 
   if (!me) return null
@@ -23,5 +23,3 @@ export const HelpCenter: React.FC = async () => {
     </CreatorDashboardLayout>
   )
 }
-
-export default HelpCenter

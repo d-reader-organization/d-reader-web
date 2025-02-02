@@ -7,7 +7,7 @@ import TransactionHistoryTable from '@/components/table/TransactionHistoryTable'
 import { RoutePath } from '@/enums/routePath'
 import React from 'react'
 
-export const DashboardPage: React.FC = async () => {
+export default async function DashboardPage() {
   const me = await fetchMe()
 
   if (!me) return null
@@ -21,5 +21,3 @@ export const DashboardPage: React.FC = async () => {
     </CreatorDashboardLayout>
   )
 }
-
-export default DashboardPage

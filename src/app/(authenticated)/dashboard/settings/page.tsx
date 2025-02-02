@@ -5,7 +5,7 @@ import Image from 'next/image'
 import React from 'react'
 import { RoutePath } from '@/enums/routePath'
 
-export const SettingsPage: React.FC = async () => {
+export default async function SettingsPage() {
   const me = await fetchMe()
 
   if (!me) return null
@@ -23,5 +23,3 @@ export const SettingsPage: React.FC = async () => {
     </CreatorDashboardLayout>
   )
 }
-
-export default SettingsPage

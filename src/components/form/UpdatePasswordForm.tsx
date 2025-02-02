@@ -79,7 +79,6 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
                 />
               </FormControl>
               {/* TODO:
-              - standardize ALL forms
               - refactor form inputs (UpdateUserDetailsForm)
               - improve RemovePhotoWarningDialog */}
               {/* {!state?.success && <FormErrorMessage message={state?.error} />} */}

@@ -25,8 +25,6 @@ import { ChevronDown } from '@/components/icons/theme/ChevronDown'
 import { FilterIcon } from '@/components/icons/theme/FilterIcon'
 import { CloseIcon } from '@/components/icons/theme/CloseIcon'
 
-// import { TransactionHistoryItem } from '@/models/transaction/transactionHistory'
-
 // TODO: prepare API endpoints params (filter, sort, and pagination)
 // TODO: change table data based on the selected tab
 // TODO: edge cases: no results at all, no results from specified parameters
@@ -34,12 +32,10 @@ import { CloseIcon } from '@/components/icons/theme/CloseIcon'
 // TODO: extract the logic from the SearchInput component
 // TODO: fetch the full data report for CSV, unpaginated. Add the .splToken property to the TransactionHistoryItem
 // TODO: finish 'My Products' table
-// TODO: work on the chart table, get Athar to sort out the backend ASAP
+// TODO: work on the chart table
 // TODO: table responsiveness
-// TODO: ICONS (Matan)
+// TODO: Does it make sense to kill the 'VariantSvgIconProps' type and lowercase 'Icon' props?
 type Props = { title: string }
-
-// const transactions: TransactionHistoryItem[] = []
 
 export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
   const [searchTerm, setSearchTerm] = useState('')

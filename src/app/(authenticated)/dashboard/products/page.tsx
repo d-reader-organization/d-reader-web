@@ -5,7 +5,7 @@ import SignatureRequestsTable from '@/components/table/SignatureRequestsTable'
 import { RoutePath } from '@/enums/routePath'
 import React from 'react'
 
-export const ProductsPage: React.FC = async () => {
+export default async function ProductsPage() {
   const me = await fetchMe()
 
   if (!me) return null
@@ -17,5 +17,3 @@ export const ProductsPage: React.FC = async () => {
     </CreatorDashboardLayout>
   )
 }
-
-export default ProductsPage
