@@ -33,10 +33,10 @@ export const RarityChip: React.FC<Props> = ({
         getRarityColor(rarity),
         border && 'border-2 border-black',
         compact && 'w-7',
-        compactOnMobile && 'max-md:w-7',
+        compactOnMobile && 'max-lg:w-7',
         className
       )}
-      title={compact ? title : ''}
+      title={compact || compactOnMobile ? title : ''}
     >
       <div className='flex items-center justify-center'>
         <RarityIcon className='w-3 h-auto' />
@@ -44,7 +44,7 @@ export const RarityChip: React.FC<Props> = ({
           as='span'
           styleVariant='body-small'
           fontWeight='semibold'
-          className={cn('font-obviouslyNarrow ml-0.5 -mb-0.5', compact && 'hidden', compactOnMobile && 'max-md:hidden')}
+          className={cn('font-obviouslyNarrow ml-0.5 -mb-0.5', compact && 'hidden', compactOnMobile && 'max-lg:hidden')}
         >
           {rarity.toUpperCase()}
         </Text>

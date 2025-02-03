@@ -1,15 +1,8 @@
 import React from 'react'
 import { SvgIconProps } from '@/lib/types'
 
-export const MailInverseIcon = React.forwardRef<SVGSVGElement, SvgIconProps>(({ className, ...props }, ref) => (
-  <svg
-    ref={ref}
-    {...props}
-    className={className}
-    viewBox='0 0 18 16'
-    fill='currentColor'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+export const MailInverseIcon = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
+  <svg ref={ref} {...props} viewBox='0 0 18 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
     <g id='MailIconInverse'>
       <path
         id='Message_2'

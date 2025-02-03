@@ -1,8 +1,8 @@
 import React from 'react'
 import { SvgIconProps } from '@/lib/types'
 
-export const BookmarkIcon = React.forwardRef<SVGSVGElement, SvgIconProps>(({ className, ...props }, ref) => (
-  <svg ref={ref} {...props} className={className} viewBox='0 0 19 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+export const BookmarkIcon = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
+  <svg ref={ref} {...props} viewBox='0 0 19 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <g id='BookmarkIcon'>
       <path
         id='Subtract'

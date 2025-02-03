@@ -34,7 +34,7 @@ export const InvestSection: React.FC<Props> = ({ data, title }) => {
                 {project.title}
               </h2>
               <div className='inline-flex items-center gap-2'>
-                <AnnouncementIcon />
+                <AnnouncementIcon className='w-6' />
                 <div className='flex max-md:flex-col md:items-center gap-1'>
                   <p className='text-base max-md:leading-[16px] md:text-2xl font-bold'>{project.stats.likes}</p>
                   <p className='text-[10px] md:text-xs font-bold text-grey-100'>PEOPLE EXPRESSED INTEREST</p>

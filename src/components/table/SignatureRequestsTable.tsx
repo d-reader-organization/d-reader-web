@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import { Trash2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
@@ -13,12 +12,12 @@ import { useRerender } from '@/hooks/useRerender'
 import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import Image from 'next/image'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
-import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 import { TextWithOverflow } from '../ui/TextWithOverflow'
 import { signatureRequests } from '@/constants/dummyData'
 import { usePaginationControls } from '@/hooks/usePaginationControls'
 import { PencilIcon } from '@/components/icons/theme/PencilIcon'
 import { FilterIcon } from '@/components/icons/theme/FilterIcon'
+import { TrashIcon } from '@/components/icons/theme/TrashIcon'
 import { useSortTagSelect } from '@/hooks/useSortTagSelect'
 import { SortOrder } from '@/enums/sortOrder'
 
@@ -48,7 +47,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
         {title}
       </Text>
       <div className='w-full space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
-        <div className='flex items-center justify-between px-4'>
+        <div className='flex items-center justify-between gap-2 px-4'>
           <div className='flex gap-1 border-grey-300 border-1 box-border rounded-xl px-1 items-center h-[42px]'>
             <Button
               variant={tab === SignatureRequestsTab.Pending ? 'secondary' : 'ghost'}
@@ -81,9 +80,9 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
           <TableHeader>
             <TableRow>
               <TableHead>Asset</TableHead>
-              <TableHead>Date Requested</TableHead>
               <TableHead>User</TableHead>
               <TableHead>Traits</TableHead>
+              <TableHead>Date</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
@@ -91,14 +90,14 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
             {signatureRequests.map(({ asset, requestedAt, user }) => (
               <TableRow key={asset.address}>
                 <TableCell>
-                  <div className='flex items-center gap-3 relative'>
+                  <div className='flex items-center gap-2 relative'>
                     <Image
                       src={asset.image}
                       alt=''
                       {...COMIC_ISSUE_COVER_SIZE}
                       className='rounded-sm h-auto w-10 aspect-comic-issue-cover'
                     />
-                    <div className='flex flex-col max-w-[200px]'>
+                    <div className='flex flex-col w-full max-lg:max-w-[240px] pr-12'>
                       <TextWithOverflow as='span' styleVariant='body-small' className='text-grey-200'>
                         {asset.comicTitle}
                       </TextWithOverflow>
@@ -109,12 +108,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span title={new Date(requestedAt).toLocaleString()}>
-                    {formatDistanceToNow(new Date(requestedAt), { addSuffix: true, includeSeconds: true })}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <div className='flex items-center gap-2'>
+                  <div className='flex items-center gap-2 text-nowrap'>
                     <Avatar className='h-6 w-6'>
                       <AvatarImage src={user.avatar || PLACEHOLDER_AVATAR} />
                       <AvatarFallback>
@@ -123,41 +117,39 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                       </AvatarFallback>
                     </Avatar>
                     {user.displayName}
-                    {/* <div className='flex flex-col max-w-[200px]'>
-                      <span>{user.displayName}</span>
-                      <span className='font-medium text-grey-200'>@{user.username}</span>
-                    </div> */}
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className='flex gap-2'>
                     <RarityChip rarity={asset.rarity} compactOnMobile />
                     <UsedTraitChip used={asset.isUsed} compactOnMobile />
-                    <SignedTraitChip signed={asset.isSigned} compactOnMobile />
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div className='gap-2'>
+                  <span title={new Date(requestedAt).toLocaleString()} className='text-nowrap'>
+                    {formatDistanceToNow(new Date(requestedAt), { addSuffix: true, includeSeconds: true })}
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <div className='flex justify-end gap-2'>
                     <Button
+                      iconClassname='m-auto'
                       variant='ghost'
-                      size='sm'
-                      className='h-8 w-8 p-0'
+                      Icon={PencilIcon}
+                      solid
                       onClick={() => {
                         console.log('Comic signed!')
                       }}
-                    >
-                      <PencilIcon className='h-4 w-4' solid />
-                    </Button>
+                    />
                     <Button
+                      iconClassname='m-auto'
                       variant='ghost'
-                      size='sm'
-                      className='h-8 w-8 p-0'
+                      Icon={TrashIcon}
+                      solid
                       onClick={() => {
-                        console.log('Signature rejected!')
+                        console.log('Comic rejected!')
                       }}
-                    >
-                      <Trash2 className='h-4 w-4' />
-                    </Button>
+                    />
                   </div>
                 </TableCell>
               </TableRow>

@@ -34,17 +34,17 @@ export const SignedTraitChip: React.FC<Props> = ({
         signed ? 'bg-purple-100' : 'bg-grey-100',
         border && 'border-2 border-black',
         compact && 'w-7',
-        compactOnMobile && 'max-md:w-7',
+        compactOnMobile && 'max-lg:w-7',
         className
       )}
-      title={compact ? title : ''}
+      title={compact || compactOnMobile ? title : ''}
     >
       <Icon className='w-3 h-auto' />
       <Text
         as='span'
         styleVariant='body-small'
         fontWeight='semibold'
-        className={cn('font-obviouslyNarrow ml-0.5 -mb-0.5', compact && 'hidden', compactOnMobile && 'max-md:hidden')}
+        className={cn('font-obviouslyNarrow ml-0.5 -mb-0.5', compact && 'hidden', compactOnMobile && 'max-lg:hidden')}
       >
         {text}
       </Text>

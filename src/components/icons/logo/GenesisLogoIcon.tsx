@@ -1,8 +1,8 @@
 import React from 'react'
 import { SvgIconProps } from '@/lib/types'
 
-export const GenesisLogoIcon = React.forwardRef<SVGSVGElement, SvgIconProps>(({ className, ...props }, ref) => (
-  <svg ref={ref} {...props} className={className} fill='none' xmlns='http://www.w3.org/2000/svg'>
+export const GenesisLogoIcon = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
+  <svg ref={ref} {...props} fill='none' xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M26.9414 13.6994C26.9414 8.92511 29.5344 5.48438 34.5913 5.48438C38.7505 5.48438 41.061 7.84654 41.6261 11.5681L38.8797 12.1074C38.3404 9.51435 36.9793 8.10326 34.4638 8.10326C31.2557 8.10326 29.8687 10.4137 29.8687 13.6994C29.8687 16.6767 31.2815 18.9372 34.7981 18.9372C38.0579 18.9372 38.9831 17.4485 38.9831 15.8048V15.5998H34.4397V13.0068H41.757V21.196H38.9848V17.6277H38.9331C38.4197 19.7849 36.8277 21.4527 33.8246 21.4527C29.4862 21.4527 26.9449 18.2187 26.9449 13.6994H26.9414Z'
       fill='white'

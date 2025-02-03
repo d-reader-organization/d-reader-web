@@ -30,10 +30,9 @@ import { CopyButton } from '../shared/CopyButton'
 // TODO: edge cases: no results at all, no results from specified parameters
 // TODO: extract the logic from the SearchInput component
 // TODO: finish 'My Products' table
-// TODO: table responsiveness
-// TODO: decouple logic and components for usePaginationControls
 // TODO: use AvatarImage component instead of the one from Shadcn?
 // TODO: Sidebar Avatar is a dropdown for settings & logout
+// TODO: look into 'solid' issue: Received `false` for a non-boolean attribute `solid`.
 
 // TODO: replace chart with PieChart, Bars, or something similar
 // TODO: prepare API endpoints params (filter, sort, and pagination)
@@ -79,7 +78,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
         {title}
       </Text>
       <div className='space-y-4 bg-grey-600 text-grey-100 border-2 border-grey-400 py-4 rounded-xl'>
-        <div className='flex items-center justify-between px-4'>
+        <div className='flex items-center justify-between gap-2 px-4'>
           <div className='relative z-10'>
             {searchTerm ? (
               <button className='absolute top-3 left-3' onClick={clearSearch}>
@@ -88,7 +87,6 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
             ) : (
               <Search className='size-[18px] absolute top-3 left-3 text-grey-200' />
             )}
-
             <Input
               placeholder='Search'
               value={searchTerm}
@@ -103,17 +101,17 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
             <Button
               className='relative rounded-lg sm:px-0'
               variant='secondary'
-              Icon={FilterIcon}
+              Icon={Upload}
               onClick={() => {
-                console.log('Filter button clicked!')
+                downloadTransactionsReportCSV(transactions)
               }}
             />
             <Button
               className='relative rounded-lg sm:px-0'
               variant='secondary'
-              Icon={Upload}
+              Icon={FilterIcon}
               onClick={() => {
-                downloadTransactionsReportCSV(transactions)
+                console.log('Filter button clicked!')
               }}
             />
             <SortSelect />
@@ -124,12 +122,12 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
           <TableHeader>
             <TableRow>
               <TableHead>Transaction</TableHead>
-              <TableHead>Date</TableHead>
               <TableHead>Customer</TableHead>
               <TableHead>Source</TableHead>
               <TableHead>Product</TableHead>
-              <TableHead>Product link</TableHead>
+              {/* <TableHead>Product link</TableHead> */}
               <TableHead>Amount</TableHead>
+              <TableHead>Date</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -142,15 +140,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span title={new Date(transaction.confirmedAt).toLocaleString()}>
-                    {formatDistanceToNow(new Date(transaction.confirmedAt), {
-                      addSuffix: true,
-                      includeSeconds: true,
-                    })}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <div className='flex items-center gap-2'>
+                  <div className='flex items-center gap-2 text-nowrap'>
                     <Avatar className='h-6 w-6'>
                       <AvatarImage src={transaction.buyer?.avatar || PLACEHOLDER_AVATAR} />
                       <AvatarFallback>
@@ -167,17 +157,22 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
                 <TableCell>
                   <ProductTypeChip type={transaction.product} />
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <div className='flex items-center gap-2'>
                     <span className='w-20'>{shortenString(transaction.id)}</span>
                     <CopyButton variant='inline' clipboard={transaction.id} />
                   </div>
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <div className='flex items-center gap-2'>
                     <SolanaIcon className='w-4 h-auto' />
                     {transaction.amount}
                   </div>
+                </TableCell>
+                <TableCell>
+                  <span title={new Date(transaction.confirmedAt).toLocaleString()} className='text-nowrap'>
+                    {formatDistanceToNow(new Date(transaction.confirmedAt), { addSuffix: true, includeSeconds: true })}
+                  </span>
                 </TableCell>
               </TableRow>
             ))}

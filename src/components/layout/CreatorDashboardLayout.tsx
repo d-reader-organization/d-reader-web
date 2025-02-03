@@ -45,7 +45,7 @@ export const CreatorDashboardLayout: React.FC<Props> = async ({
           <Text as='h4' styleVariant='secondary-heading' className='w-full'>
             {title}
           </Text>
-          <ButtonLink href={RoutePath.Home} Icon={BackIcon} variant='outline' className='whitespace-nowrap'>
+          <ButtonLink href={RoutePath.Home} Icon={BackIcon} variant='outline' className='min-w-fit w-fit'>
             Back to App
           </ButtonLink>
         </div>

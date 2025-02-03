@@ -22,7 +22,7 @@ export const Footer: React.FC = () => (
       </div>
       <Divider className='md:mt-8 bg-grey-400' />
       <div className='flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 md:gap-16'>
-        <LogoSymbolIcon className='text-grey-200' />
+        <LogoSymbolIcon className='text-grey-200 w-4 h-auto' />
         <Text as='span' className='text-grey-200' styleVariant='body-normal'>
           &#169; Decentralized Reader, ltd
         </Text>
@@ -89,7 +89,7 @@ const MobileAppsColumn: React.FC = () => (
     </Text>
     <div className='flex items-center gap-4'>
       <Link href={LINK.GOOGLE_PLAY} target='_blank'>
-        <GooglePlayIcon />
+        <GooglePlayIcon className='h-10' />
       </Link>
       <div className='flex flex-col items-center relative'>
         <SoonTag className='absolute z-10 -top-3.5 bg-grey-100' />

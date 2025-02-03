@@ -14,7 +14,7 @@ import { Divider } from '../shared/Divider'
 import { RoutePath } from '@/enums/routePath'
 import { SidebarMenuLink } from './SidebarMenuLink'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
-import { StudioLogo } from '@/components/icons/logo/StudioLogo'
+import { StudioLogoIcon } from '@/components/icons/logo/StudioLogoIcon'
 import { HomeIcon } from '@/components/icons/sidebar/HomeIcon'
 import { ProductIcon } from '@/components/icons/sidebar/ProductIcon'
 import { WalletIcon } from '@/components/icons/sidebar/WalletIcon'
@@ -31,7 +31,7 @@ export const CreatorDashboardSidebar: React.FC<Props> = ({ activePath }) => {
   return (
     <Sidebar variant='inset' className='bg-grey-500 p-3'>
       <SidebarHeader className='w-full max-w-[180px] h-auto'>
-        <StudioLogo />
+        <StudioLogoIcon />
       </SidebarHeader>
       <SidebarContent className='py-6'>
         <SidebarMenu>
