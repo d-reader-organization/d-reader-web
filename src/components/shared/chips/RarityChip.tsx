@@ -1,4 +1,4 @@
-import { RarityIcon } from '@/components/icons/rarity/RarityIcon'
+import { RarityIcon } from '@/components/icons/theme/RarityIcon'
 import { Text } from '@/components/ui'
 import { ComicRarity } from '@/enums/comicRarity'
 import { cn } from '@/lib/utils'

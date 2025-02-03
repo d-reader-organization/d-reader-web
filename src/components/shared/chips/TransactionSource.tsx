@@ -21,7 +21,7 @@ export const TransactionSourceChip: React.FC<Props> = ({ className, source }) =>
     )}
   >
     <div className='flex items-center justify-center'>
-      <div className='flex flex-wrap w-2.5 h-auto mr-2'>{getTransactionSourceIcon(source)}</div>
+      <div className='flex flex-wrap w-2.5 h-auto mr-2 text-white'>{getTransactionSourceIcon(source)}</div>
       <Text
         as='span'
         styleVariant='body-xsmall'

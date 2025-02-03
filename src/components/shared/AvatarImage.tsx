@@ -17,7 +17,6 @@ const sizeVariants: Record<AvatarSize, string> = {
   large: 'w-14 h-14',
 }
 
-/** TODO: user this AvatarImage component or from Shadcn? Look into all <AvatarImage /> uses */
 export const AvatarImage: React.FC<AvatarImageProps> = ({ size = 'medium', alt = '', className, ...props }) => {
   return (
     <Image

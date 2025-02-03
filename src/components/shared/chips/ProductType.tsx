@@ -17,7 +17,7 @@ export const ProductTypeChip: React.FC<Props> = ({ className, type }) => (
     )}
   >
     <div className='flex items-center justify-center'>
-      <div className='flex flex-wrap w-2.5 h-auto mr-2'>{getProductTypeIcon(type)}</div>
+      <div className='flex flex-wrap w-2.5 h-auto mr-2 text-white'>{getProductTypeIcon(type)}</div>
       <Text
         as='span'
         styleVariant='body-xsmall'

@@ -4,7 +4,7 @@ import { RarityChip } from '@/components/shared/chips/RarityChip'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/Dialog'
 import { OwnedCollectibleComicCard } from './OwnedCollectibleComicCard'
 import { toast } from '../ui/toast'
-import { Circle, Copy, ExternalLink } from 'lucide-react'
+import { Circle, ExternalLink } from 'lucide-react'
 import { Text } from '../ui/Text'
 import { shortenAssetName, shortenSolanaAddress } from '@/utils/helpers'
 import { GenreTags } from '../shared/GenresList'
@@ -25,6 +25,7 @@ import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 import { CollectibleComic } from '@/models/asset'
 import { SignedIcon } from '../icons/digital-asset/SignedIcon'
+import { CopyButton } from '../shared/CopyButton'
 
 type Props = {
   collectibleComic: CollectibleComic
@@ -77,9 +78,8 @@ export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic
             <Link
               className='bg-yellow-300 w-full flex justify-center items-center h-10 sm:h-[52px] p-1 sm:p-4 rounded-xl'
               href={RoutePath.ReadComicIssue(collectibleComic.comicIssueId)}
-              prefetch={false}
             >
-              <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-600'>
+              <Text as='p' styleVariant='body-normal' fontWeight='bold' className='text-grey-600'>
                 Read
               </Text>
             </Link>
@@ -175,14 +175,6 @@ const AddressContainer: React.FC<AddressContainerProps> = ({ address, title }) =
         })}
       </Text>
     </div>
-    <button
-      className='flex justify-center items-center p-4 rounded-md bg-grey-300'
-      onClick={() => {
-        navigator.clipboard.writeText(address)
-        toast({ description: 'Copied to clipboard' })
-      }}
-    >
-      <Copy className='size-3 text-grey-100' />
-    </button>
+    <CopyButton variant='inline' clipboard={address} />
   </div>
 )

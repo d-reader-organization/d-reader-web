@@ -17,9 +17,9 @@ import Image from 'next/image'
 import { usePaginationControls } from '@/hooks/usePaginationControls'
 import { BasicCollectibleComic } from '@/models/asset'
 import { PencilIcon } from '@/components/icons/theme/PencilIcon'
-import { ChevronDown } from '@/components/icons/theme/ChevronDown'
 import { FilterIcon } from '@/components/icons/theme/FilterIcon'
-import { SortIcon } from '@/components/icons/theme/SortIcon'
+import { SortOrder } from '@/enums/sortOrder'
+import { useSortTagSelect } from '@/hooks/useSortTagSelect'
 
 interface SignatureRequest {
   asset: BasicCollectibleComic
@@ -89,6 +89,10 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
   const [tab, setTab] = useState<ProductsTab>(ProductsTab.Series)
   const isTableEmpty = myProducts.length === 0
   const { PaginationControls, skip, take } = usePaginationControls({ totalItems: myProducts.length })
+  const { SortSelect } = useSortTagSelect([
+    { tag: 'Newest', order: SortOrder.ASC, value: '1', label: 'Newest' },
+    { tag: 'Oldest', order: SortOrder.DESC, value: '2', label: 'Oldest' },
+  ])
 
   console.log('MY PRODUCTS: ', { skip, take, tab })
 
@@ -103,21 +107,21 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
             <Button
               variant={tab === ProductsTab.Series ? 'secondary' : 'ghost'}
               onClick={() => setTab(ProductsTab.Series)}
-              className='h-8 font-bold'
+              className='h-8 font-bold w-[110px]'
             >
               {ProductsTab.Series}
             </Button>
             <Button
               variant={tab === ProductsTab.Releases ? 'secondary' : 'ghost'}
               onClick={() => setTab(ProductsTab.Releases)}
-              className='h-8 font-bold'
+              className='h-8 font-bold w-[110px]'
             >
               {ProductsTab.Releases}
             </Button>
             <Button
               variant={tab === ProductsTab.DigitalArt ? 'secondary' : 'ghost'}
               onClick={() => setTab(ProductsTab.DigitalArt)}
-              className='h-8 font-bold'
+              className='h-8 font-bold w-[110px]'
             >
               {ProductsTab.DigitalArt}
             </Button>
@@ -133,32 +137,24 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
             >
               <FilterIcon className='h-4 w-4' />
             </Button>
-            <Button
-              variant='secondary'
-              className='w-max min-w-10 sm:px-2 rounded-lg flex justify-center items-center gap-2'
-              size='md'
-            >
-              <span className='max-md:hidden'>Sort by: Newest</span>
-              <SortIcon className='h-[20px] w-[20px] md:hidden' />
-              <ChevronDown className='h-4 w-4 max-md:hidden' />
-            </Button>
+            <SortSelect />
           </div>
         </div>
 
         <Table>
           <TableHeader>
-            <TableRow className='border-grey-400 bg-grey-500'>
-              <TableHead className='pl-4'>Asset</TableHead>
+            <TableRow>
+              <TableHead>Asset</TableHead>
               <TableHead>Date Requested</TableHead>
               <TableHead>User</TableHead>
               <TableHead>Traits</TableHead>
-              <TableHead className='pr-4'>Status</TableHead>
+              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {myProducts.map(({ asset, requestedAt, user }) => (
-              <TableRow key={asset.address} className='border-grey-400'>
-                <TableCell className='pl-4'>
+              <TableRow key={asset.address}>
+                <TableCell>
                   <div className='flex items-center gap-3'>
                     <Image
                       src={asset.image}
@@ -198,7 +194,7 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
                     <SignedTraitChip signed={asset.isSigned} compactOnMobile />
                   </div>
                 </TableCell>
-                <TableCell className='pr-4'>
+                <TableCell>
                   <div className='gap-2'>
                     <Button
                       variant='ghost'

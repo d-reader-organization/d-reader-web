@@ -10,7 +10,6 @@ export interface ButtonLinkProps
     VariantProps<typeof buttonVariants>,
     Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> {
   Icon?: React.FC<VariantSvgIconProps>
-  iconOnly?: boolean
 }
 
 /**
@@ -24,7 +23,6 @@ export interface ButtonLinkProps
  * @param {'sm' | 'md' | 'lg'} [props.size='md'] - The size of the link
  * @param {'left' | 'right'} [props.iconPosition='left'] - The position of the icon relative to the text
  * @param {Icon} [props.icon] - An optional icon component.
- * @param {boolean} [props.iconOnly] - Whether the link should only display an icon
  * @param {string} props.href - The URL to navigate to when the link is clicked
  *
  * @example
@@ -41,28 +39,13 @@ export interface ButtonLinkProps
  * <Link href="/contact" Icon={Mail}>Contact Us</Link>
  */
 const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
-  ({ className, variant, subVariant, size = 'md', iconPosition, Icon, iconOnly, href, children, ...props }, ref) => {
+  ({ className, variant, subVariant, size = 'md', Icon, href, children, ...props }, ref) => {
     const iconSize = size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-[18px] h-[18px]' : 'w-5 h-5'
 
-    const linkContent = (
-      <>
-        {Icon && <Icon className={cn(iconSize, 'shrink-0')} />}
-        {!iconOnly && children}
-      </>
-    )
-
     return (
-      <Link
-        className={cn(
-          buttonVariants({ variant, subVariant, size, iconPosition, className }),
-          iconOnly && 'min-w-9 px-0 py-0',
-          iconOnly && (size === 'sm' ? 'size-9' : size === 'md' ? 'size-[42px]' : 'size-[52px]')
-        )}
-        ref={ref}
-        href={href}
-        {...props}
-      >
-        {linkContent}
+      <Link className={cn(buttonVariants({ variant, subVariant, size, className }))} ref={ref} href={href} {...props}>
+        {Icon && <Icon className={cn(iconSize, 'shrink-0')} />}
+        {children}
       </Link>
     )
   }

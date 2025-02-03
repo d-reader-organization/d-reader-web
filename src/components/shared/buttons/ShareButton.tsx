@@ -1,7 +1,7 @@
 'use client'
 
+import { ShareIcon } from '@/components/icons/theme/ShareIcon'
 import { Button, toast } from '@/components/ui'
-import { Share2 } from 'lucide-react'
 import React from 'react'
 
 interface Props {
@@ -22,10 +22,10 @@ export const ShareButton: React.FC<Props> = ({ title = '', text = '' }) => {
         console.error('Error sharing content: ', err)
       }
     } else {
-      await navigator.clipboard.writeText(window.location.toString())
+      navigator.clipboard.writeText(window.location.toString())
       toast({ description: 'Copied to clipboard!', variant: 'success' })
     }
   }
 
-  return <Button onClick={handleShare} Icon={Share2} iconOnly variant='secondary' />
+  return <Button onClick={handleShare} Icon={ShareIcon} iconOnly variant='secondary' />
 }

@@ -68,7 +68,6 @@ export const OwnedComicCard: React.FC<Props> = ({ comic }) => {
           href={RoutePath.OwnedAssets(comic.slug)}
           prefetch={false}
           Icon={MoreHorizontalIcon}
-          iconOnly
         />
       </div>
     </CardBorderWrapper>

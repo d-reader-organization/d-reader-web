@@ -2,18 +2,19 @@
 
 import React, { useEffect, useState } from 'react'
 import { getTokenPrice, shortenString } from '@/utils/helpers'
-import { Button, Text, toast } from '../ui'
+import { Button, Text } from '../ui'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { ConnectButton } from '../shared/buttons/ConnectButton'
 import { disconnectUserWallet } from '@/app/lib/api/auth/mutations'
 import { Wallet } from '@/models/wallet'
 import { useRouter } from 'next/navigation'
-import { CopyIcon, Dot, MoreHorizontal, Plus } from 'lucide-react'
+import { Dot, MoreHorizontal, Plus } from 'lucide-react'
 import { PublicKey } from '@solana/web3.js'
 import { useToggle } from '@/hooks'
 import { Loader } from '../shared/Loader'
 import { useAuthorizeWalletContext } from '@/providers/AuthorizeWalletContextProvider'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/DropdownMenu'
+import { CopyButton } from '../shared/CopyButton'
 
 type Props = {
   wallets: Wallet[]
@@ -94,11 +95,6 @@ export const WalletItem: React.FC<{ index: number; wallet: Wallet; isActive: boo
     fetchWalletBalance()
   }, [connection, wallet.address])
 
-  const copyWalletAddress = () => {
-    navigator.clipboard.writeText(wallet.address)
-    toast({ description: 'Wallet address copied to clipboard!', variant: 'default' })
-  }
-
   const disconnectWallet = async () => {
     toggleDisconnectLoader()
     await Promise.all([disconnect(), disconnectUserWallet(wallet.address)])
@@ -116,11 +112,11 @@ export const WalletItem: React.FC<{ index: number; wallet: Wallet; isActive: boo
               Wallet {index}
             </Text>
           </div>
-          <div className='flex gap-4'>
-            <Text as='p' styleVariant='body-normal' className='text-grey-100 w-[100px]'>
+          <div className='flex gap-4 text-grey-100'>
+            <Text as='p' styleVariant='body-normal' className='w-[100px]'>
               {shortenString(wallet.address)}
             </Text>
-            <CopyIcon className='h-4 w-4 text-grey-100 self-center cursor-pointer' onClick={copyWalletAddress} />
+            <CopyButton variant='inline' clipboard={wallet.address} />
           </div>
         </div>
         <Text as='p' styleVariant='body-normal' fontWeight='medium' className='self-center'>

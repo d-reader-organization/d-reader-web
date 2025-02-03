@@ -1,13 +1,13 @@
 'use client'
 
 import React from 'react'
-import { Copy, Power, Wallet } from 'lucide-react'
-import { toast } from '@/components/ui/toast/use-toast'
+import { Power } from 'lucide-react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { ConnectButton } from '../../buttons/ConnectButton'
 import { shortenSolanaAddress } from '@/utils/helpers'
-import { ButtonIconWrapper } from '../../buttons/IconWrapper'
 import { WalletsIcon } from '@/components/icons/WalletsIcon'
+import { WalletIcon } from '@/components/icons/sidebar/WalletIcon'
+import { CopyButton } from '../../CopyButton'
 
 export const WalletSection: React.FC = () => {
   const { publicKey } = useWallet()
@@ -32,22 +32,14 @@ export const ConnectedWalletBox: React.FC<ConnectedWalletBoxProps> = ({ address 
   return (
     <div className='bg-grey-500 rounded-xl p-4 flex flex-col gap-2'>
       <span className='text-grey-200 text-base font-medium leading-[22.4px]'>Connected wallet</span>
-      <div className='h-10 sm:h-[52px] flex items-center justify-between'>
+      <div className='h-10 flex items-center justify-between'>
         <div className='flex gap-2'>
-          <Wallet size={24} />
+          <WalletIcon className='w-6 h-6' />
           <span className='text-base font-medium leading-[22.4px] text-white'>{shortenSolanaAddress({ address })}</span>
         </div>
         <div className='flex gap-1.5'>
-          <ButtonIconWrapper
-            className='p-2 sm:p-4'
-            onClick={() => {
-              navigator.clipboard.writeText(address)
-              toast({ description: 'Copied to clipboard' })
-            }}
-          >
-            <Copy className='sm:size-5' />
-          </ButtonIconWrapper>
-          <ConnectButton iconOnly Icon={Power} size='lg' className='min-w-fit px-2 py-0' />
+          <CopyButton variant='button' clipboard={address} />
+          <ConnectButton variant='outline' iconOnly Icon={Power} />
         </div>
       </div>
     </div>

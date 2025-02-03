@@ -7,8 +7,10 @@ import { ExpressInterestParams } from '@/models/transaction/expressInterest'
 import { TRANSACTION_QUERY_KEYS } from './keys'
 import { MultipleBuyParams } from '@/models/transaction/instantBuy'
 import { ListParams } from '@/models/transaction/list'
+import { TransactionHistoryItem } from '@/models/transaction/transactionHistory'
+import { TransactionHistoryParams } from '@/models/transaction/transactionHistory'
 
-const { TRANSACTION, MINT, USE_COMIC_ISSUE_ASSET, EXPRESS_INTEREST, DIRECT_BUY, LIST } = TRANSACTION_QUERY_KEYS
+const { TRANSACTION, MINT, USE_COMIC_ISSUE_ASSET, EXPRESS_INTEREST, DIRECT_BUY, LIST, HISTORY } = TRANSACTION_QUERY_KEYS
 
 export const fetchMintTransaction = async ({
   params,
@@ -97,4 +99,13 @@ export const fetchListAssetTransaction = async ({
     return { data: '', error: response.errorMessage }
   }
   return { data: response.data || '' }
+}
+
+export const fetchTransactionHistory = async (params: TransactionHistoryParams): Promise<TransactionHistoryItem[]> => {
+  const { data } = await fetchWrapper<TransactionHistoryItem[]>({
+    params,
+    path: `${TRANSACTION}/${HISTORY}`,
+    revalidateCacheInSeconds: 5,
+  })
+  return data ?? []
 }

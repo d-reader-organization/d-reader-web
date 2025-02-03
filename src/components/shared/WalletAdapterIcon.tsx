@@ -3,9 +3,10 @@ import type { DetailedHTMLProps, FC, ImgHTMLAttributes } from 'react'
 import React from 'react'
 
 export interface WalletIconProps extends DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
-  wallet: { adapter: Pick<Wallet['adapter'], 'icon' | 'name'> } | null
+  adapter: Pick<Wallet['adapter'], 'icon' | 'name'> | null
 }
 
-export const WalletIcon: FC<WalletIconProps> = ({ wallet, ...props }) => {
-  return wallet && <img src={wallet.adapter.icon} alt={`${wallet.adapter.name} icon`} {...props} />
+export const WalletAdapterIcon: FC<WalletIconProps> = ({ adapter, ...props }) => {
+  if (!adapter) return null
+  return <img src={adapter.icon} alt={`${adapter.name} icon`} {...props} />
 }

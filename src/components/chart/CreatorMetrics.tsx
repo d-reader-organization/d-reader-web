@@ -8,16 +8,17 @@ import MetricChart from './MetricChart'
 import { MoneyPouchIcon } from '@/components/icons/theme/MoneyPouchIcon'
 import { RoyaltyIcon } from '@/components/icons/theme/RoyaltyIcon'
 import { CoinsIcon } from '@/components/icons/theme/CoinsIcon'
-import { ChevronDown } from '@/components/icons/theme/ChevronDown'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 enum ChartsTab {
   Audience = 'Audience',
   Revenue = 'Revenue',
-  Collectors = 'Collectors',
+  // Collectors = 'Collectors',
 }
 
 export const CreatorMetrics: React.FC = () => {
-  const [tab, setTab] = useState<ChartsTab>(ChartsTab.Audience)
+  const [tab, setTab] = useState(ChartsTab.Audience)
+  const [selectedOption, setSelectedOption] = useState('1')
 
   return (
     <div className='w-full'>
@@ -27,42 +28,41 @@ export const CreatorMetrics: React.FC = () => {
             <Button
               variant={tab === ChartsTab.Audience ? 'secondary' : 'ghost'}
               onClick={() => setTab(ChartsTab.Audience)}
-              className='h-8 font-bold'
+              className='h-8 font-bold w-[100px]'
             >
               {ChartsTab.Audience}
             </Button>
             <Button
               variant={tab === ChartsTab.Revenue ? 'secondary' : 'ghost'}
               onClick={() => setTab(ChartsTab.Revenue)}
-              className='h-8 font-bold'
+              className='h-8 font-bold w-[100px]'
             >
               {ChartsTab.Revenue}
             </Button>
-            <Button
-              variant={tab === ChartsTab.Collectors ? 'secondary' : 'ghost'}
-              onClick={() => setTab(ChartsTab.Collectors)}
-              className='h-8 font-bold'
-            >
-              {ChartsTab.Collectors}
-            </Button>
           </div>
-          <div className='flex items-center gap-2'>
-            <Button
-              variant='secondary'
-              className='w-max min-w-10 sm:px-2 rounded-lg flex justify-center items-center gap-2'
-              size='md'
-            >
-              <span className='max-md:hidden'>Last 30 days</span>
-              <ChevronDown className='h-4 w-4' />
-            </Button>
-          </div>
+          <Select
+            value={selectedOption}
+            onValueChange={(value) => {
+              setSelectedOption(value)
+            }}
+          >
+            <SelectTrigger variant='secondary' asChild>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='1'>Last 7 days</SelectItem>
+              <SelectItem value='2'>Last 30 days</SelectItem>
+              <SelectItem value='3'>Last 3 months</SelectItem>
+              <SelectItem value='4'>Last 6 months</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <Card className='border-0 text-white'>
           <CardContent className='p-6'>
             <div className='mb-8 grid gap-4 md:grid-cols-3'>
-              <MetricCard Icon={MoneyPouchIcon} title='Total sales' value={285342} />
-              <MetricCard Icon={RoyaltyIcon} title='Total royalties' value={25342} />
-              <MetricCard Icon={CoinsIcon} title='Other' value={2342} />
+              <MetricCard Icon={MoneyPouchIcon} title='Total sales' value={25342} />
+              <MetricCard Icon={RoyaltyIcon} title='Total royalties' value={1824} />
+              <MetricCard Icon={CoinsIcon} title='Other' value={1200} />
             </div>
             <div className='h-[400px]'>
               <MetricChart />

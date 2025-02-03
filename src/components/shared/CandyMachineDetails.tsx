@@ -15,6 +15,7 @@ import { checkIfCouponIsActive, getTokenMap, getTotalItemsMintedByUser, TokenDet
 import { Divider } from './Divider'
 import { CouponsSection, CouponsSectionLoading } from '../mint/CouponsSection'
 import { useCandyMachineStore } from '@/providers/CandyMachineStoreProvider'
+import { Button } from '../ui/Button'
 
 const normalise = (value: number, MAX: number): number => (value * 100) / MAX
 type DetailsProps = { candyMachine: CandyMachine }
@@ -161,7 +162,7 @@ const UserDetails: React.FC<DetailsProps> = ({ candyMachine }) => {
 
 const ComicVault: React.FC = () => (
   <Expandable
-    className='bg-grey-400 border-transparent rounded-2xl max-w-[800px]'
+    className='bg-grey-400 border-transparent rounded-xl max-w-[800px]'
     title='Comic Vault'
     titleComponent={
       <div className='flex gap-2 items-center text-sm sm:text-base font-medium leading-5 text-grey-100'>
@@ -185,6 +186,8 @@ type PurchaseRowProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 export const PurchaseRow: React.FC<PurchaseRowProps> = ({ comicIssue, className, bounce = false, onMint }) => {
+  const { updateNumberOfItems, numberOfItems } = useCandyMachineStore((state) => state)
+
   return (
     <div
       className={cn(
@@ -192,33 +195,22 @@ export const PurchaseRow: React.FC<PurchaseRowProps> = ({ comicIssue, className,
         className
       )}
     >
-      <NumberOfItemsWidget />
+      <div className='max-h-[52px] min-w-[150px] p-2.5 flex justify-between items-center rounded-xl bg-grey-400'>
+        <Button
+          variant='inline'
+          className='bg-grey-500 w-9 h-9'
+          Icon={MinusIcon}
+          onClick={() => updateNumberOfItems(numberOfItems - 1)}
+        />
+        <span className='text-sm md:text-base font-medium leading-[19.6px] md:leading-[22.4px]'>{numberOfItems}</span>
+        <Button
+          variant='inline'
+          className='bg-grey-500 w-9 h-9'
+          Icon={PlusIcon}
+          onClick={() => updateNumberOfItems(numberOfItems + 1)}
+        />
+      </div>
       <MintButton comicIssue={comicIssue} bounce={bounce} onMint={onMint} />
     </div>
-  )
-}
-
-const NumberOfItemsWidget: React.FC = () => {
-  const { updateNumberOfItems, numberOfItems } = useCandyMachineStore((state) => state)
-  return (
-    <div className='max-h-[52px] min-w-[150px] p-2.5 flex justify-between items-center rounded-xl bg-grey-400'>
-      <ButtonIconWrapper onClick={() => updateNumberOfItems(numberOfItems - 1)}>
-        <MinusIcon className='size-4 md:size-5' />
-      </ButtonIconWrapper>
-      <span className='text-sm md:text-base font-medium leading-[19.6px] md:leading-[22.4px]'>{numberOfItems}</span>
-      <ButtonIconWrapper onClick={() => updateNumberOfItems(numberOfItems + 1)}>
-        <PlusIcon className='size-4 md:size-5' />
-      </ButtonIconWrapper>
-    </div>
-  )
-}
-
-type ButtonIconWrapperProps = { onClick: () => void } & React.PropsWithChildren
-
-const ButtonIconWrapper: React.FC<ButtonIconWrapperProps> = ({ onClick, children }) => {
-  return (
-    <button className='flex p-2 justify-center rounded-lg bg-grey-500' onClick={onClick}>
-      {children}
-    </button>
   )
 }

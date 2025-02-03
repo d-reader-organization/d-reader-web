@@ -1,26 +1,4 @@
-import { CommonRarityIcon } from '@/components/icons/rarity/CommonRarityIcon'
-import { EpicRarityIcon } from '@/components/icons/rarity/EpicRarityIcon'
-import { LegendaryRarityIcon } from '@/components/icons/rarity/LegendaryRarityIcon'
-import { RareRarityIcon } from '@/components/icons/rarity/RareRarityIcon'
-import { UncommonRarityIcon } from '@/components/icons/rarity/UncommonRarityIcon'
 import { ComicRarity } from '@/enums/comicRarity'
-
-export const getRarityIcon = (rarity: string) => {
-  switch (rarity.toLowerCase()) {
-    case 'common':
-      return <CommonRarityIcon />
-    case 'uncommon':
-      return <UncommonRarityIcon />
-    case 'rare':
-      return <RareRarityIcon />
-    case 'epic':
-      return <EpicRarityIcon />
-    case 'legendary':
-      return <LegendaryRarityIcon />
-    default:
-      return <CommonRarityIcon />
-  }
-}
 
 // had to split this in two functions so tailwind knows about color classes at build time
 export const getRarityColor = (rarity: ComicRarity) => {

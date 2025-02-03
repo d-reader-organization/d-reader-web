@@ -4,13 +4,12 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import { Copy, LoaderCircle, Search, Upload } from 'lucide-react'
+import { LoaderCircle, Search, Upload } from 'lucide-react'
 import React, { useState, useEffect, useCallback } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { TransactionSourceChip } from '../shared/chips/TransactionSource'
 import { formatDistanceToNow } from 'date-fns'
-import { toast } from '../ui/toast'
 import { shortenString, sleep } from '@/utils/helpers'
 import { ProductTypeChip } from '../shared/chips/ProductType'
 import { useDebouncedCallback } from 'use-debounce'
@@ -20,21 +19,29 @@ import { transactions } from '@/constants/dummyData'
 import { downloadTransactionsReportCSV } from '@/utils/csv'
 import { usePaginationControls } from '@/hooks/usePaginationControls'
 import { SolanaIcon } from '../icons/SolanaIcon'
-import { SortIcon } from '@/components/icons/theme/SortIcon'
-import { ChevronDown } from '@/components/icons/theme/ChevronDown'
 import { FilterIcon } from '@/components/icons/theme/FilterIcon'
 import { CloseIcon } from '@/components/icons/theme/CloseIcon'
+import { useSortTagSelect } from '@/hooks/useSortTagSelect'
+import { TransactionHistorySortTag } from '@/models/transaction/transactionHistory'
+import { SortOrder } from '@/enums/sortOrder'
+import { CopyButton } from '../shared/CopyButton'
 
-// TODO: prepare API endpoints params (filter, sort, and pagination)
 // TODO: change table data based on the selected tab
 // TODO: edge cases: no results at all, no results from specified parameters
-// TODO: filter (all?) tables by comics, episodes, and creators
 // TODO: extract the logic from the SearchInput component
-// TODO: fetch the full data report for CSV, unpaginated. Add the .splToken property to the TransactionHistoryItem
 // TODO: finish 'My Products' table
 // TODO: work on the chart table
 // TODO: table responsiveness
 // TODO: Does it make sense to kill the 'VariantSvgIconProps' type and lowercase 'Icon' props?
+// TODO: decouple logic and components for usePaginationControls
+// TODO: Icon Button on filter is 40px wide
+// TODO: use AvatarImage component instead of the one from Shadcn?
+// TODO: Sidebar Avatar is a dropdown for settings & logout
+
+// TODO: replace chart with PieChart, Bars, or something similar
+// TODO: prepare API endpoints params (filter, sort, and pagination)
+// TODO: filter (all?) tables by comics, episodes, and creators
+// TODO: fetch the full data report for CSV, unpaginated. Add the .splToken property to the TransactionHistoryItem
 type Props = { title: string }
 
 export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
@@ -42,10 +49,16 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
   const [isLoading, setIsLoading] = useState(false)
   const isTableEmpty = transactions.length === 0
   const { PaginationControls, skip, take } = usePaginationControls({ totalItems: transactions.length })
+  const { SortSelect } = useSortTagSelect([
+    { tag: TransactionHistorySortTag.Date, order: SortOrder.ASC, value: '1', label: 'Newest' },
+    { tag: TransactionHistorySortTag.Date, order: SortOrder.DESC, value: '2', label: 'Oldest' },
+    { tag: TransactionHistorySortTag.Amount, order: SortOrder.ASC, value: '3', label: 'Highest Am' },
+    { tag: TransactionHistorySortTag.Amount, order: SortOrder.DESC, value: '4', label: 'Lowest Am' },
+  ])
 
   useRerender(30000)
 
-  console.log('TRANSACTION HISTORY: ', { skip, take })
+  console.log('TRANSACTION HISTORY: ', { searchTerm, skip, take })
 
   const debouncedSearch = useDebouncedCallback(async (value) => {
     if (value) {
@@ -106,7 +119,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
                 downloadTransactionsReportCSV(transactions)
               }}
             />
-            <Button
+            {/* <Button
               variant='secondary'
               className='w-max min-w-10 sm:px-2 rounded-lg flex justify-center items-center gap-2'
               size='md'
@@ -114,39 +127,30 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
               <span className='max-md:hidden'>Sort by: Newest</span>
               <SortIcon className='h-[20px] w-[20px] md:hidden' />
               <ChevronDown className='h-4 w-4 max-md:hidden' />
-            </Button>
+            </Button> */}
+            <SortSelect />
           </div>
         </div>
 
         <Table>
           <TableHeader>
-            <TableRow className='border-grey-400 bg-grey-500'>
-              <TableHead className='pl-4'>Transaction</TableHead>
+            <TableRow>
+              <TableHead>Transaction</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Customer</TableHead>
               <TableHead>Source</TableHead>
               <TableHead>Product</TableHead>
               <TableHead>Product link</TableHead>
-              <TableHead className='pr-4'>Amount</TableHead>
+              <TableHead>Amount</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {transactions.map((transaction) => (
-              <TableRow key={transaction.id} className='border-grey-400 h-12'>
-                <TableCell className='font-medium pl-4'>
-                  <div className='flex items-center gap-2'>
+              <TableRow key={transaction.id} className='h-12'>
+                <TableCell>
+                  <div className='flex items-center font-medium gap-2'>
                     <span className='w-20'>{shortenString(transaction.id)}</span>
-                    <Button
-                      variant='ghost'
-                      size='sm'
-                      className='sm:min-w-2 p-0'
-                      onClick={() => {
-                        navigator.clipboard.writeText(transaction.id)
-                        toast({ description: 'Copied to clipboard' })
-                      }}
-                    >
-                      <Copy className='size-4' />
-                    </Button>
+                    <CopyButton variant='inline' clipboard={transaction.id} />
                   </div>
                 </TableCell>
                 <TableCell>
@@ -178,21 +182,11 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
                 <TableCell>
                   <div className='flex items-center gap-2'>
                     <span className='w-20'>{shortenString(transaction.id)}</span>
-                    <Button
-                      variant='ghost'
-                      size='sm'
-                      className='sm:min-w-2 p-0'
-                      onClick={() => {
-                        navigator.clipboard.writeText(transaction.id)
-                        toast({ description: 'Copied to clipboard' })
-                      }}
-                    >
-                      <Copy className='size-4' />
-                    </Button>
+                    <CopyButton variant='inline' clipboard={transaction.id} />
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div className='flex items-center gap-2 pr-4'>
+                  <div className='flex items-center gap-2'>
                     <SolanaIcon className='w-4 h-auto' />
                     {transaction.amount}
                   </div>

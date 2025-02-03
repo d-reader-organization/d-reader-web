@@ -54,10 +54,10 @@ export const usePaginationControls: PaginationControlsHook = ({ totalItems, defa
             setPageSize(Number(value))
           }}
         >
-          <SelectTrigger className='w-16 bg-grey-300 bg-opacity-30 border-t border-white border-opacity-10 text-grey-100'>
+          <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className='bg-grey-300 text-grey-100 outline-none'>
+          <SelectContent>
             <SelectItem value='5'>5</SelectItem>
             <SelectItem value='10'>10</SelectItem>
             <SelectItem value='20'>20</SelectItem>
