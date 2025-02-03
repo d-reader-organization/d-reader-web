@@ -11,7 +11,7 @@ export default async function PaymentsPage() {
 
   return (
     <CreatorDashboardLayout title='Payouts' activePath={RoutePath.DashboardPayments}>
-      <TransactionHistoryTable title='Transactions' />
+      <TransactionHistoryTable title='Recent transactions' />
     </CreatorDashboardLayout>
   )
 }

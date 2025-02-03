@@ -12,7 +12,7 @@ export default async function ProductsPage() {
 
   return (
     <CreatorDashboardLayout title='Products' activePath={RoutePath.DashboardProducts}>
-      <ProductsTable title='' />
+      <ProductsTable title='My comics & art' />
       <SignatureRequestsTable title='Signature requests' />
     </CreatorDashboardLayout>
   )

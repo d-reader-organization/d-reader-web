@@ -67,15 +67,13 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
           </div>
           <div className='flex items-center gap-2'>
             <Button
-              className='relative rounded-lg min-w-10 sm:px-0'
+              className='relative rounded-lg sm:px-0'
               variant='secondary'
-              size='md'
+              Icon={FilterIcon}
               onClick={() => {
-                console.log('Filter clicked')
+                console.log('Filter button clicked!')
               }}
-            >
-              <FilterIcon className='h-4 w-4' />
-            </Button>
+            />
             <SortSelect />
           </div>
         </div>

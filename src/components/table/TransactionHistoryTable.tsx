@@ -30,11 +30,8 @@ import { CopyButton } from '../shared/CopyButton'
 // TODO: edge cases: no results at all, no results from specified parameters
 // TODO: extract the logic from the SearchInput component
 // TODO: finish 'My Products' table
-// TODO: work on the chart table
 // TODO: table responsiveness
-// TODO: Does it make sense to kill the 'VariantSvgIconProps' type and lowercase 'Icon' props?
 // TODO: decouple logic and components for usePaginationControls
-// TODO: Icon Button on filter is 40px wide
 // TODO: use AvatarImage component instead of the one from Shadcn?
 // TODO: Sidebar Avatar is a dropdown for settings & logout
 
@@ -86,7 +83,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
           <div className='relative z-10'>
             {searchTerm ? (
               <button className='absolute top-3 left-3' onClick={clearSearch}>
-                <CloseIcon className='size-[18px] text-white' />
+                <CloseIcon className='size-[18px] text-white' solid />
               </button>
             ) : (
               <Search className='size-[18px] absolute top-3 left-3 text-grey-200' />
@@ -104,7 +101,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
           </div>
           <div className='flex items-center gap-2'>
             <Button
-              className='relative rounded-lg min-w-10 sm:px-0'
+              className='relative rounded-lg sm:px-0'
               variant='secondary'
               Icon={FilterIcon}
               onClick={() => {
@@ -112,22 +109,13 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
               }}
             />
             <Button
-              className='relative rounded-lg min-w-10 sm:px-0'
+              className='relative rounded-lg sm:px-0'
               variant='secondary'
               Icon={Upload}
               onClick={() => {
                 downloadTransactionsReportCSV(transactions)
               }}
             />
-            {/* <Button
-              variant='secondary'
-              className='w-max min-w-10 sm:px-2 rounded-lg flex justify-center items-center gap-2'
-              size='md'
-            >
-              <span className='max-md:hidden'>Sort by: Newest</span>
-              <SortIcon className='h-[20px] w-[20px] md:hidden' />
-              <ChevronDown className='h-4 w-4 max-md:hidden' />
-            </Button> */}
             <SortSelect />
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from 'react'
-import { SvgIconProps } from '@/lib/types'
+import { VariantSvgIconProps } from '@/lib/types'
 
-export const ShareIcon = React.forwardRef<SVGSVGElement, SvgIconProps>(
+export const ShareIcon = React.forwardRef<SVGSVGElement, VariantSvgIconProps>(
   ({ className, solid = false, ...props }, ref) => {
     return (
       <svg

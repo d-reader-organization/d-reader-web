@@ -42,7 +42,5 @@ export const useSortTagSelect: SortTagSelectHook = (options) => {
     </Select>
   )
 
-  return {
-    SortSelect,
-  }
+  return { SortSelect }
 }

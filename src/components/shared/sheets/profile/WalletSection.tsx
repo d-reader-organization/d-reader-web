@@ -34,7 +34,7 @@ export const ConnectedWalletBox: React.FC<ConnectedWalletBoxProps> = ({ address 
       <span className='text-grey-200 text-base font-medium leading-[22.4px]'>Connected wallet</span>
       <div className='h-10 flex items-center justify-between'>
         <div className='flex gap-2'>
-          <WalletIcon className='w-6 h-6' />
+          <WalletIcon className='w-6 h-6' solid />
           <span className='text-base font-medium leading-[22.4px] text-white'>{shortenSolanaAddress({ address })}</span>
         </div>
         <div className='flex gap-1.5'>

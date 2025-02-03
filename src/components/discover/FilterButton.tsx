@@ -18,7 +18,7 @@ export const FilterButton: React.FC<FilterButtonProps> = ({
   className,
 }) => (
   <Button
-    className={cn('relative rounded-[10px]', withLabel ? 'min-w-[100px]' : 'min-w-10 sm:px-0', className)}
+    className={cn('relative rounded-[10px]', withLabel ? 'min-w-[100px]' : 'sm:px-0', className)}
     variant='secondary'
     Icon={FilterIcon}
     size='md'
