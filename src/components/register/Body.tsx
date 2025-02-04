@@ -27,7 +27,7 @@ export const RegisterBody: React.FC = () => (
 )
 
 const InnerRegisterBody: React.FC = () => {
-  const [activeTab, setActiveTab] = React.useState<string>(TabValue.verifyEmail)
+  const [activeTab, setActiveTab] = React.useState<string>(TabValue.createAccount)
   const searchParams = useSearchParams()
   const isGoogleSignUp = (searchParams.get('sso') ?? '') === 'google'
   const redirectTo = searchParams.get(REDIRECT_TO_KEY)
