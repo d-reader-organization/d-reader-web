@@ -136,7 +136,6 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                       iconClassname='m-auto'
                       variant='ghost'
                       Icon={PencilIcon}
-                      solid
                       onClick={() => {
                         console.log('Comic signed!')
                       }}
@@ -145,7 +144,6 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                       iconClassname='m-auto'
                       variant='ghost'
                       Icon={TrashIcon}
-                      solid
                       onClick={() => {
                         console.log('Comic rejected!')
                       }}
