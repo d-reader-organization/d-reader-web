@@ -19,7 +19,7 @@ export const DailyDropButton: React.FC = () => {
       >
         <div className='absolute -z-10 inset-0 bg-[radial-gradient(50%_50%_at_50%_50%,#2F333E_0%,rgba(47,51,62,0.00)_78.77%)]'></div>
         <DialogTitle className='sr-only'>Spin the wheel</DialogTitle>
-        <SpinContent title='Daily drops' subtitle='Spin It to Win It - Your Daily Dose of Fortune!' />
+        <SpinContent title='Daily drops' />
         {/* <WinContent title='WOOHOOO!' /> */}
         {/* <LoseContent title='CONGRATS! YOU&#39;VE WON...ABSOLUTELY NOTHING!' /> */}
       </DialogContent>

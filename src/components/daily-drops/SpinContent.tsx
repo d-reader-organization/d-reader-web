@@ -1,32 +1,30 @@
 import { DailyDropContentTitle } from './ContentTitle'
 import { Text } from '@/components/ui/Text'
-import { Button } from '@/components/ui/Button'
 import { HorizontalSpinner } from './HorizontalSpinner'
-import { Circle, Clock4, RefreshCw } from 'lucide-react'
+import { Circle } from 'lucide-react'
+import { useFetchActiveWheel } from '@/api/wheel/queries/useFetchActiveWheel'
 
 type Props = {
   title: string
-  subtitle: string
 }
 
-export const SpinContent: React.FC<Props> = ({ title, subtitle }) => (
-  <div className='flex flex-col items-center gap-6 overflow-hidden'>
-    <DailyDropContentTitle title={title} />
-    <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-      {subtitle}
-    </Text>
-    <HorizontalSpinner />
-    {/* <div className='flex gap-2.5 items-center'>
-      <Button size='lg' variant='secondary' icon={Clock4}>
-        <Text as='span' styleVariant='body-normal' fontWeight='bold'>
-          19:33:21
+export const SpinContent: React.FC<Props> = ({ title }) => {
+  const { data: activeWheel } = useFetchActiveWheel()
+  return (
+    <div className='flex flex-col items-center gap-6 overflow-hidden'>
+      <DailyDropContentTitle title={title} />
+      <Text as='span' styleVariant='body-normal' fontWeight='medium' className='text-grey-100 text-center'>
+        Spin It to Win It - Your Daily Dose of Fortune!
+        <br /> You can claim your daily drop once
+        <Text as='span' styleVariant='body-normal' fontWeight='bold' className='text-white'>
+          &nbsp;every 24 hours.
         </Text>
-      </Button>
-      <Button size='lg' variant='secondary' icon={RefreshCw} iconOnly />
-    </div> */}
-    <LastWinnerRow />
-  </div>
-)
+      </Text>
+      <HorizontalSpinner />
+      <LastClaimRow />
+    </div>
+  )
+}
 
 const Trophy: React.FC = () => (
   <svg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -39,7 +37,7 @@ const Trophy: React.FC = () => (
   </svg>
 )
 
-const LastWinnerRow: React.FC = () => (
+const LastClaimRow: React.FC = () => (
   <div className='p-4 w-full'>
     <div className='bg-grey-600 rounded-xl border border-grey-300 p-3.5 relative flex justify-between items-center w-full'>
       <div className='flex gap-3'>
@@ -69,7 +67,7 @@ const LastWinnerRow: React.FC = () => (
       <div className='absolute -top-3 -left-[1px] inline-flex py-1.5 px-2.5 max-h-[30px] items-center gap-2 bg-grey-600 border border-grey-300 rounded-t-lg rounded-br-lg'>
         <Trophy />
         <Text as='span' styleVariant='body-small' fontWeight='bold' className='text-grey-50'>
-          Last Winner
+          Last claim
         </Text>
       </div>
     </div>
