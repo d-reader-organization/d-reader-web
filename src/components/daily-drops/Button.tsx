@@ -6,8 +6,18 @@ import { GiftIcon } from 'lucide-react'
 import { SpinContent } from './SpinContent'
 import { WinContent } from './WinContent'
 import { LoseContent } from './LoseContent'
+import { useDailyDropsStore } from '@/providers/DailyDropsStoreProvider'
+import { DailyDropContentType } from '@/stores/daily-drops-store'
 
 export const DailyDropButton: React.FC = () => {
+  const activeContent = useDailyDropsStore((state) => state.activeContent)
+
+  const content: Record<DailyDropContentType, React.ReactNode> = {
+    lose: <LoseContent title='CONGRATS! YOU&#39;VE WON...ABSOLUTELY NOTHING!' />,
+    spin: <SpinContent title='Daily drops' />,
+    win: <WinContent title='WOOHOOO!' />,
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -19,9 +29,7 @@ export const DailyDropButton: React.FC = () => {
       >
         <div className='absolute -z-10 inset-0 bg-[radial-gradient(50%_50%_at_50%_50%,#2F333E_0%,rgba(47,51,62,0.00)_78.77%)]'></div>
         <DialogTitle className='sr-only'>Spin the wheel</DialogTitle>
-        <SpinContent title='Daily drops' />
-        {/* <WinContent title='WOOHOOO!' /> */}
-        {/* <LoseContent title='CONGRATS! YOU&#39;VE WON...ABSOLUTELY NOTHING!' /> */}
+        {content[activeContent]}
       </DialogContent>
     </Dialog>
   )

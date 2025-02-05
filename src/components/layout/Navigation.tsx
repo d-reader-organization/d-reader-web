@@ -18,6 +18,7 @@ import { GenesisNavigation } from './GenesisNavigation'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { DailyDropButton } from '../daily-drops/Button'
 import { useWallet } from '@solana/wallet-adapter-react'
+import { DailyDropsStoreProvider } from '@/providers/DailyDropsStoreProvider'
 
 type Props = {
   me: User | null
@@ -66,7 +67,9 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
             </div> */}
           </div>
           <div className='flex items-center gap-2'>
-            <DailyDropButton />
+            <DailyDropsStoreProvider>
+              <DailyDropButton />
+            </DailyDropsStoreProvider>
             {me ? (
               <div className='flex items-center gap-8'>
                 <NavItemLink
@@ -93,7 +96,7 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
               </div>
             ) : (
               <Button variant='white' size='md' onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}>
-         {!!publicKey ? 'Sign in' : 'Connect'}
+                {!!publicKey ? 'Sign in' : 'Connect'}
               </Button>
             )}
           </div>

@@ -2,10 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { GroupPlaybackControls, motion, useAnimate, useMotionValue, useTransform } from 'framer-motion'
-import { Button } from '@/components/ui'
+import { Button, Text } from '@/components/ui'
 import { DailyDropCardType } from '@/lib/types'
 import { DailyDropCard } from './Card'
 import { sleep } from '@/utils/helpers'
+import { AlertCircle } from 'lucide-react'
+import { fetchMe } from '@/app/lib/api/user/queries'
+import { useDailyDropsStore } from '@/providers/DailyDropsStoreProvider'
+import { DailyDropContentType } from '@/stores/daily-drops-store'
 
 const CARDS: DailyDropCardType[] = [
   {
@@ -73,6 +77,7 @@ export const HorizontalSpinner: React.FC = () => {
   const [centeredIndex, setCenteredIndex] = useState<number>(initialCenteredIndex)
 
   const [scope, animate] = useAnimate<HTMLDivElement>()
+  const updateDailyDropContent = useDailyDropsStore((state) => state.updateActiveContent)
 
   useEffect(() => {
     sleep(500).then(() => {
@@ -148,8 +153,8 @@ export const HorizontalSpinner: React.FC = () => {
     }
 
     setIsSpinning(true)
-    const activeAnimation: GroupPlaybackControls = scope.animations.at(0)
-    activeAnimation.stop()
+    const activeAnimation: GroupPlaybackControls | undefined = scope.animations.at(0)
+    activeAnimation?.stop()
 
     animate(xTranslation, [isEvenCardsLength ? -defaultXPosition : 0, finalPosition], {
       ease: 'linear',
@@ -167,6 +172,10 @@ export const HorizontalSpinner: React.FC = () => {
 
         xTranslation.jump(-position)
         setIsSpinning(false)
+        const isLoser = cards[winnerIndex].id === 6 // for testing purpose
+        setTimeout(() => {
+          updateDailyDropContent(isLoser ? DailyDropContentType.lose : DailyDropContentType.win)
+        }, 700)
       },
     })
   }
@@ -184,9 +193,9 @@ export const HorizontalSpinner: React.FC = () => {
           <DailyDropCard card={card} index={index} centeredIndex={centeredIndex} key={`${card.id}-${index}`} />
         ))}
       </motion.div>
-      <Button size='lg' className='max-w-[220px] w-full' onClick={startSpinning} disabled={isSpinning}>
+      <SpinButton onClick={startSpinning} disabled={isSpinning}>
         Spin
-      </Button>
+      </SpinButton>
       {/* <div className='flex gap-2 items-center w-[220px]'>
         <Button size='lg' variant='secondary' icon={Clock4} className='w-full'>
           <Text as='span' styleVariant='body-normal' fontWeight='bold'>
@@ -195,6 +204,52 @@ export const HorizontalSpinner: React.FC = () => {
         </Button>
         <Button size='lg' iconClassname='fill-grey-100' variant='secondary' icon={PlayIcon} iconOnly />
       </div> */}
+    </div>
+  )
+}
+
+const SpinButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ onClick, disabled, children }) => {
+  const [isSignInRequired, setSignInRequired] = useState(false)
+  return (
+    <div className='flex relative w-full justify-center min-h-20'>
+      <Button
+        size='lg'
+        className='max-w-[220px] w-full'
+        onClick={async (event) => {
+          const me = await fetchMe()
+          if (!me) {
+            setSignInRequired(true)
+            await sleep(5000)
+            setSignInRequired(false)
+            return
+          }
+          onClick?.(event)
+        }}
+        disabled={disabled || isSignInRequired}
+      >
+        {children}
+      </Button>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={
+          isSignInRequired
+            ? {
+                opacity: [0, 1, 1, 0],
+                transition: {
+                  duration: 4,
+                  times: [0, 0.1, 0.9, 1],
+                  ease: 'linear',
+                },
+              }
+            : {}
+        }
+        className='p-2 flex justify-center items-center gap-2 rounded-md bg-red-500 bg-opacity-40 backdrop-blur-lg absolute bottom-0'
+      >
+        <AlertCircle className='size-4 text-red-500' />
+        <Text as='span' styleVariant='body-small' fontWeight='medium' className='text-grey-50'>
+          Sign up to use this feature
+        </Text>
+      </motion.div>
     </div>
   )
 }

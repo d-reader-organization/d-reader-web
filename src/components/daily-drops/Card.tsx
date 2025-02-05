@@ -29,7 +29,6 @@ export const DailyDropCard: React.FC<Props> = ({ card, index, centeredIndex }) =
         width: distance === 0 ? '220px' : distance === 1 ? '210px' : '200px',
         opacity: distance === 0 ? 1 : 0.5,
       }}
-      drag
       transition={{
         duration: 0.3,
         ease: 'linear',

@@ -6,18 +6,21 @@ import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { ComicRarity } from '@/enums/comicRarity'
 import Realistic from 'react-canvas-confetti/dist/presets/realistic'
-import { RarityChip } from '../shared/chips/Rarity'
 import { StateChip } from '../shared/chips/State'
 import { DailyDropContentTitle } from './ContentTitle'
+import { RarityChip } from '../shared/chips/RarityChip'
+import { ShareOnX } from './ShareOnX'
 
 type Props = {
   title: string
 }
 
 export const WinContent: React.FC<Props> = ({ title }) => {
+  const twitterIntentComicMinted = ''
   return (
-    <div className='flex flex-col items-center gap-8 overflow-hidden p-4'>
+    <div className='flex flex-col items-center gap-8 overflow-hidden p-2'>
       <Realistic autorun={{ speed: 0.5, duration: 1000 }} />
+      <ShareOnX />
       <DailyDropContentTitle title={title} />
       <div className='flex flex-wrap justify-center w-full max-w-[440px]'>
         <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>

@@ -18,6 +18,7 @@ import { NavItemLink } from './NavItemLink'
 import { ConnectedWalletBox } from '../shared/sheets/profile/WalletSection'
 import { GenesisMobileNavigation } from './GenesisMobileNavigation'
 import { DailyDropButton } from '../daily-drops/Button'
+import { DailyDropsStoreProvider } from '@/providers/DailyDropsStoreProvider'
 
 type Props = {
   user?: User | null
@@ -59,7 +60,9 @@ export const MobileNav: React.FC<Props> = ({ user }) => {
               <button onClick={() => setIsSearchOpen(!isSearchOpen)}>
                 <Search size={24} />
               </button>
-              <DailyDropButton />
+              <DailyDropsStoreProvider>
+                <DailyDropButton />
+              </DailyDropsStoreProvider>
               <Link href={RoutePath.Home} prefetch={false}>
                 <DReaderSymbol className='size-6 fill-white' />
               </Link>
