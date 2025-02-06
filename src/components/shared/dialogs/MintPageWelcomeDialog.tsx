@@ -1,6 +1,6 @@
 'use client'
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
 import React from 'react'
 import { Button } from '@/components/ui'
 import { useLocalStorage, useToggle } from '@/hooks'
@@ -18,7 +18,7 @@ export const MintPageWelcomeDialog: React.FC = () => {
 
   return (
     <Dialog open={mintPageWelcomeDialog} onOpenChange={toggleMintPageWelcomeDialog}>
-      <DialogContent className='max-w-md' hideCloseIcon>
+      <DialogContent className='max-w-md' hideCloseIcon aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle asChild>
             <Text styleVariant='primary-heading' as='h3'>
@@ -26,7 +26,7 @@ export const MintPageWelcomeDialog: React.FC = () => {
             </Text>
           </DialogTitle>
         </DialogHeader>
-        <DialogDescription className='flex flex-col gap-2 w-full text-left'>
+        <div className='flex flex-col gap-2 w-full text-left'>
           <div className='rounded-xl bg-grey-400 p-4 gap-4 flex max-w-[437px]'>
             <div className='size-5'>✊</div>
             <div className='inline-block gap-2 w-full max-w-[369px]'>
@@ -76,7 +76,7 @@ export const MintPageWelcomeDialog: React.FC = () => {
               </Text>
             </div>
           </div>
-        </DialogDescription>
+        </div>
         <Button variant='white' className='w-full' onClick={onClick}>
           I understand!
         </Button>

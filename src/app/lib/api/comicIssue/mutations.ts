@@ -20,7 +20,6 @@ export const rateComicIssue = async ({
     path: `${COMIC_ISSUE}/${RATE}/${id}`,
     body: request,
     method: 'PATCH',
-    isTextResponse: true,
   })
   return response.errorMessage ?? ''
 }

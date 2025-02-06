@@ -62,7 +62,7 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
             </Text>
           </DialogTitle>
         </DialogHeader>
-        <DialogDescription>
+        <div className='flex flex-col items-center'>
           Tap a star to give a rating!
           <div className='flex justify-center gap-3 mt-4 [&>*]:text-yellow-300'>
             {[1, 2, 3, 4, 5].map((star) => (
@@ -75,7 +75,7 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
               />
             ))}
           </div>
-        </DialogDescription>
+        </div>
         <div className='flex w-full gap-2 mt-4'>
           <Button variant='secondary' className='w-full' type='button' onClick={toggleDialog}>
             Cancel

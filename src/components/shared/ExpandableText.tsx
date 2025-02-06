@@ -6,10 +6,10 @@ import { cn } from '@/lib/utils'
 type ExpandableTextProps = {
   text: string
   maxLines?: number
+  variant?: 'white' | 'yellow'
 } & React.HTMLAttributes<HTMLDivElement>
 
-// TODO: rely on Collapsible and Text, add property for yellow vs white colored 'view more'
-export const ExpandableText = ({ className, text, maxLines = 2 }: ExpandableTextProps) => {
+export const ExpandableText = ({ className, text, maxLines = 2, variant = 'yellow' }: ExpandableTextProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [showToggle, setShowToggle] = useState(false)
   const textRef = useRef<HTMLParagraphElement>(null)
@@ -40,7 +40,7 @@ export const ExpandableText = ({ className, text, maxLines = 2 }: ExpandableText
       {showToggle && (
         <button
           onClick={toggleExpand}
-          className='flex items-center text-yellow-300'
+          className={cn('flex items-center', variant === 'yellow' ? 'text-yellow-300' : 'text-white')}
           aria-expanded={isExpanded}
           aria-controls='expandable-text'
         >
