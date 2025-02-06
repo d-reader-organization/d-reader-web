@@ -68,7 +68,13 @@ export const updateUser = async (id: string | number, request: UpdateUserData): 
   return response
 }
 
-export const updateUserAvatar = async (id: string | number, request: FormData): Promise<{ errorMessage?: string }> => {
+export const updateUserAvatar = async ({
+  id,
+  request,
+}: {
+  id: string | number
+  request: FormData
+}): Promise<{ errorMessage?: string }> => {
   const accessToken = await getAccessToken()
   const response = await fetchWrapper<User>({
     accessToken,
@@ -91,10 +97,13 @@ export const removeUserProfilePhoto = async (id: string | number): Promise<{ err
   return response
 }
 
-export const updateUserPassword = async (
-  id: string | number,
+export const updateUserPassword = async ({
+  id,
+  request,
+}: {
+  id: string | number
   request: UpdatePasswordData
-): Promise<{ errorMessage?: string }> => {
+}): Promise<{ errorMessage?: string }> => {
   const accessToken = await getAccessToken()
   const response = await fetchWrapper<void>({
     accessToken,

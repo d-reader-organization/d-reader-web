@@ -13,8 +13,14 @@ import { onSubmitPreventFormListener } from '@/app/lib/utils/submitFormWithPreve
 const SubmitButton: React.FC = () => {
   const { pending } = useFormStatus()
   return (
-    <Button size='lg' className='w-full max-sm:h-[42px]' type='submit' aria-disabled={pending}>
-      {pending ? <LoaderIcon /> : <p>Login</p>}
+    <Button
+      Icon={pending ? LoaderIcon : undefined}
+      size='lg'
+      className='w-full max-sm:h-[42px]'
+      type='submit'
+      aria-disabled={pending}
+    >
+      {pending ? '' : 'Login'}
     </Button>
   )
 }

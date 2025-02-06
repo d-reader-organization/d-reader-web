@@ -110,6 +110,7 @@ const FileUpload = forwardRef<FileUploadRef, Props>(function FileUpload(
         <Button
           variant='secondary'
           size='md'
+          Icon={isUploading ? LoaderIcon : undefined}
           className={`relative overflow-hidden ${isRemoving ? 'disabled:opacity-80' : ''}`}
         >
           <input
@@ -121,7 +122,7 @@ const FileUpload = forwardRef<FileUploadRef, Props>(function FileUpload(
             accept='image/*'
             ref={fileInputRef}
           />
-          {isUploading ? <LoaderIcon /> : isPhotoSelected && !isUploading ? 'Change photo' : 'Upload photo'}
+          {isUploading ? '' : isPhotoSelected && !isUploading ? 'Change photo' : 'Upload photo'}
         </Button>
       </div>
     </div>

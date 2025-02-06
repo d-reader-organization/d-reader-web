@@ -49,8 +49,14 @@ export const ResetPasswordForm: React.FC<Props> = ({ verificationToken }) => {
 const SubmitButton: React.FC = () => {
   const { pending } = useFormStatus()
   return (
-    <Button size='lg' className='w-fit min-w-36 px-10' type='submit' aria-disabled={pending}>
-      {pending ? <LoaderIcon /> : <p>Update</p>}
+    <Button
+      Icon={pending ? LoaderIcon : undefined}
+      size='lg'
+      className='w-fit min-w-36 px-10'
+      type='submit'
+      aria-disabled={pending}
+    >
+      {pending ? '' : 'Update'}
     </Button>
   )
 }
