@@ -25,7 +25,6 @@ export const DiscoverQueryBar: React.FC = () => {
   const activeFiltersCount = useDiscoverStoreActiveFiltersCount()
   const clear = useDiscoverQueryStore((state) => state.clear)
 
-  // TODO: clear should also clear the search input
   return (
     <div className='flex'>
       <QuerySheet isOpen={isFilterSheetOpen} toggleFilterSheet={toggleFilterSheet} />

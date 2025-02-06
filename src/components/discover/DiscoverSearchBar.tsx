@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { Input } from '@/components/ui/Input'
 import { cn } from '@/lib/utils'
 import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
@@ -14,24 +14,16 @@ import { Button } from '../ui/Button'
 type Props = React.InputHTMLAttributes<HTMLInputElement>
 
 export const DiscoverSearchBar: React.FC<Props> = ({ className }) => {
-  const searchRef = useRef<HTMLDivElement>(null)
-  const searchTerm = useDiscoverQueryStore((state) => state.comicParams.search)
-  const setStoreSearchTerm = useDiscoverQueryStore((state) => state.updateSearch)
-  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || undefined)
+  const { clear, searchInputValue, updateSearchInputValue, updateSearchParam } = useDiscoverQueryStore((state) => state)
   const pathname = usePathname()
 
   const debouncedSetSearchTerm = useDebouncedCallback((value: string | undefined) => {
-    setStoreSearchTerm(value)
+    updateSearchParam(value)
   }, 300)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalSearchTerm(e.target.value)
+    updateSearchInputValue(e.target.value)
     debouncedSetSearchTerm(e.target.value)
-  }
-
-  const handleClearInput = () => {
-    setLocalSearchTerm('')
-    setStoreSearchTerm(undefined)
   }
 
   const getPlaceholder = React.useCallback(() => {
@@ -42,18 +34,18 @@ export const DiscoverSearchBar: React.FC<Props> = ({ className }) => {
   }, [pathname])
 
   return (
-    <div className={cn('relative z-10 w-full', className)} ref={searchRef}>
+    <div className={cn('relative z-10 w-full', className)}>
       <Button
-        Icon={localSearchTerm ? CloseIcon : SearchIcon}
+        Icon={searchInputValue ? CloseIcon : SearchIcon}
         variant='inline'
         iconOnly
         className='absolute top-3 left-3'
-        disabled={!localSearchTerm}
-        onClick={handleClearInput}
+        disabled={!searchInputValue}
+        onClick={clear}
       />
       <Input
         placeholder={getPlaceholder()}
-        value={localSearchTerm}
+        value={searchInputValue}
         className='pl-10 pr-10 w-full max-h-[42px]'
         onChange={handleInputChange}
       />
