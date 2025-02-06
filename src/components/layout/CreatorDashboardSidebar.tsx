@@ -1,4 +1,3 @@
-import { Plus } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
@@ -13,7 +12,6 @@ import {
 import { Divider } from '../shared/Divider'
 import { RoutePath } from '@/enums/routePath'
 import { SidebarMenuLink } from './SidebarMenuLink'
-import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { StudioLogoIcon } from '@/components/icons/logo/StudioLogoIcon'
 import { HomeIcon } from '@/components/icons/sidebar/HomeIcon'
 import { ProductIcon } from '@/components/icons/sidebar/ProductIcon'
@@ -22,12 +20,18 @@ import { ProfileIcon } from '@/components/icons/sidebar/ProfileIcon'
 import { HelpCenterIcon } from '@/components/icons/sidebar/HelpCenterIcon'
 import { SettingsIcon } from '@/components/icons/sidebar/SettingsIcon'
 import { SidebarLogoutButton } from '../shared/buttons/SidebarLogoutButton'
+import { fetchMe } from '@/app/lib/api/user/queries'
+import { PlusIcon } from '../icons/theme/PlusIcon'
 
 type Props = {
   activePath?: string
 }
 
-export const CreatorDashboardSidebar: React.FC<Props> = ({ activePath }) => {
+export async function CreatorDashboardSidebar({ activePath }: Props) {
+  const me = await fetchMe()
+
+  if (!me) return null
+
   return (
     <Sidebar variant='inset' className='bg-grey-500 p-3'>
       <SidebarHeader className='w-full max-w-[180px] h-auto'>
@@ -79,7 +83,7 @@ export const CreatorDashboardSidebar: React.FC<Props> = ({ activePath }) => {
 
         <Divider className='my-6' />
         <Button
-          Icon={Plus}
+          Icon={PlusIcon}
           className='w-full bg-yellow-300 text-base font-bold text-black border-5 border-yellow-400 hover:bg-yellow-200 hover:border-yellow-300'
         >
           Create New
@@ -103,11 +107,11 @@ export const CreatorDashboardSidebar: React.FC<Props> = ({ activePath }) => {
 
         <Button variant='outline' className='w-full flex flex-row justify-start gap-2 rounded-lg hover:bg-grey-700'>
           <Avatar className='h-8 w-8'>
-            <AvatarImage src={PLACEHOLDER_AVATAR} />
+            <AvatarImage src={me.avatar} />
             <AvatarFallback>JS</AvatarFallback>
           </Avatar>
           <Text styleVariant='body-small' as='span' fontWeight='bold' className='text-grey-100'>
-            John Smith
+            {me.displayName}
           </Text>
         </Button>
       </SidebarFooter>

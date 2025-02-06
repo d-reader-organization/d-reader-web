@@ -14,16 +14,18 @@ import { useFetchTwitterIntentComicMinted } from '@/api/twitter/queries/useFetch
 import { UtmSource } from '@/models/twitter/twitterIntentComicMintedParams'
 import { RarityChip } from '../chips/RarityChip'
 import { AssetEventData } from '@/models/asset/assetMintEvent'
-import { Arrow } from '../Arrow'
 import useEmblaCarousel from 'embla-carousel-react'
 import { fetchUseComicIssueAssetTransaction } from '@/app/lib/api/transaction/queries'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { toast } from '@/components/ui'
 import { shortenAssetName, sleep } from '@/utils/helpers'
 import { useRouter } from 'next/navigation'
-import { Loader } from 'lucide-react'
 import { LOCAL_STORAGE } from '@/constants/general'
 import { useAuthStore } from '@/providers/AuthStoreProvider'
+import { ChevronLeftIcon } from '@/components/icons/theme/ChevronLeftIcon'
+import { cn } from '@/lib/utils'
+import { ChevronRightIcon } from '@/components/icons/theme/ChevronRightIcon'
+import { LoaderIcon } from '@/components/icons/theme/LoaderIcon'
 
 type Props = {
   comicIssue: ComicIssue
@@ -114,19 +116,21 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
   return (
     <>
       <Dialog open={open} onOpenChange={toggleDialog}>
-        <DialogContent className='w-full h-full overflow-y-auto' showCloseIcon={false}>
+        <DialogContent className='w-full h-full overflow-y-auto' hideCloseIcon>
           <div className='fixed top-0 left-0 w-full h-full min-h-[850px] -z-[1]'>
             <video autoPlay className='w-full h-full min-h-[850px] object-cover' loop muted>
               <source src='/assets/animations/mint-loop.mp4' type='video/mp4' />
             </video>
           </div>
           <div className='relative flex items-center sm:gap-[24px] w-full xs:gap-[4px] xs:max-w-[330px] sm:max-w-[480px] mx-auto'>
-            <Arrow
-              arrowOrientation='LEFT'
-              className={hideArrows ? 'invisible' : ''}
+            <Button
+              variant='secondary'
+              className={cn('size-6', hideArrows && 'invisible')}
               onClick={() => {
                 emblaApi?.scrollPrev()
               }}
+              Icon={ChevronLeftIcon}
+              iconOnly
             />
             <div className='xs:max-w-[250px] sm:max-w-[350px] flex flex-col items-center gap-6 relative justify-between mx-auto overflow-y-scroll'>
               <p className='text-grey-100 text-base sm:text-[16px] xs:text-[14px] leading-5 text-center'>
@@ -165,7 +169,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
                       await handleUnwrap(assets[selectedIndex])
                     }}
                   >
-                    {isUnwrapTransactionLoading ? <Loader /> : 'Unwrap & Read'}
+                    {isUnwrapTransactionLoading ? <LoaderIcon /> : 'Unwrap & Read'}
                   </Button>
                 ) : (
                   <ButtonLink
@@ -187,12 +191,14 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
                 </Button>
               </div>
             </div>
-            <Arrow
-              arrowOrientation='RIGHT'
-              className={hideArrows ? 'invisible' : ''}
+            <Button
+              variant='secondary'
+              className={cn('size-6', hideArrows && 'invisible')}
               onClick={() => {
                 emblaApi?.scrollNext()
               }}
+              Icon={ChevronRightIcon}
+              iconOnly
             />
           </div>
         </DialogContent>

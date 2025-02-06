@@ -1,10 +1,10 @@
 import { Text } from '../ui/Text'
 import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
-import { ArrowRightIcon } from 'lucide-react'
 import { PrivacyConsentSwitch } from './ConsentSwitch'
 import { USER_CONSENT } from '@/constants/general'
 import { ConsentType } from '@/models/user'
+import { ArrowRightIcon } from '../icons/theme/ArrowRightIcon'
 
 type Props = {
   initialMarketingConsentGiven: boolean
@@ -52,7 +52,7 @@ export const PrivacySettings: React.FC<Props> = ({
         <Text as='h6' styleVariant='secondary-heading'>
           Revise Privacy Policy
         </Text>
-        <ArrowRightIcon size={20} />
+        <ArrowRightIcon className='size-5' />
       </Link>
     </div>
   )

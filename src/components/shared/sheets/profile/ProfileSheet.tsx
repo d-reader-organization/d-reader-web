@@ -13,6 +13,7 @@ type ProfileSheetProps = {
   triggerOpenChange: (open: boolean) => void
 }
 
+// TODO: kill this and use the MobileNavigation Sheet approach
 export const ProfileSheet: React.FC<ProfileSheetProps> = ({ isOpen, user, triggerOpenChange }) => (
   <div className='max-md:hidden'>
     <Sheet open={isOpen} onOpenChange={triggerOpenChange}>
@@ -20,7 +21,6 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({ isOpen, user, trigge
       <SheetContent
         aria-describedby={undefined}
         side='right'
-        showCloseIcon
         className='p-6 flex flex-col h-full w-full bg-grey-600 shadow-[0px_0px_30px_0px_rgba(0,0,0,0.50)] max-w-[420px]'
         onInteractOutside={() => {
           triggerOpenChange(false)

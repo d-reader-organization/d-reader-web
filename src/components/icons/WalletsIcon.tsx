@@ -1,10 +1,10 @@
 import React from 'react'
 import { SvgIconProps } from '@/lib/types'
 
-export const WalletsIcon = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
+export const WalletsIcon = React.forwardRef<SVGSVGElement, SvgIconProps>(({ className }, ref) => (
   <svg
     ref={ref}
-    {...props}
+    className={className}
     viewBox='0 0 316 109'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'

@@ -10,8 +10,8 @@ import { Badge } from '@/components/shared/Badge'
 import Link from 'next/link'
 import { getSlideFallbackUrl } from '@/utils/helpers'
 import { Text } from '../Text'
-import { CircleIcon } from 'lucide-react'
 import { Carousel, CarouselContent, CarouselItem } from './Carousel'
+import { CircleIcon } from '@/components/icons/theme/CircleIcon'
 
 type Props = {
   slides: CarouselSlide[]
@@ -155,7 +155,7 @@ const ChipSection: React.FC<ChipSectionProps> = ({ tags }) => (
   <div className='flex items-center gap-2'>
     {tags.map((tag) => (
       <Badge key={tag.title} className='gap-2 items-center'>
-        <CircleIcon className='text-white size-3' fill='#fff' />
+        <CircleIcon className='text-white size-3' />
         <Text as='span' styleVariant='body-normal' fontWeight='bold' className='uppercase'>
           {tag.title}
         </Text>

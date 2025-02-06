@@ -1,11 +1,11 @@
 import { VariantSvgIconProps } from '@/lib/types'
 import React from 'react'
 
-export const CloseIcon = React.forwardRef<SVGSVGElement, VariantSvgIconProps>(({ solid = false, ...props }, ref) => {
+export const CloseIcon = React.forwardRef<SVGSVGElement, VariantSvgIconProps>(({ solid = false, className }, ref) => {
   return (
     <svg
       ref={ref}
-      {...props}
+      className={className}
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill={solid ? 'currentColor' : 'none'}

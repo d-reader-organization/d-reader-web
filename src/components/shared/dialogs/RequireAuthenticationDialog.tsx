@@ -3,24 +3,24 @@
 import { Text } from '@/components/ui/Text'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/Dialog'
 import { GoogleSignInButton } from '../buttons/GoogleSignInButton'
-import { Mail } from 'lucide-react'
 import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Divider } from '../Divider'
 import { usePathname } from 'next/navigation'
 import { withRedirect } from '@/lib/utils'
+import { MailIcon } from '@/components/icons/theme/MailIcon'
 
 type Props = {
-  showDialog?: boolean
+  open?: boolean
   closeDialog: () => void
 }
 
-export const RequireAuthDialog: React.FC<Props> = ({ showDialog = false, closeDialog }) => {
+export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }) => {
   const pathname = usePathname()
   return (
     <Dialog
-      open={showDialog}
+      open={open}
       onOpenChange={(open) => {
         if (!open) {
           closeDialog()
@@ -28,7 +28,7 @@ export const RequireAuthDialog: React.FC<Props> = ({ showDialog = false, closeDi
       }}
     >
       <DialogContent
-        showCloseIcon={false}
+        hideCloseIcon
         aria-describedby={undefined}
         className='py-6 px-4 flex flex-col items-center gap-4 sm:gap-6 bg-grey-500 border-t border-t-grey-300 rounded-2xl max-w-[360px]'
       >
@@ -44,7 +44,8 @@ export const RequireAuthDialog: React.FC<Props> = ({ showDialog = false, closeDi
               href={withRedirect(RoutePath.Register, pathname)}
               variant='outline'
               size='lg'
-              Icon={Mail}
+              Icon={MailIcon}
+              solid
             >
               Continue with Email
             </ButtonLink>

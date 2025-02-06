@@ -8,6 +8,7 @@ type ExpandableTextProps = {
   maxLines?: number
 } & React.HTMLAttributes<HTMLDivElement>
 
+// TODO: rely on Collapsible and Text, add property for yellow vs white colored 'view more'
 export const ExpandableText = ({ className, text, maxLines = 2 }: ExpandableTextProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [showToggle, setShowToggle] = useState(false)

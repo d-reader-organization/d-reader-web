@@ -3,19 +3,24 @@
 import { CandyMachine } from '@/models/candyMachine'
 import React from 'react'
 import { ProgressBar } from './ProgressBar'
-import { CurrencyExpandable, Expandable } from './Expandable'
 import { MintButton } from './buttons/MintButton'
 import { ComicIssue } from '@/models/comicIssue'
 import { CouponCurrencySetting } from '@/models/candyMachine/candyMachineCoupon'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { LockKeyholeIcon, MinusIcon, PlusIcon } from 'lucide-react'
+import { LockIcon } from '@/components/icons/theme/LockIcon'
 import { Skeleton } from '../ui/Skeleton'
 import { checkIfCouponIsActive, getTokenMap, getTotalItemsMintedByUser, TokenDetail } from '@/utils/mint'
 import { Divider } from './Divider'
 import { CouponsSection, CouponsSectionLoading } from '../mint/CouponsSection'
 import { useCandyMachineStore } from '@/providers/CandyMachineStoreProvider'
 import { Button } from '../ui/Button'
+import { Text } from '../ui/Text'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
+import { useCountdown } from '@/hooks/useCountdown'
+import { ChevronDownIcon } from '../icons/theme/ChevronDownIcon'
+import { MinusIcon } from '../icons/theme/MinusIcon'
+import { PlusIcon } from '../icons/theme/PlusIcon'
 
 const normalise = (value: number, MAX: number): number => (value * 100) / MAX
 type DetailsProps = { candyMachine: CandyMachine }
@@ -38,7 +43,23 @@ export const CandyMachineDetails: React.FC<CandyMachineDetailsProps> = ({ comicI
             <CouponDetails />
             <UserDetails candyMachine={candyMachine} />
             <ProgressBar value={normalise(candyMachine.itemsMinted, candyMachine.supply)} />
-            <ComicVault />
+
+            {/* Comic Vault */}
+            <Collapsible className='bg-grey-400 border-transparent rounded-xl'>
+              <CollapsibleTrigger className='w-full p-3'>
+                <div className='flex gap-2 items-center w-full'>
+                  <LockIcon className='size-4' />
+                  <span className='text-base font-medium leading-[22.4px] text-grey-100'>Comic Vault</span>
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent asChild className='px-3 pb-3'>
+                <Text as='p' styleVariant='body-normal'>
+                  Comic Vault stores portion of the supply of each issue to later use in giveaways & other activities
+                  where we reward loyal users.
+                </Text>
+              </CollapsibleContent>
+            </Collapsible>
+
             <PurchaseRow comicIssue={comicIssue} bounce={bounce} onMint={onMint} />
           </div>
         )}
@@ -80,38 +101,64 @@ const CouponDetails: React.FC = () => {
     supportedTokens = [],
     updateSelectedCurrency,
   } = useCandyMachineStore((state) => state)
+  const { countdownString } = useCountdown({ expirationDate: selectedCoupon?.startsAt })
 
   if (!selectedCoupon) {
     return null
   }
 
-  const prices = selectedCoupon.prices
-
-  const tokenMap = getTokenMap(selectedCoupon.prices, supportedTokens)
+  const { prices } = selectedCoupon
+  const tokenMap = getTokenMap(prices, supportedTokens)
   const selectedCurrencySetting = selectedCurrency ? tokenMap.get(selectedCurrency.label) : undefined
-  return prices.length && selectedCurrencySetting ? (
-    <CurrencyExpandable
-      disableExpand={prices.length === 1}
-      isLive={checkIfCouponIsActive(selectedCoupon)}
-      startsAt={selectedCoupon.startsAt}
-      selectedCurrencySetting={selectedCurrencySetting}
-    >
-      {prices.map((setting) => {
-        const token = tokenMap.get(setting.label)
-        if (!token) return null
-        return (
-          <CurrencyRow
-            key={setting.label}
-            isSelected={selectedCurrency?.label == setting.label}
-            setCurrency={updateSelectedCurrency}
-            currencySetting={setting}
-            token={token}
+
+  if (!prices.length || !selectedCurrencySetting) return <CouponSkeleton />
+
+  const isLive = checkIfCouponIsActive(selectedCoupon)
+  const disabled = prices.length === 1
+  const title = `Price for this item is ${selectedCurrencySetting.price} ${selectedCurrencySetting.symbol} (${selectedCurrencySetting.name})`
+
+  return (
+    <Collapsible className='flex flex-col w-full' disabled={disabled}>
+      <div className='flex items-center gap-2 justify-between max-h-9'>
+        <span className={cn('text-base md:text-2xl leading-[16px] md:leading-[24px] font-bold text-important-color')}>
+          {isLive ? '● Live' : '● Live in ' + countdownString}
+        </span>
+        <CollapsibleTrigger
+          title={title}
+          className='flex gap-2 items-center w-fit rounded-xl border-none bg-grey-600 p-2'
+        >
+          <span className='text-base md:text-2xl font-bold leading-[16px] md:leading-[24px]'>
+            {selectedCurrencySetting.price}
+          </span>
+          <Image
+            alt={selectedCurrencySetting.name}
+            src={selectedCurrencySetting.icon ?? selectedCurrencySetting.symbol}
+            width={24}
+            height={24}
+            className='size-6'
           />
-        )
-      })}
-    </CurrencyExpandable>
-  ) : (
-    <CouponSkeleton />
+          {!disabled && <ChevronDownIcon className='size-6' />}
+        </CollapsibleTrigger>
+      </div>
+
+      <CollapsibleContent asChild className='w-full'>
+        <div className='flex flex-col gap-1 w-full pt-2'>
+          {prices.map((setting) => {
+            const token = tokenMap.get(setting.label)
+            if (!token) return null
+            return (
+              <CurrencyRow
+                key={setting.label}
+                isSelected={selectedCurrency?.label == setting.label}
+                setCurrency={updateSelectedCurrency}
+                currencySetting={setting}
+                token={token}
+              />
+            )
+          })}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
   )
 }
 
@@ -133,13 +180,13 @@ const CurrencyRow: React.FC<CurrencyRowProps> = ({ isSelected = false, token, se
   return (
     <button
       className={cn(
-        'flex justify-between items-center p-4 rounded-2xl border border-grey-300 bg-grey-600',
+        'flex justify-between items-center p-4 rounded-2xl border border-grey-300 bg-grey-600 hover:border-yellow-100 hover:bg-yellow-100 hover:bg-opacity-[0.08]',
         isSelected && 'border border-yellow-300 bg-yellow-300 bg-opacity-[0.08]'
       )}
       onClick={() => setCurrency(currencySetting)}
     >
       <div className='flex items-center gap-2'>
-        <Image alt='' src={token.icon} width={16} height={16} className='w-5 h-5' />
+        <Image alt='' src={token.icon} width={16} height={16} className='size-5' />
         <span className='text-base font-medium leading-[22.4px]'>{token.name}</span>
       </div>
       <span className='text-base font-medium leading-[22.4px]'>{token.price}</span>
@@ -159,25 +206,6 @@ const UserDetails: React.FC<DetailsProps> = ({ candyMachine }) => {
     </div>
   )
 }
-
-const ComicVault: React.FC = () => (
-  <Expandable
-    className='bg-grey-400 border-transparent rounded-xl max-w-[800px]'
-    title='Comic Vault'
-    titleComponent={
-      <div className='flex gap-2 items-center text-sm sm:text-base font-medium leading-5 text-grey-100'>
-        <LockKeyholeIcon className='size-4' />
-        <span className='text-base font-medium leading-[22.4px] text-grey-100'>Comic Vault</span>
-      </div>
-    }
-    hideArrow
-  >
-    <p className='text-grey-100 text-sm m-0 leading-5 sm:text-lg'>
-      Comic Vault stores portion of the supply of each issue to later use in giveaways & other activities where we
-      reward loyal users.
-    </p>
-  </Expandable>
-)
 
 type PurchaseRowProps = {
   comicIssue: ComicIssue

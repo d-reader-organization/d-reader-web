@@ -1,7 +1,5 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import { Text } from '@/components/ui'
-import { IconLink } from '@/components/shared/IconLink'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { LINK, SUPPORT_EMAIL } from '@/constants/general'
 import RabbitHole from 'public/assets/images/rabbit-hole.png'
@@ -9,8 +7,9 @@ import { RoutePath } from '@/enums/routePath'
 import { DiscordIcon } from '@/components/icons/social/DiscordIcon'
 import { InstagramIcon } from '@/components/icons/social/InstagramIcon'
 import { TwitterIcon } from '@/components/icons/social/TwitterIcon'
-import { MailInverseIcon } from '@/components/icons/social/MailInverseIcon'
+import { MailIcon } from '@/components/icons/theme/MailIcon'
 import { ArrowLeftIcon } from '@/components/icons/theme/ArrowLeftIcon'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 
 export default function NotFound() {
   return (
@@ -44,44 +43,17 @@ export default function NotFound() {
           <br />
           There is nothing significant inside but at least it&apos;s cozy.
         </Text>
-        <div className='flex w-full justify-center gap-1 pt-1 sm:gap-2 text-grey-100'>
-          <IconLink className='bg-grey-500 rounded-lg sm:rounded-xl gap-2' href={LINK.MAIL_TO_SUPPORT} blank>
-            <MailInverseIcon className='w-[16.67px]' />
-            <Text as='p' styleVariant='body-normal' fontWeight='medium' className='max-sm:text-xs'>
-              {SUPPORT_EMAIL}
-            </Text>
-          </IconLink>
-          <IconLink
-            className='bg-grey-500 rounded-lg sm:rounded-xl'
-            href={LINK.TWITTER}
-            Icon={TwitterIcon}
-            iconClassName='w-[13.09px]'
-            blank
-          />
-          <IconLink
-            className='bg-grey-500 rounded-lg sm:rounded-xl'
-            href={LINK.INSTAGRAM}
-            Icon={InstagramIcon}
-            iconClassName='w-[14px]'
-            blank
-          />
-          <IconLink
-            className='bg-grey-500 rounded-lg sm:rounded-xl'
-            href={LINK.DISCORD}
-            Icon={DiscordIcon}
-            iconClassName='w-[16px]'
-            blank
-          />
+        <div className='flex w-full justify-center gap-1 sm:gap-2 pt-1 pb-6'>
+          <ButtonLink Icon={MailIcon} href={LINK.MAIL_TO_SUPPORT} solid>
+            {SUPPORT_EMAIL}
+          </ButtonLink>
+          <ButtonLink Icon={TwitterIcon} iconOnly href={LINK.TWITTER} blank />
+          <ButtonLink Icon={InstagramIcon} iconOnly href={LINK.INSTAGRAM} blank />
+          <ButtonLink Icon={DiscordIcon} iconOnly href={LINK.DISCORD} blank />
         </div>
-        <Link
-          className='flex items-center gap-1 pt-7 sm:pt-9 sm:gap-2 border-b-2 text-grey-100 border-grey-100'
-          href={RoutePath.Home}
-        >
-          <ArrowLeftIcon className='w-5 h-5' />
-          <Text as='p' styleVariant='body-normal' fontWeight='medium' className='max-sm:text-xs'>
-            Go back
-          </Text>
-        </Link>
+        <ButtonLink variant='ghost' Icon={ArrowLeftIcon} href={RoutePath.Home} className='border-b-1 rounded-none h-6'>
+          Go back
+        </ButtonLink>
       </div>
     </BaseLayout>
   )

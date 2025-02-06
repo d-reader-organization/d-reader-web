@@ -1,8 +1,10 @@
 'use client'
 
 import React from 'react'
-import { ControlledArrows } from './ControlledArrows'
 import useEmblaCarousel from 'embla-carousel-react'
+import { ChevronLeftIcon } from '@/components/icons/theme/ChevronLeftIcon'
+import { ChevronRightIcon } from '@/components/icons/theme/ChevronRightIcon'
+import { Button } from '@/components/ui'
 
 type Props = {
   slidesToScroll?: number
@@ -20,7 +22,22 @@ export const SectionSlider: React.FC<Props> = ({ children, slidesToScroll, title
             {title}
           </h1>
         </div>
-        <ControlledArrows onLeftClick={() => emblaApi?.scrollPrev()} onRightClick={() => emblaApi?.scrollNext()} />
+        <div className='flex gap-2 items-center'>
+          <Button
+            variant='secondary'
+            iconClassName='size-4.5'
+            onClick={() => emblaApi?.scrollPrev()}
+            Icon={ChevronLeftIcon}
+            iconOnly
+          />
+          <Button
+            variant='secondary'
+            iconClassName='size-4.5'
+            onClick={() => emblaApi?.scrollNext()}
+            Icon={ChevronRightIcon}
+            iconOnly
+          />
+        </div>
       </div>
       <div className='max-sm:flex overflow-hidden' ref={emblaRef}>
         <div className='flex w-full sm:w-[calc(100%+15px)] md:w-[calc(100%+23px)]'>{children}</div>

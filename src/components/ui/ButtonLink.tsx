@@ -10,6 +10,11 @@ export interface ButtonLinkProps
     VariantProps<typeof buttonVariants>,
     Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> {
   Icon?: React.FC<VariantSvgIconProps>
+  iconOnly?: boolean
+  iconClassName?: string
+  iconPosition?: 'left' | 'right'
+  solid?: boolean
+  blank?: boolean
 }
 
 /**
@@ -35,17 +40,45 @@ export interface ButtonLinkProps
  *
  * @example
  * // With icon
- * import { Mail } from 'lucide-react';
- * <Link href="/contact" Icon={Mail}>Contact Us</Link>
+ * import { MailIcon } from '@/components/icons/MailIcon';
+ * <Link href="/contact" Icon={MailIcon}>Contact Us</Link>
  */
 const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
-  ({ className, variant, subVariant, size = 'md', Icon, href, children, ...props }, ref) => {
-    const iconSize = size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-[18px] h-[18px]' : 'w-5 h-5'
+  (
+    {
+      href,
+      className,
+      variant = 'secondary',
+      subVariant,
+      size = 'md',
+      Icon,
+      iconPosition = 'left',
+      iconClassName,
+      iconOnly,
+      solid = true,
+      blank = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const iconSize = size === 'sm' ? 'size-4' : size === 'md' ? 'size-4.5' : 'size-5'
 
     return (
-      <Link className={cn(buttonVariants({ variant, subVariant, size, className }))} ref={ref} href={href} {...props}>
-        {Icon && <Icon className={cn(iconSize, 'shrink-0')} />}
-        {children}
+      <Link
+        className={cn(
+          buttonVariants({ variant, subVariant, size }),
+          variant === 'ghost' || iconOnly ? 'px-0 sm:px-0 py-0 sm:py-0' : '',
+          className
+        )}
+        target={blank ? '_blank' : undefined}
+        ref={ref}
+        href={href}
+        {...props}
+      >
+        {Icon && iconPosition === 'left' && <Icon className={cn(iconSize, iconClassName, 'shrink-0')} solid={solid} />}
+        {!iconOnly && children}
+        {Icon && iconPosition === 'right' && <Icon className={cn(iconSize, iconClassName, 'shrink-0')} solid={solid} />}
       </Link>
     )
   }

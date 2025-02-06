@@ -4,7 +4,7 @@ import { RarityChip } from '@/components/shared/chips/RarityChip'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/Dialog'
 import { OwnedCollectibleComicCard } from './OwnedCollectibleComicCard'
 import { toast } from '../ui/toast'
-import { Circle, ExternalLink } from 'lucide-react'
+import { ExternalLinkIcon } from '@/components/icons/theme/ExternalLinkIcon'
 import { Text } from '../ui/Text'
 import { shortenAssetName, shortenSolanaAddress } from '@/utils/helpers'
 import { GenreTags } from '../shared/GenresList'
@@ -20,12 +20,14 @@ import { ComicIssue } from '@/models/comicIssue'
 import { Button } from '../ui'
 import { useToggle } from '@/hooks'
 import { requestAutograph } from '@/app/lib/api/asset/mutations'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { SignedTraitChip } from '../shared/chips/SignedTraitChip'
 import { CollectibleComic } from '@/models/asset'
-import { SignedIcon } from '../icons/digital-asset/SignedIcon'
 import { CopyButton } from '../shared/CopyButton'
+import { CircleIcon } from '../icons/theme/CircleIcon'
+import { PencilIcon } from '../icons/theme/PencilIcon'
+import { ButtonLink } from '../ui/ButtonLink'
 
 type Props = {
   collectibleComic: CollectibleComic
@@ -33,10 +35,10 @@ type Props = {
 }
 
 export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic, comicIssue }) => {
-  const [showLoader, toggleLoader] = useToggle()
+  const [isLoading, toggleLoading] = useToggle()
 
   const handleRequestAutograph = async () => {
-    toggleLoader()
+    toggleLoading()
     try {
       const { errorMessage } = await requestAutograph(collectibleComic.address)
       if (errorMessage) {
@@ -49,7 +51,7 @@ export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic
       toast({ description: `Error requesting autograph for ${collectibleComic.name}`, variant: 'error' })
     }
 
-    toggleLoader()
+    toggleLoading()
   }
 
   return (
@@ -90,11 +92,7 @@ export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
               {collectibleComic.comicTitle}
             </Text>
-            <Circle className='size-2' fill='#D9D9D9' />
-            <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-              {collectibleComic.comicIssueTitle}
-            </Text>
-            <Circle className='size-2' fill='#D9D9D9' />
+            <CircleIcon className='size-2' solid />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
               {shortenAssetName(collectibleComic.name)}
             </Text>
@@ -114,13 +112,15 @@ export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic
                 <AudienceWidget audience={comicIssue?.comic?.audienceType ?? AudienceType.Everyone} />
               </div>
               {comicIssue?.comicSlug ? (
-                <Link
-                  className='max-h-9 px-3 py-2 flex gap-2 justify-center items-center rounded-lg bg-grey-500'
+                <ButtonLink
                   href={RoutePath.Comic(comicIssue.comicSlug)}
+                  prefetch={false}
+                  Icon={ExternalLinkIcon}
+                  solid={false}
+                  variant='outline'
                 >
-                  <ExternalLink className='text-grey-100' size={20} />
-                  <span className='text-base font-medium leading-[22.4px] text-grey-100'>Explore series</span>
-                </Link>
+                  Explore series
+                </ButtonLink>
               ) : null}
             </div>
             <div className='flex items-center gap-2 flex-wrap'>
@@ -133,23 +133,21 @@ export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic
             <div className='flex justify-between'>
               <CreatorInfoLink creator={comicIssue?.creator} />
               {!collectibleComic.isSigned && (
-                <Button variant='white' onClick={handleRequestAutograph} disabled={showLoader} className='min-w-44'>
-                  {showLoader ? (
-                    <Loader />
-                  ) : (
-                    <div className='flex sm:gap-2 xs:gap-1 items-center'>
-                      <SignedIcon />
-                      <Text as='p' styleVariant='body-small' fontWeight='semibold'>
-                        Request signature
-                      </Text>
-                    </div>
-                  )}
+                <Button
+                  variant='white'
+                  onClick={handleRequestAutograph}
+                  Icon={isLoading ? LoaderIcon : PencilIcon}
+                  disabled={isLoading}
+                >
+                  Request signature
                 </Button>
               )}
             </div>
             <Divider />
-            <AddressContainer address={collectibleComic.ownerAddress} title='Owner' />
-            <AddressContainer address={collectibleComic.address} title='Asset Address' />
+            <div className='flex flex-col gap-1'>
+              <AddressContainer address={collectibleComic.ownerAddress} title='Owner' />
+              <AddressContainer address={collectibleComic.address} title='Asset Address' />
+            </div>
           </div>
         </div>
       </DialogContent>
@@ -163,16 +161,13 @@ type AddressContainerProps = {
 }
 
 const AddressContainer: React.FC<AddressContainerProps> = ({ address, title }) => (
-  <div className='flex px-4 py-1 items-center justify-between gap-4 bg-grey-600 rounded-xl max-h-14 h-full'>
-    <div className='flex flex-col'>
+  <div className='flex px-4 py-2 items-center justify-between gap-2 bg-grey-600 rounded-xl max-h-14 h-full'>
+    <div className='flex items-center gap-4'>
       <Text as='p' styleVariant='body-large' fontWeight='bold'>
         {title}
       </Text>
       <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-200 line-clamp-1 text-ellipsis'>
-        {shortenSolanaAddress({
-          address,
-          slice: 8,
-        })}
+        {shortenSolanaAddress({ address, slice: 6 })}
       </Text>
     </div>
     <CopyButton variant='inline' clipboard={address} />

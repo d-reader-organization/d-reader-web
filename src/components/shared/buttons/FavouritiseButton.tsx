@@ -43,7 +43,7 @@ export const FavouritiseButton: React.FC<Props> = ({
         isFavourite && 'bg-red-500 bg-opacity-40 text-red-500 border-0',
         className
       )}
-      iconClassname={cn(isFavourite && 'fill-red-500')}
+      iconClassName={cn(isFavourite && 'fill-red-500')}
     >
       <Text as='span' styleVariant='body-normal' className={cn('max-sm:text-xs', isFavourite && 'text-white')}>
         {favouritesCount}

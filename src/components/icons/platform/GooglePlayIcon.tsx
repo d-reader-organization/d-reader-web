@@ -1,8 +1,8 @@
 import React from 'react'
 import { SvgIconProps } from '@/lib/types'
 
-export const GooglePlayIcon = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
-  <svg ref={ref} {...props} viewBox='0 0 135 40' fill='none' xmlns='http://www.w3.org/2000/svg'>
+export const GooglePlayIcon = React.forwardRef<SVGSVGElement, SvgIconProps>(({ className }, ref) => (
+  <svg ref={ref} className={className} viewBox='0 0 135 40' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <g clipPath='url(#clip0_1691_1097)'>
       <path
         d='M130 0H5C2.23858 0 0 2.23858 0 5V35C0 37.7614 2.23858 40 5 40H130C132.761 40 135 37.7614 135 35V5C135 2.23858 132.761 0 130 0Z'

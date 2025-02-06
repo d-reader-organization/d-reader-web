@@ -1,52 +1,40 @@
 'use client'
 
-import { Text } from '@/components/ui'
+import { Button, Text } from '@/components/ui'
 import { DiscoverSearchBar } from './DiscoverSearchBar'
-import React from 'react'
+import React, { useState } from 'react'
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
-import { ChevronDown } from '@/components/icons/theme/ChevronDown'
+import { ChevronDownIcon } from '@/components/icons/theme/ChevronDownIcon'
 import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
-import { ALL_DISCOVER_PAGE_QUERY_CRITERIA, QUERY_CRITERIA_MAP } from '@/constants/discoverQueryCriteria'
+import {
+  ALL_DISCOVER_PAGE_QUERY_CRITERIA,
+  QUERY_COMIC_CRITERIA,
+  QUERY_COMIC_ISSUE_CRITERIA,
+  QUERY_CREATOR_CRITERIA,
+} from '@/constants/discoverQueryCriteria'
 import { useDiscoverStoreActiveFiltersCount } from '@/hooks/useDiscoverStoreActiveFiltersCount'
 import { FilterButton } from './FilterButton'
-import { ClearAllButton } from './ClearAllButton'
+import { useToggle } from '@/hooks'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
+import { RoutePath } from '@/enums/routePath'
 
 export const DiscoverQueryBar: React.FC = () => {
-  const [isFilterSheetOpen, setFilterSheetOpen] = React.useState<boolean>(false)
+  const [isFilterSheetOpen, toggleFilterSheet] = useToggle()
   const activeFiltersCount = useDiscoverStoreActiveFiltersCount()
+  const clear = useDiscoverQueryStore((state) => state.clear)
 
+  // TODO: clear should also clear the search input
   return (
     <div className='flex'>
-      <QuerySheet isOpen={isFilterSheetOpen} triggerOpenChange={(open: boolean) => setFilterSheetOpen(open)} />
+      <QuerySheet isOpen={isFilterSheetOpen} toggleFilterSheet={toggleFilterSheet} />
       <div className='flex gap-1 md:gap-2 w-[100%]'>
-        <FilterButton
-          isFilterSheetOpen={isFilterSheetOpen}
-          setFilterSheetOpen={setFilterSheetOpen}
-          activeFiltersCount={activeFiltersCount}
-          className='max-md:hidden'
-          withLabel
-        />
-        <ClearAllButton className='max-md:hidden' />
         <DiscoverSearchBar />
-        {/* <ClearAllButton className='md:hidden'/> */}
-        <FilterButton
-          isFilterSheetOpen={isFilterSheetOpen}
-          setFilterSheetOpen={setFilterSheetOpen}
-          activeFiltersCount={activeFiltersCount}
-          className='md:hidden'
-        />
-        {/* <Button
-          className='max-h-10 p-4 flex justify-center items-center bg-grey-500 text-grey-100 gap-2'
-          onClick={() => setFilterSheetOpen(!isFilterSheetOpen)}
-        >
-          <Text as='p' styleVariant='body-small' className='max-md:hidden'>
-            Sort by
-          </Text>
-          <ChevronDown className='w-[18px] h-[18px] max-md:hidden' />
-          <ListFilter size={16} className='md:hidden' />
-        </Button> */}
+        <FilterButton toggleFilterSheet={toggleFilterSheet} activeFiltersCount={activeFiltersCount} />
+        <Button onClick={clear} variant='secondary' className='min-w-20 whitespace-nowrap'>
+          Clear
+        </Button>
       </div>
     </div>
   )
@@ -54,40 +42,40 @@ export const DiscoverQueryBar: React.FC = () => {
 
 type QuerySheetProps = {
   isOpen: boolean
-  triggerOpenChange: (open: boolean) => void
+  toggleFilterSheet: () => void
 }
 
-const QuerySheet: React.FC<QuerySheetProps> = ({ isOpen, triggerOpenChange }) => {
+const QuerySheet: React.FC<QuerySheetProps> = ({ isOpen, toggleFilterSheet }) => {
   const pathname = usePathname()
-  const isValidKey = (key: string): key is keyof typeof QUERY_CRITERIA_MAP => key in QUERY_CRITERIA_MAP
 
   const queryCriteria = React.useMemo(() => {
-    const matchedKey = Object.keys(QUERY_CRITERIA_MAP).find((key) => pathname.includes(key))
-
-    if (!matchedKey || !isValidKey(matchedKey)) {
-      throw new Error('Invalid pathname')
+    switch (pathname) {
+      case RoutePath.DiscoverComics:
+        return QUERY_COMIC_CRITERIA
+      case RoutePath.DiscoverComicIssues:
+        return QUERY_COMIC_ISSUE_CRITERIA
+      case RoutePath.DiscoverCreators:
+        return QUERY_CREATOR_CRITERIA
     }
-
-    return QUERY_CRITERIA_MAP[matchedKey]
   }, [pathname])
+
+  if (!queryCriteria) return null
 
   return (
     <div className='max-md:hidden'>
-      <Sheet open={isOpen} onOpenChange={triggerOpenChange}>
+      <Sheet open={isOpen} onOpenChange={toggleFilterSheet}>
         <SheetTitle className='sr-only'>Open menu</SheetTitle>
         <SheetContent
           aria-describedby={undefined}
           side='left'
-          showCloseIcon
           className='p-6 flex flex-col h-full w-full bg-grey-600 shadow-[0px_0px_30px_0px_rgba(0,0,0,0.50)] max-w-[420px]'
-          onInteractOutside={() => triggerOpenChange(false)}
         >
           <Text as='span' styleVariant='body-large' fontWeight='bold' className='body-normal'>
-            Search criteria
+            Search parameters
           </Text>
           <div className='flex flex-col'>
-            {queryCriteria.map(({ id, criteria }) => (
-              <DiscoverQueryBySingleTag key={id} queryCriteria={criteria} />
+            {queryCriteria.map((criteria, index) => (
+              <DiscoverQueryBySingleTag key={index} queryCriteria={criteria} />
             ))}
             <DiscoverQueryByGenres />
           </div>
@@ -103,8 +91,7 @@ export type DiscoverQueryBySingleTagProps = {
 
 export const DiscoverQueryBySingleTag = ({ queryCriteria }: DiscoverQueryBySingleTagProps) => {
   const store = useDiscoverQueryStore((state) => state)
-  const contentRef = React.useRef<HTMLDivElement>(null)
-  const [isExpanded, setIsExpanded] = React.useState(true)
+  const [isExpanded, setIsExpanded] = useState(true)
 
   const selectedTag = queryCriteria.getSelectedTags(store)
 
@@ -117,25 +104,19 @@ export const DiscoverQueryBySingleTag = ({ queryCriteria }: DiscoverQueryBySingl
   }
 
   return (
-    <div className={cn('border-t border-grey-300', isExpanded && 'border-b-0 pb-4')}>
-      <button
-        className='flex justify-between items-center w-full text-left py-4 focus:outline-none'
-        onClick={() => setIsExpanded(!isExpanded)}
-        aria-expanded={isExpanded}
-      >
+    <Collapsible
+      open={isExpanded}
+      onOpenChange={setIsExpanded}
+      className={cn('border-t border-grey-300', isExpanded && 'border-b-0')}
+    >
+      <CollapsibleTrigger className='flex justify-between items-center w-full text-left py-4 focus:outline-none'>
         <Text as='p' styleVariant='body-large' fontWeight='bold' className='max-sm:text-base'>
           {queryCriteria.label}
         </Text>
-        <ChevronDown className='w-[18px] h-[18px]' />
-      </button>
-      <div
-        ref={contentRef}
-        className={cn('overflow-hidden transition-all duration-200 ease-in-out')}
-        style={{
-          maxHeight: isExpanded ? contentRef.current?.scrollHeight + 'px' : '0px',
-          opacity: isExpanded ? 1 : 0,
-        }}
-      >
+        <ChevronDownIcon className='size-4.5' />
+      </CollapsibleTrigger>
+
+      <CollapsibleContent className='pb-4'>
         <div className='flex flex-wrap gap-2'>
           {Object.keys(queryCriteria.tags).map((key) => {
             const typedKey = key as keyof (typeof queryCriteria)['tags']
@@ -158,14 +139,13 @@ export const DiscoverQueryBySingleTag = ({ queryCriteria }: DiscoverQueryBySingl
             )
           })}
         </div>
-      </div>
-    </div>
+      </CollapsibleContent>
+    </Collapsible>
   )
 }
 
 export const DiscoverQueryByGenres: React.FC = () => {
   const [isExpanded, setIsExpanded] = React.useState(true)
-  const contentRef = React.useRef<HTMLDivElement>(null)
   const genres = useDiscoverQueryStore((state) => state.completeGenresList)
   const updateAllParamGenreSlugs = useDiscoverQueryStore((store) => store.updateAllParamGenreSlugs)
   let selectedTags = useDiscoverQueryStore((store) => store.comicParams.genreSlugs)
@@ -185,25 +165,19 @@ export const DiscoverQueryByGenres: React.FC = () => {
   }
 
   return (
-    <div className={cn('border-t border-grey-300', isExpanded && 'border-b-0 pb-4')}>
-      <button
-        className='flex justify-between items-center w-full text-left py-4 focus:outline-none'
-        onClick={() => setIsExpanded(!isExpanded)}
-        aria-expanded={isExpanded}
-      >
-        <Text as='span' styleVariant='body-large' fontWeight='bold' className='max-sm:text-base'>
+    <Collapsible
+      open={isExpanded}
+      onOpenChange={setIsExpanded}
+      className={cn('border-t border-grey-300', isExpanded && 'border-b-0')}
+    >
+      <CollapsibleTrigger className='flex justify-between items-center w-full text-left py-4 focus:outline-none'>
+        <Text as='p' styleVariant='body-large' fontWeight='bold' className='max-sm:text-base'>
           Genres
         </Text>
-        <ChevronDown className='w-[18px] h-[18px]' />
-      </button>
-      <div
-        ref={contentRef}
-        className={cn('overflow-hidden transition-all duration-200 ease-in-out')}
-        style={{
-          maxHeight: isExpanded ? contentRef.current?.scrollHeight + 'px' : '0px',
-          opacity: isExpanded ? 1 : 0,
-        }}
-      >
+        <ChevronDownIcon className='size-4.5' />
+      </CollapsibleTrigger>
+
+      <CollapsibleContent className='pb-4'>
         <div className='flex flex-wrap gap-2'>
           {genres?.map((tag, index) => (
             <div
@@ -211,7 +185,7 @@ export const DiscoverQueryByGenres: React.FC = () => {
                 'flex justify-center items-center p-2 px-3 rounded-lg cursor-pointer',
                 selectedTags?.includes(tag.slug) ? 'bg-white text-black' : 'bg-grey-500 text-grey-100'
               )}
-              key={`${tag.slug}-${index}`}
+              key={tag.slug + index}
               onClick={() => handleTagClick(tag.slug)}
             >
               <Text as='span' styleVariant='body-normal' className='max-sm:text-sm'>
@@ -220,7 +194,7 @@ export const DiscoverQueryByGenres: React.FC = () => {
             </div>
           ))}
         </div>
-      </div>
-    </div>
+      </CollapsibleContent>
+    </Collapsible>
   )
 }

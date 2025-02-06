@@ -15,6 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   averageRating?: Nullable<number>
 }
 
+// TODO: rating a comic issue doesn't update the state on e-reader?
 export const RateButton: React.FC<Props> = ({ comicSlug, comicIssueId, rating, averageRating, className }) => {
   const [isOpenStarRatingDialog, toggleStarRating] = useToggle()
 
@@ -22,7 +23,6 @@ export const RateButton: React.FC<Props> = ({ comicSlug, comicIssueId, rating, a
     <>
       <RequireAuthWrapperButton
         Icon={Star}
-        size='md'
         onClick={() => toggleStarRating()}
         variant='outline'
         className={cn(
@@ -30,7 +30,7 @@ export const RateButton: React.FC<Props> = ({ comicSlug, comicIssueId, rating, a
           rating && 'bg-yellow-300 bg-opacity-40 text-yellow-300 border-0',
           className
         )}
-        iconClassname={cn(rating && 'fill-yellow-300')}
+        iconClassName={cn(rating && 'fill-yellow-300')}
       >
         <Text as='span' styleVariant='body-normal' className={cn('max-sm:text-xs', rating && 'text-white')}>
           {averageRating}

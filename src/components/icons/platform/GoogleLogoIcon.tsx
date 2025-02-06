@@ -1,8 +1,8 @@
 import React from 'react'
 import { SvgIconProps } from '@/lib/types'
 
-export const GoogleLogoIcon = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
-  <svg ref={ref} {...props} viewBox='0 0 21 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+export const GoogleLogoIcon = React.forwardRef<SVGSVGElement, SvgIconProps>(({ className }, ref) => (
+  <svg ref={ref} className={className} viewBox='0 0 21 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <mask id='mask0_4228_14601' style={{ maskType: 'luminance' }} maskUnits='userSpaceOnUse' x='0' y='0'>
       <path d='M20.5 0H0.5V20H20.5V0Z' fill='white' />
     </mask>

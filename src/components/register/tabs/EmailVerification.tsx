@@ -5,7 +5,7 @@ import { ButtonLink } from '../../ui/ButtonLink'
 import { toast } from '../../ui/toast'
 import { RoutePath } from '@/enums/routePath'
 import { requestUserEmailVerification } from '@/app/lib/api/user/mutations'
-import { Mail } from 'lucide-react'
+import { MailIcon } from '@/components/icons/theme/MailIcon'
 
 type Props = {
   redirectTo: string | null
@@ -14,7 +14,7 @@ type Props = {
 export const EmailVerificationContent: React.FC<Props> = ({ redirectTo }) => (
   <main className='container flex flex-col items-center max-w-md mb-8'>
     <Text as='h2' styleVariant='primary-heading' className='flex items-center text-center my-4 sm:my-8'>
-      <Mail className='h-auto w-12 mr-2' />
+      <MailIcon className='w-12 mr-2' />
       Check your mail
     </Text>
     <Text as='p' styleVariant='body-normal' className='text-center'>
@@ -27,7 +27,6 @@ export const EmailVerificationContent: React.FC<Props> = ({ redirectTo }) => (
       <p className='text-sm text-grey-100 text-center'>Didn&apos;t get the email?</p>
       <Button
         variant='ghost'
-        size='md'
         className='w-fit text-important-color hover:brightness-150'
         onClick={async () => {
           const error = await requestUserEmailVerification()

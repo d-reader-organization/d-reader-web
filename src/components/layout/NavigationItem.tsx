@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link, { LinkProps } from 'next/link'
 import { Text, Variant } from '../ui/Text'
 import { cn } from '@/lib/utils'
 import { SoonTag } from '../shared/Tags'
@@ -13,7 +13,8 @@ export type NavigationLinkProps = {
   disabled?: boolean
   as?: Variant
   title: string
-}
+} & LinkProps &
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps>
 
 export const NavigationItem: React.FC<NavigationLinkProps> = ({
   href,
@@ -22,6 +23,8 @@ export const NavigationItem: React.FC<NavigationLinkProps> = ({
   as = 'h4',
   isComingSoon = false,
   disabled = false,
+  className,
+  ...props
 }) => {
   const pathname = usePathname()
   const isActive = href === '/' ? pathname === href : pathname.startsWith(href)
@@ -31,10 +34,12 @@ export const NavigationItem: React.FC<NavigationLinkProps> = ({
       className={cn(
         'flex items-center gap-1 text-base font-bold leading-[22.4px] text-grey-100',
         isActive && activeColor,
-        disabled ? 'text-grey-300' : 'hover:text-white'
+        disabled ? 'text-grey-300' : 'hover:text-white',
+        className
       )}
       href={disabled ? '#' : href}
       prefetch={false}
+      {...props}
     >
       <Text as={as} styleVariant='secondary-heading'>
         {title}

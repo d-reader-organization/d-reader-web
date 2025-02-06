@@ -4,7 +4,7 @@ import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { ComicIssue } from '@/models/comicIssue'
 import { DefaultComicIssueCard } from '../comicIssue/cards/DefaultCard'
 import { ShowMoreButton } from './ShowMoreButton'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { useFetchComicIssues } from '@/api/comicIssue/queries/useFetchComicIssues'
 
 export const ComicIssueGrid: React.FC = () => {
@@ -19,7 +19,7 @@ export const ComicIssueGrid: React.FC = () => {
   } = useFetchComicIssues({ params: comicIssueParams })
 
   if (isFetching && !isFetched) {
-    return <Loader className='mx-auto pt-6 sm:pt-8' />
+    return <LoaderIcon className='mx-auto pt-6 sm:pt-8' />
   }
 
   return (

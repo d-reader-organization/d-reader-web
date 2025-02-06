@@ -30,11 +30,7 @@ export const MetadataImageBase: React.FC<Props> = ({ image, logo, children, ...p
     {children}
     {logo && (
       <LogoSymbolIcon
-        fill='white'
-        color='white'
-        width='40'
-        height='37.5'
-        style={{ position: 'absolute', bottom: 60, right: 60 }}
+        style={{ color: 'white', fill: 'white', position: 'absolute', bottom: 60, right: 60, width: 40, height: 37.5 }}
       />
     )}
   </div>

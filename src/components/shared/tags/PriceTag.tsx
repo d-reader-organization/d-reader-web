@@ -76,23 +76,9 @@ export const PriceTag: React.FC<Props> = ({
     <TypographyWrapper>
       {from ? 'from ' : ''}
       {symbol && <span>◎</span>}
-      {icon && (
-        <SolanaIcon
-          style={{
-            marginLeft: reverse ? '0.2rem' : '0.5rem',
-            marginRight: reverse ? '0.5rem' : '0.2rem',
-          }}
-          className={cn(sizeVariants[size], iconClassName)}
-        />
-      )}
+      {icon && <SolanaIcon className={cn(sizeVariants[size], reverse ? 'ml-1 mr-2' : 'ml-2 mr-1', iconClassName)} />}
       {colorfulIcon && (
-        <SolanaColoredIcon
-          style={{
-            marginLeft: reverse ? '0.2rem' : '0.5rem',
-            marginRight: reverse ? '0.5rem' : '0.2rem',
-          }}
-          className={cn(sizeVariants[size], iconClassName)}
-        />
+        <SolanaColoredIcon className={cn(sizeVariants[size], reverse ? 'ml-1 mr-2' : 'ml-2 mr-1', iconClassName)} />
       )}
       {roundedPrice}
     </TypographyWrapper>

@@ -40,7 +40,7 @@ export const DefaultComicIssueCard: React.FC<Props> = ({ comicIssue, className }
           FREE
         </Text>
       )}
-      <div className='flex flex-col text-gray-100 px-2 pt-2'>
+      <div className='flex flex-col text-white px-2 pt-2'>
         {comicIssue.comic && (
           <Text
             as='span'

@@ -12,7 +12,7 @@ import { UpdateUserPassword } from '@/models/user'
 import { updateUserPassword } from '@/app/lib/api/user/mutations'
 import { Text, toast } from '../ui'
 import { useToggle } from '@/hooks'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { ForgotPasswordDialog } from '../shared/dialogs/ForgotPasswordDialog'
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
 }
 
 export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
-  const [showLoader, toggleLoader] = useToggle()
+  const [isLoading, toggleLoading] = useToggle()
 
   const form = useForm<z.infer<typeof updateUserPasswordValidationSchema>>({
     resolver: zodResolver(updateUserPasswordValidationSchema),
@@ -31,7 +31,7 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
   })
 
   const handleUpdatePassword = async (data: UpdateUserPassword) => {
-    toggleLoader()
+    toggleLoading()
     const { errorMessage } = await updateUserPassword(id, data)
 
     if (errorMessage) {
@@ -39,7 +39,7 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
     } else {
       toast({ description: 'Password updated successfully!', variant: 'success' })
     }
-    toggleLoader()
+    toggleLoading()
   }
 
   return (
@@ -78,9 +78,7 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
                   className='max-w-[486px]'
                 />
               </FormControl>
-              {/* TODO:
-              - refactor form inputs (UpdateUserDetailsForm)
-              - improve RemovePhotoWarningDialog */}
+              {/* TODO: refactor form inputs (UpdateUserDetailsForm) */}
               {/* {!state?.success && <FormErrorMessage message={state?.error} />} */}
               <Text as='p' styleVariant='body-small' className='text-grey-200'>
                 8 characters minimum. At least 1 lowercase, 1 uppercase and 1 number
@@ -89,7 +87,7 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
           </div>
 
           <Button type='submit' variant='white' size='md' className='w-fit'>
-            {showLoader ? <Loader /> : 'Reset Password'}
+            {isLoading ? <LoaderIcon /> : 'Reset Password'}
           </Button>
         </form>
         <ForgotPasswordDialog />

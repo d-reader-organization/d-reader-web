@@ -1,9 +1,9 @@
-import { IconLink } from './IconLink'
-import { cn } from '@/lib/utils'
 import React from 'react'
+import { cn } from '@/lib/utils'
 import { InstagramIcon } from '../icons/social/InstagramIcon'
 import { TwitterIcon } from '../icons/social/TwitterIcon'
 import { GlobeIcon } from 'lucide-react'
+import { ButtonLink } from '../ui/ButtonLink'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   website: string
@@ -20,9 +20,9 @@ export const Socials: React.FC<Props> = ({ website, instagram, twitter, classNam
           className
         )}
       >
-        <IconLink className='rounded-lg' href={website} Icon={GlobeIcon} blank />
-        <IconLink className='rounded-lg' href={instagram} Icon={InstagramIcon} blank />
-        <IconLink className='rounded-lg' href={twitter} Icon={TwitterIcon} blank />
+        <ButtonLink variant='ghost' className='shadow-none' Icon={GlobeIcon} iconOnly href={website} blank />
+        <ButtonLink variant='ghost' className='shadow-none' Icon={InstagramIcon} iconOnly href={instagram} blank />
+        <ButtonLink variant='ghost' className='shadow-none' Icon={TwitterIcon} iconOnly href={twitter} blank />
       </div>
     )
   }

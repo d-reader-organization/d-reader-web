@@ -1,22 +1,23 @@
 'use client'
 
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { Input } from '@/components/ui/Input'
-import { Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { RoutePath } from '@/enums/routePath'
 import { usePathname } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 import { CloseIcon } from '@/components/icons/theme/CloseIcon'
+import { SearchIcon } from '@/components/icons/theme/SearchIcon'
+import { Button } from '../ui/Button'
 
 type Props = React.InputHTMLAttributes<HTMLInputElement>
 
 export const DiscoverSearchBar: React.FC<Props> = ({ className }) => {
-  const searchRef = React.useRef<HTMLDivElement>(null)
+  const searchRef = useRef<HTMLDivElement>(null)
   const searchTerm = useDiscoverQueryStore((state) => state.comicParams.search)
   const setStoreSearchTerm = useDiscoverQueryStore((state) => state.updateSearch)
-  const [localSearchTerm, setLocalSearchTerm] = React.useState(searchTerm || undefined)
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || undefined)
   const pathname = usePathname()
 
   const debouncedSetSearchTerm = useDebouncedCallback((value: string | undefined) => {
@@ -42,13 +43,14 @@ export const DiscoverSearchBar: React.FC<Props> = ({ className }) => {
 
   return (
     <div className={cn('relative z-10 w-full', className)} ref={searchRef}>
-      {localSearchTerm ? (
-        <button className='absolute top-3 left-3' onClick={handleClearInput}>
-          <CloseIcon className='w-[18px] h-[18px] text-white' />
-        </button>
-      ) : (
-        <Search className='size-[18px] absolute top-3 left-3 text-grey-200' />
-      )}
+      <Button
+        Icon={localSearchTerm ? CloseIcon : SearchIcon}
+        variant='inline'
+        iconOnly
+        className='absolute top-3 left-3'
+        disabled={!localSearchTerm}
+        onClick={handleClearInput}
+      />
       <Input
         placeholder={getPlaceholder()}
         value={localSearchTerm}

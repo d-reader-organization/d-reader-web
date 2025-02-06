@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
@@ -17,6 +17,7 @@ import { NavigationItem } from './NavigationItem'
 import { ConnectedWalletBox } from '../shared/sheets/profile/WalletSection'
 import { GenesisLogoIcon } from '../icons/logo/GenesisLogoIcon'
 import { CloseIcon } from '@/components/icons/theme/CloseIcon'
+import useToggle from '@/hooks/useToggle'
 
 type Props = {
   user?: User | null
@@ -24,7 +25,7 @@ type Props = {
 }
 
 export const GenesisMobileNavigation: React.FC<Props> = ({ user, background }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, toggleOpen] = useToggle(false)
   const { publicKey } = useWallet()
 
   return (
@@ -37,60 +38,39 @@ export const GenesisMobileNavigation: React.FC<Props> = ({ user, background }) =
     >
       <div className={cn('flex justify-between items-center px-4 h-20', isOpen && 'hidden')}>
         <Link href={RoutePath.Invest} prefetch={false}>
-          <GenesisLogoIcon className='w-auto h-full fill-white' />
+          <GenesisLogoIcon className='h-6 w-auto fill-white' />
         </Link>
-        <button onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <CloseIcon className='w-6 h-6' /> : <Menu size={24} />}
-        </button>
+        <button onClick={() => toggleOpen()}>{isOpen ? <CloseIcon className='size-6' /> : <Menu size={24} />}</button>
       </div>
 
       <div className='md:hidden'>
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <Sheet open={isOpen} onOpenChange={toggleOpen}>
           <SheetTitle className='sr-only'>Open menu</SheetTitle>
           <SheetContent aria-describedby={undefined} side='right' className='w-full bg-grey-600 p-4 border-l-0'>
             <nav className='flex flex-col justify-between size-full text-grey-100 text-2xl font-bold leading-[28.8px]'>
               <div className='flex flex-col gap-3'>
-                <div className='flex justify-between w-full'>
-                  <NavigationItem activeColor='text-green-genesis' href={RoutePath.Home} title='Home' />
-                  <button onClick={() => setIsOpen(false)}>
-                    <CloseIcon className='w-6 h-6 text-grey-100' />
-                  </button>
-                </div>
+                {user && <ProfileWidget user={user} />}
+                <NavigationItem activeColor='text-green-genesis' href={RoutePath.Home} title='Home' />
+                <NavigationItem activeColor='text-green-genesis' href={RoutePath.Discover} title='Discover' />
+                <NavigationItem activeColor='text-green-genesis' href={RoutePath.Invest} title='Invest' />
                 <NavigationItem
                   activeColor='text-green-genesis'
-                  href={RoutePath.Discover}
-                  isComingSoon
-                  title='Discover'
+                  href={RoutePath.Profile}
+                  title='Settings'
+                  className={!user ? 'hidden' : ''}
                 />
-                <NavigationItem activeColor='text-green-genesis' href={RoutePath.Invest} title='Invest' />
-                {!publicKey ? <NavConnectButton /> : null}
+                {!publicKey && <NavConnectButton />}
               </div>
-              {user ? (
-                <div className='flex flex-col gap-6 border-t border-t-grey-400'>
-                  <ProfileWidget user={user} />
-                  <div className='flex flex-col gap-4'>
-                    <NavigationItem activeColor='text-green-genesis' href={RoutePath.Library} title='Library' />
-                    <NavigationItem activeColor='text-green-genesis' href={RoutePath.Profile} title='Settings' />
-                  </div>
-                  {publicKey ? <ConnectedWalletBox address={publicKey.toBase58()} /> : null}
-                  <LogoutButton />
-                  <ProductSocials />
-                </div>
-              ) : (
-                <div className='flex flex-col gap-4'>
-                  {publicKey ? <ConnectedWalletBox address={publicKey.toBase58()} /> : null}
-
-                  <ButtonLink
-                    href={RoutePath.Login}
-                    variant='white'
-                    size='lg'
-                    subVariant={1}
-                    className='w-fit max-md:h-[42px]'
-                  >
+              <div className='flex flex-col gap-3'>
+                {publicKey && <ConnectedWalletBox address={publicKey.toBase58()} />}
+                {user && <LogoutButton />}
+                {user && <ProductSocials />}
+                {!user && (
+                  <ButtonLink href={RoutePath.Login} variant='white' size='lg' subVariant={1} className='w-full'>
                     Sign in
                   </ButtonLink>
-                </div>
-              )}
+                )}
+              </div>
             </nav>
           </SheetContent>
         </Sheet>

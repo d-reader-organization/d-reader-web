@@ -2,13 +2,13 @@ import { ComicIssue } from '@/models/comicIssue'
 import { GenreTags } from '../shared/GenresList'
 import { ExpandableText } from '../shared/ExpandableText'
 import { AudienceWidget } from '../shared/AudienceWidget'
-import Link from 'next/link'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLinkIcon } from '@/components/icons/theme/ExternalLinkIcon'
 import { Divider } from '../shared/Divider'
 import { CreatorInfoLink } from '../creator/InfoLink'
 import React from 'react'
 import { AudienceType } from '@/enums/audienceType'
 import { RoutePath } from '@/enums/routePath'
+import { ButtonLink } from '../ui/ButtonLink'
 
 type Props = {
   comicIssue: ComicIssue
@@ -29,15 +29,16 @@ export const AboutIssueSection: React.FC<Props> = ({ comicIssue, targetBlank }) 
         <AudienceWidget audience={comicIssue.comic?.audienceType ?? AudienceType.Everyone} />
       </div>
       <div className='flex flex-col gap-2'>
-        <Link
-          className='max-h-9 px-3 py-2 flex gap-2 justify-center items-center rounded-lg bg-grey-500'
+        <ButtonLink
           href={RoutePath.Comic(comicIssue.comicSlug)}
           prefetch={false}
-          target={targetBlank ? '_blank' : undefined}
+          blank={targetBlank}
+          className='font-medium h-9'
+          Icon={ExternalLinkIcon}
+          solid={false}
         >
-          <ExternalLink className='text-grey-100' size={20} />
-          <span className='text-base font-medium leading-[22.4px] text-grey-100'>Explore series</span>
-        </Link>
+          Explore series
+        </ButtonLink>
       </div>
     </div>
     <Divider />

@@ -45,7 +45,7 @@ export const CouponDescriptionDialog: React.FC<CommonDialogProps & { comicIssue:
       <DialogContent
         aria-describedby=''
         className='max-w-[485px] rounded-2xl flex flex-col items-center bg-grey-400 shadow-[0px_0px_30px_0px_rgba(0,0,0,0.50)] p-6 pt-8 gap-4'
-        showCloseIcon={false}
+        hideCloseIcon
       >
         <DialogTitle className='font-satoshi leading-[24px] text-xl'>Available discounts</DialogTitle>
         <div className='flex flex-col gap-2 w-full'>

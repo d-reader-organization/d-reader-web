@@ -22,6 +22,15 @@ const config = {
       xl: '1536px',
     },
     extend: {
+      size: {
+        '4.5': '1.125rem',
+      },
+      height: {
+        '4.5': '1.125rem',
+      },
+      width: {
+        '4.5': '1.125rem',
+      },
       aspectRatio: {
         'comic-cover': '900/1000',
         'comic-banner': '1920/900',
@@ -136,10 +145,20 @@ const config = {
             height: '0',
           },
         },
+        'collapsible-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-collapsible-content-height)' },
+        },
+        'collapsible-up': {
+          from: { height: 'var(--radix-collapsible-content-height)' },
+          to: { height: '0' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'collapsible-down': 'collapsible-down 0.2s ease-out',
+        'collapsible-up': 'collapsible-up 0.2s ease-out',
       },
       boxShadow: {
         '3': '3px 3px 3px #15171c',

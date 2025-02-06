@@ -12,8 +12,7 @@ import { SearchInput } from '../shared/SearchInput'
 import { User } from '@/models/user'
 import { NavigationItem } from './NavigationItem'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
-import { useWallet } from '@solana/wallet-adapter-react'
-import { ChevronDown } from '@/components/icons/theme/ChevronDown'
+import { ChevronDownIcon } from '@/components/icons/theme/ChevronDownIcon'
 import { LogoWithTextIcon } from '@/components/icons/logo/LogoWithTextIcon'
 
 type Props = {
@@ -23,7 +22,6 @@ type Props = {
 
 export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
   const [isProfileSheetOpen, setOpenProfileSheet] = useState(false)
-  const { publicKey } = useWallet()
 
   return (
     <>
@@ -38,41 +36,35 @@ export const Navigation: React.FC<Props> = ({ me, hideSearch = false }) => {
         <div className='flex items-center justify-between p-4 max-w-screen-xl w-full'>
           <div className='flex items-center gap-8'>
             <Link href={RoutePath.Home} prefetch={false}>
-              <LogoWithTextIcon className='h-8 min-w-fit fill-white ml-2' />
+              <LogoWithTextIcon className='h-8 w-auto fill-white ml-2' />
             </Link>
             {!hideSearch && <SearchInput />}
             <div className='flex items-center gap-10'>
               <NavigationItem as='p' activeColor='text-yellow-300' href={RoutePath.Discover} title='Discover' />
             </div>
-            {/* <div className='flex items-center gap-10'>
-              <NavigationItem as='p' activeColor='text-yellow-300' href={RoutePath.Invest} title='Invest' />
-              </div> */}
-            {/* <div className='flex items-center gap-10'>
-              <NavigationItem as='p' activeColor='text-yellow-300' href={RoutePath.Marketplace} title='Marketplace' isComingSoon disabled />
-            </div> */}
           </div>
           {me ? (
             <div className='flex items-center gap-8'>
               <NavigationItem as='p' activeColor='text-yellow-300' href={RoutePath.Library} title='My Library' />
-              <button
-                className='flex items-center cursor-pointer'
+              <Button
+                variant='secondary'
                 onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}
+                Icon={ChevronDownIcon}
+                iconPosition='right'
+                className='!p-2'
               >
-                <div className='bg-white bg-opacity-15 rounded-xl flex items-center justify-center gap-1.5 px-2 h-10'>
-                  <Image
-                    alt='avatar'
-                    src={me.avatar || PLACEHOLDER_AVATAR}
-                    width={28}
-                    height={28}
-                    className='size-7 object-cover rounded-full border border-black'
-                  />
-                  <ChevronDown className='w-6 h-6 text-grey-100' />
-                </div>
-              </button>
+                <Image
+                  alt='avatar'
+                  src={me.avatar || PLACEHOLDER_AVATAR}
+                  width={28}
+                  height={28}
+                  className='size-7 object-cover rounded-full border border-black'
+                />
+              </Button>
             </div>
           ) : (
-            <Button variant='white' size='md' onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}>
-              {!!publicKey ? 'Sign in' : 'Connect'}
+            <Button variant='white' onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}>
+              Sign in
             </Button>
           )}
         </div>

@@ -4,7 +4,7 @@ import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { useFetchCreators } from '@/api/creator/queries/useFetchCreators'
 import { DefaultCreatorCard } from '../creator/cards/DefaultCard'
 import { ShowMoreButton } from './ShowMoreButton'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { useAuthStore } from '@/providers/AuthStoreProvider'
 
 export const CreatorGrid: React.FC = () => {
@@ -19,7 +19,7 @@ export const CreatorGrid: React.FC = () => {
   } = useFetchCreators({ params: creatorParams, accessToken })
 
   if (isFetching && !isFetched) {
-    return <Loader className='mx-auto pt-6 sm:pt-8' />
+    return <LoaderIcon className='mx-auto pt-6 sm:pt-8' />
   }
 
   return (

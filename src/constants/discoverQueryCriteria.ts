@@ -1,4 +1,3 @@
-import { RoutePath } from '@/enums/routePath'
 import { ComicFilterTag, ComicSortTag } from '@/models/comic/comicParams'
 import { ComicIssueSortTag, ComicIssueFilterTag } from '@/models/comicIssue/comicIssueParams'
 import { CreatorSortTag, CreatorFilterTag } from '@/models/creator/creatorParams'
@@ -73,24 +72,6 @@ export const CREATORS_SORT_CRITERIA = createDiscoverPageQueryCriteria(
 )
 
 // criteria arrays
-export const QUERY_COMIC_CRITERIA = [
-  { id: 1, criteria: COMICS_FILTER_CRITERIA },
-  { id: 2, criteria: COMICS_SORT_CRITERIA },
-]
-
-export const QUERY_COMIC_ISSUE_CRITERIA = [
-  { id: 1, criteria: COMIC_ISSUES_FILTER_CRITERIA },
-  { id: 2, criteria: COMIC_ISSUES_SORT_CRITERIA },
-]
-
-export const QUERY_CREATOR_CRITERIA = [
-  { id: 1, criteria: CREATORS_FILTER_CRITERIA },
-  { id: 2, criteria: CREATORS_SORT_CRITERIA },
-]
-
-// query criteria map
-export const QUERY_CRITERIA_MAP = {
-  [RoutePath.DiscoverComics]: QUERY_COMIC_CRITERIA,
-  [RoutePath.DiscoverComicIssues]: QUERY_COMIC_ISSUE_CRITERIA,
-  [RoutePath.DiscoverCreators]: QUERY_CREATOR_CRITERIA,
-}
+export const QUERY_COMIC_CRITERIA = [COMICS_FILTER_CRITERIA, COMICS_SORT_CRITERIA]
+export const QUERY_COMIC_ISSUE_CRITERIA = [COMIC_ISSUES_FILTER_CRITERIA, COMIC_ISSUES_SORT_CRITERIA]
+export const QUERY_CREATOR_CRITERIA = [CREATORS_FILTER_CRITERIA, CREATORS_SORT_CRITERIA]

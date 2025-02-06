@@ -20,6 +20,7 @@ import { FilterIcon } from '@/components/icons/theme/FilterIcon'
 import { TrashIcon } from '@/components/icons/theme/TrashIcon'
 import { useSortTagSelect } from '@/hooks/useSortTagSelect'
 import { SortOrder } from '@/enums/sortOrder'
+import { cn } from '@/lib/utils'
 
 enum SignatureRequestsTab {
   Pending = 'Pending',
@@ -52,14 +53,14 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
             <Button
               variant={tab === SignatureRequestsTab.Pending ? 'secondary' : 'ghost'}
               onClick={() => setTab(SignatureRequestsTab.Pending)}
-              className='h-8 font-bold w-[100px]'
+              className={cn(tab === SignatureRequestsTab.Pending && 'text-white', 'h-8 font-bold w-[100px]')}
             >
               {SignatureRequestsTab.Pending}
             </Button>
             <Button
               variant={tab === SignatureRequestsTab.Resolved ? 'secondary' : 'ghost'}
               onClick={() => setTab(SignatureRequestsTab.Resolved)}
-              className='h-8 font-bold w-[100px]'
+              className={cn(tab === SignatureRequestsTab.Resolved && 'text-white', 'h-8 font-bold w-[100px]')}
             >
               {SignatureRequestsTab.Resolved}
             </Button>
@@ -109,7 +110,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                 </TableCell>
                 <TableCell>
                   <div className='flex items-center gap-2 text-nowrap'>
-                    <Avatar className='h-6 w-6'>
+                    <Avatar className='size-6'>
                       <AvatarImage src={user.avatar || PLACEHOLDER_AVATAR} />
                       <AvatarFallback>
                         {/** fallback to 'G' as guest */}
@@ -133,7 +134,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                 <TableCell>
                   <div className='flex justify-end gap-2'>
                     <Button
-                      iconClassname='m-auto'
+                      iconClassName='m-auto'
                       variant='ghost'
                       Icon={PencilIcon}
                       onClick={() => {
@@ -141,7 +142,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                       }}
                     />
                     <Button
-                      iconClassname='m-auto'
+                      iconClassName='m-auto'
                       variant='ghost'
                       Icon={TrashIcon}
                       onClick={() => {

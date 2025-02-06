@@ -22,10 +22,7 @@ export const CouponsSection: React.FC<{ comicIssue: ComicIssue }> = ({ comicIssu
           <Text as='h5' styleVariant='primary-heading' className='mt-1'>
             Discount coupons
           </Text>
-          <Info
-            className='h-[18px] w-[18px] hover:cursor-pointer text-grey-100'
-            onClick={toggleCouponDescriptionDialog}
-          />
+          <Info className='size-4.5 hover:cursor-pointer text-grey-100' onClick={toggleCouponDescriptionDialog} />
         </div>
         <div className='flex items-center gap-3 flex-wrap'>
           {coupons.map((coupon) => (

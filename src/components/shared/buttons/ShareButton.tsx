@@ -27,5 +27,5 @@ export const ShareButton: React.FC<Props> = ({ title = '', text = '' }) => {
     }
   }
 
-  return <Button onClick={handleShare} Icon={ShareIcon} iconOnly variant='secondary' />
+  return <Button onClick={handleShare} Icon={ShareIcon} iconOnly solid={false} variant='secondary' />
 }

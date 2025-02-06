@@ -8,13 +8,14 @@ import { ConnectButton } from '../shared/buttons/ConnectButton'
 import { disconnectUserWallet } from '@/app/lib/api/auth/mutations'
 import { Wallet } from '@/models/wallet'
 import { useRouter } from 'next/navigation'
-import { Dot, MoreHorizontal, Plus } from 'lucide-react'
+import { Dot, MoreHorizontal } from 'lucide-react'
 import { PublicKey } from '@solana/web3.js'
 import { useToggle } from '@/hooks'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { useAuthorizeWalletContext } from '@/providers/AuthorizeWalletContextProvider'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/DropdownMenu'
 import { CopyButton } from '../shared/CopyButton'
+import { PlusIcon } from '../icons/theme/PlusIcon'
 
 type Props = {
   wallets: Wallet[]
@@ -47,20 +48,12 @@ export const WalletSettings: React.FC<Props> = ({ wallets }) => {
         <ConnectButton
           variant='secondary'
           size='md'
+          Icon={isLoading ? LoaderIcon : PlusIcon}
           className={`flex gap-2 bg-grey-300 text-grey-100 ${isLoading ? 'cursor-not-allowed' : ''}`}
           disabled={isLoading}
-          triggerReconnect={true}
+          triggerReconnect
         >
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <>
-              <Plus className='h-4 w-4 font-bold' />
-              <Text as='p' fontWeight='bold' styleVariant='body-small'>
-                Link another wallet
-              </Text>
-            </>
-          )}
+          Link another wallet
         </ConnectButton>
       </div>
     </div>
@@ -123,28 +116,26 @@ export const WalletItem: React.FC<{ index: number; wallet: Wallet; isActive: boo
           {balance} SOL
         </Text>
       </div>
-      <WalletItemOptions disconnect={disconnectWallet} showLoader={showDisconnectLoader} />
+      <WalletItemOptions disconnect={disconnectWallet} isLoading={showDisconnectLoader} />
     </div>
   )
 }
 
-const WalletItemOptions: React.FC<{ disconnect: VoidFunction; showLoader: boolean }> = ({ disconnect, showLoader }) => {
+const WalletItemOptions: React.FC<{ disconnect: VoidFunction; isLoading: boolean }> = ({ disconnect, isLoading }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {showLoader ? (
-          <Loader className='self-center scale-75' />
+        {isLoading ? (
+          <LoaderIcon className='self-center scale-75' />
         ) : (
-          <MoreHorizontal className='w-5 h-5 cursor-pointer self-center font-bold' />
+          <MoreHorizontal className='size-5 cursor-pointer self-center font-bold' />
         )}
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className='bg-grey-500 p-3 rounded-xl' sideOffset={5}>
+      <DropdownMenuContent>
         <DropdownMenuItem>
-          <Button variant='ghost' size='sm' onClick={disconnect}>
-            <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-              Remove Wallet
-            </Text>
+          <Button variant='ghost' onClick={disconnect} className='shadow-none'>
+            Remove Wallet
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>

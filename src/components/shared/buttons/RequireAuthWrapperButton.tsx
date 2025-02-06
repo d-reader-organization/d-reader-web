@@ -9,7 +9,7 @@ type Props = React.PropsWithChildren &
   ButtonProps & { onClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void }
 
 export const RequireAuthWrapperButton: React.FC<Props> = ({ children, onClick, ...props }) => {
-  const [showRequireAuthDialog, setShowRequireAuthDialog] = useState<boolean>(false)
+  const [showRequireAuthDialog, setShowRequireAuthDialog] = useState(false)
   const [pending, startTransition] = useTransition()
   const submitWrapper = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -35,7 +35,7 @@ export const RequireAuthWrapperButton: React.FC<Props> = ({ children, onClick, .
         closeDialog={() => {
           setShowRequireAuthDialog(false)
         }}
-        showDialog={showRequireAuthDialog}
+        open={showRequireAuthDialog}
       />
     </>
   )

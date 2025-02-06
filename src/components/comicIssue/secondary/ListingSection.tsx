@@ -11,10 +11,11 @@ import { format } from 'date-fns'
 import { fetchDirectBuyTransaction } from '@/app/lib/api/transaction/queries'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { versionedTransactionFromBs64 } from '@/utils/transactions'
-import { Loader } from '../../shared/Loader'
+import { LoaderIcon } from '../../icons/theme/LoaderIcon'
 import { ConnectButton } from '../../shared/buttons/ConnectButton'
 import Link from 'next/link'
-import { CheckCircle2, ExternalLink } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
+import { ExternalLinkIcon } from '@/components/icons/theme/ExternalLinkIcon'
 import { InstantBuyParams } from '@/models/transaction/instantBuy'
 import { Button, Text, toast } from '../../ui'
 import { PLACEHOLDER_AVATAR, SOLANA_EXPLORER_BASE_LINK } from '@/constants/general'
@@ -28,7 +29,7 @@ import { useAuthStore } from '@/providers/AuthStoreProvider'
 
 export const ListingSection: React.FC<{ collectionAddress: string | undefined }> = ({ collectionAddress }) => {
   const { data: splTokens } = useFetchSupportedTokens()
-  const [showLoader, toggleLoader] = useToggle()
+  const [isLoading, toggleLoading] = useToggle()
   const { publicKey, signAllTransactions } = useWallet()
   const { connection } = useConnection()
   const [selectedListings, onSelectListing] = useState<ListedItem[]>([])
@@ -55,10 +56,10 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined }>
   })
 
   const handleBuy = async () => {
-    toggleLoader()
+    toggleLoading()
     if (!publicKey) {
       toast({ description: 'Connect you wallet to purchase', variant: 'error' })
-      toggleLoader()
+      toggleLoading()
       return
     }
     const instantBuyParamsArray: InstantBuyParams[] = selectedListings.map((listing) => ({
@@ -75,7 +76,7 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined }>
 
     if (error) {
       toast({ description: error, variant: 'error' })
-      toggleLoader()
+      toggleLoading()
       return
     }
 
@@ -97,14 +98,14 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined }>
     } catch (_) {
       toast({ description: `Error while sending buy transaction, try again!`, variant: 'error' })
     } finally {
-      toggleLoader()
+      toggleLoading()
     }
   }
 
   if (isFetching && !isFetched) {
     return (
       <div className='flex w-full'>
-        <Loader className='m-auto' />
+        <LoaderIcon className='m-auto' />
       </div>
     )
   }
@@ -171,8 +172,8 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined }>
         </ConnectButton>
       ) : (
         <Button onClick={handleBuy} size='lg' variant='primary' className='fixed bottom-1 w-[810px]'>
-          {showLoader ? (
-            <Loader />
+          {isLoading ? (
+            <LoaderIcon />
           ) : (
             <Text as='p' styleVariant='body-normal' fontWeight='bold'>
               Purchase
@@ -213,7 +214,7 @@ const ListedAssetRow: React.FC<{
           <Text as='p' styleVariant='body-normal' fontWeight='medium'>
             {getTokenPrice(listing.price, splToken?.decimals || 9)}
           </Text>
-          {splToken ? <Image src={splToken?.icon} alt='SOL' width={14} height={14} className='size-4' /> : null}
+          {splToken ? <Image src={splToken?.icon} alt='SOL' width={16} height={16} className='size-4' /> : null}
         </div>
       </TableCell>
       <TableCell>
@@ -250,7 +251,7 @@ const OwnerDetailsCell: React.FC<{ sellerAddress: string }> = ({ sellerAddress }
         <Text as='p' styleVariant='body-small' fontWeight='semibold'>
           {shortenSolanaAddress({ address: sellerAddress })}
         </Text>
-        <ExternalLink className='text-grey-100' size={15} />
+        <ExternalLinkIcon className='text-grey-100 size-4' />
       </Link>
     </div>
   )

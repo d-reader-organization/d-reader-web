@@ -1,6 +1,6 @@
 'use client'
 
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/Dialog'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
 import React from 'react'
 import { Button, toast } from '@/components/ui'
 import { useLocalStorage, useToggle } from '@/hooks'
@@ -26,27 +26,21 @@ export const ClaimPageHintDialog: React.FC = () => {
 
   return (
     <Dialog open={claimHintDialog} onOpenChange={toggleClaimHintDialog}>
-      <DialogContent
-        aria-describedby=''
-        className='max-w-[485px] rounded-2xl flex flex-col items-center bg-grey-400 shadow-[0px_0px_30px_0px_rgba(0,0,0,0.50)] p-6 pt-8 gap-4'
-        showCloseIcon={false}
-      >
-        <DialogTitle className='font-satoshi leading-[24px] text-xl'>Welcome to dReader!</DialogTitle>
-        <div className='flex flex-col gap-2 w-full'>
-          <div className='rounded-xl bg-grey-500 flex flex-col max-w-[437px]'>
+      <DialogContent className='max-w-md' hideCloseIcon>
+        <DialogHeader>
+          <DialogTitle asChild>
+            <Text styleVariant='primary-heading' as='h3'>
+              Welcome to dReader!
+            </Text>
+          </DialogTitle>
+        </DialogHeader>
+        <DialogDescription className='flex flex-col gap-2 w-full text-left'>
+          <div className='rounded-xl bg-grey-400 flex flex-col max-w-[437px]'>
             <div className='p-4 gap-4 flex'>
               <div className='size-5'>▶️</div>
               <div className='inline-block gap-2 w-full max-w-[369px]'>
                 <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
                   Watch the video!
-                </Text>
-                <Text
-                  as='p'
-                  styleVariant='body-small'
-                  fontWeight='medium'
-                  className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
-                >
-                  This brief video explains the features we offer
                 </Text>
               </div>
             </div>
@@ -57,11 +51,11 @@ export const ClaimPageHintDialog: React.FC = () => {
               />
             </div>
           </div>
-          <div className='rounded-xl bg-grey-500 p-4 gap-4 flex max-w-[437px]'>
+          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex max-w-[437px]'>
             <div className='size-5'>📚</div>
             <div className='inline-block gap-2 w-full max-w-[369px]'>
               <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
-                Digital collectible comics
+                Digital collectibles
               </Text>
               <Text
                 as='p'
@@ -69,30 +63,13 @@ export const ClaimPageHintDialog: React.FC = () => {
                 fontWeight='medium'
                 className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
               >
-                All comics you collect are stored in your Digital Comic Vault. To generate your Vault you&apos;ll need
-                to connect your gmail via TipLink service in the next step!
+                Comics you collect are stored in your digital wallet!
               </Text>
             </div>
           </div>
-          <div className='rounded-xl bg-grey-500 p-4 gap-4 flex max-w-[437px]'>
-            <div className='size-5'>🤝</div>
-            <div className='inline-block gap-2 w-full max-w-[369px]'>
-              <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
-                Connect with us
-              </Text>
-              <Text
-                as='p'
-                styleVariant='body-small'
-                fontWeight='medium'
-                className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
-              >
-                If you have any questions or would like to connect with our community of comic enthusiasts, drop us a
-                message on any social channel.
-              </Text>
-            </div>
-          </div>
-        </div>
-        <Button variant='secondary' className='rounded-[16px] font-bold text-base w-full' onClick={onClick}>
+        </DialogDescription>
+
+        <Button variant='white' className='w-full' onClick={onClick}>
           I understand!
         </Button>
       </DialogContent>

@@ -9,9 +9,9 @@ import { StatsContainer, StatsItem } from '../shared/Stats'
 import { RateButton } from '../shared/buttons/RateButton'
 import { FavouritiseButton } from '../shared/buttons/FavouritiseButton'
 import { BookmarkButton } from '../shared/buttons/BookmarkButton'
-import { TextWithViewMoreButton } from '../ui/TextWithViewMoreButton'
 import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
+import { ExpandableText } from '../shared/ExpandableText'
 
 type Props = {
   comic: Comic
@@ -46,13 +46,7 @@ const LeftSection: React.FC<Props> = ({ comic }) => (
           <AudienceWidget audience={comic.audienceType} />
         </div>
       )}
-      <TextWithViewMoreButton
-        as='p'
-        className='whitespace-pre-wrap text-grey-100 max-sm:text-sm'
-        styleVariant='body-normal'
-      >
-        {comic.description}
-      </TextWithViewMoreButton>
+      <ExpandableText className='whitespace-pre-wrap text-grey-100' text={comic.description} />
     </div>
     {comic.creator && (
       <Link prefetch={false} href={RoutePath.Creator(comic.creator.slug)} className='flex items-center gap-3 w-fit'>

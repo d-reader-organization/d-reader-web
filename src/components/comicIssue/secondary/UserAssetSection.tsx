@@ -2,7 +2,7 @@ import { useFetchCollectibleComics } from '@/api/asset/queries'
 import { fetchListAssetTransaction } from '@/app/lib/api/transaction/queries'
 import { OwnedCollectibleComicCard } from '@/components/digital-asset/OwnedCollectibleComicCard'
 import { ShowMoreButton } from '@/components/discover/ShowMoreButton'
-import { Loader } from '@/components/shared/Loader'
+import { LoaderIcon } from '@/components/icons/theme/LoaderIcon'
 import { toast } from '@/components/ui'
 import { SOL_ADDRESS } from '@/constants/general'
 import { useAuthStore } from '@/providers/AuthStoreProvider'
@@ -67,7 +67,7 @@ export const WalletAssetSection: React.FC<Props> = ({ collectionAddress }) => {
   if (isFetching && !isFetched) {
     return (
       <div className='flex w-full'>
-        <Loader className='m-auto' />
+        <LoaderIcon className='m-auto' />
       </div>
     )
   }

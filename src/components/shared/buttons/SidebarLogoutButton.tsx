@@ -18,7 +18,7 @@ export const SidebarLogoutButton: React.FC = () => {
           refresh()
         }}
       >
-        <LogOut className='h-5 w-5' />
+        <LogOut className='size-5' />
         <Text styleVariant='body-normal' fontWeight='medium' as='span'>
           Log out
         </Text>

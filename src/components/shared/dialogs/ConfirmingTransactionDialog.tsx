@@ -9,7 +9,7 @@ export const ConfirmingTransactionDialog: React.FC<CommonDialogProps> = ({ open 
         aria-describedby=''
         className='bg-grey-600 rounded:[32px] sm:rounded-[64px] flex flex-col items-center max-w-[400px]'
         overlayClassName='bg-grey-500'
-        showCloseIcon={false}
+        hideCloseIcon
       >
         <DialogTitle className='sr-only'>Confirming transaction...</DialogTitle>
         <video className='max-h-[300px] max-w-[300px] h-full w-full' autoPlay loop muted>

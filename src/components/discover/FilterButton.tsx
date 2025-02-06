@@ -4,37 +4,24 @@ import { FilterIcon } from '@/components/icons/theme/FilterIcon'
 import { cn } from '@/lib/utils'
 
 type FilterButtonProps = React.HTMLAttributes<HTMLDivElement> & {
-  isFilterSheetOpen: boolean
-  setFilterSheetOpen: (open: boolean) => void
+  toggleFilterSheet: () => void
   activeFiltersCount: number
-  withLabel?: boolean
 }
 
-export const FilterButton: React.FC<FilterButtonProps> = ({
-  isFilterSheetOpen,
-  setFilterSheetOpen,
-  activeFiltersCount,
-  withLabel = false,
-  className,
-}) => (
+export const FilterButton: React.FC<FilterButtonProps> = ({ toggleFilterSheet, activeFiltersCount, className }) => (
   <Button
-    className={cn('relative rounded-[10px]', withLabel ? 'min-w-[100px]' : 'sm:px-0', className)}
+    className={cn('relative min-w-20', className)}
     variant='secondary'
     Icon={FilterIcon}
-    size='md'
-    onClick={() => setFilterSheetOpen(!isFilterSheetOpen)}
+    onClick={toggleFilterSheet}
   >
-    {withLabel && (
-      <Text as='span' styleVariant='body-small'>
-        Filter
-      </Text>
-    )}
+    Filter
     {activeFiltersCount !== 0 && (
       <Text
         as='span'
         fontWeight='bold'
         styleVariant='body-xsmall'
-        className='flex -top-1 -right-1 absolute justify-center items-center w-4 h-4 bg-white text-grey-600 rounded-full leading-none'
+        className='flex -top-1 -right-1 absolute justify-center items-center size-4 bg-white text-grey-600 rounded-full leading-none'
       >
         {activeFiltersCount}
       </Text>

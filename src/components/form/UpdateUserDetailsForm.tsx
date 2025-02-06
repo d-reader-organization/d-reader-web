@@ -8,7 +8,7 @@ import { Input, Text, toast } from '../ui'
 import { useToggle } from '@/hooks'
 import { useRouter } from 'next/navigation'
 import { Divider } from '../shared/Divider'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 
 type Props = {
   id: number | string
@@ -54,7 +54,7 @@ type FormItemProps = {
 }
 
 const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id, showEdit, onEditToggle }) => {
-  const [showLoader, toggleLoader] = useToggle()
+  const [isLoading, toggleLoading] = useToggle()
   const [item, setItem] = useState<string>()
   const { refresh } = useRouter()
 
@@ -64,7 +64,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id, showEd
 
   const field = title === 'Email' ? 'email' : title === 'Username' ? 'username' : 'displayName'
   const handleItemUpdate = async () => {
-    toggleLoader()
+    toggleLoading()
 
     const data = { [field]: item }
     updateUserValidationSchema.parse(data)
@@ -75,7 +75,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id, showEd
       toast({ description: `${title} has been updated successfully!`, variant: 'success' })
       refresh()
     }
-    toggleLoader()
+    toggleLoading()
     onEditToggle()
   }
 
@@ -101,7 +101,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id, showEd
             Cancel
           </Button>
           <Button variant='white' size='md' onClick={handleItemUpdate}>
-            {showLoader ? <Loader /> : 'Save'}
+            {isLoading ? <LoaderIcon /> : 'Save'}
           </Button>
         </div>
       ) : (

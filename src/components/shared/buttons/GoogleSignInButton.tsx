@@ -2,7 +2,6 @@
 
 import { Button } from '../../ui/Button'
 import { signIn } from 'next-auth/react'
-import { Text } from '@/components/ui/Text'
 import { GoogleLogoIcon } from '@/components/icons/platform/GoogleLogoIcon'
 
 type Props = {
@@ -30,11 +29,15 @@ export const GoogleSignInButton: React.FC<Props> = ({ buttonText = 'Sign in with
   }
 
   return (
-    <Button onClick={() => handleSignIn('google')} type='button' size='lg' className={className} variant='outline'>
-      <GoogleLogoIcon className='h-[18px]' />
-      <Text as='p' fontWeight='bold' styleVariant='body-normal'>
-        {buttonText}
-      </Text>
+    <Button
+      Icon={GoogleLogoIcon}
+      onClick={() => handleSignIn('google')}
+      type='button'
+      size='lg'
+      className={className}
+      variant='outline'
+    >
+      {buttonText}
     </Button>
   )
 }

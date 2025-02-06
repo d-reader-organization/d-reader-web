@@ -1,15 +1,33 @@
-import { SvgIconProps } from '@/lib/types'
+import { VariantSvgIconProps } from '@/lib/types'
 import React from 'react'
 
-export const ArrowLeftIcon = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => {
-  return (
-    <svg ref={ref} {...props} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'>
-      <path
-        d='M10.7071 6.70711C11.0976 6.31658 11.0976 5.68342 10.7071 5.29289C10.3166 4.90237 9.68342 4.90237 9.29289 5.29289L3.29289 11.2929C2.90237 11.6834 2.90237 12.3166 3.29289 12.7071L9.29289 18.7071C9.68342 19.0976 10.3166 19.0976 10.7071 18.7071C11.0976 18.3166 11.0976 17.6834 10.7071 17.2929L6.41421 13L20 13C20.5523 13 21 12.5523 21 12C21 11.4477 20.5523 11 20 11L6.41421 11L10.7071 6.70711Z'
-        fill='currentColor'
-      />
-    </svg>
-  )
-})
+export const ArrowLeftIcon = React.forwardRef<SVGSVGElement, VariantSvgIconProps>(
+  ({ solid = false, ...props }, ref) => {
+    return (
+      <svg
+        ref={ref}
+        {...props}
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 24 24'
+        fill={solid ? 'currentColor' : 'none'}
+      >
+        {solid ? (
+          <path
+            d='M12.7071 5.70711C13.0976 5.31658 13.0976 4.68342 12.7071 4.29289C12.3166 3.90237 11.6834 3.90237 11.2929 4.29289L4.29289 11.2929C3.90237 11.6834 3.90237 12.3166 4.29289 12.7071L11.2929 19.7071C11.6834 20.0976 12.3166 20.0976 12.7071 19.7071C13.0976 19.3166 13.0976 18.6834 12.7071 18.2929L7.41421 13L19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11L7.41421 11L12.7071 5.70711Z'
+            fill='currentColor'
+          />
+        ) : (
+          <path
+            d='M19 12H5M5 12L12 19M5 12L12 5'
+            stroke='currentColor'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+          />
+        )}
+      </svg>
+    )
+  }
+)
 
 ArrowLeftIcon.displayName = 'ArrowLeftIcon'

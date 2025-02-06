@@ -72,7 +72,7 @@ export const UpdateUserAvatarForm: React.FC<Props> = ({ id, avatar }) => {
         <div className='flex flex-col justify-between gap-8'>
           <div className='flex flex-col gap-2'>
             <Text as='p' styleVariant='body-normal' className='font-bold'>
-              Profile photo
+              Avatar
             </Text>
 
             <Text as='p' styleVariant='body-small' className='text-grey-200'>

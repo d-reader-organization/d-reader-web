@@ -1,13 +1,15 @@
 'use client'
 
 import React from 'react'
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/Dialog'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
 import { StarIconButton } from '../buttons/StarIconButton'
-import { Button, toast } from '@/components/ui'
+import { Button } from '@/components/ui/Button'
+import { Text } from '@/components/ui/Text'
 import { useRouter } from 'next/navigation'
 import { rateComic } from '@/app/lib/api/comic/mutations'
 import { rateComicIssue } from '@/app/lib/api/comicIssue/mutations'
 import { CommonDialogProps } from '@/models/common'
+import { toast } from '@/components/ui/toast'
 
 type Props = {
   comicIssueId?: number
@@ -17,6 +19,7 @@ type Props = {
 export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, toggleDialog, open }) => {
   const [rating, setRating] = React.useState<number | null>(null)
   const { refresh } = useRouter()
+
   const handleStarClick = (selectedRating: number) => {
     setRating(selectedRating)
   }
@@ -27,9 +30,8 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
   }
 
   const handleSubmit = async () => {
-    if (!rating) {
-      return
-    }
+    if (!rating) return
+
     let errorMessage = ''
     if (comicSlug) {
       errorMessage = await rateComic({
@@ -52,12 +54,17 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
 
   return (
     <Dialog open={open} onOpenChange={toggleDialog}>
-      <DialogContent className='sm:max-w-xs p-0 overflow-hidden' aria-describedby={undefined}>
-        <DialogTitle className='sr-only'>Star rating dialog</DialogTitle>
-        <div className='flex flex-col items-center justify-center text-center py-8 px-4 text-base md:text-lg'>
-          <strong>Rate the episode</strong>
+      <DialogContent className='max-w-sm' aria-describedby={undefined}>
+        <DialogHeader>
+          <DialogTitle asChild>
+            <Text styleVariant='primary-heading' as='h3'>
+              Rate the comic
+            </Text>
+          </DialogTitle>
+        </DialogHeader>
+        <DialogDescription>
           Tap a star to give a rating!
-          <div className='mt-4 flex gap-3 [&>*]:text-yellow-300'>
+          <div className='flex justify-center gap-3 mt-4 [&>*]:text-yellow-300'>
             {[1, 2, 3, 4, 5].map((star) => (
               <StarIconButton
                 style={{ cursor: 'pointer' }}
@@ -68,16 +75,12 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
               />
             ))}
           </div>
-        </div>
-        <div className='flex border-t-2 border-t-grey-600 [&>*]:p-4 w-full'>
-          <Button
-            className='border-r-2 border-r-grey-600 rounded-r-none hover:bg-grey-300 w-full'
-            onClick={handleClose}
-            variant='ghost'
-          >
+        </DialogDescription>
+        <div className='flex w-full gap-2 mt-4'>
+          <Button variant='secondary' className='w-full' type='button' onClick={toggleDialog}>
             Cancel
           </Button>
-          <Button className='hover:bg-grey-300 w-full' onClick={handleSubmit} variant='ghost'>
+          <Button variant='white' className='w-full' onClick={handleSubmit}>
             OK
           </Button>
         </div>

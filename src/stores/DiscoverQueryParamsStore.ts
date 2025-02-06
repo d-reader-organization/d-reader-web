@@ -13,7 +13,7 @@ export type DiscoverQueryParamsStoreState = {
 }
 
 export type DiscoverQueryParamsStoreActions = {
-  resetToDefaultInitState: () => void
+  clear: () => void
   updateSearch: (search: string | undefined) => void
   updateCompleteGenresList: (genres: Genre[]) => void
   updateAllParamGenreSlugs: (genreSlugs: string[]) => void
@@ -61,7 +61,7 @@ export const defaultInitState: DiscoverQueryParamsStoreState = {
 export const createDiscoverQueryParamsStore = (initState: DiscoverQueryParamsStoreState = defaultInitState) => {
   return createStore<DiscoverQueryParamsStore>()((set) => ({
     ...initState,
-    resetToDefaultInitState: () =>
+    clear: () =>
       set((state) => ({
         ...defaultInitState,
         completeGenresList: state.completeGenresList,

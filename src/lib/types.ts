@@ -8,8 +8,5 @@ export type FileUploadRef = {
   reset: () => void
 }
 
-export type SvgIconProps = React.SVGProps<SVGSVGElement>
-
-export type VariantSvgIconProps = {
-  solid?: boolean
-} & SvgIconProps
+export type SvgIconProps = { className?: React.SVGProps<SVGSVGElement>['className'] }
+export type VariantSvgIconProps = { solid?: boolean } & SvgIconProps

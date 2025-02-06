@@ -1,8 +1,8 @@
 import React from 'react'
 import { SvgIconProps } from '@/lib/types'
 
-export const ComicProductIcon = React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
-  <svg ref={ref} {...props} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='currentColor'>
+export const ComicProductIcon = React.forwardRef<SVGSVGElement, SvgIconProps>(({ className }, ref) => (
+  <svg ref={ref} className={className} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='currentColor'>
     <path
       fillRule='evenodd'
       clipRule='evenodd'

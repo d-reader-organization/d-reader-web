@@ -7,8 +7,7 @@ import { toast } from '@/components/ui/toast'
 
 type CopyButtonProps = {
   clipboard: string
-  variant: 'inline' | 'button'
-} & Omit<ButtonProps, 'onClick' | 'variant'>
+} & Omit<ButtonProps, 'onClick'>
 
 export const CopyButton: React.FC<CopyButtonProps> = ({ clipboard, variant, ...props }) => {
   const handleClick = useCallback(() => {
@@ -18,7 +17,5 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ clipboard, variant, ...p
     }
   }, [clipboard])
 
-  const buttonVariant = variant === 'inline' ? 'inline' : 'secondary'
-
-  return <Button variant={buttonVariant} Icon={CopyIcon} iconOnly onClick={handleClick} {...props} />
+  return <Button variant={variant} Icon={CopyIcon} iconOnly onClick={handleClick} solid={false} {...props} />
 }

@@ -22,7 +22,7 @@ export const SliderDots: React.FC<DotsProps> = ({ emblaApi, slides, selectedInde
         >
           <RarityIcon
             className={cn(
-              'w-4 h-4',
+              'size-4',
               selectedIndex === dotIndex ? 'block' : 'invisible',
               getRarityTextColor(currentRarity)
             )}

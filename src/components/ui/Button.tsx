@@ -13,7 +13,7 @@ const buttonVariants = cva(
         secondary: 'text-grey-100',
         outline: '',
         white: 'text-black',
-        ghost: 'w-full bg-transparent text-base font-medium leading-[22.4px] text-white h-min w-fit inline',
+        ghost: 'w-full bg-transparent text-base font-medium leading-[22.4px] h-min w-fit inline-flex',
       },
       subVariant: {
         1: '',
@@ -63,10 +63,11 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  iconOnly?: boolean
   Icon?: React.FC<VariantSvgIconProps>
-  iconClassname?: string
+  iconOnly?: boolean
+  iconClassName?: string
   iconPosition?: 'left' | 'right'
+  solid?: boolean
 }
 
 /**
@@ -92,39 +93,41 @@ export interface ButtonProps
  *
  * @example
  * // With icon
- * import { Mail } from 'lucide-react';
- * <Button Icon={Mail}>Send Email</Button>
+ * import { MailIcon } from '@/components/icons/MailIcon';
+ * <Link href="/contact" Icon={MailIcon}>Contact Us</Link>
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
-      iconClassname,
       variant,
       subVariant,
       size = 'md',
-      iconPosition = 'left',
       Icon,
+      iconPosition = 'left',
+      iconClassName,
       iconOnly,
+      solid = true,
       children,
       ...props
     },
     ref
   ) => {
-    const iconSize = size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-[18px] h-[18px]' : 'w-5 h-5'
+    const iconSize = size === 'sm' ? 'size-4' : size === 'md' ? 'size-4.5' : 'size-5'
 
     return (
       <button
         className={cn(
-          buttonVariants({ variant, subVariant, size: variant !== 'inline' ? size : null, className }),
-          variant === 'ghost' || iconOnly ? 'px-0 sm:px-0 py-0 sm:py-0' : ''
+          buttonVariants({ variant, subVariant, size: variant !== 'inline' ? size : null }),
+          variant === 'ghost' || iconOnly ? 'px-0 sm:px-0 py-0 sm:py-0' : '',
+          className
         )}
         ref={ref}
         {...props}
       >
-        {Icon && iconPosition === 'left' && <Icon className={cn(iconSize, iconClassname, 'shrink-0')} />}
+        {Icon && iconPosition === 'left' && <Icon className={cn(iconSize, iconClassName, 'shrink-0')} solid={solid} />}
         {!iconOnly && children}
-        {Icon && iconPosition === 'right' && <Icon className={cn(iconSize, iconClassname, 'shrink-0')} />}
+        {Icon && iconPosition === 'right' && <Icon className={cn(iconSize, iconClassName, 'shrink-0')} solid={solid} />}
       </button>
     )
   }

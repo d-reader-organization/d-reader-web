@@ -1,5 +1,13 @@
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/Dialog'
 import { Button } from '@/components/ui/Button'
+import { Text } from '@/components/ui/Text'
 import { WHAT_IS_A_WALLET } from '@/constants/staticText'
 
 export const WhyDoINeedAWalletDialog: React.FC = () => {
@@ -10,9 +18,15 @@ export const WhyDoINeedAWalletDialog: React.FC = () => {
           Why do I need a wallet?
         </Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[480px] max-h-[380px] p-2 whitespace-pre-wrap'>
-        <strong className='mt-2'>What is a Digital Wallet?</strong>
-        {WHAT_IS_A_WALLET}
+      <DialogContent className='max-w-md'>
+        <DialogHeader className='p-4'>
+          <DialogTitle asChild>
+            <Text styleVariant='primary-heading' as='h3'>
+              What is a Digital Wallet?
+            </Text>
+          </DialogTitle>
+          <DialogDescription className='text-left whitespace-pre-wrap'>{WHAT_IS_A_WALLET} </DialogDescription>
+        </DialogHeader>
       </DialogContent>
     </Dialog>
   )

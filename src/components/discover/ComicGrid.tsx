@@ -4,14 +4,14 @@ import { useDiscoverQueryStore } from '@/providers/DiscoverQueryStoreProvider'
 import { useFetchComics } from '@/api/comic/queries'
 import { DefaultComicCard } from '../comic/cards/DefaultCard'
 import { ShowMoreButton } from './ShowMoreButton'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 
 export const ComicGrid: React.FC = () => {
   const comicParams = useDiscoverQueryStore((state) => state.comicParams)
   const { flatData: comics, fetchNextPage, hasNextPage, isFetching, isFetched } = useFetchComics(comicParams)
 
   if (isFetching && !isFetched) {
-    return <Loader className='mx-auto pt-6 sm:pt-8' />
+    return <LoaderIcon className='mx-auto pt-6 sm:pt-8' />
   }
 
   return (

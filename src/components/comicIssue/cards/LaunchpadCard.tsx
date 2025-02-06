@@ -1,9 +1,8 @@
+import { CircleIcon } from '@/components/icons/theme/CircleIcon'
 import { Text } from '@/components/ui'
 import { RoutePath } from '@/enums/routePath'
 import { LaunchpadModel } from '@/models/candyMachine'
-import { abbreviateNumber } from '@/utils/numbers'
 import { calculateRemaningSeconds, formatTime } from '@/utils/time'
-import { Circle } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -34,7 +33,7 @@ export const LaunchpadCard: React.FC<Props> = ({ launchpadItem }) => {
       </Text>
       <div className='flex justify-between items-center px-2 sm:px-4'>
         <InfoStats value={launchpadItem.price} name='price' suffix='SOL' />
-        <InfoStats value={abbreviateNumber(launchpadItem.supply)} name='supply' />
+        <InfoStats value={launchpadItem.supply} name='supply' />
         <InfoStats value={`${launchpadItem.minted}%`} name='minted' />
       </div>
       <LaunchpadState startsAt={launchpadItem.startsAt} />
@@ -96,7 +95,7 @@ const LaunchpadState: React.FC<StateProps> = ({ startsAt }) => {
     <div className='h-[42px] p-2 flex justify-center items-center rounded-xl bg-black'>
       {isDue ? (
         <div className='flex justify-center items-center gap-2'>
-          <Circle className='size-2 text-green-100 fill-green-100' />
+          <CircleIcon className='size-2 text-green-100 fill-green-100' solid />
           <Text as='span' styleVariant='body-normal' fontWeight='bold' className='text-green-100'>
             MINTING LIVE
           </Text>

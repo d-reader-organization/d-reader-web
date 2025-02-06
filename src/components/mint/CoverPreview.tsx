@@ -5,10 +5,12 @@ import { Dialog, DialogContent, DialogTitle } from '../ui/Dialog'
 import { StatelessCover } from '@/models/comicIssue/statelessCover'
 import Image from 'next/image'
 import { RarityChip } from '../shared/chips/RarityChip'
-import { Arrow } from '../shared/Arrow'
 import { CandyMachine } from '@/models/candyMachine'
 import { Nullable } from '@/models/common'
 import { InfoStats } from '../shared/InfoStats'
+import { ChevronRightIcon } from '../icons/theme/ChevronRightIcon'
+import { ChevronLeftIcon } from '../icons/theme/ChevronLeftIcon'
+import { Button } from '../ui'
 
 type Props = {
   cover: StatelessCover
@@ -39,11 +41,11 @@ export const CoverPreviewDialog: React.FC<Props> = ({
       <DialogContent
         className='bg-transparent shadow-none p-4 flex gap-4 items-center sm:max-w-[520px]'
         overlayClassName='bg-grey-600 bg-opacity-60 backdrop-blur-[20px]'
-        showCloseIcon={false}
+        hideCloseIcon
         aria-describedby={undefined}
       >
         <DialogTitle className='sr-only'>Cover Preview</DialogTitle>
-        {hideArrows ? null : <Arrow arrowOrientation='LEFT' className='bg-transparent' onClick={onPrevClick} />}
+        {hideArrows ? null : <Button variant='secondary' onClick={onPrevClick} Icon={ChevronLeftIcon} iconOnly />}
         <div className='flex flex-col gap-[42px] rounded-2xl'>
           <Image
             src={cover.image}
@@ -64,7 +66,7 @@ export const CoverPreviewDialog: React.FC<Props> = ({
             <RarityChip rarity={cover.rarity} />
           </div>
         </div>
-        {hideArrows ? null : <Arrow arrowOrientation='RIGHT' className='bg-transparent' onClick={onNextClick} />}
+        {hideArrows ? null : <Button variant='secondary' onClick={onNextClick} Icon={ChevronRightIcon} iconOnly />}
       </DialogContent>
     </Dialog>
   )

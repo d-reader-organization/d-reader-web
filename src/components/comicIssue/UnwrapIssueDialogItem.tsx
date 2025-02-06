@@ -4,7 +4,7 @@ import { useLocalStorage } from '@/hooks/useLocalStorage'
 import useToggle from '@/hooks/useToggle'
 import React from 'react'
 import { useHandleUnwrap } from '@/hooks/useHandleUnwrap'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { UnwrapWarningDialog } from '../shared/dialogs/UnwrapWarningDialog'
 import { UnwrapButtonListItem } from '../shared/buttons/UnwrapButtonListItem'
 import { LOCAL_STORAGE } from '@/constants/general'
@@ -46,7 +46,7 @@ export const UnwrapIssueDialogItem: React.FC<Props> = ({ collectibleComic, close
             await handleUnwrap()
           }}
         >
-          {isUnwrapLoading ? <Loader /> : 'Open'}
+          {isUnwrapLoading ? <LoaderIcon /> : 'Open'}
         </Button>
       ) : (
         <UnwrapButtonListItem isLoading={isUnwrapLoading} onClick={toggleUnwrapWarningDialog} />

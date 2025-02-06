@@ -26,7 +26,7 @@ export const useSortTagSelect: SortTagSelectHook = (options) => {
         setSelectedOption(newOption)
       }}
     >
-      <SelectTrigger className='max-md:w-[42px] max-md:!px-0' iconClassname='max-md:hidden' asChild>
+      <SelectTrigger className='max-md:w-[42px] max-md:!px-0' iconClassName='max-md:hidden' asChild>
         <span className='max-md:hidden'>
           Sort by: <SelectValue />
         </span>

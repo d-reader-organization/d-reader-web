@@ -2,11 +2,11 @@ import { VariantSvgIconProps } from '@/lib/types'
 import React from 'react'
 
 export const MoneyPouchIcon = React.forwardRef<SVGSVGElement, VariantSvgIconProps>(
-  ({ solid = false, ...props }, ref) => {
+  ({ solid = false, className }, ref) => {
     return (
       <svg
         ref={ref}
-        {...props}
+        className={className}
         xmlns='http://www.w3.org/2000/svg'
         viewBox='0 0 24 26'
         fill={solid ? 'currentColor' : 'none'}

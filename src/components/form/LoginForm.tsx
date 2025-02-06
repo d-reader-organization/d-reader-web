@@ -6,7 +6,7 @@ import { loginAction } from '@/app/lib/actions/auth/login'
 import { useFormStatus } from 'react-dom'
 import { useSearchParams } from 'next/navigation'
 import { REDIRECT_TO_KEY } from '@/constants/general'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { FormErrorMessage } from './FormErrorMessage'
 import { onSubmitPreventFormListener } from '@/app/lib/utils/submitFormWithPreventDefault'
 
@@ -14,7 +14,7 @@ const SubmitButton: React.FC = () => {
   const { pending } = useFormStatus()
   return (
     <Button size='lg' className='w-full max-sm:h-[42px]' type='submit' aria-disabled={pending}>
-      {pending ? <Loader /> : <p>Login</p>}
+      {pending ? <LoaderIcon /> : <p>Login</p>}
     </Button>
   )
 }

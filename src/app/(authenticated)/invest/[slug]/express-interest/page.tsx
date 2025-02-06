@@ -30,7 +30,7 @@ export default async function ExpressInterestPage(props: Props) {
             href={RoutePath.Invest}
             prefetch={false}
           >
-            <ArrowLeftIcon className='w-5 h-5' />
+            <ArrowLeftIcon className='size-5' />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='max-sm:text-xs'>
               Go back
             </Text>

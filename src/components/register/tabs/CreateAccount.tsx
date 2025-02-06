@@ -13,7 +13,7 @@ import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { TermsOfServiceAndPrivacyPolicy } from '../../shared/TermsOfServiceAndPrivacyText'
 import { useToast } from '../../ui/toast/use-toast'
-import { Loader } from '@/components/shared/Loader'
+import { LoaderIcon } from '@/components/icons/theme/LoaderIcon'
 import { ParsedFormError } from '@/models/common'
 import { FormErrorMessage } from '@/components/form/FormErrorMessage'
 import { findError } from '@/lib/forms'
@@ -49,7 +49,7 @@ const RegisterButton: React.FC = () => {
   const { pending } = useFormStatus()
   return (
     <Button className='w-full' type='submit' size='lg' aria-disabled={pending}>
-      {pending ? <Loader /> : <p>Register</p>}
+      {pending ? <LoaderIcon /> : <p>Register</p>}
     </Button>
   )
 }

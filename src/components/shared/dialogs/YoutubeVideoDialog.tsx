@@ -9,7 +9,7 @@ type Props = {
 export const YoutubeVideoDialog: React.FC<Props> = ({ videoUrl, open, toggleDialog, title }) => {
   return (
     <Dialog open={open} onOpenChange={toggleDialog}>
-      <DialogContent className='max-w-[1080px] h-auto p-0 bg-transparent' showCloseIcon={false}>
+      <DialogContent className='max-w-[1080px] h-auto p-0 bg-transparent' hideCloseIcon>
         <iframe
           src={`${videoUrl}&autoplay=0&controls=1&mute=0&playsinline=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&vq=hd720`}
           className='w-full h-auto aspect-video rounded-lg'

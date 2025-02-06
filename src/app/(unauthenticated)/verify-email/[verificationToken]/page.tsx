@@ -1,9 +1,9 @@
 import { RoutePath } from '@/enums/routePath'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { verifyUserEmail } from '@/app/lib/api/user/mutations'
-import { ArrowRight } from 'lucide-react'
 import { Text } from '@/components/ui'
 import { LogoWithTextIcon } from '@/components/icons/logo/LogoWithTextIcon'
+import { ArrowRightIcon } from '@/components/icons/theme/ArrowRightIcon'
 
 type Params = {
   verificationToken: string
@@ -35,7 +35,7 @@ export default async function VerifyEmailPage(props: { params: Promise<Params> }
           </p>
         )}
         <ButtonLink variant='primary' href={RoutePath.Home} className='w-fit'>
-          Start exploring <ArrowRight className='size-6' />
+          Start exploring <ArrowRightIcon className='size-6' />
         </ButtonLink>
       </div>
       <div className='absolute bottom-4 left-4 text-left max-w-[420px] flex flex-col items-start gap-5'>

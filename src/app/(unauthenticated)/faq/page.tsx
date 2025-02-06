@@ -8,7 +8,7 @@ import React from 'react'
 export default function FaqPage() {
   return (
     <BaseLayout showFooter>
-      <div className='flex flex-col gap-8 mx-auto max-w-screen-md'>
+      <div className='flex flex-col gap-8 mx-auto w-full max-w-screen-md'>
         <div className='flex flex-col gap-2'>
           <Text as='h3' styleVariant='secondary-heading'>
             Frequent Questions

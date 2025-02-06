@@ -3,14 +3,13 @@
 import { ComicIssue } from '@/models/comicIssue'
 import clsx from 'clsx'
 import React from 'react'
-import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { useRouter } from 'next/navigation'
-import { Button } from '../ui'
-import { cn } from '@/lib/utils'
-import { RateButton } from '../shared/buttons/RateButton'
-import { FavouritiseButton } from '../shared/buttons/FavouritiseButton'
-import { ArrowLeft } from 'lucide-react'
+import { Button } from '@/components/ui'
+import { RateButton } from '@/components/shared/buttons/RateButton'
+import { FavouritiseButton } from '@/components/shared/buttons/FavouritiseButton'
+import { ArrowLeftIcon } from '@/components/icons/theme/ArrowLeftIcon'
+import { ButtonLink } from '../ui/ButtonLink'
 
 type Props = {
   comicIssue: ComicIssue
@@ -18,8 +17,8 @@ type Props = {
 }
 
 export const EReaderNavigation: React.FC<Props> = ({ comicIssue, hideNavigation = false }) => {
-  const navigationLinkStyle = 'hover:text-yellow-300 hover:[&>*]:text-yellow-300 text-lg'
   const { back } = useRouter()
+
   const commands = (
     <div className='justify-end gap-2 flex max-md:px-2'>
       <RateButton
@@ -44,19 +43,13 @@ export const EReaderNavigation: React.FC<Props> = ({ comicIssue, hideNavigation 
     >
       <div className='w-full mx-auto h-[72px] max-w-screen-xl flex items-center'>
         <div className='flex items-center justify-between max-w-screen-md mx-auto w-full'>
-          <Button variant='ghost' onClick={() => back()} className={cn('w-fit', navigationLinkStyle)}>
-            <ArrowLeft className='size-7 text-text-color' />
-          </Button>
-          <Link
-            href={RoutePath.ComicIssue(comicIssue.id)}
-            className={clsx('flex gap-1', navigationLinkStyle)}
-            prefetch={false}
-          >
+          <Button Icon={ArrowLeftIcon} variant='ghost' onClick={() => back()} size='lg' />
+          <ButtonLink variant='ghost' size='lg' href={RoutePath.ComicIssue(comicIssue.id)} prefetch={false}>
             <div className='hidden sm:block'>
-              <strong>EP {comicIssue.number}</strong>&nbsp;&nbsp;
+              <strong className='mr-2'>EP {comicIssue.number}</strong>
             </div>
             <span className='text-grey-100'>{comicIssue.title}</span>
-          </Link>
+          </ButtonLink>
           {commands}
         </div>
       </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { RoutePath } from '@/enums/routePath'
 import { Button } from '../ui'
 import Link from 'next/link'
@@ -14,14 +14,14 @@ import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { GenesisLogoIcon } from '@/components/icons/logo/GenesisLogoIcon'
 import { LogoWithTextIcon } from '@/components/icons/logo/LogoWithTextIcon'
 import { ArrowLeftIcon } from '@/components/icons/theme/ArrowLeftIcon'
-import { ChevronDown } from '@/components/icons/theme/ChevronDown'
+import { ChevronDownIcon } from '@/components/icons/theme/ChevronDownIcon'
 
 type Props = {
   me: User | null
 }
 
 export const GenesisNavigation: React.FC<Props> = ({ me }) => {
-  const [isProfileSheetOpen, setOpenProfileSheet] = React.useState<boolean>(false)
+  const [isProfileSheetOpen, setOpenProfileSheet] = useState(false)
   const pathname = usePathname()
   const isInvest = pathname.endsWith(RoutePath.Invest)
   const backgroundColor = isInvest ? 'bg-green-genesis' : 'bg-grey-600'
@@ -39,7 +39,7 @@ export const GenesisNavigation: React.FC<Props> = ({ me }) => {
       >
         <div className='flex items-center justify-between p-4 max-w-screen-xl w-full'>
           <Link href={RoutePath.Invest}>
-            <GenesisLogoIcon className='h-8 min-w-fit fill-white ml-4' />
+            <GenesisLogoIcon className='h-8 w-auto fill-white ml-4' />
           </Link>
           <div className='flex items-center gap-2'>
             <Link
@@ -47,32 +47,30 @@ export const GenesisNavigation: React.FC<Props> = ({ me }) => {
               href={RoutePath.Home}
               prefetch={false}
             >
-              <ArrowLeftIcon className='w-5 h-5' />
-              <LogoWithTextIcon className='h-6 min-w-fit fill-white ml-2' />
+              <ArrowLeftIcon className='size-5' />
+              <LogoWithTextIcon className='h-6 w-auto fill-white ml-2' />
             </Link>
             {me ? (
-              <button
-                className='flex items-center cursor-pointer'
-                onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}
-              >
-                <div className='bg-white rounded-xl flex items-center justify-center gap-1.5 px-2 h-10'>
+              <div className='flex items-center gap-8'>
+                <Button
+                  variant='secondary'
+                  onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}
+                  Icon={ChevronDownIcon}
+                  iconPosition='right'
+                  className='!p-2'
+                >
                   <Image
-                    alt=''
+                    alt='avatar'
                     src={me.avatar || PLACEHOLDER_AVATAR}
                     width={28}
                     height={28}
                     className='size-7 object-cover rounded-full border border-black'
                   />
-                  <ChevronDown className='text-grey-100 w-6 h-6' />
-                </div>
-              </button>
+                </Button>
+              </div>
             ) : (
-              <Button
-                className='max-h-10 p-4 flex justify-center items-center text-sm font-bold leading-[19.6px] text-black rounded-xl bg-white w-fit'
-                variant='ghost'
-                onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}
-              >
-                Connect
+              <Button variant='white' onClick={() => setOpenProfileSheet(!isProfileSheetOpen)}>
+                Sign in
               </Button>
             )}
           </div>

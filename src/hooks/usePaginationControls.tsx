@@ -2,7 +2,8 @@ import { JSX, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeftIcon } from '@/components/icons/theme/ChevronLeftIcon'
+import { ChevronRightIcon } from '@/components/icons/theme/ChevronRightIcon'
 
 type PaginationControlsHook = (options: { totalItems: number; defaultPageSize?: number }) => {
   currentPage: number
@@ -25,7 +26,7 @@ export const usePaginationControls: PaginationControlsHook = ({ totalItems, defa
           variant='secondary'
           onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
           disabled={currentPage === 1}
-          Icon={ChevronLeft}
+          Icon={ChevronLeftIcon}
           iconOnly
         />
         <div className='flex items-center gap-2 mx-2'>
@@ -37,7 +38,7 @@ export const usePaginationControls: PaginationControlsHook = ({ totalItems, defa
           variant='secondary'
           onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
           disabled={currentPage === totalPages}
-          Icon={ChevronRight}
+          Icon={ChevronRightIcon}
           iconOnly
         />
       </div>

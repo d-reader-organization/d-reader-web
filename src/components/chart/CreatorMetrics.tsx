@@ -9,6 +9,7 @@ import { MoneyPouchIcon } from '@/components/icons/theme/MoneyPouchIcon'
 import { RoyaltyIcon } from '@/components/icons/theme/RoyaltyIcon'
 import { CoinsIcon } from '@/components/icons/theme/CoinsIcon'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { cn } from '@/lib/utils'
 
 enum ChartsTab {
   Audience = 'Audience',
@@ -28,14 +29,14 @@ export const CreatorMetrics: React.FC = () => {
             <Button
               variant={tab === ChartsTab.Audience ? 'secondary' : 'ghost'}
               onClick={() => setTab(ChartsTab.Audience)}
-              className='h-8 font-bold w-[100px]'
+              className={cn(tab === ChartsTab.Audience && 'text-white', 'h-8 font-bold w-[100px]')}
             >
               {ChartsTab.Audience}
             </Button>
             <Button
               variant={tab === ChartsTab.Revenue ? 'secondary' : 'ghost'}
               onClick={() => setTab(ChartsTab.Revenue)}
-              className='h-8 font-bold w-[100px]'
+              className={cn(tab === ChartsTab.Revenue && 'text-white', 'h-8 font-bold w-[100px]')}
             >
               {ChartsTab.Revenue}
             </Button>

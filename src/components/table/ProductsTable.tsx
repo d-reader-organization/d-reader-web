@@ -18,6 +18,7 @@ import { TrashIcon } from '@/components/icons/theme/TrashIcon'
 import { SortOrder } from '@/enums/sortOrder'
 import { useSortTagSelect } from '@/hooks/useSortTagSelect'
 import { TextWithOverflow } from '../ui/TextWithOverflow'
+import { cn } from '@/lib/utils'
 
 interface SignatureRequest {
   asset: BasicCollectibleComic
@@ -105,21 +106,21 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
             <Button
               variant={tab === ProductsTab.Series ? 'secondary' : 'ghost'}
               onClick={() => setTab(ProductsTab.Series)}
-              className='h-8 font-bold w-[110px]'
+              className={cn(tab === ProductsTab.Series && 'text-white', 'h-8 font-bold w-[110px]')}
             >
               {ProductsTab.Series}
             </Button>
             <Button
               variant={tab === ProductsTab.Releases ? 'secondary' : 'ghost'}
               onClick={() => setTab(ProductsTab.Releases)}
-              className='h-8 font-bold w-[110px]'
+              className={cn(tab === ProductsTab.Releases && 'text-white', 'h-8 font-bold w-[110px]')}
             >
               {ProductsTab.Releases}
             </Button>
             <Button
               variant={tab === ProductsTab.DigitalArt ? 'secondary' : 'ghost'}
               onClick={() => setTab(ProductsTab.DigitalArt)}
-              className='h-8 font-bold w-[110px]'
+              className={cn(tab === ProductsTab.DigitalArt && 'text-white', 'h-8 font-bold w-[110px]')}
             >
               {ProductsTab.DigitalArt}
             </Button>
@@ -170,7 +171,7 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
                 </TableCell>
                 <TableCell>
                   <div className='flex items-center gap-2 text-nowrap'>
-                    <Avatar className='h-6 w-6'>
+                    <Avatar className='size-6'>
                       <AvatarImage src={user.avatar || PLACEHOLDER_AVATAR} />
                       <AvatarFallback>
                         {/** fallback to 'G' as guest */}
@@ -180,9 +181,7 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
                     {user.displayName}
                   </div>
                 </TableCell>
-                <TableCell>
-                  <TableCell>TODO</TableCell>
-                </TableCell>
+                <TableCell>TODO</TableCell>
                 <TableCell>
                   <span title={new Date(requestedAt).toLocaleString()} className='text-nowrap'>
                     {formatDistanceToNow(new Date(requestedAt), { addSuffix: true, includeSeconds: true })}
@@ -191,7 +190,7 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
                 <TableCell>
                   <div className='flex justify-end gap-2'>
                     <Button
-                      iconClassname='m-auto'
+                      iconClassName='m-auto'
                       variant='ghost'
                       Icon={PencilIcon}
                       onClick={() => {
@@ -199,7 +198,7 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
                       }}
                     />
                     <Button
-                      iconClassname='m-auto'
+                      iconClassName='m-auto'
                       variant='ghost'
                       Icon={TrashIcon}
                       onClick={() => {

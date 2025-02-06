@@ -16,7 +16,7 @@ export const MetricCard: React.FC<Props> = ({ Icon, title, value = 0 }) => {
   return (
     <div className='flex items-center gap-4 rounded-lg bg-zinc-900 p-4'>
       <div className='rounded-lg bg-zinc-800 p-2'>
-        <Icon className='h-6 w-6' solid />
+        <Icon className='size-6' solid />
       </div>
       <div>
         <p className='text-sm text-zinc-400'>{title}</p>

@@ -2,7 +2,6 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Input } from '../ui/Input'
-import { LoaderCircle, Search } from 'lucide-react'
 import { SearchResultComic } from '@/models/comic'
 import { SearchResultCreator } from '@/models/creator'
 import { useDebouncedCallback } from 'use-debounce'
@@ -14,6 +13,8 @@ import Link from 'next/link'
 import { useSearchComics } from '@/api/comic/queries/useSearchComics'
 import { useSearchCreators } from '@/api/creator/queries/useSearchCreators'
 import { CloseIcon } from '@/components/icons/theme/CloseIcon'
+import { SearchIcon } from '@/components/icons/theme/SearchIcon'
+import { LoaderIcon } from '@/components/icons/theme/LoaderIcon'
 
 type Props = React.InputHTMLAttributes<HTMLInputElement>
 
@@ -105,10 +106,10 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
     <div className={cn('relative z-10', className)} ref={searchRef}>
       {searchTerm ? (
         <button className='absolute top-3 left-3' onClick={clearInput}>
-          <CloseIcon className='size-[18px] text-white' />
+          <CloseIcon className='size-4.5 text-white' />
         </button>
       ) : (
-        <Search className='size-[18px] absolute top-3 left-3 text-grey-200' />
+        <SearchIcon className='size-4.5 absolute top-3 left-3 text-grey-200' />
       )}
       <Input
         placeholder='Search comics or creators'
@@ -116,9 +117,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
         className='pl-10 pr-10 max-md:w-full'
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <LoaderCircle
-        className={cn('size-[18px] animate-spin absolute top-3 right-3 text-grey-200', isLoading ? '' : 'hidden')}
-      />
+      <LoaderIcon className={cn('size-4.5 absolute top-3 right-3 text-grey-200', isLoading ? '' : 'hidden')} />
       {showResults ? (
         <div className='max-w-80 md:max-w-[400px] flex flex-col gap-6 p-4 rounded-xl bg-grey-500 absolute top-14 md:top-16 w-full'>
           {creatorsResults.length || comicsResults.length ? (

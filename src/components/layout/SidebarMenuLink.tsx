@@ -27,7 +27,7 @@ export const SidebarMenuLink: React.FC<NavigationLinkProps> = ({ href, isActive,
         )}
         href={disabled ? '#' : href}
       >
-        <Icon solid={isActive} className='h-5 w-5' />
+        <Icon solid={isActive} className='size-5' />
         <Text styleVariant='body-normal' fontWeight='medium' as='span'>
           {title}
         </Text>

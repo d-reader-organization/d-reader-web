@@ -1,6 +1,6 @@
 import { findCollectibleComicRarityStats } from '@/app/lib/api/asset/queries'
 import { Divider } from '@/components/shared/Divider'
-import { Loader } from '@/components/shared/Loader'
+import { LoaderIcon } from '@/components/icons/theme/LoaderIcon'
 import { Text } from '@/components/ui'
 import { CollectibleComicRarityStats } from '@/models/asset/collectibleComicRarityStats'
 import Image from 'next/image'
@@ -25,7 +25,7 @@ export const StatsSection: React.FC<{ collectionAddress: string | undefined }> =
       {collectionAddress ? (
         statsList?.map((stats, index) => <CollectibleComicStats key={index} stats={stats} />)
       ) : (
-        <Loader className='self-center' />
+        <LoaderIcon className='self-center' />
       )}
     </div>
   )

@@ -3,7 +3,7 @@
 import { Button, Input, Label, toast } from '@/components/ui'
 import React, { useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { resetPasswordAction } from '@/app/lib/actions/auth/reset-password'
 import { FormErrorMessage } from './FormErrorMessage'
 import { findError } from '@/lib/forms'
@@ -50,7 +50,7 @@ const SubmitButton: React.FC = () => {
   const { pending } = useFormStatus()
   return (
     <Button size='lg' className='w-fit min-w-36 px-10' type='submit' aria-disabled={pending}>
-      {pending ? <Loader /> : <p>Update</p>}
+      {pending ? <LoaderIcon /> : <p>Update</p>}
     </Button>
   )
 }

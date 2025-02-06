@@ -1,10 +1,11 @@
 import { SuccessfulProject } from '@/models/project'
 import { RoutePath } from '@/enums/routePath'
-import { ChevronRightIcon, InfoIcon } from 'lucide-react'
+import { InfoIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/Tooltip'
+import { ChevronRightIcon } from '@/components/icons/theme/ChevronRightIcon'
 import { roiTooltip } from '@/constants/tooltips'
 import { formatCurrency } from '@/utils/numbers'
 import { Text } from '../ui'
@@ -80,7 +81,7 @@ const InfoTooltip: React.FC<{ text: string }> = ({ text }) => (
   <TooltipProvider>
     <Tooltip delayDuration={10}>
       <TooltipTrigger>
-        <InfoIcon className='text-green-genesis size-[10px] md:size-[18px]' />
+        <InfoIcon className='text-green-genesis size-[10px] md:size-4.5' />
       </TooltipTrigger>
       <TooltipContent align='start' className='max-w-80' side='right'>
         {text}

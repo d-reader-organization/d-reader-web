@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { PlusIcon, MinusIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { Text } from '../ui'
+import { MinusIcon } from '../icons/theme/MinusIcon'
+import { PlusIcon } from '../icons/theme/PlusIcon'
 
 type ProjectInfoProps = {
   info: InfoItemProps[]
@@ -28,6 +29,7 @@ export const ProjectInfo: React.FC<ProjectInfoProps> = ({ info }) => {
   )
 }
 
+/** @deprecated Use the Collapsible component for the Accordion effect */
 const InfoItem: React.FC<{ item: InfoItemProps; isLast?: boolean }> = ({ item, isLast }) => {
   const [isExpanded, setIsExpanded] = useState(true)
   const contentRef = useRef<HTMLDivElement>(null)

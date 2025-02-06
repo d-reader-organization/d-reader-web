@@ -10,7 +10,7 @@ import { expressInterest } from '@/app/lib/api/invest/mutations'
 import { ConnectButton } from '../shared/buttons/ConnectButton'
 import { useRouter } from 'next/navigation'
 import { RoutePath } from '@/enums/routePath'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { ExpressedInterestDialog } from '../shared/dialogs/ExpressedInterestDialog'
 import { useAuthStore } from '@/providers/AuthStoreProvider'
 
@@ -125,7 +125,7 @@ export const ExpressInterestSection: React.FC<Props> = ({ slug }) => {
         />
         {publicKey ? (
           <Button className='w-full h-12 bg-green-genesis text-black' onClick={onSubmit}>
-            {isLoading ? <Loader /> : 'Express Interest'}
+            {isLoading ? <LoaderIcon /> : 'Express Interest'}
           </Button>
         ) : (
           <ConnectButton className='w-full h-12 bg-green-genesis text-black' text='Connect Wallet' />

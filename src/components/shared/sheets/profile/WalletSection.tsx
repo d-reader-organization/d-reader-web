@@ -16,12 +16,12 @@ export const WalletSection: React.FC = () => {
     <ConnectedWalletBox address={publicKey.toBase58()} />
   ) : (
     <div className='rounded-xl bg-grey-500 flex flex-col items-center gap-6 p-4'>
-      <div className='text-2xl font-normal leading-[28.8px]'>
+      <div className='text-xl font-normal leading-[28.8px]'>
         <span className='font-bold'>Quick connect&nbsp;</span>
         <span>your wallet.</span>
       </div>
       <WalletsIcon />
-      <ConnectButton />
+      <ConnectButton variant='secondary' className='w-full' />
     </div>
   )
 }
@@ -34,12 +34,12 @@ export const ConnectedWalletBox: React.FC<ConnectedWalletBoxProps> = ({ address 
       <span className='text-grey-200 text-base font-medium leading-[22.4px]'>Connected wallet</span>
       <div className='h-10 flex items-center justify-between'>
         <div className='flex gap-2'>
-          <WalletIcon className='w-6 h-6' solid />
+          <WalletIcon className='size-6' solid />
           <span className='text-base font-medium leading-[22.4px] text-white'>{shortenSolanaAddress({ address })}</span>
         </div>
         <div className='flex gap-1.5'>
-          <CopyButton variant='button' clipboard={address} />
-          <ConnectButton variant='outline' iconOnly Icon={Power} />
+          <CopyButton variant='secondary' clipboard={address} solid={false} />
+          <ConnectButton variant='secondary' iconOnly Icon={Power} />
         </div>
       </div>
     </div>

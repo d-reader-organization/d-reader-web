@@ -2,8 +2,8 @@ import React from 'react'
 import { UpdatePasswordForm } from '../form/UpdatePasswordForm'
 import { Text } from '../ui'
 import { fetchMe } from '@/app/lib/api/user/queries'
-import { ResetPasswordButton } from '../shared/buttons/ResetPasswordButton'
-import { LockKeyholeIcon } from 'lucide-react'
+import { ForgotPasswordDialog } from '../shared/dialogs/ForgotPasswordDialog'
+import { LockIcon } from '@/components/icons/theme/LockIcon'
 
 export const SecuritySettings: React.FC = async () => {
   const me = await fetchMe()
@@ -25,7 +25,7 @@ export const SecuritySettings: React.FC = async () => {
 
       <div className='flex items-start border border-grey-300 p-5 rounded-xl gap-7 max-w-[607px]'>
         <div className='border border-grey-300 p-4 rounded-lg'>
-          <LockKeyholeIcon className='size-5 text-white' />
+          <LockIcon className='size-5 text-white' />
         </div>
 
         <div className='flex flex-col gap-1'>
@@ -34,7 +34,17 @@ export const SecuritySettings: React.FC = async () => {
           </Text>
           <Text as='p' styleVariant='body-normal' className='text-grey-200 font-medium'>
             You don&apos;t have a password set up. To add a password to your account for the first time, use the&nbsp;
-            <ResetPasswordButton />
+            <ForgotPasswordDialog
+              trigger={
+                <Text
+                  as='span'
+                  styleVariant='body-normal'
+                  className='text-important-color underline underline-offset-4 font-medium hover:brightness-150'
+                >
+                  password reset
+                </Text>
+              }
+            />
             &nbsp;flow.
           </Text>
         </div>

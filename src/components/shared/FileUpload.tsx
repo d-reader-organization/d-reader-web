@@ -4,7 +4,7 @@ import React, { forwardRef, InputHTMLAttributes, useEffect, useRef, useState } f
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Button } from '../ui'
-import { Loader } from './Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { FileUploadRef } from '@/lib/types'
 
@@ -104,7 +104,7 @@ const FileUpload = forwardRef<FileUploadRef, Props>(function FileUpload(
       <div className='flex gap-2'>
         {isPhotoSelected && !isUploading ? (
           <Button type='reset' variant='ghost' size='md' className='w-fit' onClick={onRemove}>
-            {isRemoving ? <Loader /> : 'Remove photo'}
+            {isRemoving ? <LoaderIcon /> : 'Remove photo'}
           </Button>
         ) : null}
         <Button
@@ -121,7 +121,7 @@ const FileUpload = forwardRef<FileUploadRef, Props>(function FileUpload(
             accept='image/*'
             ref={fileInputRef}
           />
-          {isUploading ? <Loader /> : isPhotoSelected && !isUploading ? 'Change photo' : 'Upload photo'}
+          {isUploading ? <LoaderIcon /> : isPhotoSelected && !isUploading ? 'Change photo' : 'Upload photo'}
         </Button>
       </div>
     </div>

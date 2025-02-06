@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import { LoaderCircle, Search, Upload } from 'lucide-react'
 import React, { useState, useEffect, useCallback } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
@@ -21,6 +20,9 @@ import { usePaginationControls } from '@/hooks/usePaginationControls'
 import { SolanaIcon } from '../icons/SolanaIcon'
 import { FilterIcon } from '@/components/icons/theme/FilterIcon'
 import { CloseIcon } from '@/components/icons/theme/CloseIcon'
+import { SearchIcon } from '@/components/icons/theme/SearchIcon'
+import { ExportIcon } from '@/components/icons/theme/ExportIcon'
+import { LoaderIcon } from '@/components/icons/theme/LoaderIcon'
 import { useSortTagSelect } from '@/hooks/useSortTagSelect'
 import { TransactionHistorySortTag } from '@/models/transaction/transactionHistory'
 import { SortOrder } from '@/enums/sortOrder'
@@ -32,7 +34,6 @@ import { CopyButton } from '../shared/CopyButton'
 // TODO: finish 'My Products' table
 // TODO: use AvatarImage component instead of the one from Shadcn?
 // TODO: Sidebar Avatar is a dropdown for settings & logout
-// TODO: look into 'solid' issue: Received `false` for a non-boolean attribute `solid`.
 
 // TODO: replace chart with PieChart, Bars, or something similar
 // TODO: prepare API endpoints params (filter, sort, and pagination)
@@ -82,10 +83,10 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
           <div className='relative z-10'>
             {searchTerm ? (
               <button className='absolute top-3 left-3' onClick={clearSearch}>
-                <CloseIcon className='size-[18px] text-white' solid />
+                <CloseIcon className='size-4.5 text-white' />
               </button>
             ) : (
-              <Search className='size-[18px] absolute top-3 left-3 text-grey-200' />
+              <SearchIcon className='size-4.5 absolute top-3 left-3 text-grey-200' />
             )}
             <Input
               placeholder='Search'
@@ -93,15 +94,13 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
               className='pl-10 max-w-sm'
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <LoaderCircle
-              className={cn('size-[18px] animate-spin absolute top-3 right-3 text-grey-200', isLoading ? '' : 'hidden')}
-            />
+            <LoaderIcon className={cn('size-4.5 absolute top-3 right-3 text-grey-200', isLoading ? '' : 'hidden')} />
           </div>
           <div className='flex items-center gap-2'>
             <Button
               className='relative rounded-lg sm:px-0'
               variant='secondary'
-              Icon={Upload}
+              Icon={ExportIcon}
               onClick={() => {
                 downloadTransactionsReportCSV(transactions)
               }}
@@ -141,7 +140,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
                 </TableCell>
                 <TableCell>
                   <div className='flex items-center gap-2 text-nowrap'>
-                    <Avatar className='h-6 w-6'>
+                    <Avatar className='size-6'>
                       <AvatarImage src={transaction.buyer?.avatar || PLACEHOLDER_AVATAR} />
                       <AvatarFallback>
                         {/** fallback to 'G' as guest */}

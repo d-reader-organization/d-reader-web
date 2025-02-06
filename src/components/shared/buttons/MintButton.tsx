@@ -4,7 +4,7 @@ import { checkIfCouponIsActive, validateMintEligibilty } from '@/utils/mint'
 import { useWallet } from '@solana/wallet-adapter-react'
 import React, { useEffect, useState } from 'react'
 import { Button } from '../../ui/Button'
-import { Loader } from '../Loader'
+import { LoaderIcon } from '../../icons/theme/LoaderIcon'
 import { AssetMintedDialog } from '../dialogs/AssetMintedDialog'
 import { ComicIssue } from '@/models/comicIssue'
 import { ConfirmingTransactionDialog } from '../dialogs/ConfirmingTransactionDialog'
@@ -223,7 +223,7 @@ export const MintButton: React.FC<Props> = ({ comicIssue, bounce = false, onMint
                 )}
               </div>
             ) : (
-              <Loader />
+              <LoaderIcon />
             )}
           </Button>
         ) : (

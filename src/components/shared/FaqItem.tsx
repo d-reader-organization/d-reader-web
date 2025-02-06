@@ -1,41 +1,31 @@
 'use client'
 
-import { useState, useRef } from 'react'
-import { PlusIcon, MinusIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { useState } from 'react'
 import { FAQItemType } from '@/constants/faqs'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
+import { Text } from '@/components/ui/Text'
+import { cn } from '@/lib/utils'
+import { MinusIcon } from '../icons/theme/MinusIcon'
+import { PlusIcon } from '../icons/theme/PlusIcon'
 
 export const FAQItem: React.FC<{ item: FAQItemType }> = ({ item }) => {
   const [isExpanded, setIsExpanded] = useState(false)
-  const contentRef = useRef<HTMLDivElement>(null)
+  const Icon = isExpanded ? MinusIcon : PlusIcon
 
   return (
-    <div className={cn('border-t border-grey-300', isExpanded && 'border-b-0')}>
-      <button
-        className='flex justify-between items-center w-full text-left py-8 focus:outline-none'
-        onClick={() => setIsExpanded(!isExpanded)}
-        aria-expanded={isExpanded}
-      >
-        <p className='text-base md:text-xl font-bold'>{item.question}</p>
-        {isExpanded ? (
-          <MinusIcon className='size-6 text-gray-200 transition-transform duration-200' />
-        ) : (
-          <PlusIcon className='size-6 text-gray-200 transition-transform duration-200' />
-        )}
-      </button>
-      <div
-        ref={contentRef}
-        className='overflow-hidden transition-all duration-200 ease-in-out'
-        style={{
-          maxHeight: isExpanded ? contentRef.current?.scrollHeight + 'px' : '0px',
-          opacity: isExpanded ? 1 : 0,
-        }}
-      >
-        <div className='text-sm md:text-base font-medium leading-[140%] pb-4' style={{ whiteSpace: 'pre-wrap' }}>
+    <Collapsible onOpenChange={setIsExpanded} className={cn('border-t border-grey-300', isExpanded && 'border-b-0')}>
+      <CollapsibleTrigger className='flex justify-between items-center w-full text-left py-8 focus:outline-none'>
+        <Text as='h5' styleVariant='secondary-heading'>
+          {item.question}
+        </Text>
+        <Icon className='size-6 transition-transform duration-200' />
+      </CollapsibleTrigger>
+      <CollapsibleContent className='pb-4'>
+        <Text as='span' styleVariant='body-normal' className='whitespace-pre-wrap'>
           {item.answer}
-        </div>
-      </div>
-    </div>
+        </Text>
+      </CollapsibleContent>
+    </Collapsible>
   )
 }
 

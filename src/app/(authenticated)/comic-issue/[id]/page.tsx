@@ -10,9 +10,7 @@ import { CandyMachineDetails } from '@/components/shared/CandyMachineDetails'
 import { Divider } from '@/components/shared/Divider'
 import { AboutIssueSection } from '@/components/mint/AboutIssueSection'
 import { PagesPreview } from '@/components/mint/PagesPreview'
-import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
-import { ChevronRightIcon } from 'lucide-react'
 import { Metadata } from 'next'
 import { RateButton } from '@/components/shared/buttons/RateButton'
 import { FavouritiseButton } from '@/components/shared/buttons/FavouritiseButton'
@@ -20,6 +18,8 @@ import { ShareButton } from '@/components/shared/buttons/ShareButton'
 import { getAccessToken } from '@/app/lib/utils/auth'
 import { fetchCandyMachine } from '@/app/lib/api/candyMachine/queries'
 import { SecondaryMarketplace } from '@/components/comicIssue/secondary/SecondaryMarketplace'
+import { ChevronRightIcon } from '@/components/icons/theme/ChevronRightIcon'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 
 export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const params = await props.params
@@ -58,16 +58,15 @@ export default async function ComicIssuePage(props: ComicIssuePageParams) {
       <div className='flex flex-col max-md:items-center md:flex-row md:justify-center gap-6 md:gap-10 w-full mb-2'>
         <div className='flex flex-col gap-4'>
           <CoverCarousel candyMachine={candyMachine} covers={comicIssue.statelessCovers ?? []} />
-          <Link
+          <ButtonLink
             href={RoutePath.ReadComicIssue(comicIssue.id)}
             prefetch={false}
-            className='flex justify-center items-center gap-2 self-stretch rounded-xl bg-yellow-300 py-3 pr-2 pl-4 hover:brightness-125 max-h-[36px] md:max-h-[42px]'
+            Icon={ChevronRightIcon}
+            iconPosition='right'
+            variant='primary'
           >
-            <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-600'>
-              Read episode
-            </Text>
-            <ChevronRightIcon className='text-grey-600' />
-          </Link>
+            Read episode
+          </ButtonLink>
           <div className='flex gap-1 md:gap-2 justify-between md:justify-around'>
             <RateButton
               comicIssueId={comicIssue.id}

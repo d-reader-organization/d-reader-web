@@ -30,7 +30,7 @@ export const MultiStepDialog: React.FC<Props> = ({ steps, open, toggleDialog, on
       <DialogContent
         aria-describedby=''
         className='max-w-[485px] rounded-2xl flex flex-col items-center bg-grey-400 shadow-[0px_0px_30px_0px_rgba(0,0,0,0.50)] p-6 pt-8 gap-4'
-        showCloseIcon={false}
+        hideCloseIcon
       >
         {activeStep.title && (
           <DialogTitle className='font-satoshi leading-[24px] text-xl text-center'>{activeStep.title}</DialogTitle>

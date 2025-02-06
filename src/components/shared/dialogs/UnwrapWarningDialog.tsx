@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/Dialog'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { CommonDialogProps } from '@/models/common'
 import { ConnectButton } from '../buttons/ConnectButton'
-import { Loader } from '../Loader'
+import { LoaderIcon } from '../../icons/theme/LoaderIcon'
 import { LOCAL_STORAGE } from '@/constants/general'
 
 type Props = { handleUnwrap: () => Promise<void>; isLoading: boolean } & CommonDialogProps
@@ -27,7 +27,7 @@ export const UnwrapWarningDialog: React.FC<Props> = ({ handleUnwrap, isLoading, 
           </Text>
         </div>
         <ConnectButton className='self-center w-full bg-important-color my-5 text-black' onClick={handleUnwrap}>
-          {isLoading ? <Loader /> : 'Unwrap'}
+          {isLoading ? <LoaderIcon /> : 'Unwrap'}
         </ConnectButton>
         <div className='flex items-center justify-center space-x-2'>
           <Checkbox

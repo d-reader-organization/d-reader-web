@@ -7,7 +7,7 @@ import { ComicIssueParams } from '@/models/comicIssue/comicIssueParams'
 import React, { useEffect, useMemo } from 'react'
 import { Text } from '../ui/Text'
 import clsx from 'clsx'
-import { Loader } from '../shared/Loader'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { DefaultComicIssueCard } from './cards/DefaultCard'
 
 type Props = {
@@ -74,7 +74,7 @@ export const ComicIssueList: React.FC<Props> = ({
         ))}
       </div>
       <div className='flex justify-center py-12' ref={showMoreRef}>
-        {isFetching && <Loader />}
+        {isFetching && <LoaderIcon />}
         {!hasNextPage &&
           !isFetching &&
           !hideItemsCount &&
