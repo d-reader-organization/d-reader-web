@@ -9,15 +9,15 @@ import { UserPlusIcon } from 'lucide-react'
 
 type Props = React.HTMLAttributes<HTMLButtonElement> & {
   isFollowing?: boolean
-  creatorSlug: string
+  creatorId: number
 }
 
-export const FollowCreatorButton: React.FC<Props> = ({ isFollowing = false, creatorSlug, className }) => {
+export const FollowCreatorButton: React.FC<Props> = ({ isFollowing = false, creatorId, className }) => {
   const { refresh } = useRouter()
 
   const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    await followCreator(creatorSlug)
+    await followCreator(creatorId)
     refresh()
   }
 

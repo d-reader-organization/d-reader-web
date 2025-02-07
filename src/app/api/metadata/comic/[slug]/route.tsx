@@ -12,7 +12,7 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
   return generateMetadataImage(
     <DefaultMetadataImage
       title={comic.title}
-      caption={comic.creator?.name}
+      caption={comic.creator?.handle}
       image={comic.cover}
       backgroundImage={comic.banner}
       logo

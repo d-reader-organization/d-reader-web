@@ -6,7 +6,7 @@ import { getAccessToken } from '../../utils/auth'
 
 const { CREATOR, FOLLOW } = CREATOR_QUERY_KEYS
 
-export const followCreator = async (slug: string): Promise<void> => {
+export const followCreator = async (id: number): Promise<void> => {
   const accessToken = await getAccessToken()
-  await fetchWrapper<void>({ accessToken, path: `${CREATOR}/${FOLLOW}/${slug}`, method: 'PATCH', isTextResponse: true })
+  await fetchWrapper<void>({ accessToken, path: `${CREATOR}/${FOLLOW}/${id}`, method: 'PATCH', isTextResponse: true })
 }

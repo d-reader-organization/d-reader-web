@@ -42,9 +42,9 @@ export const LargeComicCard: React.FC<Props> = ({ className, comic, index }) => 
             styleVariant='body-small'
             fontWeight='medium'
             className='line-clamp-1 overflow-ellipsis text-grey-100 max-md:text-xs'
-            title={comic.creator?.name ?? 'creator name'}
+            title={comic.creator?.handle ?? 'creator name'}
           >
-            by&nbsp;{comic.creator?.name}
+            by&nbsp;{comic.creator?.handle}
           </Text>
         </div>
       </div>

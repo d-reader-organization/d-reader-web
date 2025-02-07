@@ -19,7 +19,7 @@ export const ComicIssueGrid: React.FC = () => {
   } = useFetchComicIssues({ params: comicIssueParams })
 
   if (isFetching && !isFetched) {
-    return <LoaderIcon className='mx-auto pt-6 sm:pt-8' />
+    return <LoaderIcon className='mx-auto pt-6 sm:pt-8 size-6' />
   }
 
   return (

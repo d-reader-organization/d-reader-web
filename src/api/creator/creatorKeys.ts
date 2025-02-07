@@ -1,7 +1,7 @@
 import { CreatorParams } from '@/models/creator/creatorParams'
 
 export const CREATOR_QUERY_KEYS = Object.freeze({
-  CREATOR: 'creator',
+  CREATOR: 'creator-channel',
   GET: 'get',
   ME: 'me',
   UPDATE: 'update',

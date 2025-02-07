@@ -4,8 +4,7 @@ import { CreatorMyStats } from './creatorMyStats'
 export interface BasicCreator {
   id: number
   email: string
-  name: string
-  slug: string
+  handle: string
   isVerified: boolean
   avatar: string
   banner: string
@@ -17,6 +16,7 @@ export interface BasicCreator {
   twitter: string
   instagram: string
   linktree: string
+  userId: number
 }
 
 export interface Creator extends BasicCreator {
@@ -37,6 +37,6 @@ export type UpdateCreatorFilesData = Partial<{
   logo: File
 }>
 
-export type SearchResultCreator = Pick<Creator, 'avatar' | 'name' | 'slug'> & { issuesCount: number }
+export type SearchResultCreator = Pick<Creator, 'id' | 'avatar' | 'handle'> & { issuesCount: number }
 
-export type FollowCreator = Pick<Creator, 'slug'>
+export type FollowCreator = Pick<Creator, 'id'>

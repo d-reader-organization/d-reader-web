@@ -151,7 +151,7 @@ export const findProjectBySlug = (slug: string) => {
 
 export const getTwitterIntentExpressedInterest = (project: Project) => {
   // const title = project.title
-  const creatorTwitter = project.creator.twitterHandle ? `@${project.creator.twitterHandle}` : project.creator.name
+  const creatorTwitter = project.creator.twitterHandle ? `@${project.creator.twitterHandle}` : project.creator.handle
   const twitterIntentPrefix = 'https://x.com/intent/tweet?text='
 
   const headline = `Can't wait to see the new ${creatorTwitter} story come to life! 🔥`

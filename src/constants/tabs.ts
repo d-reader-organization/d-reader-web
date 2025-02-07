@@ -21,14 +21,14 @@ export const DISCOVER_PAGE_TABS: Tab[] = [
   },
 ]
 
-export const creatorPageTabs = (slug: string): Tab[] => [
+export const creatorPageTabs = (handle: string): Tab[] => [
   {
     name: 'Series',
-    url: RoutePath.CreatorSeries(slug),
+    url: RoutePath.CreatorSeries(handle),
   },
   {
     name: 'Collectibles',
-    url: RoutePath.CreatorCollectibles(slug),
+    url: RoutePath.CreatorCollectibles(handle),
     disabled: true,
   },
 ]
