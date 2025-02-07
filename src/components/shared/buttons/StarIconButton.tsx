@@ -6,6 +6,7 @@ type Props = {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
+// TODO: instead use <Button Icon={StarIcon} iconOnly />
 export const StarIconButton: React.FC<Props> = ({ solid = false, size = 'md', className, ...props }) => {
   return (
     <button {...props}>

@@ -30,7 +30,7 @@ export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }
       <DialogContent
         hideCloseIcon
         aria-describedby={undefined}
-        className='py-6 px-4 flex flex-col items-center gap-4 sm:gap-6 bg-grey-500 border-t border-t-grey-300 rounded-2xl max-w-[360px]'
+        className='flex flex-col items-center sm:gap-6 max-w-[360px]'
       >
         <DialogTitle className='sr-only'>Needs authentication dialog</DialogTitle>
         <Text as='h5' styleVariant='secondary-heading'>
@@ -60,7 +60,7 @@ export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }
               className='text-xs font-medium text-grey-100 underline'
               href={RoutePath.TermsOfService}
             >
-              terms
+              terms of service
             </Link>
           </div>
         </div>

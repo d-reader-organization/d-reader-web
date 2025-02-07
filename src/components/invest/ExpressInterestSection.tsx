@@ -124,8 +124,12 @@ export const ExpressInterestSection: React.FC<Props> = ({ slug }) => {
           className={`max-w-full border-green-genesis ${selectedOption?.label === 'Other' ? '' : 'hidden'}`}
         />
         {publicKey ? (
-          <Button className='w-full h-12 bg-green-genesis text-black' onClick={onSubmit}>
-            {isLoading ? <LoaderIcon /> : 'Express Interest'}
+          <Button
+            Icon={isLoading ? LoaderIcon : undefined}
+            className='w-full h-12 bg-green-genesis text-black'
+            onClick={onSubmit}
+          >
+            Express Interest
           </Button>
         ) : (
           <ConnectButton className='w-full h-12 bg-green-genesis text-black' text='Connect Wallet' />

@@ -65,6 +65,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
   })
 
   const handleUnwrap = async (selectedAsset: AssetEventData) => {
+    // TODO: didn't we deprecate the wallet part of the Unwrap?
     if (!publicKey) {
       toast({ description: 'Please connect wallet before unwrapping', variant: 'error' })
       return
@@ -88,7 +89,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
           toast({ description: 'Error while unwrapping the comic', variant: 'error' })
           throw Error()
         }
-        await sleep(1000)
+        await sleep(500)
       }
       push(RoutePath.ReadComicIssue(comicIssue.id), { scroll: false })
       toast({ description: 'Comic unwrapped, time to read! 🎉', variant: 'success' })
@@ -116,7 +117,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
   return (
     <>
       <Dialog open={open} onOpenChange={toggleDialog}>
-        <DialogContent className='w-full h-full overflow-y-auto' hideCloseIcon>
+        <DialogContent className='w-full h-full' hideCloseIcon>
           <div className='fixed top-0 left-0 w-full h-full min-h-[850px] -z-[1]'>
             <video autoPlay className='w-full h-full min-h-[850px] object-cover' loop muted>
               <source src='/assets/animations/mint-loop.mp4' type='video/mp4' />
@@ -137,7 +138,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
                 {comicIssue.title} &nbsp;&bull;&nbsp; EP&nbsp;{comicIssue.number}
               </p>
               <p className='text-white sm:text-[32px] xs:text-[26px] font-obviouslyNarrow font-semibold leading-8'>
-                Congrats! You got #{shortenAssetName(assets[selectedIndex].name)}
+                Congrats! You got {shortenAssetName(assets[selectedIndex].name)}
               </p>
               <RarityChip className='-mt-3.5' rarity={assets[selectedIndex].rarity} />
               {/* <p className='text-grey-100 text-base sm:text-[16px] xs:text-[14px] leading-5 text-center'>
@@ -161,15 +162,13 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
                 {isAuthenticated ? (
                   <Button
                     className='rounded-[12px]'
+                    Icon={isUnwrapTransactionLoading ? LoaderIcon : undefined}
                     onClick={async () => {
-                      if (!isDialogRead) {
-                        toggleUnwrapDialog()
-                        return
-                      }
-                      await handleUnwrap(assets[selectedIndex])
+                      if (!isDialogRead) toggleUnwrapDialog()
+                      else await handleUnwrap(assets[selectedIndex])
                     }}
                   >
-                    {isUnwrapTransactionLoading ? <LoaderIcon /> : 'Unwrap & Read'}
+                    Unwrap & Read
                   </Button>
                 ) : (
                   <ButtonLink
@@ -185,7 +184,6 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
                   className='text-grey-50 border border-grey-50 rounded-[12px]'
                   onClick={toggleDialog}
                   variant='outline'
-                  size='md'
                 >
                   Close
                 </Button>
@@ -203,6 +201,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
           </div>
         </DialogContent>
       </Dialog>
+      {/* TODO: don't show the unwrap dialog if user clicked on "do not ask me again" */}
       <UnwrapWarningDialog
         open={unwrapWarningDialog}
         toggleDialog={toggleUnwrapDialog}

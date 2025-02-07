@@ -36,6 +36,7 @@ export const CoverPreviewDialog: React.FC<Props> = ({
     return supply
   }
 
+  // TODO: this component is a Dialog and should be named as such?
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent

@@ -42,11 +42,12 @@ export const UnwrapIssueDialogItem: React.FC<Props> = ({ collectibleComic, close
       {isDialogRead ? (
         <Button
           className={unwrapButtonStyle}
+          Icon={isUnwrapLoading ? LoaderIcon : undefined}
           onClick={async () => {
             await handleUnwrap()
           }}
         >
-          {isUnwrapLoading ? <LoaderIcon /> : 'Open'}
+          Open
         </Button>
       ) : (
         <UnwrapButtonListItem isLoading={isUnwrapLoading} onClick={toggleUnwrapWarningDialog} />

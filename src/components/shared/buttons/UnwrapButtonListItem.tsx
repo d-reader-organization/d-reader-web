@@ -9,8 +9,9 @@ export const UnwrapButtonListItem: React.FC<Props> = ({ isLoading, onClick }) =>
     <Button
       className='border bg-transparent cursor-pointer w-20 h-12 rounded-[4px] border-green-500 text-green-500'
       onClick={onClick}
+      Icon={isLoading ? LoaderIcon : undefined}
     >
-      {isLoading ? <LoaderIcon /> : 'Open'}
+      Open
     </Button>
   )
 }

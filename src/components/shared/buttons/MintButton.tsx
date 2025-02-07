@@ -214,8 +214,8 @@ export const MintButton: React.FC<Props> = ({ comicIssue, bounce = false, onMint
                     <Image
                       alt={splToken?.name || 'currency'}
                       src={splToken?.icon ?? splToken?.symbol ?? ''}
-                      width={14}
-                      height={14}
+                      width={40}
+                      height={40}
                       className='h-3.5 w-3.5'
                     />
                     <span>{price}</span>
@@ -223,15 +223,13 @@ export const MintButton: React.FC<Props> = ({ comicIssue, bounce = false, onMint
                 )}
               </div>
             ) : (
-              <LoaderIcon />
+              <LoaderIcon className='size-4.5' />
             )}
           </Button>
         ) : (
-          <>
-            <Button className='min-h-[52px] w-full' disabled>
-              Not eligible
-            </Button>
-          </>
+          <Button className='min-h-[52px] w-full' disabled>
+            Not eligible
+          </Button>
         )
       ) : (
         <ConnectButton

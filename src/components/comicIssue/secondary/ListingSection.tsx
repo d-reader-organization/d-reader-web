@@ -14,7 +14,6 @@ import { versionedTransactionFromBs64 } from '@/utils/transactions'
 import { LoaderIcon } from '../../icons/theme/LoaderIcon'
 import { ConnectButton } from '../../shared/buttons/ConnectButton'
 import Link from 'next/link'
-import { CheckCircle2 } from 'lucide-react'
 import { ExternalLinkIcon } from '@/components/icons/theme/ExternalLinkIcon'
 import { InstantBuyParams } from '@/models/transaction/instantBuy'
 import { Button, Text, toast } from '../../ui'
@@ -26,6 +25,7 @@ import { UsedTraitChip } from '@/components/shared/chips/UsedTraitChip'
 import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import { CollectibleComic } from '@/models/asset'
 import { useAuthStore } from '@/providers/AuthStoreProvider'
+import { CheckCircleIcon } from '@/components/icons/theme/CheckCircleIcon'
 
 export const ListingSection: React.FC<{ collectionAddress: string | undefined }> = ({ collectionAddress }) => {
   const { data: splTokens } = useFetchSupportedTokens()
@@ -105,7 +105,7 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined }>
   if (isFetching && !isFetched) {
     return (
       <div className='flex w-full'>
-        <LoaderIcon className='m-auto' />
+        <LoaderIcon className='size-5 m-auto' />
       </div>
     )
   }
@@ -166,19 +166,17 @@ export const ListingSection: React.FC<{ collectionAddress: string | undefined }>
       </div>
       {!publicKey ? (
         <ConnectButton size='lg' variant='primary' className='fixed bottom-1 w-[810px]'>
-          <Text as='p' styleVariant='body-normal' fontWeight='bold'>
-            Purchase
-          </Text>
+          Purchase
         </ConnectButton>
       ) : (
-        <Button onClick={handleBuy} size='lg' variant='primary' className='fixed bottom-1 w-[810px]'>
-          {isLoading ? (
-            <LoaderIcon />
-          ) : (
-            <Text as='p' styleVariant='body-normal' fontWeight='bold'>
-              Purchase
-            </Text>
-          )}
+        <Button
+          Icon={isLoading ? LoaderIcon : undefined}
+          onClick={handleBuy}
+          size='lg'
+          variant='primary'
+          className='fixed bottom-1 w-[810px]'
+        >
+          Purchase
         </Button>
       )}
     </div>
@@ -222,7 +220,7 @@ const ListedAssetRow: React.FC<{
       </TableCell>
       <TableCell className='flex py-1 justify-end'>
         {isSelected ? (
-          <CheckCircle2 className='size-5 text-green-500' />
+          <CheckCircleIcon className='size-5 text-green-500' />
         ) : (
           <Text as='p' styleVariant='body-small' fontWeight='medium'>
             {format(listing.createdAt, 'dd MMM yyyy')}

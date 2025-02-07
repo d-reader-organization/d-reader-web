@@ -33,41 +33,41 @@ export const ClaimPageHintDialog: React.FC = () => {
               Welcome to dReader!
             </Text>
           </DialogTitle>
-        </DialogHeader>
-        <DialogDescription className='flex flex-col gap-2 w-full text-left'>
-          <div className='rounded-xl bg-grey-400 flex flex-col max-w-[437px]'>
-            <div className='p-4 gap-4 flex'>
-              <div className='size-5'>▶️</div>
-              <div className='inline-block gap-2 w-full max-w-[369px]'>
+          <DialogDescription className='text-left'>
+            <div className='rounded-xl bg-grey-400 flex flex-col'>
+              <div className='p-4 gap-4 flex'>
+                <div className='size-5'>▶️</div>
+                <div className='inline-block gap-2 w-full'>
+                  <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
+                    Watch the video!
+                  </Text>
+                </div>
+              </div>
+              <div className='pl-4 pr-4 pb-4'>
+                <iframe
+                  src='https://www.youtube.com/embed/og1LPg7bt7o'
+                  className='w-full h-auto aspect-video rounded-md'
+                />
+              </div>
+            </div>
+            <div className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
+              <div className='size-5'>📚</div>
+              <div className='inline-block gap-2 w-full'>
                 <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
-                  Watch the video!
+                  Digital collectibles
+                </Text>
+                <Text
+                  as='p'
+                  styleVariant='body-small'
+                  fontWeight='medium'
+                  className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
+                >
+                  Comics you collect are stored in your digital wallet!
                 </Text>
               </div>
             </div>
-            <div className='pl-4 pr-4 pb-4'>
-              <iframe
-                src='https://www.youtube.com/embed/og1LPg7bt7o'
-                className='w-full h-auto aspect-video rounded-md'
-              />
-            </div>
-          </div>
-          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex max-w-[437px]'>
-            <div className='size-5'>📚</div>
-            <div className='inline-block gap-2 w-full max-w-[369px]'>
-              <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
-                Digital collectibles
-              </Text>
-              <Text
-                as='p'
-                styleVariant='body-small'
-                fontWeight='medium'
-                className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
-              >
-                Comics you collect are stored in your digital wallet!
-              </Text>
-            </div>
-          </div>
-        </DialogDescription>
+          </DialogDescription>
+        </DialogHeader>
 
         <Button variant='white' className='w-full' onClick={onClick}>
           I understand!
