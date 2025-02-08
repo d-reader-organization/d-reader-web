@@ -28,19 +28,15 @@ import { TransactionHistorySortTag } from '@/models/transaction/transactionHisto
 import { SortOrder } from '@/enums/sortOrder'
 import { CopyButton } from '../shared/CopyButton'
 
-// TODO: change table data based on the selected tab
-// TODO: edge cases: no results at all, no results from specified parameters
-// TODO: extract the logic from the SearchInput component
-// TODO: finish 'My Products' table
-// TODO: use AvatarImage component instead of the one from Shadcn?
-// TODO: Sidebar Avatar is a dropdown for settings & logout
 {
   /* <TableSearchInput />
   <TableTabs tabs={tabs} setTab={setTab} />
   <TableFilter />
   <TableSort />
-{isTableEmpty ? <TableNoContent /> : <TablePagination />} */
+  {isTableEmpty ? <TableNoContent /> : <TablePagination />} */
 }
+// TODO: change table data based on the selected tab
+// TODO: finish 'My Products' table
 
 // TODO: replace chart with PieChart, Bars, or something similar
 // TODO: prepare API endpoints params (filter, sort, and pagination)

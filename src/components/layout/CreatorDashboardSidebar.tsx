@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
 import {
   Sidebar,
@@ -22,6 +21,8 @@ import { SettingsIcon } from '@/components/icons/sidebar/SettingsIcon'
 import { SidebarLogoutButton } from '../shared/buttons/SidebarLogoutButton'
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { PlusIcon } from '../icons/theme/PlusIcon'
+import { ChevronDownIcon } from '../icons/theme/ChevronDownIcon'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
 
 type Props = {
   activePath?: string
@@ -91,29 +92,41 @@ export async function CreatorDashboardSidebar({ activePath }: Props) {
       </SidebarContent>
 
       <SidebarFooter className='mt-auto'>
-        <SidebarMenu className='border-1 border-grey-300 rounded-lg'>
-          <SidebarMenuItem>
-            <SidebarMenuLink
-              isActive={activePath === RoutePath.DashboardSettings}
-              href={RoutePath.DashboardSettings}
-              title='Settings'
-              Icon={SettingsIcon}
-            />
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarLogoutButton />
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <Collapsible>
+          <CollapsibleContent animate={false}>
+            <SidebarMenu className='border-1 border-grey-300 rounded-lg mb-2'>
+              <SidebarMenuItem>
+                <SidebarMenuLink
+                  isActive={activePath === RoutePath.DashboardSettings}
+                  href={RoutePath.DashboardSettings}
+                  title='Settings'
+                  Icon={SettingsIcon}
+                />
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarLogoutButton />
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </CollapsibleContent>
 
-        <Button variant='outline' className='w-full flex flex-row justify-start gap-2 rounded-lg hover:bg-grey-700'>
-          <Avatar className='h-8 w-8'>
-            <AvatarImage src={me.avatar} />
-            <AvatarFallback>JS</AvatarFallback>
-          </Avatar>
-          <Text styleVariant='body-small' as='span' fontWeight='bold' className='text-grey-100'>
-            {me.displayName}
-          </Text>
-        </Button>
+          <CollapsibleTrigger asChild>
+            <Button
+              Icon={ChevronDownIcon}
+              iconPosition='right'
+              size='lg'
+              variant='outline'
+              className='w-full flex flex-row justify-between gap-2 rounded-lg h-12 hover:bg-grey-700'
+            >
+              <div className='flex flex-row items-center gap-2'>
+                <Avatar className='size-8'>
+                  <AvatarImage src={me.avatar} />
+                  <AvatarFallback>JS</AvatarFallback>
+                </Avatar>
+                {me.displayName}
+              </div>
+            </Button>
+          </CollapsibleTrigger>
+        </Collapsible>
       </SidebarFooter>
     </Sidebar>
   )
