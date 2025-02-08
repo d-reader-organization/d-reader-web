@@ -1,12 +1,12 @@
 'use client'
 
 import React from 'react'
-import { Power } from 'lucide-react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { ConnectButton } from '../../buttons/ConnectButton'
 import { shortenSolanaAddress } from '@/utils/helpers'
 import { WalletsIcon } from '@/components/icons/WalletsIcon'
 import { WalletIcon } from '@/components/icons/sidebar/WalletIcon'
+import { PowerIcon } from '@/components/icons/theme/PowerIcon'
 import { CopyButton } from '../../CopyButton'
 
 export const WalletSection: React.FC = () => {
@@ -39,7 +39,7 @@ export const ConnectedWalletBox: React.FC<ConnectedWalletBoxProps> = ({ address 
         </div>
         <div className='flex gap-1.5'>
           <CopyButton variant='secondary' clipboard={address} solid={false} />
-          <ConnectButton variant='secondary' iconOnly Icon={Power} />
+          <ConnectButton variant='secondary' iconOnly Icon={PowerIcon} />
         </div>
       </div>
     </div>

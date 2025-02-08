@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { TicketIcon } from 'lucide-react'
 import { getCouponDiscount } from '@/utils/mint'
 import { CouponCardButton } from './CouponCardButton'
 import { Skeleton } from '../ui/Skeleton'
@@ -10,6 +9,7 @@ import { useCandyMachineStore } from '@/providers/CandyMachineStoreProvider'
 import { CouponDescriptionDialog } from '../shared/dialogs/CouponDescriptionDialog'
 import { useToggle } from '@/hooks'
 import { InfoIcon } from '@/components/icons/theme/InfoIcon'
+import { TicketIcon } from '@/components/icons/theme/TicketIcon'
 import { ComicIssue } from '@/models/comicIssue'
 import { Button } from '../ui/Button'
 

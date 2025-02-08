@@ -2,13 +2,13 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { TrendingUp } from 'lucide-react'
 import { ProjectFunding } from '@/models/project'
 import { formatCurrency, formatNumberWithCommas } from '@/utils/numbers'
 import { differenceInDays } from 'date-fns'
 import { Text } from '../ui'
 import { cn, withRedirect } from '@/lib/utils'
 import { RoutePath } from '@/enums/routePath'
+import { TrendUpIcon } from '@/components/icons/theme/TrendUpIcon'
 
 type ProjectFundingCardProps = {
   funding: ProjectFunding
@@ -98,10 +98,10 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({
 
         <div className='flex flex-row w-full h-full justify-center items-center p-[12px] gap-[12px] bg-gradient-to-br from-[#4a4e53] to-grey-500 rounded-xl md:gap-4 md:h-[89px] md:p-4'>
           <div
-            className='flex max-h-[54px] max-w-[54px] p-[10px] bg-white rounded-xl shadow border border-[#56a05e]'
+            className='flex max-h-[54px] max-w-[54px] p-[10px] bg-white rounded-xl shadow border border-green-genesis'
             style={{ boxShadow: '0 0 15px rgba(86, 160, 94, 0.8)' }}
           >
-            <TrendingUp color='green' size={20} />
+            <TrendUpIcon className='size-5 text-green-600' solid />
           </div>
           <Text
             as='p'

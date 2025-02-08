@@ -6,7 +6,7 @@ import { Text } from '@/components/ui'
 import useToggle from '@/hooks/useToggle'
 import { StarRatingDialog } from '@/components/shared/dialogs/StarRatingDialog'
 import { Nullable } from '@/models/common'
-import { Star } from 'lucide-react'
+import { StarIcon } from '@/components/icons/theme/StarIcon'
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   comicSlug?: string
@@ -21,7 +21,7 @@ export const RateButton: React.FC<Props> = ({ comicSlug, comicIssueId, rating, a
   return (
     <>
       <RequireAuthWrapperButton
-        Icon={Star}
+        Icon={StarIcon}
         onClick={() => toggleStarRating()}
         variant='outline'
         className={cn(
@@ -29,7 +29,7 @@ export const RateButton: React.FC<Props> = ({ comicSlug, comicIssueId, rating, a
           rating && 'bg-yellow-300 bg-opacity-40 text-yellow-300 border-0',
           className
         )}
-        iconClassName={cn(rating && 'fill-yellow-300')}
+        solid={!!rating}
       >
         <Text as='span' styleVariant='body-normal' className={cn('max-sm:text-xs', rating && 'text-white')}>
           {averageRating}

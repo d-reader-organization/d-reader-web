@@ -8,14 +8,14 @@ import { ConnectButton } from '../shared/buttons/ConnectButton'
 import { disconnectUserWallet } from '@/app/lib/api/auth/mutations'
 import { Wallet } from '@/models/wallet'
 import { useRouter } from 'next/navigation'
-import { Dot, MoreHorizontal } from 'lucide-react'
 import { PublicKey } from '@solana/web3.js'
-import { useToggle } from '@/hooks'
-import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { useAuthorizeWalletContext } from '@/providers/AuthorizeWalletContextProvider'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/DropdownMenu'
 import { CopyButton } from '../shared/CopyButton'
-import { PlusIcon } from '../icons/theme/PlusIcon'
+import { LoaderIcon } from '@/components/icons/theme/LoaderIcon'
+import { DotsHorizontalIcon } from '@/components/icons/theme/DotsHorizontalIcon'
+import { PlusIcon } from '@/components/icons/theme/PlusIcon'
+import { CircleIcon } from '@/components/icons/theme/CircleIcon'
 
 type Props = {
   wallets: Wallet[]
@@ -69,7 +69,6 @@ export const WalletItem: React.FC<{ index: number; wallet: Wallet; isActive: boo
   const { connection } = useConnection()
   const [balance, setBalance] = useState<number>()
   const { refresh } = useRouter()
-  const [showDisconnectLoader, toggleDisconnectLoader] = useToggle()
 
   useEffect(() => {
     const fetchWalletBalance = async () => {
@@ -89,18 +88,16 @@ export const WalletItem: React.FC<{ index: number; wallet: Wallet; isActive: boo
   }, [connection, wallet.address])
 
   const disconnectWallet = async () => {
-    toggleDisconnectLoader()
     await Promise.all([disconnect(), disconnectUserWallet(wallet.address)])
-    toggleDisconnectLoader()
     refresh()
   }
 
   return (
-    <div className='flex justify-between p-4 rounded-xl border border-grey-300'>
+    <div className='flex justify-between items-center p-4 rounded-xl border border-grey-300'>
       <div className='flex gap-4'>
         <div className='flex flex-col gap-2 border-r border-r-grey-300 pr-4 justify-start'>
-          <div className='flex items-start'>
-            {isActive ? <Dot className='text-important-color w-fit scale-125' /> : null}
+          <div className='flex items-center'>
+            {isActive && <CircleIcon className='text-important-color size-2 mr-2' solid />}
             <Text as='p' styleVariant='body-normal' fontWeight='bold'>
               Wallet {index}
             </Text>
@@ -116,20 +113,16 @@ export const WalletItem: React.FC<{ index: number; wallet: Wallet; isActive: boo
           {balance} SOL
         </Text>
       </div>
-      <WalletItemOptions disconnect={disconnectWallet} isLoading={showDisconnectLoader} />
+      <WalletItemOptions disconnect={disconnectWallet} />
     </div>
   )
 }
 
-const WalletItemOptions: React.FC<{ disconnect: VoidFunction; isLoading: boolean }> = ({ disconnect, isLoading }) => {
+const WalletItemOptions: React.FC<{ disconnect: VoidFunction }> = ({ disconnect }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {isLoading ? (
-          <LoaderIcon className='self-center scale-75' />
-        ) : (
-          <MoreHorizontal className='size-5 cursor-pointer self-center font-bold' />
-        )}
+        <Button Icon={DotsHorizontalIcon} iconOnly variant='ghost' />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>

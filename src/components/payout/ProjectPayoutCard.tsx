@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReceiptText } from 'lucide-react'
+import { ReceiptCheckIcon } from '@/components/icons/theme/ReceiptCheckIcon'
 import { payoutDetails } from '@/constants/tooltips'
 import { formatCurrency, formatNumberWithCommas } from '@/utils/numbers'
 import { formatPercentage } from '@/utils/numbers'
@@ -45,11 +45,10 @@ export const ProjectPayoutCard: React.FC<Props> = ({ payout, funding, className 
       <div className='flex flex-col gap-1'>
         <div className='flex flex-row w-full justify-center items-center p-[10px] bg-gradient-to-br from-[#4a4e53] to-[#1f222a] rounded-xl gap-[14px] md:max-h-[104px] md:p-[12px]'>
           <div
-            className='flex max-h-[36px] max-w-[36px] md:max-h-[54px] md:max-w-[54px] p-[8px] bg-white rounded-xl shadow border border-[#56a05e]'
+            className='flex max-h-[36px] max-w-[36px] md:max-h-[54px] md:max-w-[54px] p-[8px] bg-white rounded-xl shadow border border-green-genesis'
             style={{ boxShadow: '0 0 15px rgba(86, 160, 94, 0.8)' }}
           >
-            <ReceiptText color='green' size={20} className='max-md:hidden' />
-            <ReceiptText color='green' size={16} className='md:hidden' />
+            <ReceiptCheckIcon className='text-green-600 size-4 md:size-6' solid={false} />
           </div>
           <p className='text-grey-100 text-[14px] font-medium leading-snug'>Licencing Participation Agreement</p>
         </div>

@@ -1,9 +1,9 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { InstagramIcon } from '../icons/social/InstagramIcon'
-import { TwitterIcon } from '../icons/social/TwitterIcon'
-import { GlobeIcon } from 'lucide-react'
-import { ButtonLink } from '../ui/ButtonLink'
+import { InstagramIcon } from '@/components/icons/social/InstagramIcon'
+import { TwitterIcon } from '@/components/icons/social/TwitterIcon'
+import { GlobeIcon } from '@/components/icons/social/GlobeIcon'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   website: string

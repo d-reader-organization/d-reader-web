@@ -7,7 +7,7 @@ import { UserInterestedReceipt } from '@/models/project'
 import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import clsx from 'clsx'
 import Image from 'next/image'
-import { ActivityIcon } from 'lucide-react'
+import { ActivityIcon } from '@/components/icons/theme/ActivityIcon'
 
 type Props = {
   receipts: UserInterestedReceipt[]
@@ -27,7 +27,7 @@ export const InterestUpdatesCard: React.FC<Props> = ({ className, receipts }) =>
           <Text as='h5' styleVariant='primary-heading' className='text-20'>
             Campaign Activity
           </Text>
-          <ActivityIcon />
+          <ActivityIcon className='size-6' />
         </div>
         <div className='bg-grey-300 overflow-y-auto max-h-[362px]'>
           <div className='flex flex-col gap-6 p-6 pl-4 pr-2 bg-grey-500'>

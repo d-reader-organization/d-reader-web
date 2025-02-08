@@ -40,7 +40,7 @@ export const CreatorDashboardLayout: React.FC<Props> = async ({
           mainClassName
         )}
       >
-        <div className='flex flex-row w-full'>
+        <div className='flex flex-row items-center w-full'>
           <SidebarTrigger className='min-w-12' />
           <Text as='h4' styleVariant='secondary-heading' className='w-full'>
             {title}

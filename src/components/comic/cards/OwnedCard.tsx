@@ -7,8 +7,9 @@ import { Text } from '@/components/ui'
 import { RoutePath } from '@/enums/routePath'
 import { CopiesCount } from '@/components/shared/CopiesCount'
 import { CardBorderWrapper } from '@/components/shared/CardBorderWrapper'
-import { MoreHorizontalIcon } from 'lucide-react'
+import { DotsHorizontalIcon } from '@/components/icons/theme/DotsHorizontalIcon'
 import { ButtonLink } from '@/components/ui/ButtonLink'
+import { ASPECT_RATIO } from '@/constants/general'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   comic: Comic
@@ -21,8 +22,7 @@ export const OwnedComicCard: React.FC<Props> = ({ comic }) => {
         <Image
           alt=''
           src={comic.cover}
-          width={1000}
-          height={900}
+          {...ASPECT_RATIO.COMIC_COVER}
           className='object-cover rounded-xl h-[155px] sm:h-[233px] w-full opacity-50'
         />
         <Image
@@ -67,7 +67,7 @@ export const OwnedComicCard: React.FC<Props> = ({ comic }) => {
           subVariant={1}
           href={RoutePath.OwnedAssets(comic.slug)}
           prefetch={false}
-          Icon={MoreHorizontalIcon}
+          Icon={DotsHorizontalIcon}
         />
       </div>
     </CardBorderWrapper>

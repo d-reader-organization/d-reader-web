@@ -34,6 +34,13 @@ import { CopyButton } from '../shared/CopyButton'
 // TODO: finish 'My Products' table
 // TODO: use AvatarImage component instead of the one from Shadcn?
 // TODO: Sidebar Avatar is a dropdown for settings & logout
+{
+  /* <TableSearchInput />
+  <TableTabs tabs={tabs} setTab={setTab} />
+  <TableFilter />
+  <TableSort />
+{isTableEmpty ? <TableNoContent /> : <TablePagination />} */
+}
 
 // TODO: replace chart with PieChart, Bars, or something similar
 // TODO: prepare API endpoints params (filter, sort, and pagination)
