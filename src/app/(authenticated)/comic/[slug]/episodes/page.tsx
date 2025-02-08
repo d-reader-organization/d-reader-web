@@ -7,7 +7,7 @@ import { DefaultComicIssueCard } from '@/components/comicIssue/cards/DefaultCard
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { Tabs } from '@/components/shared/Tabs'
 import { comicPageTabs } from '@/constants/tabs'
-import { SortOrder } from '@/enums/sortOrder'
+import { SortOrder } from '@/enums/sort'
 import { ComicIssueSortTag } from '@/models/comicIssue/comicIssueParams'
 import React from 'react'
 

@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import * as SelectPrimitive from '@radix-ui/react-select'
-import { CheckCircleIcon } from '@/components/icons/theme/CheckCircleIcon'
+import { CheckIcon } from '@/components/icons/theme/CheckIcon'
 import { ChevronDownIcon } from '@/components/icons/theme/ChevronDownIcon'
 import { ChevronUpIcon } from '@/components/icons/theme/ChevronUpIcon'
 
@@ -113,7 +113,7 @@ const SelectItem = React.forwardRef<
   >
     <span className='absolute left-2 flex h-3.5 w-3.5 items-center justify-center'>
       <SelectPrimitive.ItemIndicator>
-        <CheckCircleIcon className='size-4' />
+        <CheckIcon className='size-4' />
       </SelectPrimitive.ItemIndicator>
     </span>
 

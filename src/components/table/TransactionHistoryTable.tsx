@@ -1,80 +1,51 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import React, { useState, useEffect, useCallback } from 'react'
+import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { PLACEHOLDER_AVATAR } from '@/constants/general'
+import { PLACEHOLDER_AVATAR, SORT_OPTIONS } from '@/constants/general'
 import { TransactionSourceChip } from '../shared/chips/TransactionSource'
 import { formatDistanceToNow } from 'date-fns'
-import { shortenString, sleep } from '@/utils/helpers'
+import { shortenString } from '@/utils/helpers'
 import { ProductTypeChip } from '../shared/chips/ProductType'
-import { useDebouncedCallback } from 'use-debounce'
-import { cn } from '@/lib/utils'
 import { useRerender } from '@/hooks/useRerender'
 import { transactions } from '@/constants/dummyData'
 import { downloadTransactionsReportCSV } from '@/utils/csv'
-import { usePaginationControls } from '@/hooks/usePaginationControls'
+import { useTablePagination } from '@/hooks/useTablePagination'
 import { SolanaIcon } from '../icons/SolanaIcon'
 import { FilterIcon } from '@/components/icons/theme/FilterIcon'
-import { CloseIcon } from '@/components/icons/theme/CloseIcon'
-import { SearchIcon } from '@/components/icons/theme/SearchIcon'
 import { ExportIcon } from '@/components/icons/theme/ExportIcon'
-import { LoaderIcon } from '@/components/icons/theme/LoaderIcon'
-import { useSortTagSelect } from '@/hooks/useSortTagSelect'
-import { TransactionHistorySortTag } from '@/models/transaction/transactionHistory'
-import { SortOrder } from '@/enums/sortOrder'
+import { useTableSort } from '@/hooks/useTableSort'
 import { CopyButton } from '../shared/CopyButton'
+import { useTableSearch } from '@/hooks/useTableSearch'
 
-{
-  /* <TableSearchInput />
-  <TableTabs tabs={tabs} setTab={setTab} />
-  <TableFilter />
-  <TableSort />
-  {isTableEmpty ? <TableNoContent /> : <TablePagination />} */
-}
-// TODO: change table data based on the selected tab
+// TODO: <TableNoContent />
 // TODO: finish 'My Products' table
 
-// TODO: replace chart with PieChart, Bars, or something similar
-// TODO: prepare API endpoints params (filter, sort, and pagination)
-// TODO: filter (all?) tables by comics, episodes, and creators
-// TODO: fetch the full data report for CSV, unpaginated. Add the .splToken property to the TransactionHistoryItem
+// Luka
+// decouple logic and UI from useTableSort etc. ( <TableSort {...props} />)
+// filter functionality (drawers/sheets)
+// change table data based on the selected tab
+
+// Matan
+// replace chart with PieChart, Bars, or something similar
+// change the DialogClose into <Button variant="secondary" /> ?
+
+// Athar
+// fetch the full data report for CSV, unpaginated. Add the .splToken property to the TransactionHistoryItem
+
 type Props = { title: string }
 
 export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const isTableEmpty = transactions.length === 0
-  const { PaginationControls, skip, take } = usePaginationControls({ totalItems: transactions.length })
-  const { SortSelect } = useSortTagSelect([
-    { tag: TransactionHistorySortTag.Date, order: SortOrder.ASC, value: '1', label: 'Newest' },
-    { tag: TransactionHistorySortTag.Date, order: SortOrder.DESC, value: '2', label: 'Oldest' },
-    { tag: TransactionHistorySortTag.Amount, order: SortOrder.ASC, value: '3', label: 'Highest Am' },
-    { tag: TransactionHistorySortTag.Amount, order: SortOrder.DESC, value: '4', label: 'Lowest Am' },
-  ])
+  const { TablePagination, skip, take } = useTablePagination({ totalItems: transactions.length })
+  const { TableSort, value: sortTag, order: sortOrder } = useTableSort(SORT_OPTIONS.TRANSACTION_HISTORY)
+  const { TableSearch, searchTerm } = useTableSearch()
 
   useRerender(30000)
-
-  console.log('TRANSACTION HISTORY: ', { searchTerm, skip, take })
-
-  const debouncedSearch = useDebouncedCallback(async (value) => {
-    if (value) {
-      setIsLoading(true)
-      sleep(1000)
-      setIsLoading(false)
-    }
-  }, 300)
-
-  useEffect(() => {
-    debouncedSearch(searchTerm)
-  }, [searchTerm, debouncedSearch])
-
-  const clearSearch = useCallback(() => {
-    setSearchTerm('')
-  }, [])
+  console.log('TRANSACTION HISTORY: ', { sortTag, sortOrder, searchTerm, skip, take })
 
   return (
     <div className='w-full'>
@@ -83,40 +54,25 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
       </Text>
       <div className='space-y-4 bg-grey-600 text-grey-100 border-2 border-grey-400 py-4 rounded-xl'>
         <div className='flex items-center justify-between gap-2 px-4'>
-          <div className='relative z-10'>
-            {searchTerm ? (
-              <button className='absolute top-3 left-3' onClick={clearSearch}>
-                <CloseIcon className='size-4.5 text-white' />
-              </button>
-            ) : (
-              <SearchIcon className='size-4.5 absolute top-3 left-3 text-grey-200' />
-            )}
-            <Input
-              placeholder='Search'
-              value={searchTerm}
-              className='pl-10 max-w-sm'
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <LoaderIcon className={cn('size-4.5 absolute top-3 right-3 text-grey-200', isLoading ? '' : 'hidden')} />
-          </div>
+          <TableSearch />
           <div className='flex items-center gap-2'>
             <Button
-              className='relative rounded-lg sm:px-0'
               variant='secondary'
               Icon={ExportIcon}
+              iconOnly
               onClick={() => {
                 downloadTransactionsReportCSV(transactions)
               }}
             />
             <Button
-              className='relative rounded-lg sm:px-0'
               variant='secondary'
               Icon={FilterIcon}
+              iconOnly
               onClick={() => {
                 console.log('Filter button clicked!')
               }}
             />
-            <SortSelect />
+            <TableSort />
           </div>
         </div>
 
@@ -127,7 +83,6 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
               <TableHead>Customer</TableHead>
               <TableHead>Source</TableHead>
               <TableHead>Product</TableHead>
-              {/* <TableHead>Product link</TableHead> */}
               <TableHead>Amount</TableHead>
               <TableHead>Date</TableHead>
             </TableRow>
@@ -159,12 +114,6 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
                 <TableCell>
                   <ProductTypeChip type={transaction.product} />
                 </TableCell>
-                {/* <TableCell>
-                  <div className='flex items-center gap-2'>
-                    <span className='w-20'>{shortenString(transaction.id)}</span>
-                    <CopyButton variant='inline' clipboard={transaction.id} />
-                  </div>
-                </TableCell> */}
                 <TableCell>
                   <div className='flex items-center gap-2'>
                     <SolanaIcon className='w-4 h-auto' />
@@ -186,7 +135,7 @@ export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
             Nothing to see here... yet ;)
           </Text>
         ) : (
-          <PaginationControls />
+          <TablePagination />
         )}
       </div>
     </div>

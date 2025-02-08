@@ -1,3 +1,7 @@
+import { SortOrder } from '@/enums/sort'
+import { ComicSortTag } from '@/models/comic/comicParams'
+import { ComicIssueSortTag } from '@/models/comicIssue/comicIssueParams'
+import { TransactionHistorySortTag } from '@/models/transaction/transactionHistory'
 import { WalletName } from '@solana/wallet-adapter-base'
 import { PublicKey } from '@solana/web3.js'
 
@@ -93,3 +97,53 @@ export const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqX
 export const MONSTER_CLAIM_QR_SLUG = 'mark-spears-monsters'
 export const SOLANA_EXPLORER_BASE_LINK = 'https://explorer.solana.com'
 export const SOL_ADDRESS = 'So11111111111111111111111111111111111111112'
+
+export const SORT_OPTIONS = Object.freeze({
+  TRANSACTION_HISTORY: [
+    { value: TransactionHistorySortTag.Date, order: SortOrder.ASC, label: 'Newest' },
+    { value: TransactionHistorySortTag.Date, order: SortOrder.DESC, label: 'Oldest' },
+    { value: TransactionHistorySortTag.Amount, order: SortOrder.ASC, label: 'Highest Am' },
+    { value: TransactionHistorySortTag.Amount, order: SortOrder.DESC, label: 'Lowest Am' },
+  ],
+  COMICS: [
+    { value: ComicSortTag.Published, order: SortOrder.ASC, label: 'Newest' },
+    { value: ComicSortTag.Published, order: SortOrder.DESC, label: 'Oldest' },
+    { value: ComicSortTag.Title, order: SortOrder.ASC, label: 'Title A -> Z' },
+    { value: ComicSortTag.Title, order: SortOrder.DESC, label: 'Title Z -> A' },
+    { value: ComicSortTag.Rating, order: SortOrder.ASC, label: 'Top rated' },
+    { value: ComicSortTag.Likes, order: SortOrder.ASC, label: 'Most liked' },
+    { value: ComicSortTag.Readers, order: SortOrder.ASC, label: 'Most readers' },
+    { value: ComicSortTag.Viewers, order: SortOrder.ASC, label: 'Most viewers' },
+  ],
+  COMIC_ISSUES: [
+    { value: ComicIssueSortTag.Latest, order: SortOrder.ASC, label: 'Newest' },
+    { value: ComicIssueSortTag.Latest, order: SortOrder.DESC, label: 'Oldest' },
+    { value: ComicIssueSortTag.Title, order: SortOrder.ASC, label: 'Title A -> Z' },
+    { value: ComicIssueSortTag.Title, order: SortOrder.DESC, label: 'Title Z -> A' },
+    { value: ComicIssueSortTag.Rating, order: SortOrder.ASC, label: 'Top rated' },
+    { value: ComicIssueSortTag.Likes, order: SortOrder.ASC, label: 'Most liked' },
+    { value: ComicIssueSortTag.Readers, order: SortOrder.ASC, label: 'Most readers' },
+    { value: ComicIssueSortTag.Viewers, order: SortOrder.ASC, label: 'Most viewers' },
+  ],
+  DIGITAL_ARTWORK: [
+    { value: 'Newest', order: SortOrder.ASC, label: 'Newest' },
+    { value: 'Oldest', order: SortOrder.DESC, label: 'Oldest' },
+  ],
+  PENDING_SIGNATURE_REQUESTS: [
+    { value: 'RequestedDate', order: SortOrder.ASC, label: 'Newest' },
+    { value: 'RequestedDate', order: SortOrder.DESC, label: 'Oldest' },
+  ],
+  RESOLVED_SIGNATURE_REQUESTS: [
+    { value: 'ResolvedDate', order: SortOrder.ASC, label: 'Newest' },
+    { value: 'ResolvedDate', order: SortOrder.DESC, label: 'Oldest' },
+  ],
+})
+
+export const SELECT_OPTIONS = Object.freeze({
+  CHART_DATE: [
+    { value: 'Last 7 days', label: 'Last 7 days' },
+    { value: 'Last 30 days', label: 'Last 30 days' },
+    { value: 'Last 3 months', label: 'Last 3 months' },
+    { value: 'Last 6 months', label: 'Last 6 months' },
+  ],
+})

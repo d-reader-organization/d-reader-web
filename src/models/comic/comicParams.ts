@@ -1,4 +1,4 @@
-import { SortOrder } from '@/enums/sortOrder'
+import { SortOrder } from '@/enums/sort'
 import { Pagination } from '@/models/pagination'
 
 export enum ComicFilterTag {
@@ -18,9 +18,9 @@ export type ComicParams = Pagination & {
   creatorSlug?: string
   search?: string
   genreSlugs?: string[]
-  sortOrder?: SortOrder
   filterTag?: ComicFilterTag
   sortTag?: ComicSortTag
+  sortOrder?: SortOrder
 }
 
 export type RawComicParams = Omit<ComicParams, 'filterTag'>

@@ -1,4 +1,4 @@
-import { SortOrder } from '@/enums/sortOrder'
+import { SortOrder } from '@/enums/sort'
 import { ComicParams } from '@/models/comic/comicParams'
 import { ComicIssueParams } from '@/models/comicIssue/comicIssueParams'
 import { CreatorParams } from '@/models/creator/creatorParams'

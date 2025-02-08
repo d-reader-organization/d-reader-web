@@ -3,24 +3,23 @@
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import React, { useState } from 'react'
+import React, { useMemo } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { ComicRarity } from '@/enums/comicRarity'
-import { PLACEHOLDER_AVATAR } from '@/constants/general'
+import { PLACEHOLDER_AVATAR, SORT_OPTIONS } from '@/constants/general'
 import { formatDistanceToNow } from 'date-fns'
 import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import Image from 'next/image'
-import { usePaginationControls } from '@/hooks/usePaginationControls'
+import { useTablePagination } from '@/hooks/useTablePagination'
 import { BasicCollectibleComic } from '@/models/asset'
 import { PencilIcon } from '@/components/icons/theme/PencilIcon'
 import { FilterIcon } from '@/components/icons/theme/FilterIcon'
 import { TrashIcon } from '@/components/icons/theme/TrashIcon'
-import { SortOrder } from '@/enums/sortOrder'
-import { useSortTagSelect } from '@/hooks/useSortTagSelect'
+import { useTableSort } from '@/hooks/useTableSort'
 import { TextWithOverflow } from '../ui/TextWithOverflow'
-import { cn } from '@/lib/utils'
+import { useTableTabs } from '@/hooks/useTableTabs'
 
-interface SignatureRequest {
+interface Comic {
   asset: BasicCollectibleComic
   requestedAt: string
   resolvedAt?: string
@@ -31,7 +30,7 @@ interface SignatureRequest {
   }
 }
 
-const myProducts: SignatureRequest[] = [
+const myProducts: Comic[] = [
   {
     asset: {
       address: '1',
@@ -85,15 +84,22 @@ enum ProductsTab {
 type Props = { title: string }
 
 export const ProductsTable: React.FC<Props> = ({ title }) => {
-  const [tab, setTab] = useState<ProductsTab>(ProductsTab.Series)
   const isTableEmpty = myProducts.length === 0
-  const { PaginationControls, skip, take } = usePaginationControls({ totalItems: myProducts.length })
-  const { SortSelect } = useSortTagSelect([
-    { tag: 'Newest', order: SortOrder.ASC, value: '1', label: 'Newest' },
-    { tag: 'Oldest', order: SortOrder.DESC, value: '2', label: 'Oldest' },
-  ])
+  const { TableTabs, tab } = useTableTabs([ProductsTab.Series, ProductsTab.Releases, ProductsTab.DigitalArt])
+  const { TablePagination, skip, take } = useTablePagination({ totalItems: myProducts.length })
+  const selectOptions = useMemo(() => {
+    switch (tab) {
+      case ProductsTab.Series:
+        return SORT_OPTIONS.COMICS
+      case ProductsTab.Releases:
+        return SORT_OPTIONS.COMIC_ISSUES
+      case ProductsTab.DigitalArt:
+        return SORT_OPTIONS.DIGITAL_ARTWORK
+    }
+  }, [tab])
+  const { TableSort, value: sortTag, order: sortOrder } = useTableSort(selectOptions)
 
-  console.log('MY PRODUCTS: ', { skip, take, tab })
+  console.log('MY PRODUCTS: ', { sortTag, sortOrder, skip, take })
 
   return (
     <div className='w-full'>
@@ -101,40 +107,18 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
         {title}
       </Text>
       <div className='w-full space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
-        <div className='flex items-center justify-between px-4'>
-          <div className='flex gap-1 border-grey-300 border-1 box-border rounded-xl px-1 items-center h-[42px]'>
-            <Button
-              variant={tab === ProductsTab.Series ? 'secondary' : 'ghost'}
-              onClick={() => setTab(ProductsTab.Series)}
-              className={cn(tab === ProductsTab.Series && 'text-white', 'h-8 font-bold w-[110px]')}
-            >
-              {ProductsTab.Series}
-            </Button>
-            <Button
-              variant={tab === ProductsTab.Releases ? 'secondary' : 'ghost'}
-              onClick={() => setTab(ProductsTab.Releases)}
-              className={cn(tab === ProductsTab.Releases && 'text-white', 'h-8 font-bold w-[110px]')}
-            >
-              {ProductsTab.Releases}
-            </Button>
-            <Button
-              variant={tab === ProductsTab.DigitalArt ? 'secondary' : 'ghost'}
-              onClick={() => setTab(ProductsTab.DigitalArt)}
-              className={cn(tab === ProductsTab.DigitalArt && 'text-white', 'h-8 font-bold w-[110px]')}
-            >
-              {ProductsTab.DigitalArt}
-            </Button>
-          </div>
+        <div className='flex items-center justify-between gap-2 px-4'>
+          <TableTabs />
           <div className='flex items-center gap-2'>
             <Button
-              className='relative rounded-lg sm:px-0'
               variant='secondary'
               Icon={FilterIcon}
+              iconOnly
               onClick={() => {
                 console.log('Filter button clicked!')
               }}
             />
-            <SortSelect />
+            <TableSort />
           </div>
         </div>
 
@@ -216,7 +200,7 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
             You have no published products!
           </Text>
         ) : (
-          <PaginationControls />
+          <TablePagination />
         )}
       </div>
     </div>

@@ -3,9 +3,9 @@
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import React, { useState } from 'react'
+import React, { useMemo } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { PLACEHOLDER_AVATAR } from '@/constants/general'
+import { PLACEHOLDER_AVATAR, SORT_OPTIONS } from '@/constants/general'
 import { RarityChip } from '../shared/chips/RarityChip'
 import { formatDistanceToNow } from 'date-fns'
 import { useRerender } from '@/hooks/useRerender'
@@ -14,13 +14,12 @@ import Image from 'next/image'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { TextWithOverflow } from '../ui/TextWithOverflow'
 import { signatureRequests } from '@/constants/dummyData'
-import { usePaginationControls } from '@/hooks/usePaginationControls'
+import { useTablePagination } from '@/hooks/useTablePagination'
 import { PencilIcon } from '@/components/icons/theme/PencilIcon'
 import { FilterIcon } from '@/components/icons/theme/FilterIcon'
 import { TrashIcon } from '@/components/icons/theme/TrashIcon'
-import { useSortTagSelect } from '@/hooks/useSortTagSelect'
-import { SortOrder } from '@/enums/sortOrder'
-import { cn } from '@/lib/utils'
+import { useTableSort } from '@/hooks/useTableSort'
+import { useTableTabs } from '@/hooks/useTableTabs'
 
 enum SignatureRequestsTab {
   Pending = 'Pending',
@@ -30,17 +29,21 @@ enum SignatureRequestsTab {
 type Props = { title: string }
 
 export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
-  const [tab, setTab] = useState<SignatureRequestsTab>(SignatureRequestsTab.Pending)
   const isTableEmpty = signatureRequests.length === 0
-  const { PaginationControls, skip, take } = usePaginationControls({ totalItems: signatureRequests.length })
-  const { SortSelect } = useSortTagSelect([
-    { tag: 'Newest', order: SortOrder.ASC, value: '1', label: 'Newest' },
-    { tag: 'Oldest', order: SortOrder.DESC, value: '2', label: 'Oldest' },
-  ])
+  const { TableTabs, tab } = useTableTabs([SignatureRequestsTab.Pending, SignatureRequestsTab.Resolved])
+  const { TablePagination, skip, take } = useTablePagination({ totalItems: signatureRequests.length })
+  const selectOptions = useMemo(() => {
+    switch (tab) {
+      case SignatureRequestsTab.Pending:
+        return SORT_OPTIONS.PENDING_SIGNATURE_REQUESTS
+      case SignatureRequestsTab.Resolved:
+        return SORT_OPTIONS.RESOLVED_SIGNATURE_REQUESTS
+    }
+  }, [tab])
+  const { TableSort, value: sortTag, order: sortOrder } = useTableSort(selectOptions)
 
   useRerender(30000)
-
-  console.log('SIGNATURE REQUESTS: ', { skip, take, tab })
+  console.log('SIGNATURE REQUESTS: ', { sortTag, sortOrder, skip, take })
 
   return (
     <div className='w-full'>
@@ -49,32 +52,17 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
       </Text>
       <div className='w-full space-y-4 bg-grey-600 text-grey-100 border-1 border-grey-400 py-4 rounded-xl'>
         <div className='flex items-center justify-between gap-2 px-4'>
-          <div className='flex gap-1 border-grey-300 border-1 box-border rounded-xl px-1 items-center h-[42px]'>
-            <Button
-              variant={tab === SignatureRequestsTab.Pending ? 'secondary' : 'ghost'}
-              onClick={() => setTab(SignatureRequestsTab.Pending)}
-              className={cn(tab === SignatureRequestsTab.Pending && 'text-white', 'h-8 font-bold w-[100px]')}
-            >
-              {SignatureRequestsTab.Pending}
-            </Button>
-            <Button
-              variant={tab === SignatureRequestsTab.Resolved ? 'secondary' : 'ghost'}
-              onClick={() => setTab(SignatureRequestsTab.Resolved)}
-              className={cn(tab === SignatureRequestsTab.Resolved && 'text-white', 'h-8 font-bold w-[100px]')}
-            >
-              {SignatureRequestsTab.Resolved}
-            </Button>
-          </div>
+          <TableTabs />
           <div className='flex items-center gap-2'>
             <Button
-              className='relative rounded-lg sm:px-0'
               variant='secondary'
               Icon={FilterIcon}
+              iconOnly
               onClick={() => {
                 console.log('Filter button clicked!')
               }}
             />
-            <SortSelect />
+            <TableSort />
           </div>
         </div>
         <Table>
@@ -160,7 +148,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
             No user requested a signature from you!
           </Text>
         ) : (
-          <PaginationControls />
+          <TablePagination />
         )}
       </div>
     </div>
