@@ -4,7 +4,7 @@ import { SortIcon } from '@/components/icons/theme/SortIcon'
 import { SortOption, SortOrder } from '@/enums/sort'
 
 type TableSortHookResponse<T> = {
-  value: T
+  tag: T
   order: SortOrder
   TableSort: () => JSX.Element
 }
@@ -44,5 +44,5 @@ export function useTableSort<T>(options: SortOption<T>[] = []): TableSortHookRes
     </Select>
   )
 
-  return { value: selectedOption.value, order: selectedOption.order, TableSort }
+  return { tag: selectedOption.value, order: selectedOption.order, TableSort }
 }

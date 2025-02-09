@@ -5,11 +5,10 @@ import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
 import React, { useMemo } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { PLACEHOLDER_AVATAR, SORT_OPTIONS } from '@/constants/general'
+import { ASPECT_RATIO, PLACEHOLDER_AVATAR, SORT_OPTIONS } from '@/constants/general'
 import { RarityChip } from '../shared/chips/RarityChip'
 import { formatDistanceToNow } from 'date-fns'
 import { useRerender } from '@/hooks/useRerender'
-import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import Image from 'next/image'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { TextWithOverflow } from '../ui/TextWithOverflow'
@@ -40,7 +39,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
         return SORT_OPTIONS.RESOLVED_SIGNATURE_REQUESTS
     }
   }, [tab])
-  const { TableSort, value: sortTag, order: sortOrder } = useTableSort(selectOptions)
+  const { TableSort, tag: sortTag, order: sortOrder } = useTableSort(selectOptions)
 
   useRerender(30000)
   console.log('SIGNATURE REQUESTS: ', { sortTag, sortOrder, skip, take })
@@ -83,7 +82,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                     <Image
                       src={asset.image}
                       alt=''
-                      {...COMIC_ISSUE_COVER_SIZE}
+                      {...ASPECT_RATIO.COMIC_ISSUE_COVER}
                       className='rounded-sm h-auto w-10 aspect-comic-issue-cover'
                     />
                     <div className='flex flex-col w-full max-lg:max-w-[240px] pr-12'>

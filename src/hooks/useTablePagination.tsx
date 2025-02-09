@@ -13,7 +13,7 @@ type TablePaginationHook = (options: { totalItems: number; defaultPageSize?: num
   TablePagination: () => JSX.Element
 }
 
-export const useTablePagination: TablePaginationHook = ({ totalItems, defaultPageSize = 10 }) => {
+export const useTablePagination: TablePaginationHook = ({ totalItems, defaultPageSize = 5 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(defaultPageSize)
   const totalPages = Math.ceil(totalItems / pageSize)
@@ -23,8 +23,6 @@ export const useTablePagination: TablePaginationHook = ({ totalItems, defaultPag
   useEffect(() => {
     setCurrentPage(1)
   }, [totalItems])
-
-  console.log('CURRENT PAGE: ', currentPage)
 
   const TablePagination = () => (
     <div className='flex items-center justify-between px-4 select-none'>

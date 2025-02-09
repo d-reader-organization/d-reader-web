@@ -23,6 +23,9 @@ import { useTableSearch } from '@/hooks/useTableSearch'
 
 // TODO: <TableNoContent />
 // TODO: finish 'My Products' table
+// TODO: ActivityFeed
+// `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
+// If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
 
 // Luka
 // decouple logic and UI from useTableSort etc. ( <TableSort {...props} />)
@@ -35,13 +38,14 @@ import { useTableSearch } from '@/hooks/useTableSearch'
 
 // Athar
 // fetch the full data report for CSV, unpaginated. Add the .splToken property to the TransactionHistoryItem
+// /get-raw should return responses with pagination details (ie. totalItems)
 
 type Props = { title: string }
 
 export const TransactionHistoryTable: React.FC<Props> = ({ title }) => {
   const isTableEmpty = transactions.length === 0
   const { TablePagination, skip, take } = useTablePagination({ totalItems: transactions.length })
-  const { TableSort, value: sortTag, order: sortOrder } = useTableSort(SORT_OPTIONS.TRANSACTION_HISTORY)
+  const { TableSort, tag: sortTag, order: sortOrder } = useTableSort(SORT_OPTIONS.TRANSACTION_HISTORY)
   const { TableSearch, searchTerm } = useTableSearch()
 
   useRerender(30000)

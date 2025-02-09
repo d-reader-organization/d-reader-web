@@ -17,12 +17,11 @@ import Link from 'next/link'
 import { ExternalLinkIcon } from '@/components/icons/theme/ExternalLinkIcon'
 import { InstantBuyParams } from '@/models/transaction/instantBuy'
 import { Button, Text, toast } from '../../ui'
-import { PLACEHOLDER_AVATAR, SOLANA_EXPLORER_BASE_LINK } from '@/constants/general'
+import { ASPECT_RATIO, PLACEHOLDER_AVATAR, SOLANA_EXPLORER_BASE_LINK } from '@/constants/general'
 import { useState } from 'react'
 import { RarityChip } from '@/components/shared/chips/RarityChip'
 import { SignedTraitChip } from '@/components/shared/chips/SignedTraitChip'
 import { UsedTraitChip } from '@/components/shared/chips/UsedTraitChip'
-import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import { CollectibleComic } from '@/models/asset'
 import { useAuthStore } from '@/providers/AuthStoreProvider'
 import { CheckCircleIcon } from '@/components/icons/theme/CheckCircleIcon'
@@ -260,7 +259,7 @@ const CollectibleComicImageCell: React.FC<{ collectibleComic: CollectibleComic }
     <div className='flex gap-1 items-center'>
       <Image
         src={collectibleComic.image}
-        {...COMIC_ISSUE_COVER_SIZE}
+        {...ASPECT_RATIO.COMIC_ISSUE_COVER}
         alt={collectibleComic.rarity + ' cover'}
         sizes='(max-width: 30px) 100vw'
         className='rounded-sm max-w-7 object-cover'
