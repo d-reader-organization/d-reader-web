@@ -201,7 +201,6 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
           </div>
         </DialogContent>
       </Dialog>
-      {/* TODO: don't show the unwrap dialog if user clicked on "do not ask me again" */}
       <UnwrapWarningDialog
         open={unwrapWarningDialog}
         toggleDialog={toggleUnwrapDialog}

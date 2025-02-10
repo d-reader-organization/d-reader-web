@@ -38,6 +38,9 @@ export const ProductsTable: React.FC<Props> = ({ title }) => {
 
   const [comics, setComics] = useState<RawComic[]>([])
   const isTableEmpty = comics.length === 0
+  // decouple logic and UI from useTableSort etc. ( <TableSort {...props} />)
+
+  // const comics = await fetchRawComics({ skip, take, sortOrder, sortTag: sortTag as ComicSortTag })
 
   // TODO: there must be a better way to do this? it feels slow in localhost
   useEffect(() => {

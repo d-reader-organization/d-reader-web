@@ -6,6 +6,9 @@ import { TextWithOverflow } from '../ui/TextWithOverflow'
 import { RawComic } from '@/models/comic/rawComic'
 import { format } from 'date-fns'
 import { VerificationStatusChip } from '../shared/chips/VerificationStatusChip'
+import { FavouritesChip } from '../shared/chips/FavouritesChip'
+import { StarRatingChip } from '../shared/chips/StarRatingChip'
+import { ReadersChip } from '../shared/chips/ReadersChip'
 
 type Props = { comics: RawComic[] }
 
@@ -17,11 +20,11 @@ export const ProducTableComponent: React.FC<Props> = ({ comics }) => {
           <TableHead>Title</TableHead>
           <TableHead>Date published</TableHead>
           <TableHead className='text-center'>Episodes</TableHead>
-          <TableHead className='text-center'>Likes</TableHead>
-          <TableHead className='text-center'>Readers</TableHead>
-          <TableHead className='text-center'>Rating</TableHead>
+          <TableHead className='text-center'>{/* Readers */}</TableHead>
+          <TableHead className='text-center'>{/* Likes */}</TableHead>
+          <TableHead className='text-center'>{/* Rating */}</TableHead>
           {/* <TableHead className='text-center'>Bookmarks</TableHead> */}
-          <TableHead>Status</TableHead>
+          <TableHead>{/* Status */}</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
@@ -50,9 +53,15 @@ export const ProducTableComponent: React.FC<Props> = ({ comics }) => {
               <span className='text-nowrap'>{format(new Date(comic.publishedAt), 'Pp')}</span>
             </TableCell>
             <TableCell className='text-center'>{comic.stats.issuesCount}</TableCell>
-            <TableCell className='text-center'>{comic.stats.favouritesCount}</TableCell>
-            <TableCell className='text-center'>{comic.stats.readersCount}</TableCell>
-            <TableCell className='text-center'>{comic.stats.averageRating}</TableCell>
+            <TableCell className='text-center'>
+              <ReadersChip count={comic.stats.readersCount} />
+            </TableCell>
+            <TableCell className='text-center'>
+              <FavouritesChip count={comic.stats.favouritesCount} />
+            </TableCell>
+            <TableCell className='text-center'>
+              <StarRatingChip rating={comic.stats.averageRating} />
+            </TableCell>
             {/* <TableCell className='text-center'>TODO: {comic.stats.bookmarksCount}</TableCell> */}
             <TableCell>
               <VerificationStatusChip isVerified={!!comic.verifiedAt} />

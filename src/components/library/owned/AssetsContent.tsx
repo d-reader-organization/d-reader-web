@@ -1,6 +1,6 @@
 'use client'
 
-import { OwnedCollectibleComicPreview } from '@/components/digital-asset/OwnedCollectibleComicPreview'
+import { OwnedCollectibleComicDialog } from '@/components/digital-asset/OwnedCollectibleComicDialog'
 import { ArrowLeftIcon } from '@/components/icons/theme/ArrowLeftIcon'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Text } from '@/components/ui/Text'
@@ -66,7 +66,7 @@ export const OwnedComicCollectiblesContent: React.FC<Props> = ({ comicIssue, own
               </div>
               <div className='flex flex-wrap gap-6 md:gap-10 w-full'>
                 {ownedIssue.collectibles.map((collectibleComic) => (
-                  <OwnedCollectibleComicPreview
+                  <OwnedCollectibleComicDialog
                     key={collectibleComic.address}
                     collectibleComic={collectibleComic}
                     comicIssue={comicIssue}

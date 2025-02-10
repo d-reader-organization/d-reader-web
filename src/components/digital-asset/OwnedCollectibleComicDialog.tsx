@@ -34,8 +34,7 @@ type Props = {
   comicIssue: ComicIssue
 }
 
-// TODO: this should be renamed to a Dialog component
-export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic, comicIssue }) => {
+export const OwnedCollectibleComicDialog: React.FC<Props> = ({ collectibleComic, comicIssue }) => {
   const [isLoading, toggleLoading] = useToggle()
 
   const handleRequestAutograph = async () => {

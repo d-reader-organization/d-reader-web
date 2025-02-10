@@ -23,24 +23,15 @@ import { useTableSearch } from '@/hooks/useTableSearch'
 
 // TODO: <TableNoContent />
 // TODO: ActivityFeed
-// `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
-// If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
 
-// Luka
+// TODO: Luka
 // decouple logic and UI from useTableSort etc. ( <TableSort {...props} />)
 // filter functionality (drawers/sheets)
 // change table data based on the selected tab
-// kill wallet connect on unwrap
-// "reset password" button does nothing?
-// "follow" button doesn't work as intended / works slowly?
 
-// Matan
+// TODO: Matan
 // replace chart with PieChart, Bars, or something similar
 // change the DialogClose into <Button variant="secondary" /> ?
-
-// Athar
-// fetch the full data report for CSV, unpaginated. Add the .splToken property to the TransactionHistoryItem
-// /get-raw should return responses with pagination details (ie. totalItems)
 
 type Props = { title: string }
 

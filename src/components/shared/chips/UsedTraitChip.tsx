@@ -39,8 +39,7 @@ export const UsedTraitChip: React.FC<Props> = ({
       )}
       title={compact || compactOnMobile ? title : ''}
     >
-      {/* // TODO: export the MintIcon in proper viewport */}
-      <Icon className='w-3.5 h-auto' />
+      <Icon className='w-3.5' />
       <Text
         as='span'
         styleVariant='body-small'
