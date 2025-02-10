@@ -20,7 +20,7 @@ export const UnwrapIssueDialogItem: React.FC<Props> = ({ collectibleComic, close
   const [unwrapWarningDialog, toggleUnwrapWarningDialog, closeUnwrapWarningDialog] = useToggle(false)
 
   const { handleUnwrap, isUnwrapLoading } = useHandleUnwrap({
-    collectibleComic,
+    collectibleComicAddress: collectibleComic.address,
     onSuccess: () => {
       closeUnwrapWarningDialog()
       closeDialog()
