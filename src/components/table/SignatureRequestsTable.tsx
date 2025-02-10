@@ -83,9 +83,9 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                       src={asset.image}
                       alt=''
                       {...ASPECT_RATIO.COMIC_ISSUE_COVER}
-                      className='rounded-sm h-auto w-10 aspect-comic-issue-cover'
+                      className='rounded-sm h-14 w-auto aspect-comic-issue-cover'
                     />
-                    <div className='flex flex-col w-full max-lg:max-w-[240px] pr-12'>
+                    <div className='flex flex-col w-full max-w-[240px] lg:max-w-[320px] pr-12'>
                       <TextWithOverflow as='span' styleVariant='body-small' className='text-grey-200'>
                         {asset.comicTitle}
                       </TextWithOverflow>

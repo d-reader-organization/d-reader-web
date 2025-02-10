@@ -1,10 +1,11 @@
 import React from 'react'
 import Image from 'next/image'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { ASPECT_RATIO, PLACEHOLDER_AVATAR } from '@/constants/general'
+import { ASPECT_RATIO } from '@/constants/general'
 import { TextWithOverflow } from '../ui/TextWithOverflow'
 import { RawComic } from '@/models/comic/rawComic'
+import { format } from 'date-fns'
+import { VerificationStatusChip } from '../shared/chips/VerificationStatusChip'
 
 type Props = { comics: RawComic[] }
 
@@ -13,10 +14,14 @@ export const ProducTableComponent: React.FC<Props> = ({ comics }) => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Asset</TableHead>
-          <TableHead>User</TableHead>
-          <TableHead>Traits</TableHead>
-          <TableHead>Date</TableHead>
+          <TableHead>Title</TableHead>
+          <TableHead>Date published</TableHead>
+          <TableHead className='text-center'>Episodes</TableHead>
+          <TableHead className='text-center'>Likes</TableHead>
+          <TableHead className='text-center'>Readers</TableHead>
+          <TableHead className='text-center'>Rating</TableHead>
+          {/* <TableHead className='text-center'>Bookmarks</TableHead> */}
+          <TableHead>Status</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
@@ -29,9 +34,9 @@ export const ProducTableComponent: React.FC<Props> = ({ comics }) => {
                   src={comic.cover}
                   alt=''
                   {...ASPECT_RATIO.COMIC_COVER}
-                  className='rounded-sm h-auto w-10 aspect-comic-cover'
+                  className='rounded-sm h-14 w-auto aspect-comic-cover'
                 />
-                <div className='flex flex-col w-full max-lg:max-w-[240px] pr-12'>
+                <div className='flex flex-col w-full max-w-[240px] lg:max-w-[320px] pr-12'>
                   <TextWithOverflow as='span' styleVariant='body-small' className='text-grey-200'>
                     {comic.title}
                   </TextWithOverflow>
@@ -42,20 +47,17 @@ export const ProducTableComponent: React.FC<Props> = ({ comics }) => {
               </div>
             </TableCell>
             <TableCell>
-              <div className='flex items-center gap-2 text-nowrap'>
-                <Avatar className='size-6'>
-                  <AvatarImage src={PLACEHOLDER_AVATAR} />
-                  <AvatarFallback>
-                    {/** fallback to 'G' as guest */}
-                    JD
-                  </AvatarFallback>
-                </Avatar>
-                John Doe
-              </div>
+              <span className='text-nowrap'>{format(new Date(comic.publishedAt), 'Pp')}</span>
             </TableCell>
-            <TableCell>TODO</TableCell>
-            <TableCell>TODO</TableCell>
-            <TableCell>TODO</TableCell>
+            <TableCell className='text-center'>{comic.stats.issuesCount}</TableCell>
+            <TableCell className='text-center'>{comic.stats.favouritesCount}</TableCell>
+            <TableCell className='text-center'>{comic.stats.readersCount}</TableCell>
+            <TableCell className='text-center'>{comic.stats.averageRating}</TableCell>
+            {/* <TableCell className='text-center'>TODO: {comic.stats.bookmarksCount}</TableCell> */}
+            <TableCell>
+              <VerificationStatusChip isVerified={!!comic.verifiedAt} />
+            </TableCell>
+            <TableCell>Buttons</TableCell>
           </TableRow>
         ))}
       </TableBody>

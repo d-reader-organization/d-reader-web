@@ -5,9 +5,9 @@ import { RoyaltyIcon } from '@/components/icons/theme/RoyaltyIcon'
 export const getTransactionSourceIcon = (source: TransactionSource) => {
   switch (source) {
     case TransactionSource.Sale:
-      return <MoneyPouchIcon solid />
+      return MoneyPouchIcon
     case TransactionSource.Royalty:
-      return <RoyaltyIcon solid />
+      return RoyaltyIcon
   }
 }
 

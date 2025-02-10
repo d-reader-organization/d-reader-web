@@ -23,12 +23,15 @@ const config = {
     },
     extend: {
       size: {
+        '3.5': '0.875rem',
         '4.5': '1.125rem',
       },
       height: {
+        '3.5': '0.875rem',
         '4.5': '1.125rem',
       },
       width: {
+        '3.5': '0.875rem',
         '4.5': '1.125rem',
       },
       aspectRatio: {

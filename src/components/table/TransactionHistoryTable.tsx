@@ -6,10 +6,10 @@ import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { PLACEHOLDER_AVATAR, SORT_OPTIONS } from '@/constants/general'
-import { TransactionSourceChip } from '../shared/chips/TransactionSource'
+import { TransactionSourceChip } from '../shared/chips/TransactionSourceChip'
 import { formatDistanceToNow } from 'date-fns'
 import { shortenString } from '@/utils/helpers'
-import { ProductTypeChip } from '../shared/chips/ProductType'
+import { ProductTypeChip } from '../shared/chips/ProductTypeChip'
 import { useRerender } from '@/hooks/useRerender'
 import { transactions } from '@/constants/dummyData'
 import { downloadTransactionsReportCSV } from '@/utils/csv'
@@ -22,7 +22,6 @@ import { CopyButton } from '../shared/CopyButton'
 import { useTableSearch } from '@/hooks/useTableSearch'
 
 // TODO: <TableNoContent />
-// TODO: finish 'My Products' table
 // TODO: ActivityFeed
 // `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
 // If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
@@ -31,6 +30,9 @@ import { useTableSearch } from '@/hooks/useTableSearch'
 // decouple logic and UI from useTableSort etc. ( <TableSort {...props} />)
 // filter functionality (drawers/sheets)
 // change table data based on the selected tab
+// kill wallet connect on unwrap
+// "reset password" button does nothing?
+// "follow" button doesn't work as intended / works slowly?
 
 // Matan
 // replace chart with PieChart, Bars, or something similar
