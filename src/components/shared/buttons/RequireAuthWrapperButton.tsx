@@ -28,7 +28,7 @@ export const RequireAuthWrapperButton: React.FC<Props> = ({ children, onClick, .
 
   return (
     <>
-      <Button {...props} onClick={submitWrapper} disabled={pending}>
+      <Button {...props} onClick={submitWrapper}>
         {children}
       </Button>
       <RequireAuthDialog

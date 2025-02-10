@@ -54,7 +54,7 @@ export const DefaultCreatorCard: React.FC<Props> = ({ creator, className }) => (
       </div>
       <FollowCreatorButton
         creatorSlug={creator.slug}
-        isFollowing={creator.myStats?.isFollowing}
+        isFollowingDefault={creator.myStats?.isFollowing}
         className='max-sm:h-9 max-sm:min-w-[108px]'
       />
     </div>

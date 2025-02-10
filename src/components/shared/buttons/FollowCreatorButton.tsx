@@ -5,17 +5,19 @@ import { followCreator } from '@/app/lib/api/creator/mutations'
 import { cn } from '@/lib/utils'
 import { RequireAuthWrapperButton } from './RequireAuthWrapperButton'
 import { UserPlusIcon } from '@/components/icons/theme/UserPlusIcon'
+import { useOptimistic } from 'react'
 
 type Props = React.HTMLAttributes<HTMLButtonElement> & {
-  isFollowing?: boolean
+  isFollowingDefault?: boolean
   creatorSlug: string
 }
 
-export const FollowCreatorButton: React.FC<Props> = ({ isFollowing = false, creatorSlug, className }) => {
+export const FollowCreatorButton: React.FC<Props> = ({ isFollowingDefault = false, creatorSlug, className }) => {
   const { refresh } = useRouter()
+  const [isFollowing, setIsFollowing] = useOptimistic(isFollowingDefault, (current) => !current)
 
-  // TODO: does this button even work as intended?
   const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsFollowing(null)
     e.preventDefault()
     await followCreator(creatorSlug)
     refresh()

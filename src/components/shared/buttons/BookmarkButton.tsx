@@ -5,16 +5,19 @@ import { bookmarkComic } from '@/app/lib/api/comic/mutations'
 import { RequireAuthWrapperButton } from './RequireAuthWrapperButton'
 import { cn } from '@/lib/utils'
 import { BookmarkIcon } from '@/components/icons/theme/BookmarkIcon'
+import { useOptimistic } from 'react'
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+type Props = React.HTMLAttributes<HTMLButtonElement> & {
   comicSlug: string
-  isBookmarked?: boolean
+  isBookmarkedDefault?: boolean
 }
 
-export const BookmarkButton: React.FC<Props> = ({ comicSlug, isBookmarked, className }) => {
+export const BookmarkButton: React.FC<Props> = ({ comicSlug, isBookmarkedDefault, className }) => {
   const { refresh } = useRouter()
+  const [isBookmarked, setIsBookmarked] = useOptimistic(isBookmarkedDefault, (current) => !current)
 
   const handleSubmit = async () => {
+    setIsBookmarked(null)
     await bookmarkComic(comicSlug)
     refresh()
   }

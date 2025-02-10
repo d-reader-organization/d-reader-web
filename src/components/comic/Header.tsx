@@ -69,7 +69,7 @@ const RightSection: React.FC<Props> = ({ comic }) => (
         isFavourite={comic.myStats?.isFavourite}
         favouritesCount={comic.stats?.favouritesCount}
       />
-      <BookmarkButton comicSlug={comic.slug} isBookmarked={comic.myStats?.isBookmarked} />
+      <BookmarkButton comicSlug={comic.slug} isBookmarkedDefault={comic.myStats?.isBookmarked} />
     </div>
     <StatsContainer>
       <StatsItem label='Episodes' value={comic.stats?.issuesCount} />
