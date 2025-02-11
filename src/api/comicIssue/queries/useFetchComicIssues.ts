@@ -1,9 +1,10 @@
 import { useMemo } from 'react'
 import { comicIssueKeys } from '@/api/comicIssue/comicIssueKeys'
 import { ComicIssueParams } from '@/models/comicIssue/comicIssueParams'
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { fetchComicIssues } from '@/app/lib/api/comicIssue/queries'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { fetchComicIssues, fetchRawComicIssues } from '@/app/lib/api/comicIssue/queries'
 import { onQueryError } from '@/components/ui/toast/use-toast'
+import { RawComicIssue } from '@/models/comicIssue/rawComicIssue'
 
 type Input = {
   enabled?: boolean
@@ -30,4 +31,23 @@ export const useFetchComicIssues = ({ enabled = true, params }: Input) => {
   }, [data])
 
   return { ...infiniteQuery, flatData }
+}
+
+export const useFetchRawComicIssues = ({
+  params,
+  enabled = true,
+  initialData = [],
+}: {
+  params: ComicIssueParams
+  enabled?: boolean
+  initialData?: RawComicIssue[]
+}) => {
+  return useQuery({
+    queryFn: () => fetchRawComicIssues({ ...params }),
+    queryKey: comicIssueKeys.getManyRaw(params),
+    placeholderData: (prev) => prev ?? initialData,
+    staleTime: 1000 * 60 * 60, // stale for 1 hours
+    throwOnError: onQueryError,
+    enabled: enabled && !!params.take,
+  })
 }

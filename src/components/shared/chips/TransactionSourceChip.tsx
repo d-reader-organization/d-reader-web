@@ -1,11 +1,7 @@
 import { Text } from '@/components/ui'
 import { TransactionSource } from '@/enums/transactionSource'
 import { cn } from '@/lib/utils'
-import {
-  getTransactionSourceColor,
-  getTransactionSourceIcon,
-  getTransactionSourceTextColor,
-} from '@/utils/transactionSource'
+import { getTransactionSourceColor, getTransactionSourceIcon } from '@/utils/transactionSource'
 import React from 'react'
 
 type Props = {

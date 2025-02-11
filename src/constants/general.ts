@@ -98,6 +98,13 @@ export const MONSTER_CLAIM_QR_SLUG = 'mark-spears-monsters'
 export const SOLANA_EXPLORER_BASE_LINK = 'https://explorer.solana.com'
 export const SOL_ADDRESS = 'So11111111111111111111111111111111111111112'
 
+export enum ProductsTab {
+  Series = 'Series',
+  Releases = 'Releases',
+  DigitalArt = 'Digital Art',
+}
+export const DASHBOARD_TABS = [ProductsTab.Series, ProductsTab.Releases, ProductsTab.DigitalArt]
+
 export const SORT_OPTIONS = Object.freeze({
   TRANSACTION_HISTORY: [
     { value: TransactionHistorySortTag.Date, order: SortOrder.ASC, label: 'Newest' },
