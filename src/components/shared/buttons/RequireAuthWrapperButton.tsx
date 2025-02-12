@@ -5,10 +5,11 @@ import { Button, type ButtonProps } from '@/components/ui/Button'
 import { useState, useTransition, type MouseEvent } from 'react'
 import { RequireAuthDialog } from '../dialogs/RequireAuthenticationDialog'
 
-type Props = React.PropsWithChildren &
+export type RequireAuthWrapperButtonProps = React.PropsWithChildren &
   ButtonProps & { onClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void }
 
-export const RequireAuthWrapperButton: React.FC<Props> = ({ children, onClick, ...props }) => {
+//TODO: can we kill this component and instead have a 'requireAuth' prop flag on the Button component?
+export const RequireAuthWrapperButton: React.FC<RequireAuthWrapperButtonProps> = ({ children, onClick, ...props }) => {
   const [showRequireAuthDialog, setShowRequireAuthDialog] = useState(false)
   const [pending, startTransition] = useTransition()
   const submitWrapper = (event: MouseEvent<HTMLButtonElement>) => {

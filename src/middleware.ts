@@ -73,7 +73,7 @@ export const config = {
   ],
 }
 
-const authRoutesRegex = /^\/(library|profile|claim|invest\/[^/]+\/express-interest)(\/.*)?$/
+const authRoutesRegex = /^\/(library|profile|claim)(\/.*)?$/
 
 const handleUnauthorized = async ({ path, refreshToken, url }: { path: string; refreshToken: string; url: string }) => {
   if (refreshToken) {

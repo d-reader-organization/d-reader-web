@@ -1,4 +1,4 @@
-import { BaseLayout } from '@/components/layout/BaseLayout'
+import { GenesisLayout } from '@/components/layout/GenesisLayout'
 import { Text } from '@/components/ui'
 import { fetchProject } from '@/app/lib/api/invest/queries'
 import { notFound } from 'next/navigation'
@@ -19,7 +19,7 @@ export default async function ExpressInterestPage(props: Props) {
     return notFound()
   }
   return (
-    <BaseLayout>
+    <GenesisLayout>
       {project.funding.isUserInterested ? (
         <div className='m-auto'>
           <Text as='h2' styleVariant='body-large'>
@@ -38,7 +38,7 @@ export default async function ExpressInterestPage(props: Props) {
         </div>
       ) : (
         <div className='flex flex-col items-center gap-8 max-w-screen-md w-full py-4'>
-          <div className='text-center space-y-4'>
+          <div className='text-center'>
             <Text as='h4' styleVariant='secondary-heading' fontWeight='medium' className='text-grey-100'>
               If an offering were to be launched for
             </Text>
@@ -63,6 +63,6 @@ export default async function ExpressInterestPage(props: Props) {
           </div>
         </div>
       )}
-    </BaseLayout>
+    </GenesisLayout>
   )
 }

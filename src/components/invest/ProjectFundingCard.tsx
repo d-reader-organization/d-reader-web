@@ -9,6 +9,8 @@ import { Text } from '../ui'
 import { cn, withRedirect } from '@/lib/utils'
 import { RoutePath } from '@/enums/routePath'
 import { TrendUpIcon } from '@/components/icons/theme/TrendUpIcon'
+import { RequireAuthWrapperButton } from '../shared/buttons/RequireAuthWrapperButton'
+import { redirect, RedirectType } from 'next/navigation'
 
 type ProjectFundingCardProps = {
   funding: ProjectFunding
@@ -190,18 +192,19 @@ type ExpressInterestButtonProps = {
 
 const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isUserInterested }) => {
   return (
-    <Link
-      href={RoutePath.ExpressInterest(slug)}
-      className={`flex flex-col w-full h-full max-h-[52px] p-[14px] justify-center items-center self-stretch rounded-xl md:p-4 ${isUserInterested ? 'bg-grey-500 border-2 border-white pointer-events-none' : 'bg-green-genesis hover:brightness-100'}`}
+    <RequireAuthWrapperButton
+      onClick={() => {
+        // TODO: express interest (special handling for BONK?)
+        redirect(RoutePath.Pledge(slug), RedirectType.push)
+      }}
+      className={cn(
+        'flex flex-col w-full h-full max-h-[52px] p-[14px] justify-center items-center self-stretch rounded-xl md:p-4',
+        isUserInterested
+          ? 'text-white bg-grey-500 border-2 border-white pointer-events-none'
+          : 'text-grey-600 bg-green-genesis border-green-300 hover:brightness-100'
+      )}
     >
-      <Text
-        as='p'
-        styleVariant='body-normal'
-        fontWeight='bold'
-        className={`${isUserInterested ? 'text-white' : 'text-grey-600'} leading-snug max-md:text-base`}
-      >
-        {isUserInterested ? 'Interested!' : 'Express interest'}
-      </Text>
-    </Link>
+      {isUserInterested ? 'Interested!' : 'Express interest'}
+    </RequireAuthWrapperButton>
   )
 }
