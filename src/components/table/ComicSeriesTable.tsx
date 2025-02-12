@@ -12,7 +12,7 @@ import { ReadersChip } from '../shared/chips/ReadersChip'
 
 type Props = { comics: RawComic[] }
 
-export const SeriesTableComponent: React.FC<Props> = ({ comics }) => {
+export const ComicSeriesTable: React.FC<Props> = ({ comics }) => {
   return (
     <Table>
       <TableHeader>
@@ -74,4 +74,4 @@ export const SeriesTableComponent: React.FC<Props> = ({ comics }) => {
   )
 }
 
-export default SeriesTableComponent
+export default ComicSeriesTable

@@ -9,9 +9,9 @@ import { StarRatingChip } from '../shared/chips/StarRatingChip'
 import { ReadersChip } from '../shared/chips/ReadersChip'
 import { RawComicIssue } from '@/models/comicIssue/rawComicIssue'
 
-type Props = { releases: RawComicIssue[] }
+type Props = { issues: RawComicIssue[] }
 
-export const ReleasesTableComponent: React.FC<Props> = ({ releases }) => {
+export const ComicIssuesTable: React.FC<Props> = ({ issues }) => {
   return (
     <Table>
       <TableHeader>
@@ -28,44 +28,44 @@ export const ReleasesTableComponent: React.FC<Props> = ({ releases }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {releases.map((release) => {
-          const key = `${release.id}-${release.slug}`
+        {issues.map((issue) => {
+          const key = `${issue.id}-${issue.slug}`
           return (
             <TableRow key={key}>
               <TableCell>
                 <div className='flex items-center gap-2 relative'>
                   <Image
-                    src={release.cover}
+                    src={issue.cover}
                     alt=''
                     {...ASPECT_RATIO.COMIC_COVER}
                     className='rounded-sm h-14 w-auto aspect-comic-cover'
                   />
                   <div className='flex flex-col w-full max-w-[240px] lg:max-w-[320px] pr-12'>
                     <TextWithOverflow as='span' styleVariant='body-small' className='text-grey-200'>
-                      {release.title}
+                      {issue.title}
                     </TextWithOverflow>
                     <TextWithOverflow as='span' styleVariant='body-small' fontWeight='medium'>
-                      @{release.slug}
+                      @{issue.slug}
                     </TextWithOverflow>
                   </div>
                 </div>
               </TableCell>
               <TableCell>
-                <span className='text-nowrap'>{format(new Date(release.publishedAt), 'Pp')}</span>
+                <span className='text-nowrap'>{format(new Date(issue.publishedAt), 'Pp')}</span>
               </TableCell>
-              <TableCell className='text-center'>{release.stats.totalPagesCount}</TableCell>
+              <TableCell className='text-center'>{issue.stats.totalPagesCount}</TableCell>
               <TableCell className='text-center'>
-                <ReadersChip count={release.stats.readersCount} />
-              </TableCell>
-              <TableCell className='text-center'>
-                <FavouritesChip count={release.stats.favouritesCount} />
+                <ReadersChip count={issue.stats.readersCount} />
               </TableCell>
               <TableCell className='text-center'>
-                <StarRatingChip rating={release.stats.averageRating} />
+                <FavouritesChip count={issue.stats.favouritesCount} />
+              </TableCell>
+              <TableCell className='text-center'>
+                <StarRatingChip rating={issue.stats.averageRating} />
               </TableCell>
               {/* <TableCell className='text-center'>TODO: {comic.stats.bookmarksCount}</TableCell> */}
               <TableCell>
-                <VerificationStatusChip isVerified={!!release.verifiedAt} />
+                <VerificationStatusChip isVerified={!!issue.verifiedAt} />
               </TableCell>
               <TableCell>Buttons</TableCell>
             </TableRow>
