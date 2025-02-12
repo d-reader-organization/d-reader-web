@@ -114,7 +114,7 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span title={new Date(requestedAt).toLocaleString()} className='text-nowrap'>
+                  <span title={new Date(requestedAt).toString()} className='text-nowrap'>
                     {formatDistanceToNow(new Date(requestedAt), { addSuffix: true, includeSeconds: true })}
                   </span>
                 </TableCell>
