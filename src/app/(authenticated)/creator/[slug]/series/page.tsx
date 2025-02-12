@@ -22,7 +22,12 @@ export default async function CreatorReleasesPage(props: Props) {
   const { slug } = params
   const accessToken = await getAccessToken()
   const creator = await fetchCreator({ slug, accessToken })
-  const comics = await fetchComics({ creatorSlug: slug, skip: 0, take: 4 })
+
+  if (!creator) {
+    notFound()
+  }
+
+  const comics = await fetchComics({ creatorId: creator.id, skip: 0, take: 4 })
   const tabs = creatorPageTabs(slug)
 
   if (!creator) {

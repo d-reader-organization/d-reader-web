@@ -139,7 +139,7 @@ export const shortenAssetName = (name: string): string => {
 
 export const getSlideFallbackUrl = (slide: CarouselSlide): string => {
   if (slide.comicIssueId) return RoutePath.Mint(slide.comicIssueId)
-  else if (slide.creatorSlug) return RoutePath.Creator(slide.creatorSlug)
+  else if (slide.creatorId) return RoutePath.Creator(slide.creatorId)
   else if (slide.comicSlug) return RoutePath.Comic(slide.comicSlug)
   else return slide.externalLink ?? ''
 }
