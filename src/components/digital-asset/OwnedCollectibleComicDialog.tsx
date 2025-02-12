@@ -12,9 +12,8 @@ import { ExpandableText } from '../shared/ExpandableText'
 import { Divider } from '../shared/Divider'
 import { AudienceWidget } from '../shared/AudienceWidget'
 import { AudienceType } from '@/enums/audienceType'
-import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
-import { RoyaltyChip } from '../shared/chips/Royalty'
+import { RoyaltyChip } from '../shared/chips/RoyaltyChip'
 import { CreatorInfoLink } from '../creator/InfoLink'
 import { ComicIssue } from '@/models/comicIssue'
 import { Button } from '../ui'
@@ -28,13 +27,14 @@ import { CopyButton } from '../shared/CopyButton'
 import { CircleIcon } from '../icons/theme/CircleIcon'
 import { PencilIcon } from '../icons/theme/PencilIcon'
 import { ButtonLink } from '../ui/ButtonLink'
+import { ASPECT_RATIO } from '@/constants/general'
 
 type Props = {
   collectibleComic: CollectibleComic
   comicIssue: ComicIssue
 }
 
-export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic, comicIssue }) => {
+export const OwnedCollectibleComicDialog: React.FC<Props> = ({ collectibleComic, comicIssue }) => {
   const [isLoading, toggleLoading] = useToggle()
 
   const handleRequestAutograph = async () => {
@@ -60,33 +60,30 @@ export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic
         <OwnedCollectibleComicCard collectibleComic={collectibleComic} />
       </DialogTrigger>
       <DialogContent
-        className='bg-grey-500 rounded-3xl justify-start max-w-screen-md flex flex-col items-center gap-6 md:flex-row md:justify-center md:items-start md:gap-10 w-full p-4 md:p-10 max-h-full'
+        className='rounded-3xl justify-start max-w-screen-md flex flex-col items-center gap-6 md:flex-row md:justify-center md:items-start md:gap-8 w-full p-4 md:p-10 max-h-full'
         aria-describedby={undefined}
       >
         <DialogTitle className='sr-only'>Owned asset preview dialog</DialogTitle>
-        <div className='flex flex-col gap-6 md:gap-8 items-center max-sm:mt-6 h-full'>
+        <div className='flex flex-col gap-4 items-center h-full'>
           <Image
             alt={'asset ' + shortenAssetName(collectibleComic.name)}
-            width={223}
-            height={322}
+            {...ASPECT_RATIO.COMIC_ISSUE_COVER}
             src={collectibleComic.image}
           />
-          <div className='flex gap-4 max-h-12 sm:max-h-[52px] w-full'>
-            {/* <Button className='w-full rounded-xl' size='normal' variant='outline'>
-              <Text as='p' styleVariant='body-normal' fontWeight='medium'>
-                List
-              </Text>
+          <div className='flex gap-2 w-full'>
+            {/* <Button className='w-full' variant='white'>
+              List
             </Button> */}
-            <Link
-              className='bg-yellow-300 w-full flex justify-center items-center h-10 sm:h-[52px] p-1 sm:p-4 rounded-xl'
+            <ButtonLink
+              variant='primary'
+              className='w-full'
               href={RoutePath.ReadComicIssue(collectibleComic.comicIssueId)}
             >
-              <Text as='p' styleVariant='body-normal' fontWeight='bold' className='text-grey-600'>
-                Read
-              </Text>
-            </Link>
+              Read
+            </ButtonLink>
           </div>
         </div>
+
         <div className='flex flex-col gap-2 w-full max-w-fit'>
           <div className='flex items-center gap-4 flex-wrap'>
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
@@ -97,7 +94,7 @@ export const OwnedCollectibleComicPreview: React.FC<Props> = ({ collectibleComic
               {shortenAssetName(collectibleComic.name)}
             </Text>
           </div>
-          <div className='flex flex-col gap-3'>
+          <div className='flex flex-col gap-4'>
             <Text as='h3' styleVariant='primary-heading' className='line-clamp-1 text-ellipsis'>
               {collectibleComic.comicIssueTitle}
             </Text>

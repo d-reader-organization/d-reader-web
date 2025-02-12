@@ -38,8 +38,8 @@ export const RarityChip: React.FC<Props> = ({
       )}
       title={compact || compactOnMobile ? title : ''}
     >
-      <div className='flex items-center justify-center'>
-        <RarityIcon className='w-3 h-auto' />
+      <div className='flex items-center justify-center gap-2'>
+        <RarityIcon className='size-3.5' />
         <Text
           as='span'
           styleVariant='body-small'

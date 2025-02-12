@@ -97,11 +97,11 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id, showEd
             className='w-full max-w-full'
           />
 
-          <Button variant='secondary' size='md' onClick={onEditToggle}>
+          <Button variant='secondary' onClick={onEditToggle}>
             Cancel
           </Button>
-          <Button variant='white' size='md' onClick={handleItemUpdate}>
-            {isLoading ? <LoaderIcon /> : 'Save'}
+          <Button variant='white' onClick={handleItemUpdate}>
+            {isLoading ? <LoaderIcon className='size-4.5' /> : 'Save'}
           </Button>
         </div>
       ) : (
@@ -110,7 +110,7 @@ const UserDetailsFormItem: React.FC<FormItemProps> = ({ value, title, id, showEd
             {isUsername ? `@${value}` : value}
           </Text>
 
-          <Button variant='secondary' size='md' onClick={onEditToggle}>
+          <Button variant='secondary' onClick={onEditToggle}>
             Edit
           </Button>
         </div>

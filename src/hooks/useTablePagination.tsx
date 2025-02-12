@@ -1,25 +1,30 @@
-import { JSX, useState } from 'react'
+import { JSX, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { ChevronLeftIcon } from '@/components/icons/theme/ChevronLeftIcon'
 import { ChevronRightIcon } from '@/components/icons/theme/ChevronRightIcon'
 
-type PaginationControlsHook = (options: { totalItems: number; defaultPageSize?: number }) => {
+type TablePaginationHook = (options: { totalItems: number; defaultPageSize?: number }) => {
   currentPage: number
   totalPages: number
   skip: number
   take: number
-  PaginationControls: () => JSX.Element
+  TablePagination: () => JSX.Element
 }
 
-export const usePaginationControls: PaginationControlsHook = ({ totalItems, defaultPageSize = 10 }) => {
+export const useTablePagination: TablePaginationHook = ({ totalItems, defaultPageSize = 5 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(defaultPageSize)
   const totalPages = Math.ceil(totalItems / pageSize)
   const skip = (currentPage - 1) * pageSize
 
-  const PaginationControls = () => (
+  // whenever number of total items changes, reset the pages
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [totalItems])
+
+  const TablePagination = () => (
     <div className='flex items-center justify-between px-4 select-none'>
       <div className='flex items-center gap-2'>
         <Button
@@ -70,6 +75,6 @@ export const usePaginationControls: PaginationControlsHook = ({ totalItems, defa
     totalPages,
     skip,
     take: pageSize,
-    PaginationControls,
+    TablePagination,
   }
 }

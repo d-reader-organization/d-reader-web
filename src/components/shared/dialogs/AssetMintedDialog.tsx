@@ -15,10 +15,8 @@ import { UtmSource } from '@/models/twitter/twitterIntentComicMintedParams'
 import { RarityChip } from '../chips/RarityChip'
 import { AssetEventData } from '@/models/asset/assetMintEvent'
 import useEmblaCarousel from 'embla-carousel-react'
-import { fetchUseComicIssueAssetTransaction } from '@/app/lib/api/transaction/queries'
-import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { toast } from '@/components/ui'
-import { shortenAssetName, sleep } from '@/utils/helpers'
+import { shortenAssetName } from '@/utils/helpers'
 import { useRouter } from 'next/navigation'
 import { LOCAL_STORAGE } from '@/constants/general'
 import { useAuthStore } from '@/providers/AuthStoreProvider'
@@ -26,6 +24,7 @@ import { ChevronLeftIcon } from '@/components/icons/theme/ChevronLeftIcon'
 import { cn } from '@/lib/utils'
 import { ChevronRightIcon } from '@/components/icons/theme/ChevronRightIcon'
 import { LoaderIcon } from '@/components/icons/theme/LoaderIcon'
+import { unwrapComicIssueAsset } from '@/app/lib/api/transaction/mutations'
 
 type Props = {
   comicIssue: ComicIssue
@@ -53,10 +52,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
   const [isDialogRead] = useLocalStorage(LOCAL_STORAGE.IS_UNWRAP_HINT_READ, false)
 
   const [isUnwrapTransactionLoading, setUnwrapTransactionLoading] = useState<boolean>(false)
-  const { publicKey, signTransaction } = useWallet()
-
   const { push } = useRouter()
-  const { connection } = useConnection()
   const accessToken = useAuthStore((state) => state.accessToken)
 
   const { data: twitterIntentComicMinted } = useFetchTwitterIntentComicMinted({
@@ -65,36 +61,23 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
   })
 
   const handleUnwrap = async (selectedAsset: AssetEventData) => {
-    if (!publicKey) {
-      toast({ description: 'Please connect wallet before unwrapping', variant: 'error' })
-      return
-    }
     try {
       setUnwrapTransactionLoading(true)
-
-      const unwrapTransaction = await fetchUseComicIssueAssetTransaction({
+      const response = await unwrapComicIssueAsset({
         accessToken,
-        params: { assetAddress: selectedAsset.address, ownerAddress: publicKey.toString() },
+        params: { assetAddress: selectedAsset.address },
       })
-      if (unwrapTransaction) {
-        if (!signTransaction) return
-        const latestBlockhash = await connection.getLatestBlockhash()
-        const signedTransaction = await signTransaction(unwrapTransaction)
 
-        const signature = await connection.sendRawTransaction(signedTransaction.serialize())
-        const response = await connection.confirmTransaction({ signature, ...latestBlockhash })
-        if (!!response.value.err) {
-          console.log('Response error log: ', response.value.err)
-          toast({ description: 'Error while unwrapping the comic', variant: 'error' })
-          throw Error()
-        }
-        await sleep(1000)
+      if (response.errorMessage) {
+        toast({ description: response.errorMessage, variant: 'error' })
+      } else {
+        push(RoutePath.ReadComicIssue(comicIssue.id), { scroll: false })
+        toast({ description: 'Comic unwrapped, time to read! 🎉', variant: 'success' })
       }
-      push(RoutePath.ReadComicIssue(comicIssue.id), { scroll: false })
-      toast({ description: 'Comic unwrapped, time to read! 🎉', variant: 'success' })
     } catch (e) {
       console.log(e)
       toast({ description: 'Failed to unwrap, please try again!', variant: 'error' })
+    } finally {
       setUnwrapTransactionLoading(false)
     }
   }
@@ -116,7 +99,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
   return (
     <>
       <Dialog open={open} onOpenChange={toggleDialog}>
-        <DialogContent className='w-full h-full overflow-y-auto' hideCloseIcon>
+        <DialogContent className='w-full h-full' hideCloseIcon>
           <div className='fixed top-0 left-0 w-full h-full min-h-[850px] -z-[1]'>
             <video autoPlay className='w-full h-full min-h-[850px] object-cover' loop muted>
               <source src='/assets/animations/mint-loop.mp4' type='video/mp4' />
@@ -137,7 +120,7 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
                 {comicIssue.title} &nbsp;&bull;&nbsp; EP&nbsp;{comicIssue.number}
               </p>
               <p className='text-white sm:text-[32px] xs:text-[26px] font-obviouslyNarrow font-semibold leading-8'>
-                Congrats! You got #{shortenAssetName(assets[selectedIndex].name)}
+                Congrats! You got {shortenAssetName(assets[selectedIndex].name)}
               </p>
               <RarityChip className='-mt-3.5' rarity={assets[selectedIndex].rarity} />
               {/* <p className='text-grey-100 text-base sm:text-[16px] xs:text-[14px] leading-5 text-center'>
@@ -161,15 +144,13 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
                 {isAuthenticated ? (
                   <Button
                     className='rounded-[12px]'
+                    Icon={isUnwrapTransactionLoading ? LoaderIcon : undefined}
                     onClick={async () => {
-                      if (!isDialogRead) {
-                        toggleUnwrapDialog()
-                        return
-                      }
-                      await handleUnwrap(assets[selectedIndex])
+                      if (!isDialogRead) toggleUnwrapDialog()
+                      else await handleUnwrap(assets[selectedIndex])
                     }}
                   >
-                    {isUnwrapTransactionLoading ? <LoaderIcon /> : 'Unwrap & Read'}
+                    Unwrap & Read
                   </Button>
                 ) : (
                   <ButtonLink
@@ -185,7 +166,6 @@ export const AssetMintedDialog: React.FC<Props & { assets: AssetEventData[] }> =
                   className='text-grey-50 border border-grey-50 rounded-[12px]'
                   onClick={toggleDialog}
                   variant='outline'
-                  size='md'
                 >
                   Close
                 </Button>

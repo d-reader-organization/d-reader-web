@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { Info, TicketIcon } from 'lucide-react'
 import { getCouponDiscount } from '@/utils/mint'
 import { CouponCardButton } from './CouponCardButton'
 import { Skeleton } from '../ui/Skeleton'
@@ -9,7 +8,10 @@ import { Text } from '../ui/Text'
 import { useCandyMachineStore } from '@/providers/CandyMachineStoreProvider'
 import { CouponDescriptionDialog } from '../shared/dialogs/CouponDescriptionDialog'
 import { useToggle } from '@/hooks'
+import { InfoIcon } from '@/components/icons/theme/InfoIcon'
+import { TicketIcon } from '@/components/icons/theme/TicketIcon'
 import { ComicIssue } from '@/models/comicIssue'
+import { Button } from '../ui/Button'
 
 export const CouponsSection: React.FC<{ comicIssue: ComicIssue }> = ({ comicIssue }) => {
   const { coupons, selectedCoupon, updateSelectedCoupon, candyMachine } = useCandyMachineStore((state) => state)
@@ -22,7 +24,7 @@ export const CouponsSection: React.FC<{ comicIssue: ComicIssue }> = ({ comicIssu
           <Text as='h5' styleVariant='primary-heading' className='mt-1'>
             Discount coupons
           </Text>
-          <Info className='size-4.5 hover:cursor-pointer text-grey-100' onClick={toggleCouponDescriptionDialog} />
+          <Button variant='inline' Icon={InfoIcon} iconOnly onClick={toggleCouponDescriptionDialog} solid={false} />
         </div>
         <div className='flex items-center gap-3 flex-wrap'>
           {coupons.map((coupon) => (
@@ -38,7 +40,7 @@ export const CouponsSection: React.FC<{ comicIssue: ComicIssue }> = ({ comicIssu
       </div>
       <CouponDescriptionDialog
         open={showCouponDescriptionDialog}
-        toggleDialog={() => toggleCouponDescriptionDialog()}
+        toggleDialog={toggleCouponDescriptionDialog}
         comicIssue={comicIssue}
       />
     </>

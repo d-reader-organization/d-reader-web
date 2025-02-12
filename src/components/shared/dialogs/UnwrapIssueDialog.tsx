@@ -1,6 +1,13 @@
 'use client'
 
-import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/ui/Dialog'
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogHeader,
+  DialogDescription,
+} from '@/components/ui/Dialog'
 import { UnwrapIssueDialogItem } from '@/components/comicIssue/UnwrapIssueDialogItem'
 import { useToggle } from '@/hooks/useToggle'
 import { Text } from '@/components/ui'
@@ -21,18 +28,20 @@ export const UnwrapIssueDialog: React.FC<Props> = ({ collectibleComics, showUnwr
           Unwrap
         </DialogTrigger>
       )}
-      <DialogContent
-        aria-describedby=''
-        className='flex flex-col justify-between items-center gap-4 bg-grey-400 p-5 rounded-lg max-w-[500px] max-h-[600px] overflow-y-scroll'
-      >
-        <DialogTitle className='sr-only'>Unwrap issue dialog</DialogTitle>
-        <Text as='h3' styleVariant='primary-heading'>
-          Choose to open
-        </Text>
-        <Text as='p' styleVariant='body-large' className='text-center'>
-          This episode is a digital collectible, In order to read the full episode you need to &quot;unwrap&quot; at
-          least one copy. This action is irreversible and will make the selected copy lose the mint condition.
-        </Text>
+      <DialogContent aria-describedby='' className='max-w-md max-h-[480px]'>
+        <DialogHeader>
+          <DialogTitle asChild>
+            <Text styleVariant='primary-heading' as='h3'>
+              Unwrap a comic
+            </Text>
+          </DialogTitle>
+          <DialogDescription>
+            In order to read the full episode, you need to have at least one digital copy opened. This action is
+            irreversible and will make the selected copy lose its mint condition.
+          </DialogDescription>
+        </DialogHeader>
+
+        {/* TODO: improve this dialog somehow, and sort the available comics by rarity? */}
         {unusedCollectibleComics.map((collectibleComic) => (
           <UnwrapIssueDialogItem
             key={collectibleComic.address}

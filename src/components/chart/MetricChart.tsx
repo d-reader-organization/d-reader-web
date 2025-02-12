@@ -3,15 +3,6 @@
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 
-// const chartData = [
-//   { date: 'Aug 2024', sales: 800, royalties: 120, other: 0 },
-//   { date: 'Sep 2024', sales: 1400, royalties: 0, other: 400 },
-//   { date: 'Oct 2024', sales: 4700, royalties: 1980, other: 100 },
-//   { date: 'Nov 2024', sales: 2000, royalties: 5200, other: 6100 },
-//   { date: 'Dec 2024', sales: 800, royalties: 3620, other: 400 },
-//   { date: 'Jan 2025', sales: 21342, royalties: 1824, other: 2200 },
-// ]
-
 const chartData = [
   { date: 'Aug 2024', sales: 8000, royalties: 120, other: 0 },
   { date: 'Sep 2024', sales: 14000, royalties: 420, other: 400 },

@@ -1,6 +1,6 @@
 import { RoutePath } from '@/enums/routePath'
 import { ComicPage } from '@/models/comic/comicPage'
-import { EyeIcon } from 'lucide-react'
+import { EyeIcon } from '@/components/icons/theme/EyeIcon'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -32,7 +32,7 @@ export const PagesPreview: React.FC<Props> = ({ comicIssueId, pages }) => {
       </div>
       <div className='absolute top-0 size-full flex justify-center items-center'>
         <div className='size-32 flex flex-col justify-center items-center gap-1 rounded-full bg-black bg-opacity-15 backdrop-blur-[10px]'>
-          <EyeIcon size={24} />
+          <EyeIcon className='size-6' />
           <p className='text-base font-medium leading-[22.4px]'>Preview</p>
         </div>
       </div>

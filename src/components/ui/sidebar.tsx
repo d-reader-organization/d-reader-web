@@ -3,13 +3,12 @@
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { VariantProps, cva } from 'class-variance-authority'
-import { PanelLeft } from 'lucide-react'
-
 import { useIsMobile } from '@/hooks/use-mobile'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Separator } from '@/components/ui/separator'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
+import { LayoutIcon } from '@/components/icons/sidebar/LayoutIcon'
 import { Skeleton } from '@/components/ui/Skeleton'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/Tooltip'
 import { cn } from '@/lib/utils'
@@ -219,24 +218,23 @@ const Sidebar = React.forwardRef<
 Sidebar.displayName = 'Sidebar'
 
 const SidebarTrigger = React.forwardRef<React.ComponentRef<typeof Button>, React.ComponentProps<typeof Button>>(
-  ({ className, onClick, ...props }, ref) => {
+  ({ onClick, ...props }, ref) => {
     const { toggleSidebar } = useSidebar()
 
     return (
       <Button
         ref={ref}
-        data-sidebar='trigger'
+        Icon={LayoutIcon}
+        iconOnly
+        iconClassName='size-6'
         variant='ghost'
-        className={cn('h-7 w-7', className)}
         onClick={(event) => {
           onClick?.(event)
           toggleSidebar()
         }}
+        solid={false}
         {...props}
-      >
-        <PanelLeft />
-        <span className='sr-only'>Toggle Sidebar</span>
-      </Button>
+      />
     )
   }
 )

@@ -1,6 +1,6 @@
 'use client'
 
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/Dialog'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
 import React from 'react'
 import { Button } from '@/components/ui'
 import { Text } from '@/components/ui'
@@ -27,21 +27,24 @@ export const MultiStepDialog: React.FC<Props> = ({ steps, open, toggleDialog, on
 
   return (
     <Dialog open={open} onOpenChange={toggleDialog}>
-      <DialogContent
-        aria-describedby=''
-        className='max-w-[485px] rounded-2xl flex flex-col items-center bg-grey-400 shadow-[0px_0px_30px_0px_rgba(0,0,0,0.50)] p-6 pt-8 gap-4'
-        hideCloseIcon
-      >
+      <DialogContent className='max-w-md' hideCloseIcon>
         {activeStep.title && (
-          <DialogTitle className='font-satoshi leading-[24px] text-xl text-center'>{activeStep.title}</DialogTitle>
+          <DialogHeader>
+            <DialogTitle asChild>
+              <Text styleVariant='primary-heading' as='h3'>
+                {activeStep.title}
+              </Text>
+            </DialogTitle>
+            <DialogDescription className='text-left'>
+              {activeStep.items.map((item) => {
+                if (item.video) return <VideoItem key={item.title} {...item} />
+                return <TextItem key={item.title} {...item} />
+              })}
+            </DialogDescription>
+          </DialogHeader>
         )}
-        <div className='flex flex-col gap-2 w-full'>
-          {activeStep.items.map((item) => {
-            if (item.video) return <VideoItem key={item.title} {...item} />
-            return <TextItem key={item.title} {...item} />
-          })}
-        </div>
-        <Button variant='secondary' className='rounded-[16px] font-bold text-base w-full' onClick={onClick}>
+
+        <Button variant='secondary' className='w-full' onClick={onClick}>
           {activeStep.buttonLabel}
         </Button>
       </DialogContent>
@@ -51,9 +54,9 @@ export const MultiStepDialog: React.FC<Props> = ({ steps, open, toggleDialog, on
 
 const TextItem: React.FC<DialogContentItem> = ({ icon, title, text }) => {
   return (
-    <div className='rounded-xl bg-grey-500 p-4 gap-4 flex max-w-[437px]'>
+    <div className='rounded-xl bg-grey-400 p-4 gap-4 flex '>
       <div className='size-5'>{icon}</div>
-      <div className='flex flex-col gap-1 w-full max-w-[369px]'>
+      <div className='flex flex-col gap-1 w-full '>
         <Text as='p' styleVariant='body-normal' fontWeight='bold'>
           {title}
         </Text>
@@ -74,10 +77,10 @@ const TextItem: React.FC<DialogContentItem> = ({ icon, title, text }) => {
 
 const VideoItem: React.FC<DialogContentItem> = ({ icon, title, text, video }) => {
   return (
-    <div className='rounded-xl bg-grey-500 flex flex-col max-w-[437px]'>
+    <div className='rounded-xl bg-grey-500 flex flex-col '>
       <div className='p-4 gap-4 flex'>
         <div className='size-5'>{icon}</div>
-        <div className='flex flex-col gap-1 w-full max-w-[369px]'>
+        <div className='flex flex-col gap-1 w-full '>
           <Text as='p' styleVariant='body-normal' fontWeight='bold'>
             {title}
           </Text>

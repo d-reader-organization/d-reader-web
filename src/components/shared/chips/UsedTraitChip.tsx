@@ -39,7 +39,7 @@ export const UsedTraitChip: React.FC<Props> = ({
       )}
       title={compact || compactOnMobile ? title : ''}
     >
-      <Icon className='w-3 h-auto' />
+      <Icon className='w-3.5' />
       <Text
         as='span'
         styleVariant='body-small'

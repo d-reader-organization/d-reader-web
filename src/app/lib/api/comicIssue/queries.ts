@@ -5,8 +5,9 @@ import { COMIC_ISSUE_QUERY_KEYS } from '@/api/comicIssue/comicIssueKeys'
 import { Nullable } from '@/models/common'
 import { ComicPage } from '@/models/comic/comicPage'
 import { OwnedCollectibleComic } from '@/models/asset'
+import { RawComicIssue } from '@/models/comicIssue/rawComicIssue'
 
-const { BY_OWNER, COMIC_ISSUE, GET, GET_PUBLIC, PAGES } = COMIC_ISSUE_QUERY_KEYS
+const { BY_OWNER, COMIC_ISSUE, GET, GET_PUBLIC, GET_RAW, PAGES } = COMIC_ISSUE_QUERY_KEYS
 
 export const fetchComicIssues = async (params: ComicIssueParams): Promise<ComicIssue[]> => {
   const { data } = await fetchWrapper<ComicIssue[]>({
@@ -15,6 +16,15 @@ export const fetchComicIssues = async (params: ComicIssueParams): Promise<ComicI
     revalidateCacheInSeconds: 60,
   })
   return data ?? []
+}
+
+export const fetchRawComicIssues = async (params: ComicIssueParams): Promise<RawComicIssue[]> => {
+  const response = await fetchWrapper<RawComicIssue[]>({
+    params,
+    path: `${COMIC_ISSUE}/${GET_RAW}`,
+    revalidateCacheInSeconds: 15,
+  })
+  return response.data ?? []
 }
 
 export const fetchComicIssue = async ({

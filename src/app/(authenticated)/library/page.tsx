@@ -2,7 +2,7 @@ import { fetchComicsByOwner } from '@/app/lib/api/comic/queries'
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { BaseLayout } from '@/components/layout/BaseLayout'
 import { LibraryTabs } from '@/components/library/Tabs'
-import { SortOrder } from '@/enums/sortOrder'
+import { SortOrder } from '@/enums/sort'
 import { ComicSortTag } from '@/models/comic/comicParams'
 import React from 'react'
 

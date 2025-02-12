@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
 import { ButtonLink } from '../ui/ButtonLink'
-import { Menu } from 'lucide-react'
 import { Sheet, SheetContent, SheetTitle } from '../ui/sheet'
 import { User } from '@/models/user'
 import { ProfileWidget } from '../shared/ProfileWidget'
@@ -17,6 +16,7 @@ import { NavigationItem } from './NavigationItem'
 import { ConnectedWalletBox } from '../shared/sheets/profile/WalletSection'
 import { GenesisLogoIcon } from '../icons/logo/GenesisLogoIcon'
 import { CloseIcon } from '@/components/icons/theme/CloseIcon'
+import { MenuIcon } from '@/components/icons/theme/MenuIcon'
 import useToggle from '@/hooks/useToggle'
 
 type Props = {
@@ -27,6 +27,7 @@ type Props = {
 export const GenesisMobileNavigation: React.FC<Props> = ({ user, background }) => {
   const [isOpen, toggleOpen] = useToggle(false)
   const { publicKey } = useWallet()
+  const Icon = isOpen ? CloseIcon : MenuIcon
 
   return (
     <div
@@ -40,7 +41,9 @@ export const GenesisMobileNavigation: React.FC<Props> = ({ user, background }) =
         <Link href={RoutePath.Invest} prefetch={false}>
           <GenesisLogoIcon className='h-6 w-auto fill-white' />
         </Link>
-        <button onClick={() => toggleOpen()}>{isOpen ? <CloseIcon className='size-6' /> : <Menu size={24} />}</button>
+        <button onClick={toggleOpen}>
+          <Icon className='size-6' />
+        </button>
       </div>
 
       <div className='md:hidden'>

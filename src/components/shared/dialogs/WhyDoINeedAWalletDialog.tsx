@@ -19,7 +19,7 @@ export const WhyDoINeedAWalletDialog: React.FC = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className='max-w-md'>
-        <DialogHeader className='p-4'>
+        <DialogHeader>
           <DialogTitle asChild>
             <Text styleVariant='primary-heading' as='h3'>
               What is a Digital Wallet?

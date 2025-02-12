@@ -2,10 +2,10 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { PlayIcon } from 'lucide-react'
 import { Project } from '@/models/project'
 import { YoutubeVideoDialog } from './dialogs/YoutubeVideoDialog'
 import { useToggle } from '@/hooks'
+import { PlayIcon } from '@/components/icons/theme/PlayIcon'
 
 type Props = {
   title: Project['title']
@@ -37,15 +37,13 @@ export const ProjectBanner: React.FC<Props> = ({ title, banner, cover, videoUrl 
               className='sm:hidden shadow-lg'
             />
           </div>
-          {videoUrl && (
-            <div
+          {!videoUrl && (
+            <button
               className='absolute top-0 left-0 flex justify-center items-center w-full h-full'
               onClick={toggleYoutubeVideoDialog}
             >
-              <div className='flex p-8 bg-black bg-opacity-30 rounded-full shadow-lg backdrop-blur-lg'>
-                <PlayIcon fill='white' className='cursor-pointer h-8 w-8' />
-              </div>
-            </div>
+              <PlayIcon className='fill-white size-24 flex py-6 pl-7 pr-5 bg-black bg-opacity-30 rounded-full shadow-lg backdrop-blur-lg' />
+            </button>
           )}
         </div>
       </div>

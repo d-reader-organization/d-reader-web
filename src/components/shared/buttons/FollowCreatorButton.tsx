@@ -1,11 +1,11 @@
 'use client'
 
-import { Text } from '@/components/ui/Text'
 import { useRouter } from 'next/navigation'
 import { followCreator } from '@/app/lib/api/creator/mutations'
 import { cn } from '@/lib/utils'
 import { RequireAuthWrapperButton } from './RequireAuthWrapperButton'
-import { UserPlusIcon } from 'lucide-react'
+import { UserPlusIcon } from '@/components/icons/theme/UserPlusIcon'
+import { useOptimistic } from 'react'
 
 type Props = React.HTMLAttributes<HTMLButtonElement> & {
   isFollowing?: boolean
@@ -14,8 +14,10 @@ type Props = React.HTMLAttributes<HTMLButtonElement> & {
 
 export const FollowCreatorButton: React.FC<Props> = ({ isFollowing = false, creatorId, className }) => {
   const { refresh } = useRouter()
+  const [isFollowing, setIsFollowing] = useOptimistic(isFollowingDefault, (current) => !current)
 
   const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsFollowing(null)
     e.preventDefault()
     await followCreator(creatorId)
     refresh()
@@ -26,11 +28,9 @@ export const FollowCreatorButton: React.FC<Props> = ({ isFollowing = false, crea
       className={cn('min-w-[126px]', className)}
       variant={isFollowing ? 'outline' : 'white'}
       onClick={handleFollow}
+      Icon={UserPlusIcon}
     >
-      <UserPlusIcon className='w-5' />
-      <Text as='span' styleVariant='body-small' fontWeight='bold' className='max-sm:text-xs'>
-        {isFollowing ? 'Unfollow' : 'Follow'}
-      </Text>
+      {isFollowing ? 'Unfollow' : 'Follow'}
     </RequireAuthWrapperButton>
   )
 }

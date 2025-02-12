@@ -74,7 +74,7 @@ export const ComicIssueList: React.FC<Props> = ({
         ))}
       </div>
       <div className='flex justify-center py-12' ref={showMoreRef}>
-        {isFetching && <LoaderIcon />}
+        {isFetching && <LoaderIcon className='size-4.5' />}
         {!hasNextPage &&
           !isFetching &&
           !hideItemsCount &&

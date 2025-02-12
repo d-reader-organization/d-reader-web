@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
 import { ButtonLink } from '../ui/ButtonLink'
-import { Menu } from 'lucide-react'
 import { Sheet, SheetContent, SheetTitle } from '../ui/sheet'
 import { User } from '@/models/user'
 import { ProfileWidget } from '../shared/ProfileWidget'
@@ -19,6 +18,7 @@ import { ConnectedWalletBox } from '../shared/sheets/profile/WalletSection'
 import { LogoSymbolIcon } from '../icons/logo/LogoSymbolIcon'
 import { CloseIcon } from '@/components/icons/theme/CloseIcon'
 import { SearchIcon } from '@/components/icons/theme/SearchIcon'
+import { MenuIcon } from '@/components/icons/theme/MenuIcon'
 import useToggle from '@/hooks/useToggle'
 
 type Props = {
@@ -29,6 +29,7 @@ export const MobileNav: React.FC<Props> = ({ user }) => {
   const [isOpen, toggleOpen] = useToggle(false)
   const [isSearchOpen, toggleSearch] = useToggle(false)
   const { publicKey } = useWallet()
+  const Icon = isOpen ? CloseIcon : MenuIcon
 
   return (
     <div
@@ -54,8 +55,8 @@ export const MobileNav: React.FC<Props> = ({ user }) => {
             <Link href={RoutePath.Home} prefetch={false}>
               <LogoSymbolIcon className='h-6 w-auto fill-white' />
             </Link>
-            <button onClick={() => toggleOpen()}>
-              {isOpen ? <CloseIcon className='size-6' /> : <Menu size={24} />}
+            <button onClick={toggleOpen}>
+              <Icon className='size-6' />
             </button>
           </div>
 

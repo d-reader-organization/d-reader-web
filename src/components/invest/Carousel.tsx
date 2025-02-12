@@ -6,8 +6,8 @@ import useEmblaCarousel from 'embla-carousel-react'
 import Link from 'next/link'
 import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Hourglass } from 'lucide-react'
 import { InvestSlide, SlideStats } from '@/app/lib/data/invest/carouselData'
+import { HourglassIcon } from '@/components/icons/theme/HourglassIcon'
 import { CarouselDots } from '../shared/CarouselDots'
 import { cn } from '@/lib/utils'
 
@@ -108,7 +108,7 @@ const InfoSection: React.FC<{ infos: SlideStats[] }> = ({ infos }) => (
   <div className='flex gap-2 items-center text-grey-100'>
     {infos.map((info, index) => (
       <div className='flex items-center gap-2' key={info.text}>
-        {info.text.includes('left') ? <Hourglass className='size-4 ' /> : null}
+        {info.text.includes('left') ? <HourglassIcon className='size-4 ' /> : null}
         <Paragraph text={info.text} />
         {index < infos.length - 1 && <span className='size-2 rounded-lg bg-grey-100' />}
       </div>

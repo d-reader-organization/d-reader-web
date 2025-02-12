@@ -1,15 +1,23 @@
 'use client'
 
 import React from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
-import { StarIconButton } from '../buttons/StarIconButton'
-import { Button } from '@/components/ui/Button'
+import {
+  Dialog,
+  DialogButton,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/Dialog'
 import { Text } from '@/components/ui/Text'
 import { useRouter } from 'next/navigation'
 import { rateComic } from '@/app/lib/api/comic/mutations'
 import { rateComicIssue } from '@/app/lib/api/comicIssue/mutations'
 import { CommonDialogProps } from '@/models/common'
 import { toast } from '@/components/ui/toast'
+import { StarIcon } from '@/components/icons/theme/StarIcon'
+import { Button } from '@/components/ui/Button'
 
 type Props = {
   comicIssueId?: number
@@ -54,7 +62,7 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
 
   return (
     <Dialog open={open} onOpenChange={toggleDialog}>
-      <DialogContent className='max-w-sm' aria-describedby={undefined}>
+      <DialogContent className='max-w-sm' aria-describedby=''>
         <DialogHeader>
           <DialogTitle asChild>
             <Text styleVariant='primary-heading' as='h3'>
@@ -62,28 +70,32 @@ export const StarRatingDialog: React.FC<Props> = ({ comicIssueId, comicSlug, tog
             </Text>
           </DialogTitle>
         </DialogHeader>
-        <div className='flex flex-col items-center'>
+        <DialogDescription>
           Tap a star to give a rating!
-          <div className='flex justify-center gap-3 mt-4 [&>*]:text-yellow-300'>
+          <div className='flex justify-center gap-3 mt-2 mb-4 [&>*]:text-yellow-300'>
             {[1, 2, 3, 4, 5].map((star) => (
-              <StarIconButton
-                style={{ cursor: 'pointer' }}
-                size='xl'
+              <Button
                 key={star}
+                Icon={StarIcon}
+                iconOnly
+                variant='inline'
+                className='text-yellow-300'
+                iconClassName='size-8'
                 onClick={() => handleStarClick(star)}
                 solid={!!(rating && rating >= star)}
               />
             ))}
           </div>
-        </div>
-        <div className='flex w-full gap-2 mt-4'>
-          <Button variant='secondary' className='w-full' type='button' onClick={toggleDialog}>
+        </DialogDescription>
+
+        <DialogFooter>
+          <DialogButton variant='secondary' onClick={toggleDialog}>
             Cancel
-          </Button>
-          <Button variant='white' className='w-full' onClick={handleSubmit}>
+          </DialogButton>
+          <DialogButton variant='white' onClick={handleSubmit}>
             OK
-          </Button>
-        </div>
+          </DialogButton>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

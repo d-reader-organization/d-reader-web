@@ -103,13 +103,18 @@ const FileUpload = forwardRef<FileUploadRef, Props>(function FileUpload(
       </div>
       <div className='flex gap-2'>
         {isPhotoSelected && !isUploading ? (
-          <Button type='reset' variant='ghost' size='md' className='w-fit' onClick={onRemove}>
-            {isRemoving ? <LoaderIcon /> : 'Remove photo'}
+          <Button
+            Icon={isRemoving ? LoaderIcon : undefined}
+            type='reset'
+            variant='ghost'
+            className='w-fit'
+            onClick={onRemove}
+          >
+            Remove photo
           </Button>
         ) : null}
         <Button
           variant='secondary'
-          size='md'
           Icon={isUploading ? LoaderIcon : undefined}
           className={`relative overflow-hidden ${isRemoving ? 'disabled:opacity-80' : ''}`}
         >

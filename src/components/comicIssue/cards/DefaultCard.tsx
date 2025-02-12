@@ -5,8 +5,8 @@ import { PriceTag } from '../../shared/tags/PriceTag'
 import { ComicIssue } from '@/models/comicIssue'
 import { RoutePath } from '@/enums/routePath'
 import { cn } from '@/lib/utils'
-import { COMIC_ISSUE_COVER_SIZE } from '@/constants/imageSizes'
 import { TextWithOverflow } from '@/components/ui/TextWithOverflow'
+import { ASPECT_RATIO } from '@/constants/general'
 //import { TextWithOverflow } from '@/components/ui/TextWithOverflow'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
@@ -27,7 +27,7 @@ export const DefaultComicIssueCard: React.FC<Props> = ({ comicIssue, className }
       <Image
         src={comicIssue.cover}
         alt=''
-        {...COMIC_ISSUE_COVER_SIZE}
+        {...ASPECT_RATIO.COMIC_ISSUE_COVER}
         className='rounded-2xl h-auto w-full aspect-comic-issue-cover'
       />
       {isFree && (

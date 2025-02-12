@@ -8,14 +8,19 @@ const Collapsible = CollapsiblePrimitive.Root
 
 const CollapsibleTrigger = CollapsiblePrimitive.CollapsibleTrigger
 
+interface CollapsibleContentProps {
+  animate?: boolean
+}
+
 const CollapsibleContent = React.forwardRef<
   React.ComponentRef<typeof CollapsiblePrimitive.CollapsibleContent>,
-  React.ComponentPropsWithoutRef<typeof CollapsiblePrimitive.CollapsibleContent>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof CollapsiblePrimitive.CollapsibleContent> & CollapsibleContentProps
+>(({ className, animate = true, ...props }, ref) => (
   <CollapsiblePrimitive.CollapsibleContent
     ref={ref}
     className={cn(
-      'overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up',
+      'overflow-hidden',
+      animate && 'data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up',
       className
     )}
     {...props}

@@ -1,8 +1,7 @@
 'use client'
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
+import { Dialog, DialogButton, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
 import React from 'react'
-import { Button } from '@/components/ui'
 import { useLocalStorage, useToggle } from '@/hooks'
 import { Text } from '@/components/ui'
 import { LOCAL_STORAGE } from '@/constants/general'
@@ -26,10 +25,11 @@ export const MintPageWelcomeDialog: React.FC = () => {
             </Text>
           </DialogTitle>
         </DialogHeader>
+
         <div className='flex flex-col gap-2 w-full text-left'>
-          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex max-w-[437px]'>
+          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
             <div className='size-5'>✊</div>
-            <div className='inline-block gap-2 w-full max-w-[369px]'>
+            <div className='inline-block gap-2 w-full'>
               <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
                 Spread the word!
               </Text>
@@ -44,9 +44,9 @@ export const MintPageWelcomeDialog: React.FC = () => {
               </Text>
             </div>
           </div>
-          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex max-w-[437px]'>
+          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
             <div className='size-5'>💸</div>
-            <div className='inline-block gap-2 w-full max-w-[369px]'>
+            <div className='inline-block gap-2 w-full'>
               <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
                 Protocol fees
               </Text>
@@ -60,9 +60,9 @@ export const MintPageWelcomeDialog: React.FC = () => {
               </Text>
             </div>
           </div>
-          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex max-w-[437px]'>
+          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
             <div className='size-5'>🎁</div>
-            <div className='inline-block gap-2 w-full max-w-[369px]'>
+            <div className='inline-block gap-2 w-full'>
               <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
                 Use discounts!
               </Text>
@@ -72,14 +72,13 @@ export const MintPageWelcomeDialog: React.FC = () => {
                 fontWeight='medium'
                 className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
               >
-                Registered users and collectors get discounts! Check your eligibility before buying.
+                Registered users and collectors get discounts!
               </Text>
             </div>
           </div>
         </div>
-        <Button variant='white' className='w-full' onClick={onClick}>
-          I understand!
-        </Button>
+
+        <DialogButton onClick={onClick}>I understand!</DialogButton>
       </DialogContent>
     </Dialog>
   )

@@ -1,14 +1,14 @@
 import { SuccessfulProject } from '@/models/project'
 import { RoutePath } from '@/enums/routePath'
-import { InfoIcon } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/Tooltip'
 import { ChevronRightIcon } from '@/components/icons/theme/ChevronRightIcon'
+import { InfoIcon } from '@/components/icons/theme/InfoIcon'
 import { roiTooltip } from '@/constants/tooltips'
 import { formatCurrency } from '@/utils/numbers'
 import { Text } from '../ui'
+import { ButtonLink } from '../ui/ButtonLink'
 
 type Props = {
   projects: SuccessfulProject[]
@@ -56,14 +56,16 @@ const Card: React.FC<CardProps> = ({ project }) => (
     <p className='text-sm md:text-base font-bold leading-normal md:leading-[22.4px] text-center'>
       Profitability achieved {project.payout?.daysForRoi} days after the production started {/* offering closed. */}
     </p>
-    <Link
+    <ButtonLink
       href={RoutePath.Payout(project.slug)}
       prefetch={false}
-      className='flex justify-center items-center gap-2 self-stretch text-[#AFB3BC] rounded-xl bg-grey-400 py-3 pr-2 pl-4 hover:brightness-125 max-h-[36px] md:max-h-[42px]'
+      Icon={ChevronRightIcon}
+      iconPosition='right'
+      className='w-full'
+      subVariant={2}
     >
-      <p className='text-xs md:text-base font-medium leading-normal md:leading-[22.4px]'>Learn more</p>
-      <ChevronRightIcon />
-    </Link>
+      Learn more
+    </ButtonLink>
   </div>
 )
 

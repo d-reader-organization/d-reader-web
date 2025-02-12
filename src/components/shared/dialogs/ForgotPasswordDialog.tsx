@@ -8,9 +8,11 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogButton,
 } from '@/components/ui/Dialog'
 import useToggle from '@/hooks/useToggle'
 import { LockIcon } from '@/components/icons/theme/LockIcon'
@@ -55,7 +57,7 @@ export const ForgotPasswordDialog: React.FC<Props> = ({ trigger }) => {
         )}
       </DialogTrigger>
       <DialogContent className='max-w-md'>
-        <DialogHeader className='p-4'>
+        <DialogHeader>
           <DialogTitle asChild>
             <Text styleVariant='primary-heading' as='h3'>
               Reset password
@@ -66,17 +68,17 @@ export const ForgotPasswordDialog: React.FC<Props> = ({ trigger }) => {
           </DialogDescription>
         </DialogHeader>
 
-        <form action={action} onSubmit={onSubmitPreventFormListener(action)}>
+        <form className='w-full' action={action} onSubmit={onSubmitPreventFormListener(action)}>
           <Input className='w-full mb-4' name='nameOrEmail' placeholder='john.doe@dreader.io' />
 
-          <div className='flex w-full gap-2 mt-4'>
-            <Button variant='secondary' className='w-full' type='button' onClick={togglePasswordDialog}>
+          <DialogFooter>
+            <DialogButton variant='secondary' onClick={togglePasswordDialog}>
               Cancel
-            </Button>
-            <Button variant='white' className='w-full' type='submit' disabled={pending}>
+            </DialogButton>
+            <DialogButton type='submit' disabled={pending}>
               Send
-            </Button>
-          </div>
+            </DialogButton>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

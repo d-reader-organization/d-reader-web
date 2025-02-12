@@ -5,9 +5,9 @@ import { ProductType } from '@/enums/productType'
 export const getProductTypeIcon = (source: ProductType) => {
   switch (source) {
     case ProductType.Comic:
-      return <ComicProductIcon />
+      return ComicProductIcon
     case ProductType.DigitalArt:
-      return <DigitalArtIcon />
+      return DigitalArtIcon
   }
 }
 
