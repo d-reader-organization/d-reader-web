@@ -1,7 +1,7 @@
 'use client'
 
 import { RawComic } from '@/models/comic/rawComic'
-import { useDashboardStore } from '@/providers/DashboardStoreProvider'
+import { useDashboardStore } from '@/providers/TableStoreProvider'
 import { DASHBOARD_TABS, ProductsTab, SORT_OPTIONS } from '@/constants/general'
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'

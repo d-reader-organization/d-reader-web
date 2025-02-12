@@ -7,7 +7,7 @@ import { SORT_OPTIONS } from '@/constants/general'
 import { RoutePath } from '@/enums/routePath'
 import { SortOrder } from '@/enums/sort'
 import { ComicSortTag } from '@/models/comic/comicParams'
-import { DashboardStoreProvider } from '@/providers/DashboardStoreProvider'
+import { TableStoreProvider } from '@/providers/TableStoreProvider'
 import React from 'react'
 
 export default async function ProductsPage() {
@@ -25,14 +25,14 @@ export default async function ProductsPage() {
 
   return (
     <CreatorDashboardLayout title='Products' activePath={RoutePath.DashboardProducts}>
-      <DashboardStoreProvider
+      <TableStoreProvider
         sortOptions={SORT_OPTIONS.COMICS}
         sortOrder={SortOrder.ASC}
         sortTag={ComicSortTag.Published}
         totalPages={comics.length} // this will come from backend
       >
         <ProductsTableWrapper initialData={comics} />
-      </DashboardStoreProvider>
+      </TableStoreProvider>
       <SignatureRequestsTable title='Signature requests' />
     </CreatorDashboardLayout>
   )

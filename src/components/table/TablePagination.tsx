@@ -1,4 +1,4 @@
-import { useDashboardStore } from '@/providers/DashboardStoreProvider'
+import { useDashboardStore } from '@/providers/TableStoreProvider'
 import { Button } from '../ui/Button'
 import { Text } from '../ui/Text'
 import { ChevronLeftIcon } from '../icons/theme/ChevronLeftIcon'

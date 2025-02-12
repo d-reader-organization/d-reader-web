@@ -9,7 +9,7 @@ import { createStore } from 'zustand/vanilla'
 
 type SortOption = { value: string; order: SortOrder; label: string }
 
-export type DashboardState = {
+export type TableState = {
   currentPage: number
   skip: number
   sortOptions: SortOption[]
@@ -19,16 +19,16 @@ export type DashboardState = {
   totalPages: number
 }
 
-type DashboardActions = {
+type TableActions = {
   setCurrentPage: (page: number) => void
   setTakePerPage: (take: number) => void
   setSortOptions: (sortOptions: SortOption[]) => void
   updateSortParams: ({ sortOrder, sortTag }: { sortOrder: SortOrder; sortTag: string }) => void
 }
 
-export type DashboardStore = DashboardState & DashboardActions
+export type TableStore = TableState & TableActions
 
-export const defaultInitState: DashboardState = {
+export const defaultInitState: TableState = {
   sortOptions: SORT_OPTIONS.COMICS,
   sortOrder: SortOrder.ASC,
   sortTag: ComicSortTag.Published,
@@ -38,8 +38,8 @@ export const defaultInitState: DashboardState = {
   totalPages: 0,
 }
 
-export const createDashboardStore = (initState: DashboardState = defaultInitState) => {
-  return createStore<DashboardStore>()((set) => ({
+export const createTableStore = (initState: TableState = defaultInitState) => {
+  return createStore<TableStore>()((set) => ({
     ...initState,
     setCurrentPage: (page: number) =>
       set(({ take }) => {

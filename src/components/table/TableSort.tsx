@@ -1,4 +1,4 @@
-import { useDashboardStore } from '@/providers/DashboardStoreProvider'
+import { useDashboardStore } from '@/providers/TableStoreProvider'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { SortIcon } from '../icons/theme/SortIcon'
 import { SortOrder } from '@/enums/sort'
