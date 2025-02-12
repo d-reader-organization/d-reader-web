@@ -8,11 +8,11 @@ import { UserPlusIcon } from '@/components/icons/theme/UserPlusIcon'
 import { useOptimistic } from 'react'
 
 type Props = React.HTMLAttributes<HTMLButtonElement> & {
-  isFollowing?: boolean
+  isFollowingDefault?: boolean
   creatorId: number
 }
 
-export const FollowCreatorButton: React.FC<Props> = ({ isFollowing = false, creatorId, className }) => {
+export const FollowCreatorButton: React.FC<Props> = ({ isFollowingDefault = false, creatorId, className }) => {
   const { refresh } = useRouter()
   const [isFollowing, setIsFollowing] = useOptimistic(isFollowingDefault, (current) => !current)
 
