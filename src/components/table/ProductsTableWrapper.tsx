@@ -55,9 +55,9 @@ export const ProductsTableWrapper: React.FC<Props> = ({ initialData }) => {
           </div>
         </div>
         {activeTab === ProductsTab.Releases ? (
-          <ComicEpisodesWrapper />
+          <ComicEpisodesTableWrapper />
         ) : (
-          <ComicSeriesWrapper initialData={initialData} />
+          <ComicSeriesTableWrapper initialData={initialData} />
         )}
         <TablePagination />
       </div>
@@ -65,7 +65,7 @@ export const ProductsTableWrapper: React.FC<Props> = ({ initialData }) => {
   )
 }
 
-const ComicSeriesWrapper: React.FC<Props> = ({ initialData }) => {
+const ComicSeriesTableWrapper: React.FC<Props> = ({ initialData }) => {
   const { sortOrder, skip, sortTag, take } = useDashboardStore((state) => state)
 
   const { data: comics = [], refetch } = useFetchRawComics({
@@ -80,7 +80,7 @@ const ComicSeriesWrapper: React.FC<Props> = ({ initialData }) => {
   return <ComicSeriesTable comics={comics} />
 }
 
-const ComicEpisodesWrapper: React.FC = () => {
+const ComicEpisodesTableWrapper: React.FC = () => {
   const { sortOrder, skip, sortTag, take } = useDashboardStore((state) => state)
 
   const { data: releases = [], refetch } = useFetchRawComicIssues({
