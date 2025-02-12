@@ -46,7 +46,7 @@ export const useFetchRawComicIssues = ({
     queryFn: () => fetchRawComicIssues({ ...params }),
     queryKey: comicIssueKeys.getManyRaw(params),
     placeholderData: (prev) => prev ?? initialData,
-    staleTime: 1000 * 60 * 60, // stale for 1 hours
+    staleTime: 1000 * 15, // stale for 15 seconds
     throwOnError: onQueryError,
     enabled: enabled && !!params.take,
   })
