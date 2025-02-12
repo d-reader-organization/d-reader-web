@@ -3,7 +3,7 @@ import { fetchMe } from '@/app/lib/api/user/queries'
 import { Footer } from './Footer'
 import { cn } from '@/lib/utils'
 import { IntercomClient } from '../shared/IntercomClient'
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { SidebarProvider } from '@/components/ui/sidebar'
 import CreatorDashboardSidebar from './CreatorDashboardSidebar'
 import { cookies } from 'next/headers'
 import { Text } from '@/components/ui/Text'
@@ -41,11 +41,15 @@ export const CreatorDashboardLayout: React.FC<Props> = async ({
         )}
       >
         <div className='flex flex-row items-center w-full'>
-          <SidebarTrigger className='min-w-12' />
           <Text as='h4' styleVariant='secondary-heading' className='w-full'>
             {title}
           </Text>
-          <ButtonLink href={RoutePath.Home} Icon={BackIcon} variant='outline' className='min-w-fit w-fit'>
+          <ButtonLink
+            href={RoutePath.Home}
+            Icon={BackIcon}
+            variant='outline'
+            className='min-w-fit w-fit hidden sm:flex'
+          >
             Back to App
           </ButtonLink>
         </div>

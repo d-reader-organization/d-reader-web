@@ -26,7 +26,7 @@ export function useTableSelect<T>(options: SelectOption<T>[] = []): TableSelectH
         setSelectedOption(newOption)
       }}
     >
-      <SelectTrigger asChild>
+      <SelectTrigger asChild className='min-w-[124px]'>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

@@ -1,7 +1,11 @@
 import { Text } from '@/components/ui'
 import { TransactionSource } from '@/enums/transactionSource'
 import { cn } from '@/lib/utils'
-import { getTransactionSourceColor, getTransactionSourceIcon } from '@/utils/transactionSource'
+import {
+  getTransactionSourceColor,
+  getTransactionSourceTextColor,
+  getTransactionSourceIcon,
+} from '@/utils/transactionSource'
 import React from 'react'
 
 type Props = {
@@ -16,6 +20,7 @@ export const TransactionSourceChip: React.FC<Props> = ({ className, source }) =>
       className={cn(
         'py-2 px-4 flex items-center justify-center gap-1 rounded-lg h-6 bg-opacity-10 w-min',
         getTransactionSourceColor(source),
+        getTransactionSourceTextColor(source),
         className
       )}
     >

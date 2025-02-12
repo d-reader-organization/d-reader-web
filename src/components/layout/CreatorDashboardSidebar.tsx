@@ -7,6 +7,7 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
+  SidebarTrigger,
 } from '@/components/ui/sidebar'
 import { Divider } from '../shared/Divider'
 import { RoutePath } from '@/enums/routePath'
@@ -23,6 +24,7 @@ import { fetchMe } from '@/app/lib/api/user/queries'
 import { PlusIcon } from '../icons/theme/PlusIcon'
 import { ChevronDownIcon } from '../icons/theme/ChevronDownIcon'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible'
+import { LogoSymbolIcon } from '../icons/logo/LogoSymbolIcon'
 
 type Props = {
   activePath?: string
@@ -38,7 +40,11 @@ export async function CreatorDashboardSidebar({ activePath }: Props) {
       <SidebarHeader className='w-full max-w-[180px] h-auto'>
         <StudioLogoIcon />
       </SidebarHeader>
+
       <SidebarContent className='py-6'>
+        {/* TODO: finalize these styles */}
+        <SidebarTrigger className='absolute top-1 -right-6 bg-grey-500 rounded-l-none' />
+
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuLink
@@ -78,6 +84,14 @@ export async function CreatorDashboardSidebar({ activePath }: Props) {
               href={RoutePath.DashboardHelpCenter}
               title='Help Center'
               Icon={HelpCenterIcon}
+            />
+          </SidebarMenuItem>
+          <SidebarMenuItem className='sm:hidden'>
+            <SidebarMenuLink
+              isActive={activePath === RoutePath.Home}
+              href={RoutePath.Home}
+              title='Back to app'
+              Icon={LogoSymbolIcon}
             />
           </SidebarMenuItem>
         </SidebarMenu>

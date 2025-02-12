@@ -18,6 +18,7 @@ export const ComicSeriesTable: React.FC<Props> = ({ comics }) => {
       <TableHeader>
         <TableRow>
           <TableHead>Title</TableHead>
+          {/* TODO: show creator column if the user is Admin */}
           <TableHead>Date published</TableHead>
           <TableHead className='text-center'>Episodes</TableHead>
           <TableHead className='text-center'>{/* Readers */}</TableHead>
