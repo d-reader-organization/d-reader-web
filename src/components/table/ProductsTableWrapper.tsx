@@ -1,7 +1,7 @@
 'use client'
 
 import { RawComic } from '@/models/comic/rawComic'
-import { useDashboardStore } from '@/providers/TableStoreProvider'
+import { useTableStore } from '@/providers/TableStoreProvider'
 import { DASHBOARD_TABS, ProductsTab, SORT_OPTIONS } from '@/constants/general'
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
@@ -20,7 +20,7 @@ import ComicSeriesTable from './ComicSeriesTable'
 type Props = { initialData: RawComic[] }
 
 export const ProductsTableWrapper: React.FC<Props> = ({ initialData }) => {
-  const { setSortOptions, setCurrentPage } = useDashboardStore((state) => state)
+  const { setSortOptions, setCurrentPage } = useTableStore((state) => state)
   const [activeTab, setActiveTab] = useState<ProductsTab>(DASHBOARD_TABS.at(0)!)
 
   return (
@@ -66,8 +66,7 @@ export const ProductsTableWrapper: React.FC<Props> = ({ initialData }) => {
 }
 
 const ComicSeriesTableWrapper: React.FC<Props> = ({ initialData }) => {
-  const { sortOrder, skip, sortTag, take } = useDashboardStore((state) => state)
-
+  const { sortOrder, skip, sortTag, take } = useTableStore((state) => state)
   const { data: comics = [], refetch } = useFetchRawComics({
     initialData,
     params: { skip, take, sortOrder, sortTag: sortTag as ComicSortTag },
@@ -81,7 +80,7 @@ const ComicSeriesTableWrapper: React.FC<Props> = ({ initialData }) => {
 }
 
 const ComicEpisodesTableWrapper: React.FC = () => {
-  const { sortOrder, skip, sortTag, take } = useDashboardStore((state) => state)
+  const { sortOrder, skip, sortTag, take } = useTableStore((state) => state)
 
   const { data: releases = [], refetch } = useFetchRawComicIssues({
     params: { skip, take, sortOrder, sortTag: sortTag as ComicIssueSortTag },

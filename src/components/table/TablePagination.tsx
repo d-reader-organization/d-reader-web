@@ -1,4 +1,4 @@
-import { useDashboardStore } from '@/providers/TableStoreProvider'
+import { useTableStore } from '@/providers/TableStoreProvider'
 import { Button } from '../ui/Button'
 import { Text } from '../ui/Text'
 import { ChevronLeftIcon } from '../icons/theme/ChevronLeftIcon'
@@ -6,13 +6,7 @@ import { ChevronRightIcon } from '../icons/theme/ChevronRightIcon'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 export const TablePagination: React.FC = () => {
-  const {
-    currentPage,
-    setCurrentPage,
-    totalPages,
-    take: pageSize,
-    setTakePerPage,
-  } = useDashboardStore((state) => state)
+  const { currentPage, setCurrentPage, totalPages, take: pageSize, setTakePerPage } = useTableStore((state) => state)
   return (
     <div className='flex items-center justify-between px-4 select-none'>
       <div className='flex items-center gap-2'>

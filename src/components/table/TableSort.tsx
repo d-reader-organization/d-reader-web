@@ -1,10 +1,10 @@
-import { useDashboardStore } from '@/providers/TableStoreProvider'
+import { useTableStore } from '@/providers/TableStoreProvider'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { SortIcon } from '../icons/theme/SortIcon'
 import { SortOrder } from '@/enums/sort'
 
 export const TableSort: React.FC = () => {
-  const { updateSortParams, sortOptions, sortTag, sortOrder } = useDashboardStore((state) => state)
+  const { updateSortParams, sortOptions, sortTag, sortOrder } = useTableStore((state) => state)
 
   const constructSelectValue = (option: { value: string; order: SortOrder }) => `${option.value}_${option.order}`
 
