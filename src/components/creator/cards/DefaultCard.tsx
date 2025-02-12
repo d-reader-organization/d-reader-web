@@ -41,7 +41,7 @@ export const DefaultCreatorCard: React.FC<Props> = ({ creator, className }) => (
       <div className='flex flex-col items-center gap-[2px] md:items-start'>
         <div className='flex md:w-28 1160:w-40'>
           <TextWithOverflow as='span' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-sm'>
-            {creator.handle}
+            {creator.displayName}
           </TextWithOverflow>
         </div>
         <Text

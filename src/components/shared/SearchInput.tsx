@@ -58,7 +58,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
       creators: creators.map((creator: SearchResultCreator) => ({
         id: `${creator.id}`,
         image: creator.avatar,
-        title: creator.handle,
+        title: creator.displayName,
         episodeCount: creator.issuesCount,
         href: RoutePath.Creator(creator.handle),
       })),

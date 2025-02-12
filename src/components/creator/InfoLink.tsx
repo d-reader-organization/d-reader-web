@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
-  creator: Pick<Creator, 'id' | 'handle' | 'isVerified' | 'avatar'> | undefined
+  creator: Pick<Creator, 'id' | 'handle' | 'displayName' | 'isVerified' | 'avatar'> | undefined
 }
 
 export const CreatorInfoLink: React.FC<Props> = ({ className, creator }) =>
@@ -15,7 +15,7 @@ export const CreatorInfoLink: React.FC<Props> = ({ className, creator }) =>
       <AvatarImage size='medium' src={creator.avatar} />
       <div className='flex flex-col gap-1 justify-center items-start max-w-[400px]'>
         <span className='text-xs font-medium leading-normal text-grey-200'>Author</span>
-        <span className='text-base font-bold leading-[22.4px] line-clamp-1'>{creator.handle}</span>
+        <span className='text-base font-bold leading-[22.4px] line-clamp-1'>{creator.displayName}</span>
       </div>
     </Link>
   ) : null

@@ -65,9 +65,9 @@ export const DefaultComicCard: React.FC<Props> = ({ comic, className }) => {
           as='p'
           styleVariant='body-small'
           className='text-grey-100 line-clamp-1 overflow-ellipsis max-sm:text-xs'
-          title={comic.creator?.handle ?? 'creator name'}
+          title={comic.creator?.displayName ?? 'creator name'}
         >
-          {comic.creator ? 'by ' + comic.creator.handle : ''}
+          {comic.creator ? 'by ' + comic.creator.displayName : ''}
         </Text>
       </div>
     </Link>

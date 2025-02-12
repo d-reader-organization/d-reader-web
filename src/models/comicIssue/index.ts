@@ -31,7 +31,7 @@ export interface BasicComicIssue {
 
 export interface ComicIssue extends BasicComicIssue {
   collectibleInfo?: ComicIssueCollectibleInfo
-  creator?: Pick<Creator, 'id' | 'handle' | 'isVerified' | 'avatar'>
+  creator?: Pick<Creator, 'id' | 'handle' | 'displayName' | 'isVerified' | 'avatar'>
   comic?: Pick<Comic, 'title' | 'slug' | 'audienceType'>
   genres?: PartialGenre[]
   collaborators?: ComicIssueCollaborator[]

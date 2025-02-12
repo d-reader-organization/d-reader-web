@@ -52,7 +52,7 @@ const LeftSection: React.FC<Props> = ({ comic }) => (
       <Link prefetch={false} href={RoutePath.Creator(comic.creator.handle)} className='flex items-center gap-3 w-fit'>
         <AvatarImage src={comic.creator.avatar} size='small' className='border-grey-300 border max-sm:size-8' />
         <Text as='p' styleVariant='body-normal' fontWeight='bold'>
-          {comic.creator.handle}
+          {comic.creator.displayName}
         </Text>
       </Link>
     )}

@@ -22,7 +22,7 @@ const LeftSection: React.FC<Props> = ({ creator }) => {
     <div className='flex flex-col gap-3 w-full text-center items-center sm:max-w-[500px] sm:items-start sm:text-start'>
       <div className='flex flex-col gap-5'>
         <Text as='h3' styleVariant='primary-heading' fontWeight='semibold'>
-          {creator.handle}
+          {creator.displayName}
         </Text>
         <Text as='p' className='whitespace-pre-wrap mb-2 text-grey-100' styleVariant='body-normal'>
           {creator.description}
@@ -30,7 +30,7 @@ const LeftSection: React.FC<Props> = ({ creator }) => {
       </div>
       <div className='flex gap-2 items-center'>
         <FollowCreatorButton isFollowing={creator.myStats?.isFollowing} creatorId={creator.id} />
-        <ShareButton title={creator.handle} text={creator.description} />
+        <ShareButton title={creator.displayName} text={creator.description} />
       </div>
     </div>
   )

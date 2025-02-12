@@ -49,7 +49,7 @@ export const OwnedComicCard: React.FC<Props> = ({ comic }) => {
           fontWeight='medium'
           className='line-clamp-1 overflow-ellipsis text-grey-100 max-md:text-xs'
         >
-          by&nbsp;{comic.creator?.handle}
+          by&nbsp;{comic.creator?.displayName}
         </Text>
       </div>
       <div className='flex gap-2 sm:p-2'>
