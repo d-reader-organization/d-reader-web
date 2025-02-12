@@ -1,6 +1,7 @@
 export type ProjectCreator = {
-  name: string
+  handle: string
   avatar: string
+  displayName: string
   twitterHandle?: string
 }
 

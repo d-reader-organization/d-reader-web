@@ -9,17 +9,17 @@ import { useOptimistic } from 'react'
 
 type Props = React.HTMLAttributes<HTMLButtonElement> & {
   isFollowingDefault?: boolean
-  creatorSlug: string
+  creatorId: number
 }
 
-export const FollowCreatorButton: React.FC<Props> = ({ isFollowingDefault = false, creatorSlug, className }) => {
+export const FollowCreatorButton: React.FC<Props> = ({ isFollowingDefault = false, creatorId, className }) => {
   const { refresh } = useRouter()
   const [isFollowing, setIsFollowing] = useOptimistic(isFollowingDefault, (current) => !current)
 
   const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsFollowing(null)
     e.preventDefault()
-    await followCreator(creatorSlug)
+    await followCreator(creatorId)
     refresh()
   }
 

@@ -30,7 +30,7 @@ export interface Comic extends BasicComic {
   stats?: ComicStats
   myStats?: ComicMyStats
   genres?: PartialGenre[]
-  creator?: Pick<Creator, 'name' | 'slug' | 'isVerified' | 'avatar'>
+  creator?: Pick<Creator, 'id' | 'handle' | 'displayName' | 'isVerified' | 'avatar'>
 }
 
 export interface CreateComicData

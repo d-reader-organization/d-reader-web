@@ -23,27 +23,19 @@ export type CarouselSlide = {
   location: CarouselLocation
   comicIssueId?: number
   comicSlug?: string
-  creatorSlug?: string
+  creatorId?: string
   externalLink?: string
   tags?: CarouselTag[]
 }
 
 export type CreateCarouselSlideData = Pick<
   CarouselSlide,
-  | 'image'
-  | 'priority'
-  | 'title'
-  | 'subtitle'
-  | 'location'
-  | 'comicIssueId'
-  | 'comicSlug'
-  | 'creatorSlug'
-  | 'externalLink'
+  'image' | 'priority' | 'title' | 'subtitle' | 'location' | 'comicIssueId' | 'comicSlug' | 'creatorId' | 'externalLink'
 >
 
 export type UpdateCarouselSlideData = Partial<
   Pick<
     CreateCarouselSlideData,
-    'priority' | 'title' | 'subtitle' | 'location' | 'comicIssueId' | 'comicSlug' | 'creatorSlug' | 'externalLink'
+    'priority' | 'title' | 'subtitle' | 'location' | 'comicIssueId' | 'comicSlug' | 'creatorId' | 'externalLink'
   >
 >

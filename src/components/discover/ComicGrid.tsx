@@ -11,7 +11,7 @@ export const ComicGrid: React.FC = () => {
   const { flatData: comics, fetchNextPage, hasNextPage, isFetching, isFetched } = useFetchComics(comicParams)
 
   if (isFetching && !isFetched) {
-    return <LoaderIcon className='mx-auto pt-6 sm:pt-8' />
+    return <LoaderIcon className='mx-auto pt-6 sm:pt-8 size-6' />
   }
 
   return (

@@ -12,7 +12,7 @@ export const ProjectCreatorSection: React.FC<Props> = ({ creator, tags }) => {
     <section className='flex flex-col w-full justify-between gap-3 py-4 md:items-center md:flex-row md:py-6 md:gap-10'>
       <div className='flex items-center gap-2'>
         <AvatarImage src={creator.avatar} size='medium' alt={creator + ' Avatar'} className='' />
-        <span className='text-white text-base font-bold leading-snug'>{creator.name}</span>
+        <span className='text-white text-base font-bold leading-snug'>{creator.displayName}</span>
       </div>
       <div className='flex flex-wrap gap-2 max-md:pl-[1px]'>
         {tags.map((tag, index) => (

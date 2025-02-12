@@ -10,6 +10,6 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
   if (!creator) return generateMetadataImage(<FallbackMetadataImage />)
 
   return generateMetadataImage(
-    <CreatorMetadataImage name={creator.name} banner={creator.banner} avatar={creator.avatar} logo />
+    <CreatorMetadataImage name={creator.displayName} banner={creator.banner} avatar={creator.avatar} logo />
   )
 }

@@ -56,11 +56,11 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
         href: RoutePath.Comic(comic.slug),
       })),
       creators: creators.map((creator: SearchResultCreator) => ({
-        id: creator.slug,
+        id: `${creator.id}`,
         image: creator.avatar,
-        title: creator.name,
+        title: creator.displayName,
         episodeCount: creator.issuesCount,
-        href: RoutePath.Creator(creator.slug),
+        href: RoutePath.Creator(creator.handle),
       })),
     }
   }

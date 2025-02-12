@@ -139,7 +139,7 @@ export const shortenAssetName = (name: string): string => {
 
 export const getSlideFallbackUrl = (slide: CarouselSlide): string => {
   if (slide.comicIssueId) return RoutePath.Mint(slide.comicIssueId)
-  else if (slide.creatorSlug) return RoutePath.Creator(slide.creatorSlug)
+  else if (slide.creatorId) return RoutePath.Creator(slide.creatorId)
   else if (slide.comicSlug) return RoutePath.Comic(slide.comicSlug)
   else return slide.externalLink ?? ''
 }
@@ -151,7 +151,9 @@ export const findProjectBySlug = (slug: string) => {
 
 export const getTwitterIntentExpressedInterest = (project: Project) => {
   // const title = project.title
-  const creatorTwitter = project.creator.twitterHandle ? `@${project.creator.twitterHandle}` : project.creator.name
+  const creatorTwitter = project.creator.twitterHandle
+    ? `@${project.creator.twitterHandle}`
+    : project.creator.displayName
   const twitterIntentPrefix = 'https://x.com/intent/tweet?text='
 
   const headline = `Can't wait to see the new ${creatorTwitter} story come to life! 🔥`

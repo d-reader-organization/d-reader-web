@@ -18,7 +18,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 
 export const DefaultCreatorCard: React.FC<Props> = ({ creator, className }) => (
   <Link
-    href={RoutePath.Creator(creator.slug)}
+    href={RoutePath.Creator(creator.handle)}
     prefetch={false}
     className={cn(
       'flex flex-col gap-3 md:gap-2 w-full rounded-2xl hover:brightness-110 border border-grey-300 p-2',
@@ -41,7 +41,7 @@ export const DefaultCreatorCard: React.FC<Props> = ({ creator, className }) => (
       <div className='flex flex-col items-center gap-[2px] md:items-start'>
         <div className='flex md:w-28 1160:w-40'>
           <TextWithOverflow as='span' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-sm'>
-            {creator.name}
+            {creator.displayName}
           </TextWithOverflow>
         </div>
         <Text
@@ -53,7 +53,7 @@ export const DefaultCreatorCard: React.FC<Props> = ({ creator, className }) => (
         </Text>
       </div>
       <FollowCreatorButton
-        creatorSlug={creator.slug}
+        creatorId={creator.id}
         isFollowingDefault={creator.myStats?.isFollowing}
         className='max-sm:h-9 max-sm:min-w-[108px]'
       />
