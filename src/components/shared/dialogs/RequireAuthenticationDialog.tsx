@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { RoutePath } from '@/enums/routePath'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Divider } from '../Divider'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { withRedirect } from '@/lib/utils'
 import { MailIcon } from '@/components/icons/theme/MailIcon'
 
@@ -17,7 +17,9 @@ type Props = {
 }
 
 export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }) => {
-  const pathname = usePathname()
+  const params = useSearchParams()
+  const pathname = usePathname() + (params ? `?${params.toString()}` : '')
+
   return (
     <Dialog
       open={open}
