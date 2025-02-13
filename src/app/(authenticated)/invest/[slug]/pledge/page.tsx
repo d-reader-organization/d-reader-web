@@ -4,10 +4,8 @@ import { fetchProject } from '@/app/lib/api/invest/queries'
 import { notFound } from 'next/navigation'
 import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
-import { cn } from '@/lib/utils'
-import { RequireAuthWrapperButton } from '@/components/shared/buttons/RequireAuthWrapperButton'
-import { PledgeCard } from '@/components/invest/PledgeCard'
-import { RewardCard } from '@/components/invest/RewardCard'
+import { RewardSection } from '@/components/invest/RewardSection'
+import { fetchMe } from '@/app/lib/api/user/queries'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -16,8 +14,9 @@ type Props = {
 export default async function PledgePage(props: Props) {
   const params = await props.params
   const { data: project, errorMessage } = await fetchProject(params.slug)
+  const user = await fetchMe()
 
-  if (!project || errorMessage) {
+  if (!project || !user || errorMessage) {
     return notFound()
   }
 
@@ -35,29 +34,7 @@ export default async function PledgePage(props: Props) {
         </div>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6 max-w-screen-md text-white mx-auto mt-6'>
-        <div className='col-span-2'>
-          <Text styleVariant='primary-heading' as='h3'>
-            Select your reward
-          </Text>
-          <Text styleVariant='body-large' as='p' className='mb-4'>
-            Pick which reward you&apos;d like to pledge for
-          </Text>
-          <RewardCard
-            title='Digital comic (pdf)'
-            price={5}
-            description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
-            imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
-            project={project}
-          />
-          <RewardCard
-            title='Digital comic (pdf)'
-            price={5}
-            description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
-            imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
-            project={project}
-          />
-          <PledgeCard slug={project.slug} defaultPrice={100} />
-        </div>
+        <RewardSection project={project} user={user} />
         <div>
           <ReferFriend />
           {/* <FAQ /> */}

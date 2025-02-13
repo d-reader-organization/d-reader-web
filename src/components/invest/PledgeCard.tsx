@@ -5,7 +5,15 @@ import { Input } from '../ui'
 import { ConfirmInterestButton } from './ConfirmInterestButton'
 import { useState } from 'react'
 
-export function PledgeCard({ slug, defaultPrice }: { slug: string; defaultPrice: number }) {
+export function PledgeCard({
+  slug,
+  defaultPrice,
+  toggleExpressedInterestDialog,
+}: {
+  slug: string
+  defaultPrice: number
+  toggleExpressedInterestDialog: VoidFunction
+}) {
   const [price, setPrice] = useState<number>(defaultPrice)
 
   return (
@@ -23,7 +31,12 @@ export function PledgeCard({ slug, defaultPrice }: { slug: string; defaultPrice:
             onChange={(e) => setPrice(+e.target.value)}
             className='w-24'
           />
-          <ConfirmInterestButton slug={slug} className='min-w-[146px]' amount={price} />
+          <ConfirmInterestButton
+            slug={slug}
+            className='min-w-[146px]'
+            amount={price}
+            toggleExpressedInterestDialog={toggleExpressedInterestDialog}
+          />
         </div>
       </CardContent>
     </Card>

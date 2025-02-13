@@ -10,9 +10,11 @@ import { cn, withRedirect } from '@/lib/utils'
 import { RoutePath } from '@/enums/routePath'
 import { TrendUpIcon } from '@/components/icons/theme/TrendUpIcon'
 import { RequireAuthWrapperButton } from '../shared/buttons/RequireAuthWrapperButton'
-import { redirect, RedirectType, useRouter, useSearchParams } from 'next/navigation'
+import { redirect, RedirectType, useSearchParams } from 'next/navigation'
 import { REFERRAL_CODE_KEY } from '@/constants/general'
 import { expressInterest } from '@/app/lib/api/invest/mutations'
+import { useToggle } from '@/hooks'
+import { LoaderIcon } from '../icons/theme/LoaderIcon'
 
 type ProjectFundingCardProps = {
   funding: ProjectFunding
@@ -196,10 +198,14 @@ type ExpressInterestButtonProps = {
 const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isUserInterested, defaultPrice }) => {
   const searchParams = useSearchParams()
   const referralCode = searchParams.get(REFERRAL_CODE_KEY)
+  const [showLoader, toggleLoader] = useToggle()
 
   const handleExpressInterest = async () => {
+    toggleLoader()
+
     const request: ExpressInterest = { expressedAmount: defaultPrice, referralCode }
     const { errorMessage } = await expressInterest({ slug, request })
+    toggleLoader()
 
     if (errorMessage) {
       toast({ description: errorMessage, variant: 'error' })
@@ -208,6 +214,7 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
     redirect(`${RoutePath.Pledge(slug)}`, RedirectType.push)
   }
 
+  const text = isUserInterested ? 'Interested!' : 'Express interest'
   return (
     <RequireAuthWrapperButton
       onClick={handleExpressInterest}
@@ -218,7 +225,7 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
           : 'text-grey-600 bg-green-genesis border-green-300 hover:brightness-100'
       )}
     >
-      {isUserInterested ? 'Interested!' : 'Express interest'}
+      {showLoader ? <LoaderIcon /> : text}
     </RequireAuthWrapperButton>
   )
 }

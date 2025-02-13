@@ -15,10 +15,18 @@ type RewardCardProps = {
   description: string
   imageUrl: string
   project: Project
+  toggleExpressedInterestDialog: VoidFunction
   referralCode?: string | null
 }
 
-export function RewardCard({ title, price, description, imageUrl, project }: RewardCardProps) {
+export function RewardCard({
+  title,
+  price,
+  description,
+  imageUrl,
+  project,
+  toggleExpressedInterestDialog,
+}: RewardCardProps) {
   const searchParams = useSearchParams()
   const referralCode = searchParams.get(REFERRAL_CODE_KEY)
 
@@ -47,6 +55,7 @@ export function RewardCard({ title, price, description, imageUrl, project }: Rew
               className='min-w-[146px]'
               amount={price}
               referralCode={referralCode}
+              toggleExpressedInterestDialog={toggleExpressedInterestDialog}
             />
           </div>
         </div>
