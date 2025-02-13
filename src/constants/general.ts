@@ -11,7 +11,7 @@ export const refreshTokenKey = 'refresh_token'
 export const googleAccessTokenKey = 'google_access_token'
 export const SUCC_RESPONSE_STATUS_CODES = [200, 201]
 export const REDIRECT_TO_KEY = 'redirectTo'
-export const REFERRAL_CODE_KEY = 'referral_code'
+export const REFERRAL_CODE_KEY = 'ref'
 
 export const jwtCookieProps = {
   httpOnly: true,
