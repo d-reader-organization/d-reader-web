@@ -52,22 +52,22 @@ export const INVEST_DISCLAIMER_DIALOG_STEPS: DialogStep[] = [
 
 export const PROJECT_INVEST_DIALOG_STEPS: DialogStep[] = [
   {
-    title: '',
+    title: 'Back stories on Genesis!',
     buttonLabel: 'Got it!',
     items: [
       {
-        icon: '🔎',
-        title: 'Do your research',
-        text: '',
-      },
-      {
-        icon: '✋',
-        title: 'Express interest to invest',
-        text: '',
-      },
-      {
         icon: '🪙',
-        title: 'Wait for the story token offering',
+        title: 'Early bird benefits & Referral rewards',
+        text: '',
+      },
+      {
+        icon: '🤞',
+        title: 'Lucky users get rare comic covers!',
+        text: '',
+      },
+      {
+        icon: '🤑',
+        title: 'Imagine investing into The Walking Dead before it became a $1B franchise',
         text: '',
       },
     ],

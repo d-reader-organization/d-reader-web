@@ -16,7 +16,6 @@ import { Text } from '@/components/ui'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { generateReferralLink } from '@/constants/general'
-import { CopyButton } from '../CopyButton'
 
 type Props = {
   slug: string
@@ -33,7 +32,7 @@ export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDia
         <DialogHeader>
           <DialogTitle asChild>
             <Text styleVariant='primary-heading' as='h3'>
-              Appreciate the interest!
+              You got it champ!
             </Text>
           </DialogTitle>
           <DialogDescription className='text-left'>
@@ -51,17 +50,25 @@ export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDia
                 >
                   Share the campaign and help this story secure funding!
                 </Text>
-                <br />
+              </p>
+            </p>
+            <p className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
+              <p className='size-5'>🎁</p>
+              <p className='inline-block gap-2 w-full'>
+                <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
+                  Refer a friend!
+                </Text>
                 <Text
                   as='p'
                   styleVariant='body-small'
                   fontWeight='medium'
                   className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
                 >
-                  Copy & share your referral link: <CopyButton variant='inline' clipboard={referralLink} />
+                  You collect 10% fees on all purchases which your referred user makes.
                 </Text>
               </p>
             </p>
+            {/* // TODO: copy my invite link */}
           </DialogDescription>
         </DialogHeader>
         <Realistic autorun={{ speed: 0.5, duration: 1000 }} />

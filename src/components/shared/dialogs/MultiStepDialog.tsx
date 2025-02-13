@@ -29,21 +29,21 @@ export const MultiStepDialog: React.FC<Props> = ({ steps, open, toggleDialog, on
     <Dialog open={open} onOpenChange={toggleDialog}>
       <DialogContent className='max-w-md' hideCloseIcon aria-describedby={undefined}>
         <DialogTitle className='sr-only'>Multistep dialog</DialogTitle>
-        {activeStep.title && (
-          <DialogHeader>
+        <DialogHeader>
+          {activeStep.title && (
             <DialogTitle asChild>
               <Text styleVariant='primary-heading' as='h3'>
                 {activeStep.title}
               </Text>
             </DialogTitle>
-            <DialogDescription className='text-left'>
-              {activeStep.items.map((item) => {
-                if (item.video) return <VideoItem key={item.title} {...item} />
-                return <TextItem key={item.title} {...item} />
-              })}
-            </DialogDescription>
-          </DialogHeader>
-        )}
+          )}
+          <DialogDescription className='text-left'>
+            {activeStep.items.map((item) => {
+              if (item.video) return <VideoItem key={item.title} {...item} />
+              return <TextItem key={item.title} {...item} />
+            })}
+          </DialogDescription>
+        </DialogHeader>
 
         <Button variant='secondary' className='w-full' onClick={onClick}>
           {activeStep.buttonLabel}
@@ -55,9 +55,9 @@ export const MultiStepDialog: React.FC<Props> = ({ steps, open, toggleDialog, on
 
 const TextItem: React.FC<DialogContentItem> = ({ icon, title, text }) => {
   return (
-    <div className='rounded-xl bg-grey-400 p-4 gap-4 flex '>
+    <div className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
       <div className='size-5'>{icon}</div>
-      <div className='flex flex-col gap-1 w-full '>
+      <div className='flex flex-col gap-1 w-full'>
         <Text as='p' styleVariant='body-normal' fontWeight='bold'>
           {title}
         </Text>

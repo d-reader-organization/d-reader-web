@@ -15,31 +15,25 @@ export const ReferralSettings: React.FC = async () => {
   const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(slug, referralLink)
 
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-6 max-w-screen-sm'>
       <div className='flex flex-col gap-2'>
         <Text as='h4' styleVariant='secondary-heading'>
           Referrals
         </Text>
         <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-200 font-medium'>
-          You get limited referrals each day based on your activity on the app, Refer your friends and earn exciting
+          You get limited referrals each day based on your activity on the app. Refer your friends and earn exciting
           rewards:
         </Text>
       </div>
-      <div className='flex justify-between border border-grey-300 p-5 rounded-xl gap-5 max-w-[607px]'>
+      <div className='flex justify-between gap-4'>
         <div className='flex flex-col items-center border border-grey-300 p-4 rounded-lg w-full'>
-          <Text as='h2' styleVariant='body-large' fontWeight='bold'>
-            {me.referralsRemaining}
-          </Text>
-          <Text as='h2' styleVariant='body-large' fontWeight='bold'>
-            Available
+          <Text as='h3' styleVariant='body-large' fontWeight='bold' className='text-center'>
+            {me.referralsRemaining} available
           </Text>
         </div>
         <div className='flex flex-col items-center border border-grey-300 p-4 rounded-lg w-full'>
-          <Text as='h2' styleVariant='body-large' fontWeight='bold'>
-            {me.referralUsed || 0}
-          </Text>
-          <Text as='h2' styleVariant='body-large' fontWeight='bold'>
-            Used
+          <Text as='h3' styleVariant='body-large' fontWeight='bold' className='text-center'>
+            {me.referralUsed} used
           </Text>
         </div>
       </div>
@@ -49,7 +43,7 @@ export const ReferralSettings: React.FC = async () => {
           className=' w-fit bg-green-genesis bg-opacity-100 text-black'
           target='_blank'
         >
-          Share on 𝕏
+          Share my referral on 𝕏
         </ButtonLink>
         <CopyButton clipboard={referralLink} text='Copy your referral link' className='max-w-fit' />
       </div>

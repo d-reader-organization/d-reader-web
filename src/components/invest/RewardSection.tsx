@@ -30,16 +30,32 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           Pick which reward you&apos;d like to pledge for
         </Text>
         <RewardCard
-          title='Digital comic (pdf)'
-          price={100}
+          title='Digital Comic (pdf)'
+          price={5}
           description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
           toggleExpressedInterestDialog={toggleExpressedInterestDialog}
         />
         <RewardCard
-          title='Digital comic (pdf)'
-          price={200}
+          title='Digital Collectible Comic'
+          price={10}
+          description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
+          imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
+          project={project}
+          toggleExpressedInterestDialog={toggleExpressedInterestDialog}
+        />
+        <RewardCard
+          title='Physical hard cover graphic novel'
+          price={50}
+          description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
+          imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
+          project={project}
+          toggleExpressedInterestDialog={toggleExpressedInterestDialog}
+        />
+        <RewardCard
+          title='Animated comic'
+          price={100}
           description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
@@ -47,7 +63,7 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
         />
         <PledgeCard
           slug={project.slug}
-          defaultPrice={300}
+          defaultPrice={10}
           toggleExpressedInterestDialog={toggleExpressedInterestDialog}
         />
       </div>

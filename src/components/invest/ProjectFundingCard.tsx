@@ -207,6 +207,7 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
 
     toggleLoader()
 
+    // TODO: this should remove the interest to express, if the user is clicking on the "I'm interested" button
     const request: ExpressInterest = { expressedAmount: defaultPrice, referralCode }
     const { errorMessage } = await expressInterest({ slug, request })
     toggleLoader()
@@ -218,9 +219,10 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
     redirect(`${RoutePath.Pledge(slug)}`, RedirectType.push)
   }
 
-  const text = isUserInterested ? 'Pledge More ->' : 'Express interest'
+  const text = isUserInterested ? `🔔 I'm interested` : 'Express interest'
   return (
     <RequireAuthWrapperButton
+      Icon={showLoader ? LoaderIcon : undefined}
       onClick={handleExpressInterest}
       className={cn(
         'flex flex-col w-full h-full max-h-[52px] p-[14px] justify-center items-center self-stretch rounded-xl md:p-4',
@@ -229,7 +231,7 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
           : 'text-grey-600 bg-green-genesis border-green-300 hover:brightness-100'
       )}
     >
-      {showLoader ? <LoaderIcon /> : text}
+      {text}
     </RequireAuthWrapperButton>
   )
 }

@@ -31,6 +31,11 @@ async function ProfilePage() {
                 Account
               </Text>
             </TabsTrigger>
+            <TabsTrigger value='5' className={tabTriggerClass}>
+              <Text as='h4' styleVariant='secondary-heading'>
+                Referrals
+              </Text>
+            </TabsTrigger>
             <TabsTrigger value='2' className={tabTriggerClass}>
               <Text as='h4' styleVariant='secondary-heading'>
                 Wallet
@@ -44,11 +49,6 @@ async function ProfilePage() {
             <TabsTrigger value='4' className={tabTriggerClass}>
               <Text as='h4' styleVariant='secondary-heading'>
                 Privacy
-              </Text>
-            </TabsTrigger>
-            <TabsTrigger value='5' className={tabTriggerClass}>
-              <Text as='h4' styleVariant='secondary-heading'>
-                Referrals
               </Text>
             </TabsTrigger>
             <TabsTrigger value='6' className={tabTriggerClass}>

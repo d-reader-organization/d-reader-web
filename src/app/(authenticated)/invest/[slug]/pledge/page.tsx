@@ -6,6 +6,9 @@ import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 import { RewardSection } from '@/components/invest/RewardSection'
 import { fetchMe } from '@/app/lib/api/user/queries'
+import { ButtonLink } from '@/components/ui/ButtonLink'
+import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
+import { generateReferralLink } from '@/constants/general'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -15,6 +18,8 @@ export default async function PledgePage(props: Props) {
   const params = await props.params
   const { data: project, errorMessage } = await fetchProject(params.slug)
   const user = await fetchMe()
+  const referralLink = generateReferralLink(params.slug, user?.username || '')
+  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(params.slug, referralLink)
 
   if (!project || !user || errorMessage) {
     return notFound()
@@ -33,10 +38,10 @@ export default async function PledgePage(props: Props) {
           </Text>
         </div>
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-6 max-w-screen-md text-white mx-auto mt-6'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-6 max-w-screen-md text-white mx-auto mt-12'>
         <RewardSection project={project} user={user} />
         <div>
-          <ReferFriend />
+          <ReferFriend twitterIntent={twitterIntent} />
           {/* <FAQ /> */}
         </div>
       </div>
@@ -44,7 +49,7 @@ export default async function PledgePage(props: Props) {
   )
 }
 
-function ReferFriend() {
+function ReferFriend({ twitterIntent }: { twitterIntent: string | null }) {
   return (
     <Card className='mb-6 text-white'>
       <CardHeader>
@@ -60,6 +65,14 @@ function ReferFriend() {
           <li>some reward #2</li>
           <li>some reward #3</li>
         </ul>
+
+        <ButtonLink
+          href={twitterIntent || ''}
+          className='mt-4 w-fit bg-green-genesis bg-opacity-100 text-black'
+          target='_blank'
+        >
+          Share on 𝕏
+        </ButtonLink>
       </CardContent>
     </Card>
   )

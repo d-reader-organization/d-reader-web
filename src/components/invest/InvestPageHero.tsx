@@ -14,7 +14,7 @@ export const InvestPageHero: React.FC = () => {
 
   return (
     <div className='flex flex-col justify-center gap-2 pt-12 lg:pt-16 bg-green-genesis'>
-      <div className='flex flex-col justify-center items-center gap-2 pt-24 pb-16 px-4 md:px-8 text-center mx-auto mb-16 lg:mb-24'>
+      <div className='flex flex-col justify-center items-center gap-2 pt-16 md:pt-24 pb-8 px-4 md:px-8 text-center mx-auto mb-16 lg:mb-24'>
         <Text as='h1' styleVariant='primary-heading' className='text-40 sm:text-48 md:text-64'>
           Scout & Invest into
           <br />
@@ -26,7 +26,7 @@ export const InvestPageHero: React.FC = () => {
       </div>
       <div className='relative w-full bg-grey-600'>
         <GenesisHeroFooterIcon className='absolute min-w-full fill-green-genesis' />
-        <div className='relative w-full max-w-[90%] md:max-w-[760px] lg:max-w-[1000px] h-auto mx-auto aspect-video rounded-lg shadow-[0px_0px_250px_-50px_rgba(0,0,0,0.8)]'>
+        <div className='-mt-16 relative w-full max-w-[90%] md:max-w-[760px] lg:max-w-[1000px] h-auto mx-auto aspect-video rounded-lg shadow-[0px_0px_250px_-50px_rgba(0,0,0,0.8)]'>
           <Image alt='' src={InvestHeroCta} width={2024} height={1138} priority className='size-full' />
           <button
             className='absolute top-0 left-0 flex justify-center items-center w-full h-full'
