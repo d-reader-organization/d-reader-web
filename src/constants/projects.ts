@@ -113,7 +113,7 @@ This is a 24 page fully animated comic, complete with professional voice acting,
   {
     slug: 'bonk-and-the-curse-of-the-bear-king',
     title: 'BONK and the curse of the Bear King',
-    subtitle: 'A legendary tale of chaos and mischief',
+    subtitle: 'A legendary tale of one small hero against all the odds',
     tags: ['Animated Series', 'Action', 'Superhero'],
     banner: '/assets/images/invest/bonk-banner.jpg',
     cover: '/assets/images/invest/bonk-cover.jpg',
