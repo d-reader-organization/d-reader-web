@@ -22,6 +22,7 @@ import { ConnectButton } from './ConnectButton'
 import { cn } from '@/lib/utils'
 import { getTokenPrice } from '@/utils/helpers'
 import { useAuthStore } from '@/providers/AuthStoreProvider'
+import { SOCKET } from '@/constants/general'
 
 type Props = {
   comicIssue: ComicIssue
@@ -62,10 +63,10 @@ export const MintButton: React.FC<Props> = ({ comicIssue, bounce = false, onMint
 
   useEffect(() => {
     if (!walletAddress || !socketInstance) return
-    socketInstance.emit('join-room', { walletAddress })
+    socketInstance.emit(SOCKET.JOIN_ROOM, { walletAddress })
 
     return () => {
-      socketInstance.emit('leave-room', { walletAddress })
+      socketInstance.emit(SOCKET.LEAVE_ROOM, { walletAddress })
     }
   }, [walletAddress, socketInstance])
 

@@ -27,7 +27,8 @@ export const MultiStepDialog: React.FC<Props> = ({ steps, open, toggleDialog, on
 
   return (
     <Dialog open={open} onOpenChange={toggleDialog}>
-      <DialogContent className='max-w-md' hideCloseIcon>
+      <DialogContent className='max-w-md' hideCloseIcon aria-describedby={undefined}>
+        <DialogTitle className='sr-only'>Multistep dialog</DialogTitle>
         {activeStep.title && (
           <DialogHeader>
             <DialogTitle asChild>

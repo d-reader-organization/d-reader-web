@@ -154,3 +154,8 @@ export const SELECT_OPTIONS = Object.freeze({
     { value: 'Last 6 months', label: 'Last 6 months' },
   ],
 })
+
+export const SOCKET = Object.freeze({
+  JOIN_ROOM: 'join-room',
+  LEAVE_ROOM: 'leave-room',
+})

@@ -22,7 +22,7 @@ export type ActivityNotification = {
   createdAt: Date | string
 }
 
-type Props = { action?: () => void; href?: string; notification: ActivityNotification }
+type Props = { notification: ActivityNotification }
 
 export enum ActivityNotificationType {
   ComicRated = 'ComicRated',
@@ -57,8 +57,8 @@ const STATIC_ACTIVITY_DATA: Record<ActivityNotificationType, StaticData> = {
     buttonText: 'Check out',
   },
   [ActivityNotificationType.ComicLiked]: {
-    bgColor: 'bg-red-300',
-    textColor: 'text-red-300',
+    bgColor: 'bg-orange-300',
+    textColor: 'text-orange-300',
     icon: HeartIcon,
     buttonText: 'See why',
   },
@@ -69,8 +69,8 @@ const STATIC_ACTIVITY_DATA: Record<ActivityNotificationType, StaticData> = {
     buttonText: 'Favorite',
   },
   [ActivityNotificationType.ComicIssueLiked]: {
-    bgColor: 'bg-red-300',
-    textColor: 'text-red-300',
+    bgColor: 'bg-orange-300',
+    textColor: 'text-orange-300',
     icon: HeartIcon,
     buttonText: 'See why',
   },
