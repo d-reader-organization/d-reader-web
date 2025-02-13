@@ -1,3 +1,5 @@
+'use client'
+
 import { BasicUser } from '@/models/user'
 import { UserPlusIcon } from '../icons/theme/UserPlusIcon'
 import { Button, Text, toast } from '../ui'
@@ -10,6 +12,7 @@ import { RoutePath } from '@/enums/routePath'
 import { favouritiseComic } from '@/app/lib/api/comic/mutations'
 import { expressInterest } from '@/app/lib/api/invest/mutations'
 import { followCreator } from '@/app/lib/api/creator/mutations'
+import { ExpressInterestIcon } from '../icons/theme/ExpressInterestIcon'
 
 export type ActivityNotification = {
   user: BasicUser
@@ -86,7 +89,7 @@ const STATIC_ACTIVITY_DATA: Record<ActivityNotificationType, StaticData> = {
   [ActivityNotificationType.ExpressedInterest]: {
     bgColor: 'bg-green-accent',
     textColor: 'text-green-accent',
-    icon: BookmarkIcon,
+    icon: ExpressInterestIcon,
     buttonText: 'Favorite',
   },
 }
