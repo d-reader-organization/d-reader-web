@@ -2,15 +2,17 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { ProjectFunding } from '@/models/project'
+import { ExpressInterest, ProjectFunding } from '@/models/project'
 import { formatCurrency, formatNumberWithCommas } from '@/utils/numbers'
 import { differenceInDays } from 'date-fns'
-import { Text } from '../ui'
+import { Text, toast } from '../ui'
 import { cn, withRedirect } from '@/lib/utils'
 import { RoutePath } from '@/enums/routePath'
 import { TrendUpIcon } from '@/components/icons/theme/TrendUpIcon'
 import { RequireAuthWrapperButton } from '../shared/buttons/RequireAuthWrapperButton'
-import { redirect, RedirectType } from 'next/navigation'
+import { redirect, RedirectType, useRouter, useSearchParams } from 'next/navigation'
+import { REFERRAL_CODE_KEY } from '@/constants/general'
+import { expressInterest } from '@/app/lib/api/invest/mutations'
 
 type ProjectFundingCardProps = {
   funding: ProjectFunding
@@ -95,7 +97,7 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({
             <InvestButton isAuthenticated={isAuthenticated} slug={slug} />
           )
         ) : (
-          <ExpressInterestButton slug={slug} isUserInterested={!!funding.expressedAmount} />
+          <ExpressInterestButton slug={slug} isUserInterested={!!funding.expressedAmount} defaultPrice={100} />
         )}
 
         <div className='flex flex-row w-full h-full justify-center items-center p-[12px] gap-[12px] bg-gradient-to-br from-[#4a4e53] to-grey-500 rounded-xl md:gap-4 md:h-[89px] md:p-4'>
@@ -187,16 +189,28 @@ const InvestButton: React.FC<InvestButtonProps> = ({ isAuthenticated, slug }) =>
 
 type ExpressInterestButtonProps = {
   slug: string
+  defaultPrice: number
   isUserInterested?: boolean
 }
 
-const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isUserInterested }) => {
+const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isUserInterested, defaultPrice }) => {
+  const searchParams = useSearchParams()
+  const referralCode = searchParams.get(REFERRAL_CODE_KEY)
+
+  const handleExpressInterest = async () => {
+    const request: ExpressInterest = { expressedAmount: defaultPrice, referralCode }
+    const { errorMessage } = await expressInterest({ slug, request })
+
+    if (errorMessage) {
+      toast({ description: errorMessage, variant: 'error' })
+      return
+    }
+    redirect(`${RoutePath.Pledge(slug)}`, RedirectType.push)
+  }
+
   return (
     <RequireAuthWrapperButton
-      onClick={() => {
-        // TODO: express interest (special handling for BONK?)
-        redirect(RoutePath.Pledge(slug), RedirectType.push)
-      }}
+      onClick={handleExpressInterest}
       className={cn(
         'flex flex-col w-full h-full max-h-[52px] p-[14px] justify-center items-center self-stretch rounded-xl md:p-4',
         isUserInterested

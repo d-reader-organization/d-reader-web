@@ -1,13 +1,13 @@
 import { GenesisLayout } from '@/components/layout/GenesisLayout'
-import { Button, Input, Text } from '@/components/ui'
+import { Text } from '@/components/ui'
 import { fetchProject } from '@/app/lib/api/invest/queries'
 import { notFound } from 'next/navigation'
 import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { RequireAuthWrapperButton } from '@/components/shared/buttons/RequireAuthWrapperButton'
-import { Project } from '@/models/project'
-import { ConfirmInterestButton } from '@/components/invest/ConfirmInterestButton'
+import { PledgeCard } from '@/components/invest/PledgeCard'
+import { RewardCard } from '@/components/invest/RewardCard'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -20,6 +20,7 @@ export default async function PledgePage(props: Props) {
   if (!project || errorMessage) {
     return notFound()
   }
+
   return (
     <GenesisLayout>
       <div className='text-center'>
@@ -55,7 +56,7 @@ export default async function PledgePage(props: Props) {
             imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
             project={project}
           />
-          <PledgeCard slug={project.slug} />
+          <PledgeCard slug={project.slug} defaultPrice={100} />
         </div>
         <div>
           <ReferFriend />
@@ -63,66 +64,6 @@ export default async function PledgePage(props: Props) {
         </div>
       </div>
     </GenesisLayout>
-  )
-}
-
-type RewardCardProps = {
-  title: string
-  price: number
-  description: string
-  imageUrl: string
-  project: Project
-}
-
-function RewardCard({ title, price, description, imageUrl, project }: RewardCardProps) {
-  return (
-    <Card className='mb-6 text-white'>
-      <CardContent className='p-6'>
-        <div className='flex justify-between items-start'>
-          <div>
-            <CardTitle className='text-xl mb-2'>{title}</CardTitle>
-            <Text styleVariant='body-large' as='p' className='font-semibold text-grey-100'>
-              ${price} • {project.funding.numberOfBackers} backers
-            </Text>
-            <p className='mt-2'>{description}</p>
-          </div>
-          <div className='flex flex-col gap-2'>
-            <Image
-              src={imageUrl || '/placeholder.svg'}
-              alt='Comic preview'
-              width={100}
-              height={100}
-              className='rounded-md'
-            />
-            <ConfirmInterestButton
-              slug={project.slug}
-              isUserInterested={!!project.funding.expressedAmount}
-              className='min-w-[146px]'
-            />
-          </div>
-        </div>
-      </CardContent>
-      {/* <CardFooter>
-        <Button className='w-full bg-green-genesis border-green-300'>Express Interest</Button>
-      </CardFooter> */}
-    </Card>
-  )
-}
-
-function PledgeCard({ slug }: { slug: string }) {
-  return (
-    <Card className='text-white'>
-      <CardContent className='p-6'>
-        <CardTitle className='text-xl mb-2'>Pledge a higher amount</CardTitle>
-        <p className='mb-4'>
-          Pledge the amount higher than the biggest reward, just because the project speaks to you.
-        </p>
-        <div className='flex items-center gap-2'>
-          <Input type='number' placeholder='10' className='w-24' />
-          <ConfirmInterestButton slug={slug} className='min-w-[146px]' />
-        </div>
-      </CardContent>
-    </Card>
   )
 }
 

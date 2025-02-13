@@ -18,7 +18,7 @@ export type ProjectFunding = {
   numberOfInterestedInvestors: number
   startDate?: string
   endDate?: string
-  expressedAmount?: boolean
+  expressedAmount?: number
 }
 
 export type ProjectPayout = {
@@ -53,13 +53,13 @@ export function isSuccessfulProject(project: Project | undefined): project is Su
 export type UserProjectInterest = {
   slug: string
   countOfUserExpressedInterest: number
-  expressedAmount?: boolean
+  expressedAmount?: number
   expectedPledgedAmount?: number
 }
 
 export type ExpressInterest = {
   expressedAmount: number
-  referralCode?: string
+  referralCode?: string | null
 }
 
 export type UserInterestedReceipt = {
