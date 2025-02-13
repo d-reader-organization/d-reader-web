@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import '../../globals.css'
 import { ActivitySocketProvider } from '@/providers/ActivitySocketContextProvider'
 import { fetchMe } from '@/app/lib/api/user/queries'
 
