@@ -42,8 +42,8 @@ export async function CreatorDashboardSidebar({ activePath }: Props) {
       </SidebarHeader>
 
       <SidebarContent className='py-6'>
-        {/* TODO: finalize these styles */}
-        <SidebarTrigger className='absolute top-1 -right-6 bg-grey-500 rounded-l-none' />
+        {/* TODO: finalize these styles. Sidebar is not shown on Mobile?!?! */}
+        <SidebarTrigger className='absolute top-0 -right-6 shadow-none bg-grey-500 rounded-l-none' />
 
         <SidebarMenu>
           <SidebarMenuItem>
@@ -86,11 +86,11 @@ export async function CreatorDashboardSidebar({ activePath }: Props) {
               Icon={HelpCenterIcon}
             />
           </SidebarMenuItem>
-          <SidebarMenuItem className='sm:hidden'>
+          <SidebarMenuItem>
             <SidebarMenuLink
               isActive={activePath === RoutePath.Home}
               href={RoutePath.Home}
-              title='Back to app'
+              title='Back to App'
               Icon={LogoSymbolIcon}
             />
           </SidebarMenuItem>

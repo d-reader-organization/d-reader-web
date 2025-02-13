@@ -7,9 +7,6 @@ import { SidebarProvider } from '@/components/ui/sidebar'
 import CreatorDashboardSidebar from './CreatorDashboardSidebar'
 import { cookies } from 'next/headers'
 import { Text } from '@/components/ui/Text'
-import { ButtonLink } from '@/components/ui/ButtonLink'
-import { BackIcon } from '@/components/icons/theme/BackIcon'
-import { RoutePath } from '@/enums/routePath'
 
 type Props = React.PropsWithChildren & {
   title?: string
@@ -40,19 +37,9 @@ export const CreatorDashboardLayout: React.FC<Props> = async ({
           mainClassName
         )}
       >
-        <div className='flex flex-row items-center w-full'>
-          <Text as='h4' styleVariant='secondary-heading' className='w-full'>
-            {title}
-          </Text>
-          <ButtonLink
-            href={RoutePath.Home}
-            Icon={BackIcon}
-            variant='outline'
-            className='min-w-fit w-fit hidden sm:flex'
-          >
-            Back to App
-          </ButtonLink>
-        </div>
+        <Text as='h4' styleVariant='secondary-heading' className='w-full'>
+          {title}
+        </Text>
 
         {children}
       </main>

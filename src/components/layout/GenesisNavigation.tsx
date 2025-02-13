@@ -15,6 +15,7 @@ import { GenesisLogoIcon } from '@/components/icons/logo/GenesisLogoIcon'
 import { LogoWithTextIcon } from '@/components/icons/logo/LogoWithTextIcon'
 import { ArrowLeftIcon } from '@/components/icons/theme/ArrowLeftIcon'
 import { ChevronDownIcon } from '@/components/icons/theme/ChevronDownIcon'
+import { ButtonLink } from '../ui/ButtonLink'
 
 type Props = {
   me: User | null
@@ -42,14 +43,9 @@ export const GenesisNavigation: React.FC<Props> = ({ me }) => {
             <GenesisLogoIcon className='h-8 w-auto fill-white ml-4' />
           </Link>
           <div className='flex items-center gap-2'>
-            <Link
-              className='flex items-center border border-white rounded-xl p-2'
-              href={RoutePath.Home}
-              prefetch={false}
-            >
-              <ArrowLeftIcon className='size-5' />
+            <ButtonLink Icon={ArrowLeftIcon} href={RoutePath.Home} prefetch={false}>
               <LogoWithTextIcon className='h-6 w-auto fill-white ml-2' />
-            </Link>
+            </ButtonLink>
             {me ? (
               <div className='flex items-center gap-8'>
                 <Button
