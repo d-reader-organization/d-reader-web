@@ -19,7 +19,7 @@ export const expressInterest = async ({
     accessToken,
     path: `${INVEST}/${EXPRESS_INTEREST}/${slug}`,
     body: request,
-    method: 'POST',
+    method: 'PATCH',
   })
 
   return { errorMessage: response.errorMessage }

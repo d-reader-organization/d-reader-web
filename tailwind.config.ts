@@ -122,6 +122,7 @@ const config = {
         },
         purple: {
           '100': '#FFABC4',
+          '200': '#EA69C5',
           '500': '#8377f2',
         },
         pink: {

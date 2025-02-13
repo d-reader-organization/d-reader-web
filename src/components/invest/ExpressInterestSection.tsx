@@ -69,7 +69,7 @@ export const ExpressInterestSection: React.FC<Props> = ({ slug }) => {
       const expressedAmount = selectedOption.label === 'Other' ? other : selectedOption.value
       await expressInterest({
         slug,
-        request: { transaction: serializedTransaction, expressedAmount: expressedAmount || 0 },
+        request: { expressedAmount: expressedAmount || 0 },
       })
       toggleExpressedInterestDialog()
     } catch (error) {

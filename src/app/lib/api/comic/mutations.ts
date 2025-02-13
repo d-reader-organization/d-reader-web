@@ -18,9 +18,9 @@ export const rateComic = async ({ slug, request }: { slug: string; request: Rate
   return response.errorMessage ?? ''
 }
 
-export const favouritiseComic = async (slug: string): Promise<void> => {
+export const favouritiseComic = async (slug: string): Promise<{ errorMessage?: string }> => {
   const accessToken = await getAccessToken()
-  await fetchWrapper<void>({
+  return await fetchWrapper<void>({
     accessToken,
     path: `${COMIC}/${FAVOURITISE}/${slug}`,
     method: 'PATCH',
