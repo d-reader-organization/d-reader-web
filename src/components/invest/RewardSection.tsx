@@ -7,8 +7,6 @@ import { RewardCard } from './RewardCard'
 import React from 'react'
 import { ExpressedInterestDialog } from '../shared/dialogs/ExpressedInterestDialog'
 import { useToggle } from '@/hooks'
-import { RoutePath } from '@/enums/routePath'
-import { useRouter } from 'next/navigation'
 import { User } from '@/models/user'
 
 type Props = {
@@ -18,7 +16,6 @@ type Props = {
 
 export const RewardSection: React.FC<Props> = ({ project, user }) => {
   const [showExpressedInterestDialog, toggleExpressedInterestDialog] = useToggle()
-  const { push } = useRouter()
 
   return (
     <>
@@ -72,7 +69,7 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           slug={project.slug}
           username={user.username}
           open={showExpressedInterestDialog}
-          toggleDialog={() => push(RoutePath.InvestDetails(project.slug))}
+          toggleDialog={toggleExpressedInterestDialog}
         />
       )}
     </>

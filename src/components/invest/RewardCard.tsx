@@ -51,10 +51,13 @@ export function RewardCard({
             />
             <ConfirmInterestButton
               slug={project.slug}
+              // TODO: this should be "is higher"?
               isUserInterested={isEqual(project.funding.expressedAmount, price)}
               className='min-w-[146px]'
               amount={price}
+              // ALSO: why do we need the referral code here?
               referralCode={referralCode}
+              // ALSO: why are we sending the toggle function as a prop? Why isn't the dialog living within the button? or why aren't we passing 'onClick'
               toggleExpressedInterestDialog={toggleExpressedInterestDialog}
             />
           </div>

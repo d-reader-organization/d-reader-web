@@ -152,9 +152,10 @@ function getNotificationData(notification: ActivityNotification): {
       }
     case ActivityNotificationType.ExpressedInterest:
       return {
-        buttonText: 'Express interest',
+        buttonText: 'Subscribe',
         descriptionText: 'expressed interest in',
         hrefOrAction: async () => {
+          // TODO: and then redirect to the kickstarter page?
           return expressInterest({ request: { expressedAmount: 1 }, slug: notification.targetId })
         },
       }

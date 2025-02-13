@@ -25,7 +25,6 @@ import { useTableSearch } from '@/hooks/useTableSearch'
 // TODO: ActivityFeed
 
 // TODO: Luka
-// decouple logic and UI from useTableSort etc. ( <TableSort {...props} />)
 // filter functionality (drawers/sheets)
 // change table data based on the selected tab
 

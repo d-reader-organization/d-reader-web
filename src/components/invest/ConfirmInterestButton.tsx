@@ -31,6 +31,7 @@ export const ConfirmInterestButton: React.FC<Props> = ({
   const handleExpressInterest = async () => {
     toggleLoader()
 
+    // TODO: why are we passing the referral code here? are these referrals campaign-scoped?
     const request: ExpressInterest = { expressedAmount: amount, referralCode }
     const { errorMessage } = await expressInterest({ slug, request })
     toggleLoader()
@@ -47,6 +48,7 @@ export const ConfirmInterestButton: React.FC<Props> = ({
   return (
     <RequireAuthWrapperButton
       onClick={handleExpressInterest}
+      Icon={showLoader ? LoaderIcon : undefined}
       variant={isUserInterested ? 'secondary' : 'primary'}
       className={cn(
         className,
@@ -54,7 +56,7 @@ export const ConfirmInterestButton: React.FC<Props> = ({
         !isUserInterested && 'text-grey-600 bg-green-genesis border-green-300 hover:brightness-100'
       )}
     >
-      {showLoader ? <LoaderIcon /> : text}
+      {text}
     </RequireAuthWrapperButton>
   )
 }
