@@ -201,6 +201,10 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
   const [showLoader, toggleLoader] = useToggle()
 
   const handleExpressInterest = async () => {
+    if (isUserInterested) {
+      redirect(`${RoutePath.Pledge(slug)}`, RedirectType.push)
+    }
+
     toggleLoader()
 
     const request: ExpressInterest = { expressedAmount: defaultPrice, referralCode }
@@ -214,14 +218,14 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
     redirect(`${RoutePath.Pledge(slug)}`, RedirectType.push)
   }
 
-  const text = isUserInterested ? 'Interested!' : 'Express interest'
+  const text = isUserInterested ? 'Pledge More ->' : 'Express interest'
   return (
     <RequireAuthWrapperButton
       onClick={handleExpressInterest}
       className={cn(
         'flex flex-col w-full h-full max-h-[52px] p-[14px] justify-center items-center self-stretch rounded-xl md:p-4',
         isUserInterested
-          ? 'text-white bg-grey-500 border-2 border-white pointer-events-none'
+          ? 'text-white bg-grey-500 border-2 border-white'
           : 'text-grey-600 bg-green-genesis border-green-300 hover:brightness-100'
       )}
     >
