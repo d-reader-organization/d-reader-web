@@ -2,7 +2,6 @@ import { GenesisLayout } from '@/components/layout/GenesisLayout'
 import { Text } from '@/components/ui'
 import { fetchProject } from '@/app/lib/api/invest/queries'
 import { notFound } from 'next/navigation'
-import { ExpressInterestSection } from '@/components/invest/ExpressInterestSection'
 import Link from 'next/link'
 import { ArrowLeftIcon } from '@/components/icons/theme/ArrowLeftIcon'
 import { RoutePath } from '@/enums/routePath'
@@ -55,7 +54,6 @@ export default async function ExpressInterestPage(props: Props) {
               We want to understand how many people are interested in this story. This action won&apos;t start the
               investment process. Expressing interest will incur a $1 fee to prevent spam.
             </Text>
-            <ExpressInterestSection slug={params.slug} />
             <Text as='p' styleVariant='body-xsmall' className='text-grey-100' italic>
               *A person&apos;s indication of interest involves no obligation or commitment of any kind. No money or
               other consideration is being solicited, and if sent in response, will not be accepted.
