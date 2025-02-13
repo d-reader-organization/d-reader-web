@@ -11,6 +11,7 @@ import { PROJECTS } from '@/constants/projects'
 import { findProjectBySlug } from '@/utils/helpers'
 import { highInterestProjects, InterestProject } from '../../data/invest/projectsData'
 import { INVEST_QUERY_KEYS } from './keys'
+import { getAccessToken } from '../../utils/auth'
 
 const { GET, INVEST, INTEREST_RECEIPTS } = INVEST_QUERY_KEYS
 
@@ -52,6 +53,7 @@ export const fetchProject = async (slug: string): Promise<{ data: Nullable<Proje
   }
 
   const { data } = await fetchWrapper<UserProjectInterest>({
+    accessToken: await getAccessToken(),
     path: `${INVEST}/${GET}/${slug}`,
   })
 
