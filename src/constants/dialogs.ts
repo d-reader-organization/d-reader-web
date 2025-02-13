@@ -57,17 +57,17 @@ export const PROJECT_INVEST_DIALOG_STEPS: DialogStep[] = [
     items: [
       {
         icon: '🪙',
-        title: 'Early bird benefits & Referral rewards',
-        text: '',
-      },
-      {
-        icon: '🤞',
-        title: 'Lucky users get rare comic covers!',
+        title: 'Back a creator & earn future royalties',
         text: '',
       },
       {
         icon: '🤑',
-        title: 'Imagine investing into The Walking Dead before it became a $1B franchise',
+        title: 'Imagine investing into The Walking Dead before it became a $1b franchise',
+        text: '',
+      },
+      {
+        icon: '🎁',
+        title: 'Early bird benefits & Referral rewards!',
         text: '',
       },
     ],
