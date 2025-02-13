@@ -111,6 +111,52 @@ This is a 24 page fully animated comic, complete with professional voice acting,
     },
   },
   {
+    // TODO: add youtube video https://www.youtube.com/embed/ld0EDoBmFSY?si=UI5cxhTkvSYI8Cl9
+    slug: 'bonk-and-the-curse-of-the-bear-king',
+    title: 'BONK and the curse of the Bear King',
+    subtitle: 'A legendary tale of chaos and mischief',
+    tags: ['Animated Series', 'Action', 'Superhero'],
+    banner: '/assets/images/invest/bonk-banner.png',
+    cover: '/assets/images/invest/bonk-cover.png',
+    logo: '/assets/images/invest/mad-king-logo.png',
+    creator: {
+      displayName: 'Studio NX',
+      handle: 'studio_nx',
+      avatar: 'https://d323dls9ny69nf.cloudfront.net/genesis/mad-muse.jpg',
+      twitterHandle: 'studionx',
+    },
+    info: [
+      {
+        section: 'Overview',
+        text: `BONK and the curse of the Bear King is a 24 page fully animated comic, with voice acting, sound effects a cinematic score. It's a fantasy adventure story about a spirited young hound who leaves his village to become a great warrior like his father. He must brave the harsh winter lands to seek an elusive master who can teach him the ancient ways of the Samurai and defeat the evil king before he destroys all he loves.`,
+        image: '',
+      },
+      {
+        section: 'Team',
+        text: 'Created by StudioNX, the Emmy winning team behind the highly rated animated comic Niko & the Sword of Light. They have produced series for Marvel, Disney & Amazon and written the Bafta winning game Endling, Exctinction is forever.',
+      },
+      {
+        section: 'Offering',
+        text: 'The chance to back an Emmy winning team as they develop the Bonk IP from comic series to a video game and beyond.',
+      },
+      {
+        section: 'Roadmap',
+        text: `
+        Phase 1: 6 months for animated comic production.
+        Phase 2: Animated comic mint on dReader.
+        Phase 3: Physical distribution of the static comic.`,
+      },
+    ],
+    funding: {
+      pledgedAmount: 0,
+      raiseGoal: 80000,
+      startDate: undefined,
+      endDate: undefined,
+      numberOfBackers: 670,
+      numberOfInterestedInvestors: 2,
+    },
+  },
+  {
     slug: 'mad-lads',
     title: 'Mad Lads',
     subtitle: 'A tale of chaos and mischief',

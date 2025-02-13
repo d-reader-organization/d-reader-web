@@ -10,6 +10,13 @@ export type InterestProject = {
 
 export const highInterestProjects: InterestProject[] = [
   {
+    image: '/assets/images/invest/bonk-cover.png',
+    slug: 'bonk-and-the-curse-of-the-bear-king',
+    stats: { likes: 0 },
+    tags: ['Animated Series', 'Action', 'Superhero'],
+    title: 'BONK and the curse of the Bear King',
+  },
+  {
     image: '/assets/images/invest/mad-lads-cover.png',
     slug: 'mad-lads',
     stats: {

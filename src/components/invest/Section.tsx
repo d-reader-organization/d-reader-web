@@ -30,7 +30,7 @@ export const InvestSection: React.FC<Props> = ({ data, title }) => {
             <Image alt={project.title} src={project.image} className='object-cover rounded-xl' fill />
             <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black rounded-xl'></div>
             <div className='relative z-10 p-4 md:p-6 flex flex-col gap-2 justify-end h-full'>
-              <h2 className='text-xl md:text-2xl font-semibold md:font-bold leading-[20px] md:leading-[24px] max-md:tracking-[0.04px]'>
+              <h2 className='text-xl md:text-2xl font-semibold md:font-bold leading-[20px] md:leading-[24px] max-md:tracking-[0.04px] truncate overflow-hidden whitespace-nowrap max-w-[380px]'>
                 {project.title}
               </h2>
               <div className='inline-flex items-center gap-2'>
