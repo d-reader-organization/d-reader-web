@@ -65,7 +65,7 @@ export const fetchProject = async (slug: string): Promise<{ data: Nullable<Proje
       funding: {
         ...project.funding,
         numberOfInterestedInvestors: data.countOfUserExpressedInterest,
-        isUserInterested: data.isUserInterested,
+        expressedAmount: data.expressedAmount,
         pledgedAmount: data.expectedPledgedAmount || 0,
       },
     },

@@ -20,7 +20,7 @@ export default async function ExpressInterestPage(props: Props) {
   }
   return (
     <GenesisLayout>
-      {project.funding.isUserInterested ? (
+      {project.funding.expressedAmount ? (
         <div className='m-auto'>
           <Text as='h2' styleVariant='body-large'>
             You&apos;ve already expressed interest into this story! 🎉

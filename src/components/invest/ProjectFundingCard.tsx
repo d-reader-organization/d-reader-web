@@ -95,7 +95,7 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({
             <InvestButton isAuthenticated={isAuthenticated} slug={slug} />
           )
         ) : (
-          <ExpressInterestButton slug={slug} isUserInterested={funding.isUserInterested} />
+          <ExpressInterestButton slug={slug} isUserInterested={!!funding.expressedAmount} />
         )}
 
         <div className='flex flex-row w-full h-full justify-center items-center p-[12px] gap-[12px] bg-gradient-to-br from-[#4a4e53] to-grey-500 rounded-xl md:gap-4 md:h-[89px] md:p-4'>

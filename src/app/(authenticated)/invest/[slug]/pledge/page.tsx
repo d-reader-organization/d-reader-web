@@ -96,7 +96,7 @@ function RewardCard({ title, price, description, imageUrl, project }: RewardCard
             />
             <ConfirmInterestButton
               slug={project.slug}
-              isUserInterested={project.funding.isUserInterested}
+              isUserInterested={!!project.funding.expressedAmount}
               className='min-w-[146px]'
             />
           </div>

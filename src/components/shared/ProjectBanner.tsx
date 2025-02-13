@@ -37,7 +37,7 @@ export const ProjectBanner: React.FC<Props> = ({ title, banner, cover, videoUrl 
               className='sm:hidden shadow-lg'
             />
           </div>
-          {!videoUrl && (
+          {videoUrl && (
             <button
               className='absolute top-0 left-0 flex justify-center items-center w-full h-full'
               onClick={toggleYoutubeVideoDialog}

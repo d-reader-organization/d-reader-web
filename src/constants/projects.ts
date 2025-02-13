@@ -111,7 +111,6 @@ This is a 24 page fully animated comic, complete with professional voice acting,
     },
   },
   {
-    // TODO: add youtube video https://www.youtube.com/embed/ld0EDoBmFSY?si=UI5cxhTkvSYI8Cl9
     slug: 'bonk-and-the-curse-of-the-bear-king',
     title: 'BONK and the curse of the Bear King',
     subtitle: 'A legendary tale of chaos and mischief',
@@ -119,6 +118,7 @@ This is a 24 page fully animated comic, complete with professional voice acting,
     banner: '/assets/images/invest/bonk-banner.png',
     cover: '/assets/images/invest/bonk-cover.png',
     logo: '/assets/images/invest/mad-king-logo.png',
+    videoUrl: 'https://www.youtube.com/embed/ld0EDoBmFSY?si=UI5cxhTkvSYI8Cl9',
     creator: {
       displayName: 'Studio NX',
       handle: 'studio_nx',
