@@ -9,6 +9,7 @@ export interface User {
   isEmailVerified: boolean
   hasBetaAccess: boolean
   referralsRemaining: number
+  referralUsed?: number
   role: Role
   hasPassword: boolean
 }

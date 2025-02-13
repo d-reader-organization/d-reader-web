@@ -15,7 +15,7 @@ import Realistic from 'react-canvas-confetti/dist/presets/realistic'
 import { Text } from '@/components/ui'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
 import { ButtonLink } from '@/components/ui/ButtonLink'
-import { REFERRAL_CODE_KEY } from '@/constants/general'
+import { generateReferralLink } from '@/constants/general'
 import { CopyButton } from '../CopyButton'
 
 type Props = {
@@ -24,7 +24,8 @@ type Props = {
 } & CommonDialogProps
 
 export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDialog, username }) => {
-  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(slug)
+  const referralLink = generateReferralLink(slug, username)
+  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(slug, referralLink)
 
   return (
     <Dialog open={open} onOpenChange={toggleDialog}>
@@ -57,11 +58,7 @@ export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDia
                   fontWeight='medium'
                   className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
                 >
-                  Copy & share your referral link:{' '}
-                  <CopyButton
-                    variant='inline'
-                    clipboard={`${process.env.NEXT_PUBLIC_SITE_URL}/invest/${slug}?${REFERRAL_CODE_KEY}=${username}`}
-                  />
+                  Copy & share your referral link: <CopyButton variant='inline' clipboard={referralLink} />
                 </Text>
               </p>
             </p>

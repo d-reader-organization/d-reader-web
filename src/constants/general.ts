@@ -160,3 +160,10 @@ export const SOCKET = Object.freeze({
   JOIN_ROOM: 'join-room',
   LEAVE_ROOM: 'leave-room',
 })
+
+export const REFERRAL_REWARDING_PROJECT = 'bonk-and-the-curse-of-the-bear-king'
+
+export const generateReferralLink = (slug: string, username: string) => {
+  if (slug != REFERRAL_REWARDING_PROJECT) return 'https://dreader.app/invest'
+  return `${process.env.NEXT_PUBLIC_SITE_URL}/invest/${slug}?${REFERRAL_CODE_KEY}=${username}`
+}

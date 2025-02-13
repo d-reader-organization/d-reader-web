@@ -7,6 +7,7 @@ import { AccountSettings } from '@/components/profile/AccountSettings'
 import { SecuritySettings } from '@/components/profile/SecuritySettings'
 import { FaqSettings } from '@/components/profile/FaqSettings'
 import { PrivacySettingsWrapper } from '@/components/profile/PrivacySettingsWrapper'
+import { ReferralSettings } from '@/components/profile/ReferralSettings'
 
 async function ProfilePage() {
   const me = await fetchMe()
@@ -47,6 +48,11 @@ async function ProfilePage() {
             </TabsTrigger>
             <TabsTrigger value='5' className={tabTriggerClass}>
               <Text as='h4' styleVariant='secondary-heading'>
+                Referrals
+              </Text>
+            </TabsTrigger>
+            <TabsTrigger value='6' className={tabTriggerClass}>
+              <Text as='h4' styleVariant='secondary-heading'>
                 FAQ
               </Text>
             </TabsTrigger>
@@ -66,6 +72,9 @@ async function ProfilePage() {
               <PrivacySettingsWrapper />
             </TabsContent>
             <TabsContent value='5' className='m-0'>
+              <ReferralSettings />
+            </TabsContent>
+            <TabsContent value='6' className='m-0'>
               <FaqSettings />
             </TabsContent>
           </div>

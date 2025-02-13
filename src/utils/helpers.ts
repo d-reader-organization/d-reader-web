@@ -149,7 +149,7 @@ export const findProjectBySlug = (slug: string) => {
   return project
 }
 
-export const getTwitterIntentExpressedInterest = (project: Project) => {
+export const getTwitterIntentExpressedInterest = (project: Project, refferalLink?: string) => {
   // const title = project.title
   const creatorTwitter = project.creator.twitterHandle
     ? `@${project.creator.twitterHandle}`
@@ -160,9 +160,12 @@ export const getTwitterIntentExpressedInterest = (project: Project) => {
   const content = 'Want to see more original stories?'
 
   const shoutOutLine = '@GenesisDotApp is cooking 🍳'
-  const genesisLink = '🔗👇 Check it out\nhttps://dreader.app/invest'
+  const genesisLinkText = '🔗👇 Express your interest and get exciting rewards'
+  const genesisLink = refferalLink || 'https://dreader.app/invest'
 
-  const tweetText = encodeURI(`${twitterIntentPrefix}${headline}\n\n${content}\n${shoutOutLine}\n\n${genesisLink}`)
+  const tweetText = encodeURI(
+    `${twitterIntentPrefix}${headline}\n\n${content}\n${shoutOutLine}\n\n${genesisLinkText}\n${genesisLink}`
+  )
   return tweetText
 }
 
