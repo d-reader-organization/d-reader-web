@@ -1,6 +1,6 @@
 import React from 'react'
 import { fetchMe, fetchUserReferrals } from '@/app/lib/api/user/queries'
-import { PLACEHOLDER_AVATAR } from '@/constants/general'
+import { generateReferralLink, generateUserInviteReferralLink, PLACEHOLDER_AVATAR } from '@/constants/general'
 import { fetchTwitterIntentInviteUser } from '@/app/lib/api/twitter/queries'
 import { Referral, ReferralCampaign } from '@/models/project'
 import { Card } from '../ui/card'
@@ -12,6 +12,7 @@ import { ButtonLink } from '../ui/ButtonLink'
 import { Text } from '../ui'
 import { fetchAllReferralCampaignReceipts, fetchProject } from '@/app/lib/api/invest/queries'
 import Image from 'next/image'
+import { EmptyReferral } from './EmptyReferral'
 
 export const ReferralSettings: React.FC = async () => {
   const me = await fetchMe()
@@ -22,8 +23,8 @@ export const ReferralSettings: React.FC = async () => {
   return (
     <div className='flex flex-col gap-6 max-w-[617px]'>
       <ReferralCard username={me.username} />
-      {referrals && <UserReferralList referralsRemaining={me.referralsRemaining} referrals={referrals} />}
-      <CampaignReferralList />
+      <UserReferralList referralsRemaining={me.referralsRemaining} referrals={referrals} username={me.username} />
+      <CampaignReferralList username={me.username}/>
     </div>
   )
 }
@@ -67,11 +68,13 @@ export function ReferralCard({ username }: { username: string }) {
 }
 
 type UserReferralListProps = {
+  username: string
   referralsRemaining: number
   referrals: Referral[]
 }
 
 const UserReferralList: React.FC<UserReferralListProps> = async ({ referrals, referralsRemaining }) => {
+  const isSuccesfulReferrals = referrals && referrals.length;
   return (
     <div className='flex flex-col gap-4'>
       {/* Referrals Section */}
@@ -79,7 +82,7 @@ const UserReferralList: React.FC<UserReferralListProps> = async ({ referrals, re
         New user referrals <span className='text-white/60'>{`( ${referralsRemaining} referrals remaining) `}</span>
       </Text>
 
-      {referrals.map((referral, index) => (
+      {isSuccesfulReferrals ? referrals.map((referral, index) => (
         <div key={index} className='flex flex-col gap-4'>
           <div className='flex rounded-xl p-4 border-1 border-grey-300 justify-between'>
             <div className='flex items-center gap-3'>
@@ -99,12 +102,12 @@ const UserReferralList: React.FC<UserReferralListProps> = async ({ referrals, re
             </div>
           </div>
         </div>
-      ))}
+      )) : (<EmptyReferral />)}
     </div>
   )
 }
 
-const CampaignReferralList: React.FC = async () => {
+const CampaignReferralList: React.FC<{ username: string }> = async ({ username }) => {
   const campaigns = await fetchAllReferralCampaignReceipts()
 
   return (
@@ -114,14 +117,15 @@ const CampaignReferralList: React.FC = async () => {
         Campaign referrals
       </Text>
       {campaigns && campaigns.map((campaign, index) => (
-        <CampaignReferral key={index} campaign={campaign} />
+        <CampaignReferral key={index} campaign={campaign} username={username} />
       ))}
     </div>
   )
 }
 
-const CampaignReferral: React.FC<{ campaign: ReferralCampaign }> = async ({ campaign }) => {
+const CampaignReferral: React.FC<{ campaign: ReferralCampaign, username: string }> = async ({ campaign, username }) => {
   const { data: project } = await fetchProject(campaign.slug)
+  const isSuccesfulReferrals = campaign.totalReferred;
 
   return (
     <div className='flex flex-col rounded-xl p-4 border-1 border-grey-300 gap-4'>
@@ -143,7 +147,7 @@ const CampaignReferral: React.FC<{ campaign: ReferralCampaign }> = async ({ camp
         </Text>
       </div>
       <div>
-        {campaign.receipts.map((referral, index) => (
+        {isSuccesfulReferrals ? campaign.receipts.map((referral, index) => (
           <div key={index} className='flex p-2 border-t-1 border-grey-300 justify-between'>
             <div className='flex items-center gap-3'>
               <Avatar className='w-5 h-5'>
@@ -165,7 +169,7 @@ const CampaignReferral: React.FC<{ campaign: ReferralCampaign }> = async ({ camp
               <TokenIcon className='h-5 w-5' />
             </div>
           </div>
-        ))}
+        )): (<EmptyReferral />)}
       </div>
     </div>
   )

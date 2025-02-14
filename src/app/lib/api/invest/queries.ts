@@ -89,6 +89,5 @@ export const fetchAllReferralCampaignReceipts = async (): Promise<ReferralCampai
     params: { skip: 0, take: 5 },
   })
 
-  console.log(data)
   return data || []
 }
