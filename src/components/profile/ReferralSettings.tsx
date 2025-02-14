@@ -12,7 +12,7 @@ export const ReferralSettings: React.FC = async () => {
 
   const slug = 'bonk-and-the-curse-of-the-bear-king'
   const referralLink = generateReferralLink(slug, me.username)
-  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(slug, referralLink)
+  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(slug, me.username)
 
   return (
     <div className='flex flex-col gap-6 max-w-screen-sm'>

@@ -15,7 +15,6 @@ import Realistic from 'react-canvas-confetti/dist/presets/realistic'
 import { Text } from '@/components/ui'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
 import { ButtonLink } from '@/components/ui/ButtonLink'
-import { generateReferralLink } from '@/constants/general'
 
 type Props = {
   slug: string
@@ -23,8 +22,7 @@ type Props = {
 } & CommonDialogProps
 
 export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDialog, username }) => {
-  const referralLink = generateReferralLink(slug, username)
-  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(slug, referralLink)
+  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(slug, username)
 
   return (
     <Dialog open={open} onOpenChange={toggleDialog}>

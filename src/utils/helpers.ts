@@ -1,3 +1,4 @@
+import { generateReferralLink } from '@/constants/general'
 import { PROJECTS } from '@/constants/projects'
 import { RoutePath } from '@/enums/routePath'
 import { CarouselSlide } from '@/models/carousel/carouselSlide'
@@ -149,8 +150,9 @@ export const findProjectBySlug = (slug: string) => {
   return project
 }
 
-export const getTwitterIntentExpressedInterest = (project: Project, refferalLink?: string) => {
+export const getTwitterIntentExpressedInterest = (project: Project, username: string) => {
   // const title = project.title
+  const referralLink = generateReferralLink(project.slug, username)
   const creatorTwitter = project.creator.twitterHandle
     ? `@${project.creator.twitterHandle}`
     : project.creator.displayName
@@ -161,10 +163,9 @@ export const getTwitterIntentExpressedInterest = (project: Project, refferalLink
 
   const shoutOutLine = '@GenesisDotApp is cooking 🍳'
   const genesisLinkText = '🔗👇 Express your interest and get exciting rewards'
-  const genesisLink = refferalLink || 'https://dreader.app/invest'
 
   const tweetText = encodeURI(
-    `${twitterIntentPrefix}${headline}\n\n${content}\n${shoutOutLine}\n\n${genesisLinkText}\n${genesisLink}`
+    `${twitterIntentPrefix}${headline}\n\n${content}\n${shoutOutLine}\n\n${genesisLinkText}\n${referralLink}`
   )
   return tweetText
 }

@@ -8,7 +8,6 @@ import { RewardSection } from '@/components/invest/RewardSection'
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
-import { generateReferralLink } from '@/constants/general'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -18,8 +17,7 @@ export default async function PledgePage(props: Props) {
   const params = await props.params
   const { data: project, errorMessage } = await fetchProject(params.slug)
   const user = await fetchMe()
-  const referralLink = generateReferralLink(params.slug, user?.username || '')
-  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(params.slug, referralLink)
+  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(params.slug, user?.username || '')
 
   if (!project || !user || errorMessage) {
     return notFound()

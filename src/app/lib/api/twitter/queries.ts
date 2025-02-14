@@ -18,13 +18,13 @@ export const fetchTwitterIntentComicMinted = async (params: TwitterIntentComicMi
 
 export const fetchTwitterIntentExpressedInterest = (
   slug: string,
-  refferalLink?: string
+  username: string
 ): { data: Nullable<string>; errorMessage?: string } => {
   const project = PROJECTS.find((project) => project.slug === slug)
   if (!project) {
     return { data: null, errorMessage: `Project with slug ${slug} not found` }
   }
 
-  const twitterIntent = getTwitterIntentExpressedInterest(project, refferalLink)
+  const twitterIntent = getTwitterIntentExpressedInterest(project, username)
   return { data: twitterIntent }
 }
