@@ -12,6 +12,7 @@ export type RequireAuthWrapperButtonProps = React.PropsWithChildren &
 export const RequireAuthWrapperButton: React.FC<RequireAuthWrapperButtonProps> = ({ children, onClick, ...props }) => {
   const [showRequireAuthDialog, setShowRequireAuthDialog] = useState(false)
   const [pending, startTransition] = useTransition()
+
   const submitWrapper = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     if (!onClick || pending) {

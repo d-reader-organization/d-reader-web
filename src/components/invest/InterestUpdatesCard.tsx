@@ -1,6 +1,6 @@
 'use client'
 
-import { formatDate } from 'date-fns'
+import { formatDistanceToNow } from 'date-fns'
 import { Text } from '../ui'
 import { Divider } from '../shared/Divider'
 import { UserInterestedReceipt } from '@/models/project'
@@ -42,8 +42,12 @@ export const InterestUpdatesCard: React.FC<Props> = ({ className, receipts }) =>
                     className='size-7 object-cover rounded-full border border-black'
                   />
                   <Text as='p' styleVariant='body-normal'>
-                    <strong>{receipt.user.username}</strong> has expressed interest to invest{' '}
-                    <strong>${receipt.expressedAmount}!</strong> {formatDate(receipt.timestamp, 'MM/dd/yyyy')}
+                    <strong>{receipt.user.username}</strong> is down to contribute&nbsp;
+                    <strong>${receipt.expressedAmount}!</strong>
+                    <br />
+                    <span className='italic text-grey-100'>
+                      {formatDistanceToNow(new Date(receipt.timestamp), { addSuffix: true })}
+                    </span>
                   </Text>
                 </div>
                 <Divider className={index == receipts.length - 1 ? 'hidden' : ''} />

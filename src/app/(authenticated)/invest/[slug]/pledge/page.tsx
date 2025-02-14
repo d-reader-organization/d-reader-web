@@ -7,6 +7,7 @@ import { fetchMe } from '@/app/lib/api/user/queries'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
 import { ReferFriend } from '@/components/invest/Referral'
 import { PledgeActions } from '@/components/invest/PledgeActions'
+import { ProjectHeader } from '@/components/shared/ProjectHeader'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -23,15 +24,9 @@ export default async function PledgePage(props: Props) {
   const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(params.slug, user.username)
 
   return (
-    <GenesisLayout mainClassName=' p-0 md:p-0 lg:p-0'>
-      <div className='flex flex-col items-center gap-6 mt-6'>
-        <Text as='h2' styleVariant='secondary-heading'>
-          {project.title}
-        </Text>
-        <Text as='p' styleVariant='body-normal' fontWeight='medium'>
-          {project.subtitle}
-        </Text>
-      </div>
+    <GenesisLayout mainClassName='px-0 pb-0 md:px-0 md:pb-0 lg:px-0 lg:p-0'>
+      <ProjectHeader title={project.title} subtitle={project.subtitle} />
+
       <div className='bg-black rounded-t-[36px] size-full min-h-screen flex flex-col border-t border-t-grey-300 mt-10 items-center'>
         <div className='w-[78px] h-[3px] bg-grey-300 mt-4' />
         <div className='flex flex-col gap-6 mt-10 max-w-screen-lg w-full'>

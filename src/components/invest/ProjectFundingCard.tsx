@@ -8,13 +8,13 @@ import { differenceInDays } from 'date-fns'
 import { Text, toast } from '../ui'
 import { cn, withRedirect } from '@/lib/utils'
 import { RoutePath } from '@/enums/routePath'
-import { TrendUpIcon } from '@/components/icons/theme/TrendUpIcon'
 import { RequireAuthWrapperButton } from '../shared/buttons/RequireAuthWrapperButton'
 import { redirect, RedirectType, useSearchParams } from 'next/navigation'
 import { REFERRAL_CODE_KEY } from '@/constants/general'
 import { expressInterest } from '@/app/lib/api/invest/mutations'
 import { useToggle } from '@/hooks'
 import { LoaderIcon } from '../icons/theme/LoaderIcon'
+import { TokenIcon } from '../icons/logo/TokenIcon'
 
 type ProjectFundingCardProps = {
   funding: ProjectFunding
@@ -23,6 +23,7 @@ type ProjectFundingCardProps = {
   className: string
 }
 
+// TODO: rewrite the whole component, consider the mobile screen
 export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({
   funding,
   isAuthenticated,
@@ -38,7 +39,7 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({
   return (
     <div
       className={
-        'flex flex-col p-2 gap-4 bg-grey-500 justify-between items-start shadow md:rounded-xl md:p-6 md:top-[100px] md:max-w-[485px] md:min-w-[300px] md:max-h-[550px] md:gap-6 ' +
+        'flex flex-col p-2 gap-4 bg-grey-500 justify-between items-start shadow md:rounded-xl md:p-6 md:top-[100px] md:max-w-[400px] md:min-w-[390px] md:max-h-[550px] md:gap-6 ' +
         className
       }
     >
@@ -82,7 +83,7 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({
         ) : (
           <FundingStats
             text='expressed interest'
-            value={formatNumberWithCommas(funding.numberOfInterestedInvestors) + ' investors'}
+            value={formatNumberWithCommas(funding.numberOfInterestedInvestors) + ' contributors'}
             className='max-md:items-center'
           />
         )}
@@ -102,20 +103,15 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({
           <ExpressInterestButton slug={slug} isUserInterested={!!funding.expressedAmount} defaultPrice={100} />
         )}
 
-        <div className='flex flex-row w-full h-full justify-center items-center p-[12px] gap-[12px] bg-gradient-to-br from-[#4a4e53] to-grey-500 rounded-xl md:gap-4 md:h-[89px] md:p-4'>
-          <div
-            className='flex max-h-[54px] max-w-[54px] p-[10px] bg-white rounded-xl shadow border border-green-genesis'
-            style={{ boxShadow: '0 0 15px rgba(86, 160, 94, 0.8)' }}
-          >
-            <TrendUpIcon className='size-5 text-green-600' solid />
-          </div>
+        <div className='flex flex-row w-full h-full justify-center items-center p-[12px] gap-[12px] bg-gradient-to-br from-[#4a4e53] to-grey-500 rounded-xl md:gap-4 md:h-[72px] md:p-4'>
+          <TokenIcon className='w-10 h-auto' />
           <Text
             as='p'
             styleVariant='body-normal'
             fontWeight='medium'
             className='text-grey-100 leading-tight max-md:text-sm'
           >
-            Rewards will be distributed as creator completes milestones
+            Refer friends & get paid
           </Text>
         </div>
       </div>
@@ -216,7 +212,7 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
       toast({ description: errorMessage, variant: 'error' })
       return
     }
-    redirect(`${RoutePath.Pledge(slug)}`, RedirectType.push)
+    redirect(`${RoutePath.Pledge(slug)}`, RedirectType.replace)
   }
 
   const text = isUserInterested ? `🔔 I'm interested` : 'Express interest'
