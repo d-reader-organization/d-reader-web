@@ -57,9 +57,9 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
             position: 'absolute',
             left: 60,
             bottom: 140,
-            fontSize: '100px',
+            fontSize: '56px',
             fontWeight: 600,
-            lineHeight: '120px',
+            lineHeight: 1.2,
             color: 'white',
             maxWidth: '1000px',
           }}
