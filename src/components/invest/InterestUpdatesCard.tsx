@@ -36,13 +36,13 @@ export const InterestUpdatesCard: React.FC<Props> = ({ className, receipts }) =>
                 <div className='flex gap-4'>
                   <Image
                     alt='avatar'
-                    src={PLACEHOLDER_AVATAR}
+                    src={receipt.user.avatar || PLACEHOLDER_AVATAR}
                     width={32}
                     height={32}
                     className='size-7 object-cover rounded-full border border-black'
                   />
                   <Text as='p' styleVariant='body-normal'>
-                    <strong>{receipt.username}</strong> has expressed interest to invest{' '}
+                    <strong>{receipt.user.username}</strong> has expressed interest to invest{' '}
                     <strong>${receipt.expressedAmount}!</strong> {formatDate(receipt.timestamp, 'MM/dd/yyyy')}
                   </Text>
                 </div>

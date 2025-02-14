@@ -1,3 +1,5 @@
+import { BasicUser } from '../user'
+
 export type ProjectCreator = {
   handle: string
   avatar: string
@@ -68,6 +70,6 @@ export type UserInterestedReceipt = {
   walletAddress: string
   transactionSignature: string
   timestamp: Date
-  username: string
+  user: BasicUser
   expressedAmount: number
 }
