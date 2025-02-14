@@ -1,10 +1,8 @@
 'use client'
 
 import { Project } from '@/models/project'
-import { Text } from '../ui'
-import { PledgeCard } from './PledgeCard'
 import { RewardCard } from './RewardCard'
-import React from 'react'
+import React, { useState } from 'react'
 import { ExpressedInterestDialog } from '../shared/dialogs/ExpressedInterestDialog'
 import { useToggle } from '@/hooks'
 import { User } from '@/models/user'
@@ -16,23 +14,21 @@ type Props = {
 
 export const RewardSection: React.FC<Props> = ({ project, user }) => {
   const [showExpressedInterestDialog, toggleExpressedInterestDialog] = useToggle()
-
+  const [selectedReward, setSelectedReward] = useState(0)
   return (
     <>
-      <div className='col-span-2'>
-        <Text styleVariant='primary-heading' as='h3'>
-          Select your reward
-        </Text>
-        <Text styleVariant='body-large' as='p' className='mb-4'>
-          Pick which reward you&apos;d like to pledge for
-        </Text>
+      <div className='flex flex-col gap-4'>
         <RewardCard
           title='Digital Comic (pdf)'
           price={5}
           description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
-          toggleExpressedInterestDialog={toggleExpressedInterestDialog}
+          rewardId={0}
+          selectedReward={selectedReward}
+          updateSelected={(value) => {
+            setSelectedReward(value)
+          }}
         />
         <RewardCard
           title='Digital Collectible Comic'
@@ -40,7 +36,11 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
-          toggleExpressedInterestDialog={toggleExpressedInterestDialog}
+          rewardId={1}
+          selectedReward={selectedReward}
+          updateSelected={(value) => {
+            setSelectedReward(value)
+          }}
         />
         <RewardCard
           title='Physical hard cover graphic novel'
@@ -48,7 +48,11 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
-          toggleExpressedInterestDialog={toggleExpressedInterestDialog}
+          rewardId={2}
+          selectedReward={selectedReward}
+          updateSelected={(value) => {
+            setSelectedReward(value)
+          }}
         />
         <RewardCard
           title='Animated comic'
@@ -56,12 +60,11 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
-          toggleExpressedInterestDialog={toggleExpressedInterestDialog}
-        />
-        <PledgeCard
-          slug={project.slug}
-          defaultPrice={10}
-          toggleExpressedInterestDialog={toggleExpressedInterestDialog}
+          rewardId={3}
+          selectedReward={selectedReward}
+          updateSelected={(value) => {
+            setSelectedReward(value)
+          }}
         />
       </div>
       {showExpressedInterestDialog && (

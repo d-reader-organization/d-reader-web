@@ -1,15 +1,7 @@
 'use client'
 
 import React from 'react'
-import {
-  Dialog,
-  DialogButton,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/Dialog'
+import { Dialog, DialogButton, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
 import { CommonDialogProps } from '@/models/common'
 import Realistic from 'react-canvas-confetti/dist/presets/realistic'
 import { Text } from '@/components/ui'
@@ -26,48 +18,46 @@ export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDia
 
   return (
     <Dialog open={open} onOpenChange={toggleDialog}>
-      <DialogContent className='max-w-md' hideCloseIcon>
+      <DialogContent className='max-w-md' hideCloseIcon aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle asChild>
             <Text styleVariant='primary-heading' as='h3'>
               You got it champ!
             </Text>
           </DialogTitle>
-          <DialogDescription className='text-left'>
-            <p className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
-              <p className='size-5'>🐦</p>
-              <p className='inline-block gap-2 w-full'>
-                <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
-                  Spread the word
-                </Text>
-                <Text
-                  as='p'
-                  styleVariant='body-small'
-                  fontWeight='medium'
-                  className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
-                >
-                  Share the campaign and help this story secure funding!
-                </Text>
-              </p>
-            </p>
-            <p className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
-              <p className='size-5'>🎁</p>
-              <p className='inline-block gap-2 w-full'>
-                <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
-                  Refer a friend!
-                </Text>
-                <Text
-                  as='p'
-                  styleVariant='body-small'
-                  fontWeight='medium'
-                  className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
-                >
-                  You collect 10% fees on all purchases which your referred user makes.
-                </Text>
-              </p>
-            </p>
-            {/* // TODO: copy my invite link */}
-          </DialogDescription>
+          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
+            <div className='size-5'>🐦</div>
+            <div className='inline-block gap-2 w-full'>
+              <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
+                Spread the word
+              </Text>
+              <Text
+                as='p'
+                styleVariant='body-small'
+                fontWeight='medium'
+                className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
+              >
+                Share the campaign and help this story secure funding!
+              </Text>
+            </div>
+          </div>
+          <div className='rounded-xl bg-grey-400 p-4 gap-4 flex'>
+            <div className='size-5'>🎁</div>
+            <div className='inline-block gap-2 w-full'>
+              <Text as='p' styleVariant='body-normal' fontWeight='bold' className='max-sm:text-xs'>
+                Refer a friend!
+              </Text>
+              <Text
+                as='p'
+                styleVariant='body-small'
+                fontWeight='medium'
+                className='max-sm:text-xs text-grey-100 text-ellipsis overflow-auto'
+              >
+                You collect 10% fees on all purchases which your referred user makes.
+              </Text>
+            </div>
+          </div>
+          {/* // TODO: copy my invite link */}
         </DialogHeader>
         <Realistic autorun={{ speed: 0.5, duration: 1000 }} />
 

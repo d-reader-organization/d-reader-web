@@ -1,4 +1,5 @@
-import { cn } from '@/lib/utils'
+'use client'
+
 import { RequireAuthWrapperButton, RequireAuthWrapperButtonProps } from '../shared/buttons/RequireAuthWrapperButton'
 import { expressInterest } from '@/app/lib/api/invest/mutations'
 import { ExpressInterest } from '@/models/project'
@@ -6,6 +7,7 @@ import { toast } from '../ui'
 import { useRouter } from 'next/navigation'
 import { useToggle } from '@/hooks'
 import { LoaderIcon } from '../icons/theme/LoaderIcon'
+import { cn } from '@/lib/utils'
 
 type Props = {
   slug: string
@@ -18,10 +20,9 @@ type Props = {
 
 export const ConfirmInterestButton: React.FC<Props> = ({
   slug,
-  className,
-  isUserInterested,
   amount,
   referralCode,
+  className,
   toggleExpressedInterestDialog,
 }) => {
   const { refresh } = useRouter()
@@ -43,19 +44,14 @@ export const ConfirmInterestButton: React.FC<Props> = ({
     refresh()
   }
 
-  const text = isUserInterested ? '👍 Selected' : 'Express interest'
   return (
     <RequireAuthWrapperButton
       onClick={handleExpressInterest}
       Icon={showLoader ? LoaderIcon : undefined}
-      variant={isUserInterested ? 'secondary' : 'primary'}
-      className={cn(
-        className,
-        'flex flex-col w-full p-[14px] justify-center items-center self-stretch rounded-xl md:p-4',
-        !isUserInterested && 'text-grey-600 bg-green-genesis border-green-300 hover:brightness-100'
-      )}
+      variant='genesis'
+      className={cn('w-full', className)}
     >
-      {text}
+      {showLoader ? '' : 'Submit'}
     </RequireAuthWrapperButton>
   )
 }

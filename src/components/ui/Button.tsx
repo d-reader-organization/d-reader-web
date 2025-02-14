@@ -10,6 +10,7 @@ const buttonVariants = cva(
       variant: {
         inline: 'p-0 min-w-max h-fit',
         primary: 'text-black',
+        genesis: 'text-black',
         secondary: 'text-grey-100',
         outline: '',
         white: 'text-black',
@@ -30,6 +31,9 @@ const buttonVariants = cva(
       { variant: 'primary', subVariant: 1, className: 'bg-yellow-300 border-t border-yellow-100' },
       { variant: 'primary', subVariant: 2, className: 'bg-yellow-100 border-t border-yellow-50' },
       { variant: 'primary', subVariant: 3, className: 'bg-yellow-300 border-3 border-yellow-100' },
+      { variant: 'genesis', subVariant: 1, className: 'bg-green-genesis border-t border-green-100' },
+      { variant: 'genesis', subVariant: 2, className: 'bg-green-genesis border-t border-green-50' },
+      { variant: 'genesis', subVariant: 3, className: 'bg-green-genesis border-3 border-green-100' },
       {
         variant: 'secondary',
         subVariant: 1,

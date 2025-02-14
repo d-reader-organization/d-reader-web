@@ -1,13 +1,13 @@
 'use client'
 
 import { Project } from '@/models/project'
-import { Card, CardContent, CardTitle } from '../ui/card'
-import { Text } from '../ui'
+import { Card, CardContent } from '../ui/card'
+import { Text } from '../ui/Text'
 import Image from 'next/image'
-import { ConfirmInterestButton } from './ConfirmInterestButton'
-import { useSearchParams } from 'next/navigation'
-import { REFERRAL_CODE_KEY } from '@/constants/general'
-import { isEqual } from 'lodash'
+import { cn } from '@/lib/utils'
+import { CircleIcon } from '../icons/theme/CircleIcon'
+import { Button } from '../ui'
+import { CheckCircleIcon } from '../icons/theme/CheckCircleIcon'
 
 type RewardCardProps = {
   title: string
@@ -15,8 +15,9 @@ type RewardCardProps = {
   description: string
   imageUrl: string
   project: Project
-  toggleExpressedInterestDialog: VoidFunction
-  ref?: string | null
+  rewardId: number
+  selectedReward: number
+  updateSelected: (value: number) => void
 }
 
 export function RewardCard({
@@ -25,42 +26,48 @@ export function RewardCard({
   description,
   imageUrl,
   project,
-  toggleExpressedInterestDialog,
+  rewardId,
+  selectedReward,
+  updateSelected,
 }: RewardCardProps) {
-  const searchParams = useSearchParams()
-  const ref = searchParams.get(REFERRAL_CODE_KEY)
+  const isSelected = rewardId === selectedReward
 
   return (
-    <Card className='mb-6 text-white'>
-      <CardContent className='p-6'>
-        <div className='flex justify-between items-start'>
-          <div>
-            <CardTitle className='text-xl mb-2'>{title}</CardTitle>
-            <Text styleVariant='body-large' as='p' className='font-semibold text-grey-100'>
-              ${price} • {project.funding.numberOfBackers} backers
+    <Card
+      className={cn(
+        'text-white w-full max-w-[750px] rounded-xl border border-grey-300',
+        isSelected ? 'border-green-genesis' : ''
+      )}
+    >
+      <CardContent className='flex gap-4 p-4'>
+        <Image
+          src={imageUrl || '/placeholder.svg'}
+          alt='Project image'
+          width={270}
+          height={180}
+          className='rounded-[10px] max-h-[180px] h-full w-auto'
+        />
+        <div className='flex flex-col gap-3'>
+          <div className='flex justify-between'>
+            <Text as='p' styleVariant='body-xlarge' fontWeight='bold'>
+              {title}
             </Text>
-            <p className='mt-2'>{description}</p>
-          </div>
-          <div className='flex flex-col gap-2'>
-            <Image
-              src={imageUrl || '/placeholder.svg'}
-              alt='Comic preview'
-              width={100}
-              height={100}
-              className='rounded-md'
-            />
-            <ConfirmInterestButton
-              slug={project.slug}
-              // TODO: this should be "is higher"?
-              isUserInterested={isEqual(project.funding.expressedAmount, price)}
-              className='min-w-[146px]'
-              amount={price}
-              // ALSO: why do we need the referral code here?
-              referralCode={ref}
-              // ALSO: why are we sending the toggle function as a prop? Why isn't the dialog living within the button? or why aren't we passing 'onClick'
-              toggleExpressedInterestDialog={toggleExpressedInterestDialog}
+            <Button
+              iconOnly
+              Icon={isSelected ? CheckCircleIcon : CircleIcon}
+              solid={isSelected}
+              className='size-6'
+              iconClassName={cn('size-6', isSelected ? 'text-green-genesis' : 'text-grey-300')}
+              variant='ghost'
+              onClick={() => updateSelected(rewardId)}
             />
           </div>
+          <Text styleVariant='body-normal' as='p' fontWeight='medium' className='text-grey-100 mb-2'>
+            ${price}&nbsp; | &nbsp;{project.funding.numberOfBackers} backers
+          </Text>
+          <Text as='p' styleVariant='body-small' className='text-grey-100'>
+            {description}
+          </Text>
         </div>
       </CardContent>
     </Card>
