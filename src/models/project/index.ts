@@ -77,3 +77,10 @@ export type UserInterestedReceipt = {
 export type Referral = BasicUser & {
   referredAt: Date
 }
+
+export type ReferralCampaign = {
+  title: string
+  slug: string
+  totalReferred: number
+  receipts: UserInterestedReceipt[]
+}

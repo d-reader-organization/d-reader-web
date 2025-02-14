@@ -3,6 +3,7 @@ import { Nullable } from '@/models/common'
 import {
   isSuccessfulProject,
   Project,
+  ReferralCampaign,
   SuccessfulProject,
   UserInterestedReceipt,
   UserProjectInterest,
@@ -13,7 +14,7 @@ import { highInterestProjects, InterestProject } from '../../data/invest/project
 import { INVEST_QUERY_KEYS } from './keys'
 import { getAccessToken } from '../../utils/auth'
 
-const { GET, INVEST, INTEREST_RECEIPTS } = INVEST_QUERY_KEYS
+const { GET, INVEST, INTEREST_RECEIPTS, REFERRAL_CAMPAIGN, RECEIPT } = INVEST_QUERY_KEYS
 
 export const fetchSuccessfulProjects = async (): Promise<{
   data: SuccessfulProject[]
@@ -78,5 +79,16 @@ export const fetchUserInterestedReceipts = async (slug: string): Promise<UserInt
   const { data } = await fetchWrapper<UserInterestedReceipt[]>({
     path: `${INVEST}/${GET}/${slug}/${INTEREST_RECEIPTS}`,
   })
+  return data || []
+}
+
+export const fetchAllReferralCampaignReceipts = async (): Promise<ReferralCampaign[]> => {
+  const { data } = await fetchWrapper<ReferralCampaign[]>({
+    accessToken: await getAccessToken(),
+    path: `${INVEST}/${REFERRAL_CAMPAIGN}/${RECEIPT}/${GET}`,
+    params: { skip: 0, take: 5 },
+  })
+
+  console.log(data)
   return data || []
 }
