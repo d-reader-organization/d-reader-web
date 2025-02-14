@@ -11,7 +11,7 @@ import { TelegramIcon } from '../icons/social/TelegramIcon'
 
 export function ReferFriend({ twitterIntent, username }: { twitterIntent: string | null; username: string }) {
   return (
-    <div className='w-[480px] min-h-[637px] h-fit rounded-xl border border-grey-300 relative p-4 flex flex-col gap-6'>
+    <div className='max-w-[480px] w-full min-h-[637px] h-fit rounded-xl border border-grey-300 relative p-4 flex flex-col gap-6'>
       <ShareReferralBox twitterIntent={twitterIntent ?? ''} username={username} />
       <div className='flex flex-col gap-4'>
         {referralCardsData.map((card) => (
@@ -36,14 +36,13 @@ const referralCardsData: ReferralCardType[] = [
     title: 'Every referral',
   },
   {
-    description: 'Refer 1 friend and enter a raffle for one of the 100 T-shirts we have in stock',
+    description: 'Refer 1 friend and enter a raffle for a T-shirt',
     showTrophy: true,
     subtitle: 'T-shirt & merch',
     title: '1 Referral',
   },
   {
-    description:
-      'Refer at least 2 users to enter a raffle for $200. Each following referral counts as additional raffle tickets.',
+    description: 'Refer at least 2 users to enter a raffle for $200',
     showTrophy: false,
     subtitle: 'Chance for $200',
     title: '2+ Referrals',
@@ -56,7 +55,7 @@ type ReferralCardProps = {
 
 const ReferralCard: React.FC<ReferralCardProps> = ({ card }) => {
   return (
-    <div className='flex justify-between items-center p-3 rounded-[10px]  bg-grey-600'>
+    <div className='flex justify-between gap-2 items-center p-3 rounded-[10px] bg-grey-500'>
       <div className='flex flex-col gap-2'>
         <Text as='p' styleVariant='body-small' fontWeight='bold' className='text-grey-100'>
           {card.title}
@@ -86,10 +85,10 @@ type ShareReferralBoxProps = {
   username: string
 }
 const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, username }) => (
-  <div className='rounded-[10px] bg-blue-300 shadow-[-4px_0px_0px_0px_#3D3E60] h-[212px] flex justify-end w-full'>
+  <div className='rounded-[10px] bg-blue-300 shadow-[-4px_0px_0px_0px_#3D3E60] h-[160px] sm:h-[212px] flex justify-end w-full'>
     <SomeImage />
-    <div className='flex flex-col p-4 h-full justify-between max-w-[260px]'>
-      <div className='flex flex-col gap-4'>
+    <div className='flex flex-col p-2 sm:p-4 h-full justify-between max-w-[180px] sm:max-w-[260px]'>
+      <div className='flex flex-col gap-2 md:gap-4'>
         <Text as='h3' styleVariant='primary-heading'>
           Invite friends!
         </Text>
@@ -146,7 +145,7 @@ const SomeImage = () => (
     height='263'
     viewBox='0 0 233 263'
     fill='none'
-    className='absolute -top-9 -left-4'
+    className='absolute -top-16 sm:-top-9 -left-4 max-sm:w-[160px]'
     xmlns='http://www.w3.org/2000/svg'
     xmlnsXlink='http://www.w3.org/1999/xlink'
   >

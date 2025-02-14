@@ -26,9 +26,7 @@ export default async function PledgePage(props: Props) {
   return (
     <GenesisLayout mainClassName='px-0 pb-0 md:px-0 md:pb-0 lg:px-0 lg:p-0'>
       <ProjectHeader title={project.title} subtitle={project.subtitle} />
-
-      <div className='bg-black rounded-t-[36px] size-full min-h-screen flex flex-col border-t border-t-grey-300 mt-10 items-center'>
-        <div className='w-[78px] h-[3px] bg-grey-300 mt-4' />
+      <div className='size-full min-h-screen flex flex-col border-t border-t-grey-300 mt-10 items-center p-4'>
         <div className='flex flex-col gap-6 mt-10 max-w-screen-lg w-full'>
           <div className='flex flex-col gap-3'>
             <Text styleVariant='secondary-heading' as='h4'>

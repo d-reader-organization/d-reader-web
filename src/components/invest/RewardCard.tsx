@@ -46,7 +46,7 @@ export function RewardCard({
           isSelected ? 'border-green-genesis' : ''
         )}
       >
-        <CardContent className='flex gap-4 p-4'>
+        <CardContent className='flex max-sm:flex-col gap-4 p-4'>
           <Image
             src={imageUrl || '/placeholder.svg'}
             alt='Project image'
