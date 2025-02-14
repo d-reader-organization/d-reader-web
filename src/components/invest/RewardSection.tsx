@@ -46,7 +46,7 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
         <RewardCard
           title='Digital Comic (pdf)'
           price={5}
-          description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
+          description='Get the full comic in high-quality PDF—yours to read anytime, anywhere!'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
           rewardId={0}
@@ -58,7 +58,7 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
         <RewardCard
           title='Digital Collectible Comic'
           price={10}
-          description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
+          description='Own a unique digital edition with exclusive art, bonuses, and guaranteed rarity that only you can own and trade!'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
           rewardId={1}
@@ -68,9 +68,9 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           }}
         />
         <RewardCard
-          title='Physical hard cover graphic novel'
+          title='Physical comic'
           price={50}
-          description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
+          description='A beautifully printed edition to hold, admire, and add to your collection!'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
           rewardId={2}
@@ -82,7 +82,7 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
         <RewardCard
           title='Animated comic'
           price={100}
-          description='Use this tier to receive a DRM-Free PDF copy plus any and all digital goodies unlocked via Stretch Goals.far!)'
+          description='Experience the story like never before with motion, sound, and epic visuals!'
           imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
           project={project}
           rewardId={3}

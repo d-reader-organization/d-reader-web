@@ -8,6 +8,7 @@ import { ButtonLink } from '../ui/ButtonLink'
 import { LinkIcon } from '../icons/theme/LinkIcon'
 import { DiscordIcon } from '../icons/social/DiscordIcon'
 import { TelegramIcon } from '../icons/social/TelegramIcon'
+import Image from 'next/image'
 
 export function ReferFriend({ twitterIntent, username }: { twitterIntent: string | null; username: string }) {
   return (
@@ -24,26 +25,26 @@ export function ReferFriend({ twitterIntent, username }: { twitterIntent: string
 
 type ReferralCardType = {
   description: string
-  showTrophy: boolean
+  image: string
   subtitle: string
   title: string
 }
 const referralCardsData: ReferralCardType[] = [
   {
     description: 'Receive 20% of referred user’s purchase fees. They receive a 10% discount of their purchase.',
-    showTrophy: true,
+    image: '/assets/images/money.png',
     subtitle: 'Earn money',
     title: 'Every referral',
   },
   {
     description: 'Refer 1 friend and enter a raffle for a T-shirt',
-    showTrophy: true,
+    image: '/assets/images/merch.png',
     subtitle: 'T-shirt & merch',
     title: '1 Referral',
   },
   {
     description: 'Refer at least 2 users to enter a raffle for $200',
-    showTrophy: false,
+    image: '/assets/images/raffle.png',
     subtitle: 'Chance for $200',
     title: '2+ Referrals',
   },
@@ -64,17 +65,13 @@ const ReferralCard: React.FC<ReferralCardProps> = ({ card }) => {
           <Text as='p' styleVariant='body-xlarge' fontWeight='bold'>
             {card.subtitle}
           </Text>
-          <Text as='p' styleVariant='body-small' className='text-grey-100'>
+          <Text as='p' styleVariant='body-small' className='text-grey-100 line-clamp-2 text-ellipsis'>
             {card.description}
           </Text>
         </div>
       </div>
       <div className='h-[82px] w-full max-w-[82px] rounded-lg bg-grey-400 relative'>
-        {/* {card.showTrophy && (
-          <div className='size-[22px] rounded-md absolute -top-2 -right-2 bg-yellow-300 bg-opacity-40 flex items-center justify-center'>
-            <TrophyIcon className='size-3 text-yellow-300' />
-          </div>
-        )} */}
+        <Image src={card.image} alt={card.subtitle} width={82} height={82} className='rounded-lg size-full' />
       </div>
     </div>
   )
