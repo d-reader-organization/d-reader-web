@@ -43,7 +43,7 @@ export default async function PledgePage(props: Props) {
               <RewardSection project={project} user={user} />
               <ReferFriend twitterIntent={twitterIntent} username={user.username} />
             </div>
-            <PledgeActions project={project} username={user.username} />
+            <PledgeActions />
           </div>
         </div>
       </div>

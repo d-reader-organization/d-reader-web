@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { VariantSvgIconProps } from '@/lib/types'
 
 const buttonVariants = cva(
-  'min-w-[42px] inline-flex items-center justify-center font-bold rounded-md shadow-[0px_16px_32px_-4px_rgba(0,0,0,0.10),0px_2px_4px_0px_rgba(0,0,0,0.04)] transition-colors hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
+  'min-w-[42px] inline-flex items-center justify-center font-bold rounded-md shadow-[0px_16px_32px_-4px_rgba(0,0,0,0.10),0px_2px_4px_0px_rgba(0,0,0,0.04)] transition-colors hover:brightness-105  disabled:opacity-50 disabled:pointer-events-none',
   {
     variants: {
       variant: {

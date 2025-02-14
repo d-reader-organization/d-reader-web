@@ -1,11 +1,15 @@
 'use client'
 
-import { Project } from '@/models/project'
+import { ExpressInterest, Project } from '@/models/project'
 import { RewardCard } from './RewardCard'
 import React, { useState } from 'react'
 import { ExpressedInterestDialog } from '../shared/dialogs/ExpressedInterestDialog'
 import { useToggle } from '@/hooks'
 import { User } from '@/models/user'
+import { useSearchParams } from 'next/navigation'
+import { REFERRAL_CODE_KEY } from '@/constants/general'
+import { expressInterest } from '@/app/lib/api/invest/mutations'
+import { toast } from '../ui/toast'
 
 type Props = {
   project: Project
@@ -15,6 +19,27 @@ type Props = {
 export const RewardSection: React.FC<Props> = ({ project, user }) => {
   const [showExpressedInterestDialog, toggleExpressedInterestDialog] = useToggle()
   const [selectedReward, setSelectedReward] = useState(0)
+  const searchParams = useSearchParams()
+  const referralCode = searchParams.get(REFERRAL_CODE_KEY)
+  const [isLoading, toggleLoader] = useToggle(false)
+
+  const handleCardSelect = async ({ cardId, amount }: { cardId: number; amount: number }) => {
+    toggleLoader()
+    if (isLoading) {
+      return
+    }
+    setSelectedReward(cardId)
+    const request: ExpressInterest = { expressedAmount: amount, ref: referralCode }
+    const { errorMessage } = await expressInterest({ slug: project.slug, request })
+    toggleLoader()
+
+    if (errorMessage) {
+      toast({ description: errorMessage, variant: 'error' })
+      return
+    }
+    toggleExpressedInterestDialog()
+  }
+
   return (
     <>
       <div className='flex flex-col gap-4'>
@@ -26,8 +51,8 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           project={project}
           rewardId={0}
           selectedReward={selectedReward}
-          updateSelected={(value) => {
-            setSelectedReward(value)
+          updateSelected={async (cardId) => {
+            await handleCardSelect({ amount: 5, cardId })
           }}
         />
         <RewardCard
@@ -38,8 +63,8 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           project={project}
           rewardId={1}
           selectedReward={selectedReward}
-          updateSelected={(value) => {
-            setSelectedReward(value)
+          updateSelected={async (cardId) => {
+            await handleCardSelect({ amount: 10, cardId })
           }}
         />
         <RewardCard
@@ -50,8 +75,8 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           project={project}
           rewardId={2}
           selectedReward={selectedReward}
-          updateSelected={(value) => {
-            setSelectedReward(value)
+          updateSelected={async (cardId) => {
+            await handleCardSelect({ amount: 50, cardId })
           }}
         />
         <RewardCard
@@ -62,8 +87,8 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           project={project}
           rewardId={3}
           selectedReward={selectedReward}
-          updateSelected={(value) => {
-            setSelectedReward(value)
+          updateSelected={async (cardId) => {
+            await handleCardSelect({ amount: 100, cardId })
           }}
         />
       </div>
