@@ -7,13 +7,12 @@ import { METADATA_IMAGE_SIZE } from '@/constants/general'
 export async function GET(request: Request, props: { params: Promise<{ slug: string }> }) {
   const params = await props.params
   const project = (await fetchProject(params.slug)).data
-  if (!process.cwd().includes('public')) {
-    process.chdir('public')
-  }
+
   let bannerSrc = project?.banner
 
   if (bannerSrc?.includes('assets')) {
-    const bannerData = await readFile(join(process.cwd(), project?.banner ?? '/assets/images/metadata-invest.png'))
+    const imagePath = join(process.cwd(), 'public', bannerSrc ?? '/assets/images/metadata-invest.png')
+    const bannerData = await readFile(imagePath)
     const extension = bannerSrc.split('.')[1] === 'png' ? 'png' : 'jpeg'
     bannerSrc = `data:image/${extension};base64,${bannerData.toString('base64')}`
   }
