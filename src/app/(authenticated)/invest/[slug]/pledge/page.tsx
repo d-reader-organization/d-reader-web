@@ -24,7 +24,7 @@ export default async function PledgePage(props: Props) {
   const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(params.slug, user.username)
 
   return (
-    <GenesisLayout mainClassName='px-0 pb-0 md:px-0 md:pb-0 lg:px-0 lg:p-0'>
+    <GenesisLayout>
       <ProjectHeader title={project.title} subtitle={project.subtitle} />
       <div className='size-full min-h-screen flex flex-col border-t border-t-grey-300 mt-10 items-center p-4'>
         <div className='flex flex-col gap-6 mt-10 max-w-screen-lg w-full'>

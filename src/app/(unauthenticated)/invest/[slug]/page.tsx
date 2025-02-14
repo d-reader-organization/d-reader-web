@@ -25,7 +25,7 @@ export default async function ProjectInvestPage(props: Props) {
   const receipts = await fetchUserInterestedReceipts(project.slug)
   const isAuthenticated = await isAuthenticatedUser()
   return (
-    <GenesisLayout showFooter>
+    <GenesisLayout showFooter backgroundImageSrc={project.banner}>
       <div className='flex flex-col max-w-screen-xl w-full'>
         <ProjectHeader title={project.title} subtitle={project.subtitle} className='max-md:hidden' />
         <div className='flex flex-col md:flex-row w-full h-full gap-6 md:gap-10'>

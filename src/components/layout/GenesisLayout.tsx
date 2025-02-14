@@ -4,15 +4,22 @@ import { fetchMe } from '@/app/lib/api/user/queries'
 import { Footer } from './Footer'
 import { cn } from '@/lib/utils'
 import { IntercomClient } from '../shared/IntercomClient'
+import { BackgroundImageWithGradient } from '../shared/BackgroundImageWithGradient'
 
-type Props = React.PropsWithChildren & { mainClassName?: string; showFooter?: boolean }
+type Props = React.PropsWithChildren & { mainClassName?: string; showFooter?: boolean; backgroundImageSrc?: string }
 
-export const GenesisLayout: React.FC<Props> = async ({ children, mainClassName, showFooter = false }) => {
+export const GenesisLayout: React.FC<Props> = async ({
+  children,
+  mainClassName,
+  showFooter = false,
+  backgroundImageSrc,
+}) => {
   const me = await fetchMe()
 
   return (
     <div className='flex flex-col min-h-screen'>
       <GenesisNavigation me={me} />
+      {backgroundImageSrc ? <BackgroundImageWithGradient image={backgroundImageSrc} /> : null}
       <main
         className={cn(
           'flex flex-col w-full h-full items-center mt-20 md:mt-16 p-4 md:p-6 lg:p-8 xs:pb-24 sm:pb-24 md:pb-24 lg:pb-24 flex-1',
