@@ -1,4 +1,4 @@
-import { generateReferralLink } from '@/constants/general'
+import { generateReferralLink, generateUserInviteReferralLink } from '@/constants/general'
 import { PROJECTS } from '@/constants/projects'
 import { RoutePath } from '@/enums/routePath'
 import { CarouselSlide } from '@/models/carousel/carouselSlide'
@@ -175,4 +175,18 @@ export const getTokenPrice = (basePrice: number, decimals: number) => {
   const price = parseFloat((basePrice / denominator).toFixed(3))
 
   return price
+}
+
+export const getTwitterIntentInviteUser = (username: string) => {
+  const referralLink = generateUserInviteReferralLink(username)
+  const twitterIntentPrefix = 'https://x.com/intent/tweet?text='
+
+  const headline = `DON'T MISS OUT 🫵`
+  const shoutOutLine = '@GenesisDotApp is cooking 🍳, join the platform and earn exciting rewards'
+  const genesisLinkText = '🔗👇 Register with my referral link to get discounts'
+
+  const tweetText = encodeURI(
+    `${twitterIntentPrefix}${headline}\n\n${shoutOutLine}\n\n${genesisLinkText}\n${referralLink}`
+  )
+  return tweetText
 }

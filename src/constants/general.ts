@@ -166,3 +166,7 @@ export const REFERRAL_REWARDING_PROJECT = 'bonk-and-the-curse-of-the-bear-king'
 export const generateReferralLink = (slug: string, username: string) => {
   return `${process.env.NEXT_PUBLIC_SITE_URL}/invest/${slug}?${REFERRAL_CODE_KEY}=${username}`
 }
+
+export const generateUserInviteReferralLink = (username: string) => {
+  return `${process.env.NEXT_PUBLIC_SITE_URL}/register?${REFERRAL_CODE_KEY}=${username}`
+}

@@ -20,6 +20,7 @@ export const USER_QUERY_KEYS = Object.freeze({
   DELETE: 'delete',
   RECOVER: 'recover',
   SYNC_WALLETS: 'sync-wallets',
+  REFERRALS: 'referrals',
   PRIVACY_CONSENT: 'privacy-consent',
 })
 
@@ -28,6 +29,7 @@ export const userKeys = Object.freeze({
   get: (id: string | number) => [USER_QUERY_KEYS.USER, USER_QUERY_KEYS.GET, id],
   getMe: [USER_QUERY_KEYS.USER, USER_QUERY_KEYS.GET, USER_QUERY_KEYS.ME],
   getAssets: (id: string | number) => [USER_QUERY_KEYS.USER, USER_QUERY_KEYS.GET, id, USER_QUERY_KEYS.ASSETS],
+  getReferrals: (id: string | number) => [USER_QUERY_KEYS.USER, USER_QUERY_KEYS.REFERRALS, id, USER_QUERY_KEYS.GET],
   getWallets: (id: string | number) => [USER_QUERY_KEYS.USER, USER_QUERY_KEYS.GET, id, USER_QUERY_KEYS.WALLETS],
   syncWallets: (id: string | number) => [USER_QUERY_KEYS.USER, USER_QUERY_KEYS.SYNC_WALLETS, id],
 })

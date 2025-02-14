@@ -2,7 +2,7 @@ import { TwitterIntentComicMintedParams } from '@/models/twitter/twitterIntentCo
 import { TWITTER_QUERY_KEYS } from '@/api/twitter/twitterKeys'
 import { PROJECTS } from '@/constants/projects'
 import { Nullable } from '@/models/common'
-import { getTwitterIntentExpressedInterest } from '@/utils/helpers'
+import { getTwitterIntentExpressedInterest, getTwitterIntentInviteUser } from '@/utils/helpers'
 import { fetchWrapper } from '../../fetchWrapper'
 
 const { TWITTER, INTENT, COMIC_MINTED } = TWITTER_QUERY_KEYS
@@ -26,5 +26,10 @@ export const fetchTwitterIntentExpressedInterest = (
   }
 
   const twitterIntent = getTwitterIntentExpressedInterest(project, username)
+  return { data: twitterIntent }
+}
+
+export const fetchTwitterIntentInviteUser = (username: string): { data: Nullable<string>; errorMessage?: string } => {
+  const twitterIntent = getTwitterIntentInviteUser(username)
   return { data: twitterIntent }
 }

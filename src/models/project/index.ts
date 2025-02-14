@@ -73,3 +73,7 @@ export type UserInterestedReceipt = {
   user: BasicUser
   expressedAmount: number
 }
+
+export type Referral = BasicUser & {
+  referredAt: Date
+}
