@@ -208,7 +208,7 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
     toggleLoader()
 
     // TODO: this should remove the interest to express, if the user is clicking on the "I'm interested" button
-    const request: ExpressInterest = { expressedAmount: defaultPrice, referralCode }
+    const request: ExpressInterest = { expressedAmount: defaultPrice, ref: referralCode }
     const { errorMessage } = await expressInterest({ slug, request })
     toggleLoader()
 

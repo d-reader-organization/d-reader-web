@@ -61,7 +61,7 @@ export type UserProjectInterest = {
 
 export type ExpressInterest = {
   expressedAmount: number
-  referralCode?: string | null
+  ref?: string | null
 }
 
 export type UserInterestedReceipt = {

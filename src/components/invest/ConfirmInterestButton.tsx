@@ -31,8 +31,7 @@ export const ConfirmInterestButton: React.FC<Props> = ({
   const handleExpressInterest = async () => {
     toggleLoader()
 
-    // TODO: why are we passing the referral code here? are these referrals campaign-scoped?
-    const request: ExpressInterest = { expressedAmount: amount, referralCode }
+    const request: ExpressInterest = { expressedAmount: amount, ref: referralCode }
     const { errorMessage } = await expressInterest({ slug, request })
     toggleLoader()
 

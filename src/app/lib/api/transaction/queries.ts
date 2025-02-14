@@ -1,13 +1,12 @@
 import { fetchWrapper } from '../../fetchWrapper'
 import { MintParams } from '@/models/transaction/mint'
-import { ExpressInterestParams } from '@/models/transaction/expressInterest'
 import { TRANSACTION_QUERY_KEYS } from './keys'
 import { MultipleBuyParams } from '@/models/transaction/instantBuy'
 import { ListParams } from '@/models/transaction/list'
 import { TransactionHistoryItem } from '@/models/transaction/transactionHistory'
 import { TransactionHistoryParams } from '@/models/transaction/transactionHistory'
 
-const { TRANSACTION, MINT, EXPRESS_INTEREST, DIRECT_BUY, LIST, HISTORY } = TRANSACTION_QUERY_KEYS
+const { TRANSACTION, MINT, DIRECT_BUY, LIST, HISTORY } = TRANSACTION_QUERY_KEYS
 
 export const fetchMintTransaction = async ({
   params,
@@ -26,22 +25,6 @@ export const fetchMintTransaction = async ({
     return { data: [], error: response.errorMessage }
   }
   return { data: JSON.parse(JSON.stringify(response.data ?? [])) }
-}
-
-export const fetchExpressInterestTransaction = async ({
-  accessToken,
-  params,
-}: {
-  accessToken: string
-  params: ExpressInterestParams
-}) => {
-  const response = await fetchWrapper<string>({
-    accessToken,
-    path: `${TRANSACTION}/${EXPRESS_INTEREST}`,
-    params,
-    isTextResponse: true,
-  })
-  return response
 }
 
 export const fetchDirectBuyTransaction = async ({

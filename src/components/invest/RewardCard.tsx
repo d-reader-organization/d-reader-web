@@ -16,7 +16,7 @@ type RewardCardProps = {
   imageUrl: string
   project: Project
   toggleExpressedInterestDialog: VoidFunction
-  referralCode?: string | null
+  ref?: string | null
 }
 
 export function RewardCard({
@@ -28,7 +28,7 @@ export function RewardCard({
   toggleExpressedInterestDialog,
 }: RewardCardProps) {
   const searchParams = useSearchParams()
-  const referralCode = searchParams.get(REFERRAL_CODE_KEY)
+  const ref = searchParams.get(REFERRAL_CODE_KEY)
 
   return (
     <Card className='mb-6 text-white'>
@@ -56,16 +56,13 @@ export function RewardCard({
               className='min-w-[146px]'
               amount={price}
               // ALSO: why do we need the referral code here?
-              referralCode={referralCode}
+              referralCode={ref}
               // ALSO: why are we sending the toggle function as a prop? Why isn't the dialog living within the button? or why aren't we passing 'onClick'
               toggleExpressedInterestDialog={toggleExpressedInterestDialog}
             />
           </div>
         </div>
       </CardContent>
-      {/* <CardFooter>
-          <Button className='w-full bg-green-genesis border-green-300'>Express Interest</Button>
-        </CardFooter> */}
     </Card>
   )
 }
