@@ -6,7 +6,7 @@ import { Text } from '../ui/Text'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { CircleIcon } from '../icons/theme/CircleIcon'
-import { Button } from '../ui'
+import { Button } from '../ui/Button'
 import { CheckCircleIcon } from '../icons/theme/CheckCircleIcon'
 
 type RewardCardProps = {
@@ -33,43 +33,48 @@ export function RewardCard({
   const isSelected = rewardId === selectedReward
 
   return (
-    <Card
-      className={cn(
-        'text-white w-full max-w-[750px] rounded-xl border border-grey-300',
-        isSelected ? 'border-green-genesis' : ''
-      )}
+    <Button
+      variant='ghost'
+      onClick={() => {
+        updateSelected(rewardId)
+      }}
+      className='size-full'
     >
-      <CardContent className='flex gap-4 p-4'>
-        <Image
-          src={imageUrl || '/placeholder.svg'}
-          alt='Project image'
-          width={270}
-          height={180}
-          className='rounded-[10px] max-h-[180px] h-full w-auto'
-        />
-        <div className='flex flex-col gap-3'>
-          <div className='flex justify-between'>
-            <Text as='p' styleVariant='body-xlarge' fontWeight='bold'>
-              {title}
+      <Card
+        className={cn(
+          'text-white w-full max-w-[750px] rounded-xl border border-grey-300',
+          isSelected ? 'border-green-genesis' : ''
+        )}
+      >
+        <CardContent className='flex gap-4 p-4'>
+          <Image
+            src={imageUrl || '/placeholder.svg'}
+            alt='Project image'
+            width={270}
+            height={180}
+            priority
+            className='rounded-[10px] max-h-[180px] h-full w-auto'
+          />
+          <div className='flex flex-col items-start gap-3'>
+            <div className='flex justify-between w-full'>
+              <Text as='p' styleVariant='body-xlarge' fontWeight='bold'>
+                {title}
+              </Text>
+              {isSelected ? (
+                <CheckCircleIcon className='size-6 text-green-genesis' />
+              ) : (
+                <CircleIcon className='size-6 text-grey-300' />
+              )}
+            </div>
+            <Text styleVariant='body-normal' as='p' fontWeight='medium' className='text-grey-100 mb-2'>
+              ${price}&nbsp; | &nbsp;{project.funding.numberOfBackers} backers
             </Text>
-            <Button
-              iconOnly
-              Icon={isSelected ? CheckCircleIcon : CircleIcon}
-              solid={isSelected}
-              className='size-6'
-              iconClassName={cn('size-6', isSelected ? 'text-green-genesis' : 'text-grey-300')}
-              variant='ghost'
-              onClick={() => updateSelected(rewardId)}
-            />
+            <Text as='p' styleVariant='body-small' className='text-grey-100 text-start'>
+              {description}
+            </Text>
           </div>
-          <Text styleVariant='body-normal' as='p' fontWeight='medium' className='text-grey-100 mb-2'>
-            ${price}&nbsp; | &nbsp;{project.funding.numberOfBackers} backers
-          </Text>
-          <Text as='p' styleVariant='body-small' className='text-grey-100'>
-            {description}
-          </Text>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Button>
   )
 }

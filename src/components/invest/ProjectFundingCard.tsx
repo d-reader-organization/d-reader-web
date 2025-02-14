@@ -15,6 +15,7 @@ import { REFERRAL_CODE_KEY } from '@/constants/general'
 import { expressInterest } from '@/app/lib/api/invest/mutations'
 import { useToggle } from '@/hooks'
 import { LoaderIcon } from '../icons/theme/LoaderIcon'
+import { ButtonLink } from '../ui/ButtonLink'
 
 type ProjectFundingCardProps = {
   funding: ProjectFunding
@@ -201,12 +202,7 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
   const [showLoader, toggleLoader] = useToggle()
 
   const handleExpressInterest = async () => {
-    if (isUserInterested) {
-      redirect(`${RoutePath.Pledge(slug)}`, RedirectType.push)
-    }
-
     toggleLoader()
-
     // TODO: this should remove the interest to express, if the user is clicking on the "I'm interested" button
     const request: ExpressInterest = { expressedAmount: defaultPrice, ref: referralCode }
     const { errorMessage } = await expressInterest({ slug, request })
@@ -218,9 +214,12 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
     }
     redirect(`${RoutePath.Pledge(slug)}`, RedirectType.push)
   }
-
   const text = isUserInterested ? `🔔 I'm interested` : 'Express interest'
-  return (
+  return isUserInterested ? (
+    <ButtonLink href={RoutePath.Pledge(slug)} className='border-2 border-white border-opacity-100'>
+      {text}
+    </ButtonLink>
+  ) : (
     <RequireAuthWrapperButton
       Icon={showLoader ? LoaderIcon : undefined}
       onClick={handleExpressInterest}

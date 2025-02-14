@@ -4,8 +4,10 @@ import { Button, Text, toast } from '@/components/ui'
 import { ShareIconV2 } from '@/components/icons/theme/ShareIconV2'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/DropdownMenu'
 import { TwitterIcon } from '../icons/social/TwitterIcon'
-import { CopyIcon } from '../icons/theme/CopyIcon'
 import { ButtonLink } from '../ui/ButtonLink'
+import { LinkIcon } from '../icons/theme/LinkIcon'
+import { DiscordIcon } from '../icons/social/DiscordIcon'
+import { TelegramIcon } from '../icons/social/TelegramIcon'
 
 export function ReferFriend({ twitterIntent, username }: { twitterIntent: string | null; username: string }) {
   return (
@@ -101,15 +103,29 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
             Share the campaign
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='bg-white border-t border-t-grey-300 inline-flex p-4 gap-2 hover:bg-none'>
+        <DropdownMenuContent className='bg-white border-t border-t-grey-300 inline-flex p-4 gap-2 hover:bg-none w-full'>
           <DropdownMenuItem asChild className='border border-grey-300 rounded-[10px]'>
-            <ButtonLink href={twitterIntent} blank variant='outline' iconOnly Icon={TwitterIcon} />
+            <ButtonLink
+              href={twitterIntent}
+              blank
+              variant='outline'
+              iconOnly
+              Icon={TwitterIcon}
+              iconClassName='text-grey-400'
+            />
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild disabled className='border border-grey-300 rounded-[10px]'>
+            <Button variant='outline' iconOnly Icon={DiscordIcon} className='text-grey-400 cursor-default' />
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild disabled className='border border-grey-300 rounded-[10px] cursor-default'>
+            <Button variant='outline' iconOnly Icon={TelegramIcon} />
           </DropdownMenuItem>
           <DropdownMenuItem asChild className='border border-grey-300 rounded-[10px] hover:bg-none'>
             <Button
               variant='outline'
               iconOnly
-              Icon={CopyIcon}
+              Icon={LinkIcon}
+              iconClassName='text-grey-400'
               solid={false}
               onClick={() => {
                 const text = location.href + `?ref=${username}` // todo do this properly with url and search params etc.
