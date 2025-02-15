@@ -16,7 +16,7 @@ export const PrivacySettings: React.FC<Props> = ({
   initialMarketingConsentGiven,
 }) => {
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-6 max-w-[750px]'>
       <div className='flex flex-col gap-2'>
         <Text as='h4' styleVariant='secondary-heading'>
           Safety & Privacy

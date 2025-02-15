@@ -8,7 +8,7 @@ import { PROFILE_FAQ_ITEMS } from '@/constants/faqs'
 
 export const FaqSettings: React.FC = () => {
   return (
-    <div className='flex flex-col gap-8'>
+    <div className='flex flex-col gap-8 max-w-[750px]'>
       <div className='flex flex-col gap-2'>
         <Text as='h4' styleVariant='secondary-heading'>
           Frequent Questions

@@ -13,7 +13,7 @@ import { Text } from '../ui'
 import { fetchAllReferralCampaignReceipts, fetchProject } from '@/app/lib/api/invest/queries'
 import Image from 'next/image'
 import { EmptyReferral } from './EmptyReferral'
-import { BunPointsInfoDialog } from '../shared/dialogs/BunPointsInfoDialog'
+import { BunPointsInfoSection } from './BunPointsInfoSection'
 
 export const ReferralSettings: React.FC = async () => {
   const me = await fetchMe()
@@ -22,14 +22,15 @@ export const ReferralSettings: React.FC = async () => {
   const referrals = await fetchUserReferrals()
 
   return (
-    <>
-      <div className='flex flex-col gap-6 max-w-[617px]'>
+    <div className='flex gap-14'>
+      <div className='w-full flex flex-col gap-6 max-w-[617px]'>
         <ReferralCard username={me.username} />
         <UserReferralList referralsRemaining={me.referralsRemaining} referrals={referrals} username={me.username} />
         <CampaignReferralList username={me.username} />
+        <BunPointsInfoSection defaultOpen={true} className='translate-y-14 lg:hidden max-w-full' />
       </div>
-      <BunPointsInfoDialog />
-    </>
+      <BunPointsInfoSection defaultOpen={true} className='translate-y-14 max-lg:hidden' />
+    </div>
   )
 }
 

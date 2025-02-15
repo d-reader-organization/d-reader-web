@@ -11,7 +11,7 @@ export const AccountSettings: React.FC = async () => {
   const { id, displayName, username, email, avatar } = me
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 max-w-[750px]'>
       <Text as='h4' styleVariant='secondary-heading'>
         Your Account
       </Text>

@@ -13,7 +13,7 @@ export const SecuritySettings: React.FC = async () => {
   if (hasPassword) return <UpdatePasswordForm id={id} />
 
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-6 max-w-[600px]'>
       <div className='flex flex-col gap-2'>
         <Text as='h4' styleVariant='secondary-heading'>
           Log in

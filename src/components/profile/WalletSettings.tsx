@@ -27,7 +27,7 @@ export const WalletSettings: React.FC<Props> = ({ wallets }) => {
   const isLoading = isAuthorizing || connecting
 
   return (
-    <div className='flex flex-col gap-8'>
+    <div className='flex flex-col gap-4 max-w-[750px]'>
       <div className='flex flex-col gap-2 max-w-[617px]'>
         <Text as='h4' styleVariant='secondary-heading'>
           Linked Wallets

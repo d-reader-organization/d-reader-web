@@ -20,12 +20,12 @@ async function ProfilePage() {
 
   return (
     <BaseLayout>
-      <div className='flex flex-col justify-start w-full max-w-[1200px] gap-5'>
+      <div className='flex flex-col justify-start w-full max-w-[1550px] self-end gap-5'>
         <Text as='h1' styleVariant='primary-heading' className=''>
           Settings
         </Text>
-        <Tabs defaultValue='1' className='flex gap-36 w-full max-sm:flex-col max-sm:gap-10'>
-          <TabsList className='flex gap-7 items-start justify-start flex-col text-left max-sm:flex-row max-sm:gap-4'>
+        <Tabs defaultValue='1' className='flex justify-end max-sm:flex-col max-sm:gap-10'>
+          <TabsList className='fle gap-7 w-full sm:max-w-52 items-start justify-start flex-col text-left max-sm:flex-row max-sm:gap-4 overflow-x-scroll scrollbar-none'>
             <TabsTrigger value='1' className={tabTriggerClass}>
               <Text as='h4' styleVariant='secondary-heading'>
                 Account
@@ -58,7 +58,7 @@ async function ProfilePage() {
             </TabsTrigger>
           </TabsList>
 
-          <div className='w-full max-w-[750px]'>
+          <div className='w-full'>
             <TabsContent value='1' className='m-0'>
               <AccountSettings />
             </TabsContent>

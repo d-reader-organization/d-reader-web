@@ -41,7 +41,7 @@ export const UpdatePasswordForm: React.FC<Props> = ({ id }) => {
   const newPasswordError = findError(state?.errors, 'newPassword')
 
   return (
-    <form action={action} className='flex flex-col gap-6'>
+    <form action={action} className='flex flex-col gap-6 max-w-[750px]'>
       <div className='flex flex-col gap-2'>
         <Text as='h4' styleVariant='secondary-heading'>
           Change Password
