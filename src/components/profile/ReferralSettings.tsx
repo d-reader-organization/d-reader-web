@@ -1,6 +1,6 @@
 import React from 'react'
 import { fetchMe, fetchUserReferrals } from '@/app/lib/api/user/queries'
-import { generateReferralLink, generateUserInviteReferralLink, PLACEHOLDER_AVATAR } from '@/constants/general'
+import { PLACEHOLDER_AVATAR } from '@/constants/general'
 import { fetchTwitterIntentInviteUser } from '@/app/lib/api/twitter/queries'
 import { Referral, ReferralCampaign } from '@/models/project'
 import { Card } from '../ui/card'
@@ -13,6 +13,7 @@ import { Text } from '../ui'
 import { fetchAllReferralCampaignReceipts, fetchProject } from '@/app/lib/api/invest/queries'
 import Image from 'next/image'
 import { EmptyReferral } from './EmptyReferral'
+import { BunPointsInfoDialog } from '../shared/dialogs/BunPointsInfoDialog'
 
 export const ReferralSettings: React.FC = async () => {
   const me = await fetchMe()
@@ -21,11 +22,14 @@ export const ReferralSettings: React.FC = async () => {
   const referrals = await fetchUserReferrals()
 
   return (
-    <div className='flex flex-col gap-6 max-w-[617px]'>
-      <ReferralCard username={me.username} />
-      <UserReferralList referralsRemaining={me.referralsRemaining} referrals={referrals} username={me.username} />
-      <CampaignReferralList username={me.username}/>
-    </div>
+    <>
+      <div className='flex flex-col gap-6 max-w-[617px]'>
+        <ReferralCard username={me.username} />
+        <UserReferralList referralsRemaining={me.referralsRemaining} referrals={referrals} username={me.username} />
+        <CampaignReferralList username={me.username} />
+      </div>
+      <BunPointsInfoDialog />
+    </>
   )
 }
 
@@ -74,7 +78,7 @@ type UserReferralListProps = {
 }
 
 const UserReferralList: React.FC<UserReferralListProps> = async ({ referrals, referralsRemaining }) => {
-  const isSuccesfulReferrals = referrals && referrals.length;
+  const isSuccesfulReferrals = referrals && referrals.length
   return (
     <div className='flex flex-col gap-4'>
       {/* Referrals Section */}
@@ -82,27 +86,31 @@ const UserReferralList: React.FC<UserReferralListProps> = async ({ referrals, re
         New user referrals <span className='text-white/60'>{`( ${referralsRemaining} referrals remaining) `}</span>
       </Text>
 
-      {isSuccesfulReferrals ? referrals.map((referral, index) => (
-        <div key={index} className='flex flex-col gap-4'>
-          <div className='flex rounded-xl p-4 border-1 border-grey-300 justify-between'>
-            <div className='flex items-center gap-3'>
-              <Avatar className='w-10 h-10'>
-                <AvatarImage src={referral.avatar || PLACEHOLDER_AVATAR} alt='User avatar' />
-              </Avatar>
-              <Text as='span' fontWeight='medium' styleVariant='body-normal'>
-                {referral.displayName}
-              </Text>
-              <SignedUpChip />
-            </div>
-            <div className='flex gap-2 items-center'>
-              <Text as='span' fontWeight='medium' styleVariant='body-normal' className='text-important-color'>
-                +50
-              </Text>
-              <TokenIcon className='h-5 w-5' />
+      {isSuccesfulReferrals ? (
+        referrals.map((referral, index) => (
+          <div key={index} className='flex flex-col gap-4'>
+            <div className='flex rounded-xl p-4 border-1 border-grey-300 justify-between'>
+              <div className='flex items-center gap-3'>
+                <Avatar className='w-10 h-10'>
+                  <AvatarImage src={referral.avatar || PLACEHOLDER_AVATAR} alt='User avatar' />
+                </Avatar>
+                <Text as='span' fontWeight='medium' styleVariant='body-normal'>
+                  {referral.displayName}
+                </Text>
+                <SignedUpChip />
+              </div>
+              <div className='flex gap-2 items-center'>
+                <Text as='span' fontWeight='medium' styleVariant='body-normal' className='text-important-color'>
+                  +50
+                </Text>
+                <TokenIcon className='h-5 w-5' />
+              </div>
             </div>
           </div>
-        </div>
-      )) : (<EmptyReferral />)}
+        ))
+      ) : (
+        <EmptyReferral />
+      )}
     </div>
   )
 }
@@ -116,16 +124,15 @@ const CampaignReferralList: React.FC<{ username: string }> = async ({ username }
       <Text as='h5' styleVariant='secondary-heading' fontWeight='bold' className='text-white'>
         Campaign referrals
       </Text>
-      {campaigns && campaigns.map((campaign, index) => (
-        <CampaignReferral key={index} campaign={campaign} username={username} />
-      ))}
+      {campaigns &&
+        campaigns.map((campaign, index) => <CampaignReferral key={index} campaign={campaign} username={username} />)}
     </div>
   )
 }
 
-const CampaignReferral: React.FC<{ campaign: ReferralCampaign, username: string }> = async ({ campaign, username }) => {
+const CampaignReferral: React.FC<{ campaign: ReferralCampaign; username: string }> = async ({ campaign }) => {
   const { data: project } = await fetchProject(campaign.slug)
-  const isSuccesfulReferrals = campaign.totalReferred;
+  const isSuccesfulReferrals = campaign.totalReferred
 
   return (
     <div className='flex flex-col rounded-xl p-4 border-1 border-grey-300 gap-4'>
@@ -147,29 +154,33 @@ const CampaignReferral: React.FC<{ campaign: ReferralCampaign, username: string 
         </Text>
       </div>
       <div>
-        {isSuccesfulReferrals ? campaign.receipts.map((referral, index) => (
-          <div key={index} className='flex p-2 border-t-1 border-grey-300 justify-between'>
-            <div className='flex items-center gap-3'>
-              <Avatar className='w-5 h-5'>
-                <AvatarImage src={referral.user.avatar || PLACEHOLDER_AVATAR} alt='User avatar' />
-              </Avatar>
-              <Text as='span' fontWeight='medium' styleVariant='body-normal'>
-                {referral.user.username}
-              </Text>
-              <div className='bg-grey-400 rounded-lg px-2'>
-                <Text as='span' styleVariant='body-small' fontWeight='medium' className='text-grey-100'>
-                  {referral.expressedAmount}$
+        {isSuccesfulReferrals ? (
+          campaign.receipts.map((referral, index) => (
+            <div key={index} className='flex p-2 border-t-1 border-grey-300 justify-between'>
+              <div className='flex items-center gap-3'>
+                <Avatar className='w-5 h-5'>
+                  <AvatarImage src={referral.user.avatar || PLACEHOLDER_AVATAR} alt='User avatar' />
+                </Avatar>
+                <Text as='span' fontWeight='medium' styleVariant='body-normal'>
+                  {referral.user.username}
                 </Text>
+                <div className='bg-grey-400 rounded-lg px-2'>
+                  <Text as='span' styleVariant='body-small' fontWeight='medium' className='text-grey-100'>
+                    {referral.expressedAmount}$
+                  </Text>
+                </div>
+              </div>
+              <div className='flex gap-2'>
+                <Text as='span' fontWeight='medium' styleVariant='body-normal' className='text-important-color'>
+                  +50
+                </Text>
+                <TokenIcon className='h-5 w-5' />
               </div>
             </div>
-            <div className='flex gap-2'>
-              <Text as='span' fontWeight='medium' styleVariant='body-normal' className='text-important-color'>
-                +50
-              </Text>
-              <TokenIcon className='h-5 w-5' />
-            </div>
-          </div>
-        )): (<EmptyReferral />)}
+          ))
+        ) : (
+          <EmptyReferral />
+        )}
       </div>
     </div>
   )
