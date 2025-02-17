@@ -47,7 +47,7 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           title='Digital Comic (pdf)'
           price={5}
           description='Get the full comic in high-quality PDF—yours to read anytime, anywhere!'
-          imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
+          imageUrl='/assets/images/invest/comic_pdf.png'
           project={project}
           rewardId={0}
           selectedReward={selectedReward}
@@ -59,7 +59,7 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           title='Digital Collectible Comic'
           price={10}
           description='Own a unique digital edition with exclusive art, bonuses, and guaranteed rarity that only you can own and trade!'
-          imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
+          imageUrl='/assets/images/invest/digital_collectibles.png'
           project={project}
           rewardId={1}
           selectedReward={selectedReward}
@@ -71,7 +71,7 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           title='Physical comic'
           price={50}
           description='A beautifully printed edition to hold, admire, and add to your collection!'
-          imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
+          imageUrl='/assets/images/invest/physical_comic.png'
           project={project}
           rewardId={2}
           selectedReward={selectedReward}
@@ -83,7 +83,7 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
           title='Animated comic'
           price={100}
           description='Experience the story like never before with motion, sound, and epic visuals!'
-          imageUrl='/assets/images/dummy-kickstarter-reward.jpg'
+          imageUrl='/assets/images/invest/animated_comic.gif'
           project={project}
           rewardId={3}
           selectedReward={selectedReward}
