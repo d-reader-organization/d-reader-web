@@ -84,3 +84,11 @@ export type ReferralCampaign = {
   totalReferred: number
   receipts: UserInterestedReceipt[]
 }
+
+export type Reward = {
+  id: number
+  description: string
+  image: string
+  price: number
+  title: string
+}

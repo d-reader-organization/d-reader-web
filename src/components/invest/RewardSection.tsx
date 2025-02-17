@@ -1,6 +1,6 @@
 'use client'
 
-import { ExpressInterest, Project } from '@/models/project'
+import { type Reward, type ExpressInterest, type Project } from '@/models/project'
 import { RewardCard } from './RewardCard'
 import React, { useState } from 'react'
 import { ExpressedInterestDialog } from '../shared/dialogs/ExpressedInterestDialog'
@@ -12,11 +12,44 @@ import { expressInterest } from '@/app/lib/api/invest/mutations'
 import { toast } from '../ui/toast'
 
 type Props = {
+  viewOnly?: boolean
   project: Project
-  user: User
+  user?: User
 }
 
-export const RewardSection: React.FC<Props> = ({ project, user }) => {
+const rewards: Reward[] = [
+  {
+    id: 0,
+    description: 'Get the full comic in high-quality PDF—yours to read anytime, anywhere!',
+    image: '/assets/images/invest/comic_pdf.png',
+    price: 5,
+    title: 'Digital Comic (pdf)',
+  },
+  {
+    id: 1,
+    description:
+      'Own a unique digital edition with exclusive art, bonuses, and guaranteed rarity that only you can own and trade!',
+    image: '/assets/images/invest/digital_collectibles.png',
+    price: 10,
+    title: 'Digital Collectible Comic',
+  },
+  {
+    id: 2,
+    description: 'A beautifully printed edition to hold, admire, and add to your collection!',
+    image: '/assets/images/invest/physical_comic.png',
+    price: 50,
+    title: 'Physical comic',
+  },
+  {
+    id: 3,
+    description: 'Experience the story like never before with motion, sound, and epic visuals!',
+    image: '/assets/images/invest/animated_comic.gif',
+    price: 100,
+    title: 'Animated comic',
+  },
+]
+
+export const RewardSection: React.FC<Props> = ({ viewOnly = false, project, user }) => {
   const [showExpressedInterestDialog, toggleExpressedInterestDialog] = useToggle()
   const [selectedReward, setSelectedReward] = useState(0)
   const searchParams = useSearchParams()
@@ -43,56 +76,20 @@ export const RewardSection: React.FC<Props> = ({ project, user }) => {
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <RewardCard
-          title='Digital Comic (pdf)'
-          price={5}
-          description='Get the full comic in high-quality PDF—yours to read anytime, anywhere!'
-          imageUrl='/assets/images/invest/comic_pdf.png'
-          project={project}
-          rewardId={0}
-          selectedReward={selectedReward}
-          updateSelected={async (cardId) => {
-            await handleCardSelect({ amount: 5, cardId })
-          }}
-        />
-        <RewardCard
-          title='Digital Collectible Comic'
-          price={10}
-          description='Own a unique digital edition with exclusive art, bonuses, and guaranteed rarity that only you can own and trade!'
-          imageUrl='/assets/images/invest/digital_collectibles.png'
-          project={project}
-          rewardId={1}
-          selectedReward={selectedReward}
-          updateSelected={async (cardId) => {
-            await handleCardSelect({ amount: 10, cardId })
-          }}
-        />
-        <RewardCard
-          title='Physical comic'
-          price={50}
-          description='A beautifully printed edition to hold, admire, and add to your collection!'
-          imageUrl='/assets/images/invest/physical_comic.png'
-          project={project}
-          rewardId={2}
-          selectedReward={selectedReward}
-          updateSelected={async (cardId) => {
-            await handleCardSelect({ amount: 50, cardId })
-          }}
-        />
-        <RewardCard
-          title='Animated comic'
-          price={100}
-          description='Experience the story like never before with motion, sound, and epic visuals!'
-          imageUrl='/assets/images/invest/animated_comic.gif'
-          project={project}
-          rewardId={3}
-          selectedReward={selectedReward}
-          updateSelected={async (cardId) => {
-            await handleCardSelect({ amount: 100, cardId })
-          }}
-        />
+        {rewards.map((reward) => (
+          <RewardCard
+            key={reward.id}
+            project={project}
+            reward={reward}
+            selectedReward={selectedReward}
+            viewOnly={viewOnly}
+            updateSelected={async (cardId) => {
+              await handleCardSelect({ amount: reward.price, cardId })
+            }}
+          />
+        ))}
       </div>
-      {showExpressedInterestDialog && (
+      {showExpressedInterestDialog && !!user && (
         <ExpressedInterestDialog
           slug={project.slug}
           username={user.username}

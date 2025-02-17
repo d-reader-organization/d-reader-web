@@ -1,6 +1,6 @@
 'use client'
 
-import { Project } from '@/models/project'
+import { type Project, type Reward } from '@/models/project'
 import { Card, CardContent } from '../ui/card'
 import { Text } from '../ui/Text'
 import Image from 'next/image'
@@ -10,45 +10,35 @@ import { Button } from '../ui/Button'
 import { CheckCircleIcon } from '../icons/theme/CheckCircleIcon'
 
 type RewardCardProps = {
-  title: string
-  price: number
-  description: string
-  imageUrl: string
+  reward: Reward
   project: Project
-  rewardId: number
   selectedReward: number
+  viewOnly: boolean
   updateSelected: (value: number) => void
 }
 
-export function RewardCard({
-  title,
-  price,
-  description,
-  imageUrl,
-  project,
-  rewardId,
-  selectedReward,
-  updateSelected,
-}: RewardCardProps) {
-  const isSelected = rewardId === selectedReward
+export function RewardCard({ project, reward, selectedReward, viewOnly, updateSelected }: RewardCardProps) {
+  const isSelected = reward.id === selectedReward
 
   return (
     <Button
       variant='ghost'
       onClick={() => {
-        updateSelected(rewardId)
+        if (!viewOnly) {
+          updateSelected(reward.id)
+        }
       }}
-      className='size-full'
+      className={cn('size-full', viewOnly ? 'cursor-default hover:brightness-100' : '')}
     >
       <Card
         className={cn(
           'text-white w-full max-w-[750px] rounded-xl border border-grey-300',
-          isSelected ? 'border-green-genesis' : ''
+          isSelected && !viewOnly ? 'border-green-genesis' : ''
         )}
       >
         <CardContent className='flex max-sm:flex-col gap-4 p-4'>
           <Image
-            src={imageUrl || '/placeholder.svg'}
+            src={reward.image || '/placeholder.svg'}
             alt='Project image'
             width={270}
             height={180}
@@ -58,19 +48,19 @@ export function RewardCard({
           <div className='flex flex-col items-start gap-3'>
             <div className='flex justify-between w-full'>
               <Text as='p' styleVariant='body-xlarge' fontWeight='bold'>
-                {title}
+                {reward.title}
               </Text>
-              {isSelected ? (
+              {viewOnly ? null : isSelected ? (
                 <CheckCircleIcon className='size-6 text-green-genesis' />
               ) : (
                 <CircleIcon className='size-6 text-grey-300' />
               )}
             </div>
             <Text styleVariant='body-normal' as='p' fontWeight='medium' className='text-grey-100 mb-2'>
-              ${price}&nbsp; | &nbsp;{project.funding.numberOfBackers} backers
+              ${reward.price}&nbsp; | &nbsp;{project.funding.numberOfBackers} backers
             </Text>
             <Text as='p' styleVariant='body-small' className='text-grey-100 text-start'>
-              {description}
+              {reward.description}
             </Text>
           </div>
         </CardContent>

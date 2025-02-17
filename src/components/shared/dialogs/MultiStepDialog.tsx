@@ -1,6 +1,6 @@
 'use client'
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/Dialog'
 import React from 'react'
 import { Button } from '@/components/ui'
 import { Text } from '@/components/ui'
@@ -37,12 +37,12 @@ export const MultiStepDialog: React.FC<Props> = ({ steps, open, toggleDialog, on
               </Text>
             </DialogTitle>
           )}
-          <DialogDescription className='text-left'>
+          <div className='text-left flex flex-col gap-2'>
             {activeStep.items.map((item) => {
               if (item.video) return <VideoItem key={item.title} {...item} />
               return <TextItem key={item.title} {...item} />
             })}
-          </DialogDescription>
+          </div>
         </DialogHeader>
 
         <Button variant='secondary' className='w-full' onClick={onClick}>

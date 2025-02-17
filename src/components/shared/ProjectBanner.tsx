@@ -19,7 +19,7 @@ export const ProjectBanner: React.FC<Props> = ({ title, banner, cover, videoUrl 
 
   return (
     <>
-      <div className='flex flex-col w-full h-[300px] md:h-[550px]'>
+      <div className='flex flex-col w-full h-[300px] md:h-[450px] max-w-[750px]'>
         <div className='relative w-full h-full'>
           <div>
             <Image

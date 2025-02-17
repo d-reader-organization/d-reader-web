@@ -25,7 +25,7 @@ async function ProfilePage() {
           Settings
         </Text>
         <Tabs defaultValue='1' className='flex justify-end max-sm:flex-col max-sm:gap-10'>
-          <TabsList className='fle gap-7 w-full sm:max-w-52 items-start justify-start flex-col text-left max-sm:flex-row max-sm:gap-4 overflow-x-scroll scrollbar-none'>
+          <TabsList className='flex gap-7 w-full sm:max-w-52 items-start justify-start flex-col text-left max-sm:flex-row max-sm:gap-4 overflow-x-scroll scrollbar-none'>
             <TabsTrigger value='1' className={tabTriggerClass}>
               <Text as='h4' styleVariant='secondary-heading'>
                 Account

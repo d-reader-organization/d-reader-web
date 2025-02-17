@@ -2,10 +2,12 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { ExpressInterest, ProjectFunding } from '@/models/project'
+import { ExpressInterest, Project } from '@/models/project'
 import { formatCurrency, formatNumberWithCommas } from '@/utils/numbers'
 import { differenceInDays } from 'date-fns'
-import { Text, toast } from '../ui'
+import { Progress } from '../ui/Progress'
+import { toast } from '../ui/toast'
+import { Text } from '../ui/Text'
 import { cn, withRedirect } from '@/lib/utils'
 import { RoutePath } from '@/enums/routePath'
 import { RequireAuthWrapperButton } from '../shared/buttons/RequireAuthWrapperButton'
@@ -16,106 +18,53 @@ import { useToggle } from '@/hooks'
 import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { TokenIcon } from '../icons/logo/TokenIcon'
 import { ButtonLink } from '../ui/ButtonLink'
+import { ProjectCreatorSection } from '../shared/ProjectCreatorSection'
 
 type ProjectFundingCardProps = {
-  funding: ProjectFunding
   isAuthenticated: boolean
-  slug: string
-  className: string
-}
+  project: Project
+} & React.HTMLAttributes<HTMLDivElement>
 
 // TODO: rewrite the whole component, consider the mobile screen
-export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({
-  funding,
-  isAuthenticated,
-  slug,
-  className,
-}) => {
+export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthenticated, className, project }) => {
   const currentDate = new Date()
+  const { funding, slug } = project
   const startedAt = funding.startDate ? new Date(funding.startDate) : undefined
-  const hasFundingStarted = startedAt ? startedAt <= currentDate : false
-  const hasFundingEnded = funding.pledgedAmount >= funding.raiseGoal
-  const daysLeft = funding.endDate ? differenceInDays(new Date(funding.endDate), currentDate) : undefined
+  // const hasFundingStarted = startedAt ? startedAt <= currentDate : false
+  // const hasFundingEnded = funding.pledgedAmount >= funding.raiseGoal
+  // const daysLeft = funding.endDate ? differenceInDays(new Date(funding.endDate), currentDate) : undefined
 
   return (
-    <div
-      className={
-        'flex flex-col p-2 gap-4 bg-grey-500 justify-between items-start shadow md:rounded-xl md:p-6 md:top-[100px] md:max-w-[400px] md:min-w-[390px] md:max-h-[550px] md:gap-6 ' +
-        className
-      }
-    >
+    <div className={cn('flex flex-col gap-6 p-2 pt-0 w-full', className)}>
       <div className='flex flex-col gap-4 w-full'>
-        <Text
-          as='p'
-          styleVariant='body-normal'
-          fontWeight='bold'
-          className='text-white leading-snug max-md:text-sm max-md:font-medium max-md:leading-tight'
-        >
+        <Text as='p' styleVariant='body-normal' fontWeight='bold'>
           Overall project fund goal:
         </Text>
-        <div className='relative h-[8px] rounded-[27px] w-full bg-[#44464d]'>
-          <div
-            className='h-[8px] bg-green-genesis rounded-[27px] absolute top-0 left-0'
-            style={{ width: `${Math.min(1, funding.pledgedAmount / funding.raiseGoal) * 100}%` }}
-          />
-        </div>
+        <Progress className='h-2.5' value={Math.min(1, (funding.pledgedAmount + 50000) / funding.raiseGoal) * 100} />
+        {/* Contributors and pledges section */}
+        <section className='flex flex-col gap-2 sm:flex-row w-full sm:justify-between'>
+          <div className='flex flex-col'>
+            <Text as='h3' styleVariant='primary-heading' className='text-green-genesis'>
+              {formatCurrency({ value: funding.pledgedAmount, fractionDigits: 0 })}
+            </Text>
+            <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
+              pledged of&nbsp;{formatCurrency({ value: funding.raiseGoal, fractionDigits: 0 })}
+            </Text>
+          </div>
+          <div className='flex flex-col'>
+            <Text as='h3' styleVariant='primary-heading' className='text-white'>
+              {formatNumberWithCommas(funding.numberOfInterestedInvestors)}&nbsp;contributors
+            </Text>
+            <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
+              expressed interests
+            </Text>
+          </div>
+        </section>
       </div>
-
-      <div className='flex w-full max-md:justify-between md:flex-col items-start md:gap-[29px]'>
-        <FundingStats
-          text={'pledged of ' + formatCurrency({ value: funding.raiseGoal, fractionDigits: 0 })}
-          value={formatCurrency({ value: funding.pledgedAmount, fractionDigits: 0 })}
-          valueColor='text-green-genesis '
-          valueSizeMd='md:text-[32px] '
-          className='max-md:hidden'
-        />
-        <FundingStats
-          text={'of ' + formatCurrency({ value: funding.raiseGoal, fractionDigits: 0 })}
-          value={formatCurrency({ value: funding.raiseGoal, fractionDigits: 0 })}
-          valueColor='text-green-genesis '
-          className='md:hidden items-center'
-        />
-        {hasFundingStarted ? (
-          <FundingStats
-            text='backers'
-            value={formatNumberWithCommas(funding.numberOfBackers)}
-            className='max-md:items-center'
-          />
-        ) : (
-          <FundingStats
-            text='expressed interest'
-            value={formatNumberWithCommas(funding.numberOfInterestedInvestors) + ' contributors'}
-            className='max-md:items-center'
-          />
-        )}
-        {daysLeft !== undefined && (
-          <FundingStats text='days left' value={formatNumberWithCommas(daysLeft)} className='max-md:items-center' />
-        )}
-      </div>
-
-      <div className='flex flex-col w-full gap-2 md:gap-4'>
-        {hasFundingStarted ? (
-          hasFundingEnded ? (
-            <FundingEndedButton />
-          ) : (
-            <InvestButton isAuthenticated={isAuthenticated} slug={slug} />
-          )
-        ) : (
-          <ExpressInterestButton slug={slug} isUserInterested={!!funding.expressedAmount} defaultPrice={100} />
-        )}
-
-        <div className='flex flex-row w-full h-full justify-center items-center p-[12px] gap-[12px] bg-gradient-to-br from-[#4a4e53] to-grey-500 rounded-xl md:gap-4 md:h-[72px] md:p-4'>
-          <TokenIcon className='w-10 h-auto' />
-          <Text
-            as='p'
-            styleVariant='body-normal'
-            fontWeight='medium'
-            className='text-grey-100 leading-tight max-md:text-sm'
-          >
-            Refer friends & get paid
-          </Text>
-        </div>
-      </div>
+      <ProjectCreatorSection creator={project.creator} />
+      <ButtonLink href={RoutePath.Pledge(project.slug)} variant='genesis'>
+        Express Interest
+      </ButtonLink>
     </div>
   )
 }
