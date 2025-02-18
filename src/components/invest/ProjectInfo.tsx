@@ -22,7 +22,7 @@ export const ProjectInfo: React.FC<ProjectInfoProps> = ({ info }) => {
     <section className='w-full flex flex-col justify-center align-center'>
       <div className='flex flex-col'>
         {info.map((item, index) => (
-          <InfoItem key={index} item={item} isLast={index === info.length - 1} />
+          <InfoItem key={index} item={item} isFirst={index === 0} isLast={index === info.length - 1} />
         ))}
       </div>
     </section>
@@ -30,7 +30,11 @@ export const ProjectInfo: React.FC<ProjectInfoProps> = ({ info }) => {
 }
 
 /** @deprecated Use the Collapsible component for the Accordion effect */
-const InfoItem: React.FC<{ item: InfoItemProps; isLast?: boolean }> = ({ item, isLast }) => {
+const InfoItem: React.FC<{ item: InfoItemProps; isFirst?: boolean; isLast?: boolean }> = ({
+  item,
+  isFirst,
+  isLast,
+}) => {
   const [isExpanded, setIsExpanded] = useState(true)
   const contentRef = useRef<HTMLDivElement>(null)
   const [maxHeight, setMaxHeight] = useState('0px')
@@ -64,7 +68,14 @@ const InfoItem: React.FC<{ item: InfoItemProps; isLast?: boolean }> = ({ item, i
   }
 
   return (
-    <div className={cn('border-t border-grey-300', isLast && 'border-b', isExpanded && 'border-b-0')}>
+    <div
+      className={cn(
+        'border-t border-grey-300',
+        isFirst && 'border-t-0',
+        isLast && 'border-b',
+        isExpanded && 'border-b-0'
+      )}
+    >
       <button
         className={cn(
           'flex justify-between items-center py-4 md:flex-row w-full text-left md:py-8 focus:outline-none',

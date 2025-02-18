@@ -128,7 +128,7 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
             <Button variant='outline' disabled iconOnly Icon={DiscordIcon} className='text-grey-400' />
           </DropdownMenuItem>
           <DropdownMenuItem asChild disabled className='border border-grey-300 rounded-[10px]'>
-            <Button variant='outline' disabled iconOnly Icon={TelegramIcon}  />
+            <Button variant='outline' disabled iconOnly Icon={TelegramIcon} />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

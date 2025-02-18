@@ -3,10 +3,8 @@ import { ProjectHeader } from '@/components/shared/ProjectHeader'
 import { ProjectBanner } from '@/components/shared/ProjectBanner'
 import { ProjectFundingCard } from '@/components/invest/ProjectFundingCard'
 import { notFound } from 'next/navigation'
-import { fetchProject, fetchUserInterestedReceipts } from '@/app/lib/api/invest/queries'
+import { fetchProject } from '@/app/lib/api/invest/queries'
 import { ProjectInvestDialog } from '@/components/shared/dialogs/ProjectInvestDialog'
-import { InterestUpdatesCard } from '@/components/invest/InterestUpdatesCard'
-import { ReferFriend } from '@/components/invest/Referral'
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
 import { KickstarterTabs } from '@/components/invest/KickstarterTabs'
@@ -27,13 +25,17 @@ export default async function ProjectInvestPage(props: Props) {
     ? fetchTwitterIntentExpressedInterest({ path: `/invest/${params.slug}`, slug: params.slug, username: me.username })
         .data
     : ''
-  const receipts = await fetchUserInterestedReceipts(project.slug)
+
   return (
-    <GenesisLayout showFooter backgroundImageSrc={project.banner}>
-      <div className='flex flex-col max-md:items-center max-w-screen-xl w-full'>
+    <GenesisLayout
+      showFooter
+      backgroundImageSrc={project.banner}
+      mainClassName=' p-0 md:p-0 lg:p-0 pt-4 md:pt-6 lg:pt-8 xs:pb-24 sm:pb-24 md:pb-24 lg:pb-24'
+    >
+      <div className='flex flex-col items-center w-full'>
         <ProjectHeader subtitle={project.subtitle} title={project.title} className='max-md:hidden' />
-        <div className='flex flex-col max-md:items-center md:flex-row md:justify-center w-full h-full gap-6 md:gap-10'>
-          <div className='flex flex-col max-md:items-center gap-6 md:gap-10 max-md:w-full'>
+        <div className='flex flex-col max-md:items-center md:flex-row md:justify-center size-full gap-6 md:gap-10 max-w-screen-xl p-4 md:p-6'>
+          <div className='flex flex-col max-md:items-center gap-6 md:gap-10 w-full max-w-[750px]'>
             <ProjectBanner
               title={project.title}
               banner={project.banner}
@@ -41,18 +43,16 @@ export default async function ProjectInvestPage(props: Props) {
               videoUrl={project.videoUrl}
             />
             <ProjectHeader subtitle={project.subtitle} title={project.title} className='md:hidden' />
-            <KickstarterTabs className='max-md:hidden mt-4' project={project} />
           </div>
-          <div className='flex flex-col items-center gap-12 w-full md:max-w-[488px]'>
-            <ProjectFundingCard isAuthenticated={!!me} project={project} />
-            {!!me ? (
-              <ReferFriend twitterIntent={twitterIntent} username={me?.username} />
-            ) : (
-              <InterestUpdatesCard className='max-md:hidden' receipts={receipts} />
-            )}
-          </div>
-          <KickstarterTabs className='md:hidden w-full p-4' project={project} />
+          <ProjectFundingCard className='w-full md:max-w-[488px]' isAuthenticated={!!me} project={project} />
         </div>
+        <KickstarterTabs
+          className='w-full mt-6 md:mt-10 max-w-screen-xl'
+          project={project}
+          twitterIntent={twitterIntent ?? ''}
+          username={me?.username}
+        />
+
         {/* <ProjectHeader title={project.title} subtitle={project.subtitle} className='max-md:hidden' />
         <div className='flex flex-col md:flex-row w-full h-full gap-6 md:gap-10'>
           <div className='flex flex-col w-full items-center'>
