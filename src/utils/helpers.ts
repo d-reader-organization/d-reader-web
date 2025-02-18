@@ -150,9 +150,17 @@ export const findProjectBySlug = (slug: string) => {
   return project
 }
 
-export const getTwitterIntentExpressedInterest = (project: Project, username: string) => {
+export const getTwitterIntentExpressedInterest = ({
+  path,
+  project,
+  username,
+}: {
+  path: string
+  project: Project
+  username: string
+}) => {
   // const title = project.title
-  const referralLink = generateReferralLink(project.slug, username)
+  const referralLink = generateReferralLink({ path, slug: project.slug, username })
   const creatorTwitter = project.creator.twitterHandle
     ? `@${project.creator.twitterHandle}`
     : project.creator.displayName

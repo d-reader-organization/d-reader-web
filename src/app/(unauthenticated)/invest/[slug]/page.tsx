@@ -23,7 +23,10 @@ export default async function ProjectInvestPage(props: Props) {
     return notFound()
   }
 
-  const twitterIntent = !!me ? fetchTwitterIntentExpressedInterest(params.slug, me.username).data : ''
+  const twitterIntent = !!me
+    ? fetchTwitterIntentExpressedInterest({ path: `/invest/${params.slug}`, slug: params.slug, username: me.username })
+        .data
+    : ''
   const receipts = await fetchUserInterestedReceipts(project.slug)
   return (
     <GenesisLayout showFooter backgroundImageSrc={project.banner}>

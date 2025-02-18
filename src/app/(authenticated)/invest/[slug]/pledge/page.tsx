@@ -21,7 +21,12 @@ export default async function PledgePage(props: Props) {
   if (!project || !user || errorMessage) {
     return notFound()
   }
-  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest(params.slug, user.username)
+
+  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest({
+    path: `/invest/${project.slug}/pledge`,
+    slug: params.slug,
+    username: user.username,
+  })
 
   return (
     <GenesisLayout>
@@ -38,10 +43,10 @@ export default async function PledgePage(props: Props) {
           </div>
           <div className='flex flex-col gap-6 md:gap-10 items-center'>
             <div className='flex flex-col md:flex-row gap-6 w-full max-md:items-center md:justify-start'>
-              <RewardSection project={project} user={user} />
+              <RewardSection project={project} />
               <ReferFriend twitterIntent={twitterIntent} username={user.username} />
             </div>
-            <PledgeActions />
+            <PledgeActions slug={project.slug} username={user.username} />
           </div>
         </div>
       </div>

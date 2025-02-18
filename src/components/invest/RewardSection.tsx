@@ -3,9 +3,7 @@
 import { type Reward, type ExpressInterest, type Project } from '@/models/project'
 import { RewardCard } from './RewardCard'
 import React, { useState } from 'react'
-import { ExpressedInterestDialog } from '../shared/dialogs/ExpressedInterestDialog'
 import { useToggle } from '@/hooks'
-import { User } from '@/models/user'
 import { useSearchParams } from 'next/navigation'
 import { REFERRAL_CODE_KEY } from '@/constants/general'
 import { expressInterest } from '@/app/lib/api/invest/mutations'
@@ -14,7 +12,6 @@ import { toast } from '../ui/toast'
 type Props = {
   viewOnly?: boolean
   project: Project
-  user?: User
 }
 
 const rewards: Reward[] = [
@@ -49,8 +46,7 @@ const rewards: Reward[] = [
   },
 ]
 
-export const RewardSection: React.FC<Props> = ({ viewOnly = false, project, user }) => {
-  const [showExpressedInterestDialog, toggleExpressedInterestDialog] = useToggle()
+export const RewardSection: React.FC<Props> = ({ viewOnly = false, project }) => {
   const [selectedReward, setSelectedReward] = useState(0)
   const searchParams = useSearchParams()
   const referralCode = searchParams.get(REFERRAL_CODE_KEY)
@@ -70,7 +66,6 @@ export const RewardSection: React.FC<Props> = ({ viewOnly = false, project, user
       toast({ description: errorMessage, variant: 'error' })
       return
     }
-    toggleExpressedInterestDialog()
   }
 
   return (
@@ -89,14 +84,6 @@ export const RewardSection: React.FC<Props> = ({ viewOnly = false, project, user
           />
         ))}
       </div>
-      {showExpressedInterestDialog && !!user && (
-        <ExpressedInterestDialog
-          slug={project.slug}
-          username={user.username}
-          open={showExpressedInterestDialog}
-          toggleDialog={toggleExpressedInterestDialog}
-        />
-      )}
     </>
   )
 }

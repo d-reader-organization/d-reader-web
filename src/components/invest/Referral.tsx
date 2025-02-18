@@ -110,12 +110,6 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
               iconClassName='text-grey-400'
             />
           </DropdownMenuItem>
-          <DropdownMenuItem asChild disabled className='border border-grey-300 rounded-[10px]'>
-            <Button variant='outline' iconOnly Icon={DiscordIcon} className='text-grey-400 cursor-default' />
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild disabled className='border border-grey-300 rounded-[10px] cursor-default'>
-            <Button variant='outline' iconOnly Icon={TelegramIcon} />
-          </DropdownMenuItem>
           <DropdownMenuItem asChild className='border border-grey-300 rounded-[10px] hover:bg-none'>
             <Button
               variant='outline'
@@ -129,6 +123,12 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
                 toast({ description: 'Copied to clipboard' })
               }}
             />
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild disabled className='border border-grey-300 rounded-[10px]'>
+            <Button variant='outline' disabled iconOnly Icon={DiscordIcon} className='text-grey-400' />
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild disabled className='border border-grey-300 rounded-[10px]'>
+            <Button variant='outline' disabled iconOnly Icon={TelegramIcon}  />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
