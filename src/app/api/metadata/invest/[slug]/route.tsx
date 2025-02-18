@@ -56,12 +56,12 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
           style={{
             position: 'absolute',
             left: 60,
-            bottom: 140,
+            bottom: 100,
             fontSize: '56px',
             fontWeight: 600,
             lineHeight: 1.2,
             color: 'white',
-            maxWidth: '1000px',
+            width: '50%',
           }}
         >
           {project?.title}
