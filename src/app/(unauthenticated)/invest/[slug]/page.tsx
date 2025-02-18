@@ -47,7 +47,7 @@ export default async function ProjectInvestPage(props: Props) {
           <ProjectFundingCard className='w-full md:max-w-[488px]' isAuthenticated={!!me} project={project} />
         </div>
         <KickstarterTabs
-          className='w-full mt-6 md:mt-10 max-w-screen-xl'
+          className='w-full mt-6 md:mt-10 max-w-screen-xl p-4 md:p-6 xl:p-0'
           project={project}
           twitterIntent={twitterIntent ?? ''}
           username={me?.username}

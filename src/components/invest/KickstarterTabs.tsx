@@ -51,7 +51,7 @@ type TabContentProps = {
   Pick<React.HTMLAttributes<HTMLDivElement>, 'className'>
 
 const TabContent: React.FC<TabContentProps> = ({ className, value, children }) => (
-  <TabsContent value={value} className={cn('max-xl:pb-4 max-xl:px-4 pt-2 flex', className)}>
+  <TabsContent value={value} className={cn('max-xl:pb-4 pt-2 flex', className)}>
     {children}
   </TabsContent>
 )

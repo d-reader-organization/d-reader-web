@@ -47,7 +47,8 @@ const rewards: Reward[] = [
 ]
 
 export const RewardSection: React.FC<Props> = ({ viewOnly = false, project }) => {
-  const [selectedReward, setSelectedReward] = useState(0)
+  const defaultSelected = rewards.findIndex((reward) => reward.price === project.funding.expressedAmount) ?? 0
+  const [selectedReward, setSelectedReward] = useState(defaultSelected)
   const searchParams = useSearchParams()
   const referralCode = searchParams.get(REFERRAL_CODE_KEY)
   const [isLoading, toggleLoader] = useToggle(false)
