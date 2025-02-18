@@ -20,7 +20,7 @@ async function ProfilePage() {
 
   return (
     <BaseLayout>
-      <div className='flex flex-col justify-start w-full max-w-[1550px] self-end gap-5'>
+      <div className='flex flex-col justify-start w-full max-w-[1200px] gap-5'>
         <Text as='h1' styleVariant='primary-heading' className=''>
           Settings
         </Text>
