@@ -135,6 +135,10 @@ const config = {
         'text-black': '#17191D',
       },
       keyframes: {
+        'spin-horizontal': {
+          '0%': { transform: 'rotateY(0deg)' },
+          '100%': { transform: 'rotateY(360deg)' },
+        },
         'accordion-down': {
           from: {
             height: '0',
@@ -161,6 +165,7 @@ const config = {
         },
       },
       animation: {
+        'spin-horizontal': 'spin-horizontal 1s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'collapsible-down': 'collapsible-down 0.2s ease-out',

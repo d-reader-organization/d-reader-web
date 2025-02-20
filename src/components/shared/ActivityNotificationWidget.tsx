@@ -13,6 +13,7 @@ import { favouritiseComic } from '@/app/lib/api/comic/mutations'
 import { expressInterest } from '@/app/lib/api/invest/mutations'
 import { followCreator } from '@/app/lib/api/creator/mutations'
 import { ExpressInterestIcon } from '../icons/theme/ExpressInterestIcon'
+import { TokenIcon } from '../icons/logo/TokenIcon'
 
 export type ActivityNotification = {
   user: BasicUser
@@ -193,6 +194,20 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notification }) =>
   const IconWidget = staticData.icon
   const { buttonText, descriptionText, hrefOrAction } = getNotificationData(notification)
 
+  if (notification.type == ActivityNotificationType.ExpressedInterest) {
+    return (
+      <div className='flex flex-col items-center gap-2'>
+        <TokenIcon className='h-20 w-20 animate-spin-horizontal' />
+        <Text as='h1' styleVariant='primary-heading'>
+          <span className='text-green-700'>Luka</span>
+          &nbsp;pledged to invest&nbsp;
+          <span className='text-green-700'>30$</span>
+          &nbsp;in Bonk !
+        </Text>
+      </div>
+    )
+  }
+
   return (
     <div className='flex gap-2 justify-between items-center w-[380px]'>
       <div className='flex gap-3 items-center'>
@@ -219,9 +234,9 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notification }) =>
         </ButtonLink>
       ) : (
         <Button
-          variant={notification.type === ActivityNotificationType.ExpressedInterest ? 'primary' : 'white'}
+          variant={notification.type === ActivityNotificationType.ComicBookmarked ? 'primary' : 'white'}
           className={cn(
-            notification.type === ActivityNotificationType.ExpressedInterest
+            notification.type === ActivityNotificationType.ComicBookmarked
               ? 'bg-green-genesis border-t-0 justify-self-end'
               : ''
           )}
