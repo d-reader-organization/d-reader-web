@@ -3,3 +3,8 @@ export enum SignatureRequestStatus {
   Approved = 'Approved',
   Pending = 'Pending',
 }
+
+export enum SignatureRequestsTab {
+  Pending = 'Pending',
+  Resolved = 'Resolved',
+}

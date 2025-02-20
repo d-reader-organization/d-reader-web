@@ -2,9 +2,6 @@ import { TransactionSource } from '@/enums/transactionSource'
 import { ProductType } from '@/enums/productType'
 import { TransactionHistoryItem } from '@/models/transaction/transactionHistory'
 import { PLACEHOLDER_AVATAR } from './general'
-import { ComicRarity } from '@/enums/comicRarity'
-import { SignatureRequestStatus } from '@/enums/signatureRequest'
-import { SignatureRequest } from '@/models/comicIssue/signatureRequest'
 
 export const transactions: TransactionHistoryItem[] = [
   {
@@ -108,77 +105,5 @@ export const transactions: TransactionHistoryItem[] = [
     source: TransactionSource.Royalty,
     product: ProductType.DigitalArt,
     amount: '200.67',
-  },
-]
-
-export const signatureRequests: SignatureRequest[] = [
-  {
-    asset: {
-      address: '1',
-      name: 'Into the Grasslands #1032',
-      image:
-        'https://d323dls9ny69nf.cloudfront.net/comics/the-farmer-1722522111521/issues/into-the-grasslands-1722879335442/cover-uncommon-1723141682738.jpg',
-      comicTitle: 'The Farmer',
-      comicIssueTitle: 'Into the Grasslands',
-      episodeNumber: 1,
-      isSigned: false,
-      isUsed: false,
-      rarity: ComicRarity.Legendary,
-    },
-    user: {
-      id: 1,
-      username: 'studionx',
-      displayName: 'Studio NX',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    status: SignatureRequestStatus.Approved,
-    requestedAt: '2025-01-25T21:38:00Z',
-    resolvedAt: '2025-01-26T21:38:00Z',
-  },
-  {
-    asset: {
-      address: '2',
-      name: 'Into the Grasslands #1033',
-      image:
-        'https://d323dls9ny69nf.cloudfront.net/comics/the-farmer-1722522111521/issues/into-the-grasslands-1722879335442/cover-uncommon-1723141682738.jpg',
-      comicTitle: 'The Farmer',
-      comicIssueTitle: 'Into the Grasslands',
-      episodeNumber: 1,
-      isSigned: true,
-      isUsed: true,
-      rarity: ComicRarity.Rare,
-    },
-    user: {
-      id: 2,
-      username: 'studionx',
-      displayName: 'Studio NX',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    status: SignatureRequestStatus.Rejected,
-    requestedAt: '2025-01-25T12:00:00Z',
-    resolvedAt: '2025-01-26T12:00:00Z',
-  },
-  {
-    asset: {
-      address: '3',
-      name: 'Into the Grasslands #1034',
-      image:
-        'https://d323dls9ny69nf.cloudfront.net/comics/the-farmer-1722522111521/issues/into-the-grasslands-1722879335442/cover-uncommon-1723141682738.jpg',
-      comicTitle: 'The Farmer',
-      comicIssueTitle: 'Into the Grasslands',
-      episodeNumber: 1,
-      isSigned: false,
-      isUsed: false,
-      rarity: ComicRarity.Rare,
-    },
-    user: {
-      id: 3,
-      username: 'johndoe',
-      displayName: 'John Doe',
-      avatar: PLACEHOLDER_AVATAR,
-    },
-    status: SignatureRequestStatus.Pending,
-    requestedAt: '2025-01-20T12:00:00Z',
-    resolvedAt: undefined,
   },
 ]

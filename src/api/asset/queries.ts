@@ -1,9 +1,10 @@
 import { useMemo } from 'react'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { onQueryError } from '@/components/ui/toast/use-toast'
 import { assetKeys } from './assetKeys'
 import { CollectibleComicFilterParams } from '@/models/asset/collectibleComicFilterParams'
-import { fetchCollectibleComics } from '@/app/lib/api/asset/queries'
+import { fetchCollectibleComics, fetchSignatureRequests } from '@/app/lib/api/asset/queries'
+import { SignatureRequestParams } from '@/models/asset'
 
 type Input = {
   enabled?: boolean
@@ -31,4 +32,20 @@ export const useFetchCollectibleComics = ({ enabled = true, params }: Input) => 
   }, [data])
 
   return { ...infiniteQuery, flatData }
+}
+
+type SignatureRequestInput = {
+  enabled?: boolean
+  accessToken: string
+  params: SignatureRequestParams
+}
+
+export const useFetchSignatureRequests = ({ enabled = true, params, accessToken }: SignatureRequestInput) => {
+  return useQuery({
+    queryFn: () => fetchSignatureRequests({ accessToken, params }),
+    queryKey: assetKeys.getAutographRequests(params),
+    staleTime: 1000 * 15, // stale for 15 seconds
+    throwOnError: onQueryError,
+    enabled: enabled && !!params.take,
+  })
 }

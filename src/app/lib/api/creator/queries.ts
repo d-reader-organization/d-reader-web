@@ -3,8 +3,9 @@ import { CreatorParams } from '@/models/creator/creatorParams'
 import { fetchWrapper } from '../../fetchWrapper'
 import { CREATOR_QUERY_KEYS } from '@/api/creator/creatorKeys'
 import { Nullable } from '@/models/common'
+import { getAccessToken } from '../../utils/auth'
 
-const { CREATOR, GET, SEARCH } = CREATOR_QUERY_KEYS
+const { CREATOR, GET, SEARCH, ME } = CREATOR_QUERY_KEYS
 
 export const fetchCreator = async ({
   slug,
@@ -41,4 +42,9 @@ export const searchCreators = async (params: CreatorParams): Promise<SearchResul
     path: `${CREATOR}/${SEARCH}`,
   })
   return data ?? []
+}
+
+export const fetchMe = async ({ accessToken }: { accessToken: string }): Promise<Nullable<Creator>> => {
+  const response = await fetchWrapper<Creator>({ path: `${CREATOR}/${GET}/${ME}`, accessToken })
+  return response.data
 }

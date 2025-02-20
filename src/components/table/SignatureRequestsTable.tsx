@@ -3,34 +3,36 @@
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '@/components/ui/Table'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { ASPECT_RATIO, PLACEHOLDER_AVATAR, SORT_OPTIONS } from '@/constants/general'
 import { RarityChip } from '../shared/chips/RarityChip'
 import { formatDistanceToNow } from 'date-fns'
-import { useRerender } from '@/hooks/useRerender'
 import Image from 'next/image'
 import { UsedTraitChip } from '../shared/chips/UsedTraitChip'
 import { TextWithOverflow } from '../ui/TextWithOverflow'
-import { signatureRequests } from '@/constants/dummyData'
 import { useTablePagination } from '@/hooks/useTablePagination'
 import { PencilIcon } from '@/components/icons/theme/PencilIcon'
 import { FilterIcon } from '@/components/icons/theme/FilterIcon'
 import { TrashIcon } from '@/components/icons/theme/TrashIcon'
 import { useTableSort } from '@/hooks/useTableSort'
 import { useTableTabs } from '@/hooks/useTableTabs'
+import { useFetchSignatureRequests } from '@/api/asset/queries'
+import { SignatureRequestsTab } from '@/enums/signatureRequest'
 
-enum SignatureRequestsTab {
-  Pending = 'Pending',
-  Resolved = 'Resolved',
-}
+type Props = { title: string; creatorId?: number; accessToken: string }
 
-type Props = { title: string }
-
-export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
-  const isTableEmpty = signatureRequests.length === 0
+export const SignatureRequestsTable: React.FC<Props> = ({ title, creatorId, accessToken }) => {
+  const [totalItems, setTotalItems] = useState<number>(0)
   const { TableTabs, tab } = useTableTabs([SignatureRequestsTab.Pending, SignatureRequestsTab.Resolved])
-  const { TablePagination, skip, take } = useTablePagination({ totalItems: signatureRequests.length })
+  const { TablePagination, skip, take } = useTablePagination({ totalItems })
+  const { data: paginatedRequests } = useFetchSignatureRequests({ accessToken, params: { creatorId, skip, take, status: tab } })
+
+  const isTableEmpty = totalItems == 0
+  useEffect(() => {
+    setTotalItems(paginatedRequests?.totalItems || 0)
+  }, [paginatedRequests])
+
   const selectOptions = useMemo(() => {
     switch (tab) {
       case SignatureRequestsTab.Pending:
@@ -41,7 +43,6 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
   }, [tab])
   const { TableSort, tag: sortTag, order: sortOrder } = useTableSort(selectOptions)
 
-  useRerender(30000)
   console.log('SIGNATURE REQUESTS: ', { sortTag, sortOrder, skip, take })
 
   return (
@@ -75,22 +76,22 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {signatureRequests.map(({ asset, requestedAt, user }) => (
-              <TableRow key={asset.address}>
+            {paginatedRequests?.data.map(({ requestedAt, user, collectibleComic }) => (
+              <TableRow key={collectibleComic.address}>
                 <TableCell>
                   <div className='flex items-center gap-2 relative'>
                     <Image
-                      src={asset.image}
+                      src={collectibleComic.image}
                       alt=''
                       {...ASPECT_RATIO.COMIC_ISSUE_COVER}
                       className='rounded-sm h-14 w-auto aspect-comic-issue-cover'
                     />
                     <div className='flex flex-col w-full max-w-[240px] lg:max-w-[320px] pr-12'>
                       <TextWithOverflow as='span' styleVariant='body-small' className='text-grey-200'>
-                        {asset.comicTitle}
+                        {collectibleComic.comicTitle}
                       </TextWithOverflow>
                       <TextWithOverflow as='span' styleVariant='body-small' fontWeight='medium'>
-                        {asset.name}
+                        {collectibleComic.name}
                       </TextWithOverflow>
                     </div>
                   </div>
@@ -109,8 +110,8 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title }) => {
                 </TableCell>
                 <TableCell>
                   <div className='flex gap-2'>
-                    <RarityChip rarity={asset.rarity} compactOnMobile />
-                    <UsedTraitChip used={asset.isUsed} compactOnMobile />
+                    <RarityChip rarity={collectibleComic.rarity} compactOnMobile />
+                    <UsedTraitChip used={collectibleComic.isUsed} compactOnMobile />
                   </div>
                 </TableCell>
                 <TableCell>

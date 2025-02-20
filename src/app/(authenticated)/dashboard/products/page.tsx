@@ -1,5 +1,6 @@
 import { fetchRawComics } from '@/app/lib/api/comic/queries'
-import { fetchMe } from '@/app/lib/api/user/queries'
+import { fetchMe } from '@/app/lib/api/creator/queries'
+import { getAccessToken } from '@/app/lib/utils/auth'
 import { CreatorDashboardLayout } from '@/components/layout/CreatorDashboardLayout'
 import { ProductsTableWrapper } from '@/components/table/ProductsTableWrapper'
 import SignatureRequestsTable from '@/components/table/SignatureRequestsTable'
@@ -11,7 +12,8 @@ import { TableStoreProvider } from '@/providers/TableStoreProvider'
 import React from 'react'
 
 export default async function ProductsPage() {
-  const me = await fetchMe()
+  const accessToken = await getAccessToken()
+  const me = await fetchMe({ accessToken })
 
   if (!me) {
     return null
@@ -33,7 +35,7 @@ export default async function ProductsPage() {
       >
         <ProductsTableWrapper initialData={comics} />
       </TableStoreProvider>
-      <SignatureRequestsTable title='Signature requests' />
+      <SignatureRequestsTable title='Signature requests' creatorId={me.id} accessToken={accessToken} />
     </CreatorDashboardLayout>
   )
 }

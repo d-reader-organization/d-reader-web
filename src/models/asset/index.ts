@@ -1,6 +1,8 @@
 import { ComicRarity } from '@/enums/comicRarity'
 import { ComicIssue } from '../comicIssue'
 import { Comic } from '../comic'
+import { Pagination } from '../pagination'
+import { SignatureRequestsTab } from '@/enums/signatureRequest'
 
 export type CollectibleComic = {
   address: string
@@ -36,4 +38,9 @@ export type OwnedCollectibleComic = {
   cover: string
   collectibles: CollectibleComic[]
   ownedCopiesCount: number
+}
+
+export type SignatureRequestParams = Pagination & {
+  status: SignatureRequestsTab
+  creatorId?: number
 }
