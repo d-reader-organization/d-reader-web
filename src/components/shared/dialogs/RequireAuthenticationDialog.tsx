@@ -44,7 +44,7 @@ export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }
             <GoogleSignInButton
               buttonText='Continue with Google'
               className='justify-start'
-              onClick={() => track('Auth Dialog - Google_Click')}
+              onClick={() => track('Auth Dialog - Google Click')}
             />
             <ButtonLink
               className='justify-start'
@@ -53,7 +53,7 @@ export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }
               size='lg'
               Icon={MailIcon}
               solid
-              onClick={() => track('Auth Dialog - Register_Click')}
+              onClick={() => track('Auth Dialog - Register Click')}
             >
               Continue with Email
             </ButtonLink>
@@ -80,7 +80,7 @@ export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }
           <Link
             className='underline text-white'
             href={withRedirect(RoutePath.Login, pathname)}
-            onClick={() => track('Auth Dialog - Login_Click')}
+            onClick={() => track('Auth Dialog - Login Click')}
           >
             Log in
           </Link>
