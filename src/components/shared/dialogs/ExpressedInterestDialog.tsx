@@ -7,7 +7,6 @@ import Realistic from 'react-canvas-confetti/dist/presets/realistic'
 import { Text } from '@/components/ui'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
 import { ButtonLink } from '@/components/ui/ButtonLink'
-import { usePathname } from 'next/navigation'
 
 type Props = {
   slug: string
@@ -15,8 +14,7 @@ type Props = {
 } & CommonDialogProps
 
 export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDialog, username }) => {
-  const path = usePathname()
-  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest({ path, slug, username })
+  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest({ slug, username })
 
   return (
     <Dialog open={open} onOpenChange={toggleDialog}>

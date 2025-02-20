@@ -118,7 +118,7 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
               iconClassName='text-grey-400'
               solid={false}
               onClick={() => {
-                const text = location.href + `?ref=${username}` // todo do this properly with url and search params etc.
+                const text = location.href.replace('/pledge', '') + `?ref=${username}` // todo do this properly with url and search params etc.
                 navigator.clipboard.writeText(text)
                 toast({ description: 'Copied to clipboard' })
               }}

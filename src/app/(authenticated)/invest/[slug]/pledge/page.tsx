@@ -23,7 +23,6 @@ export default async function PledgePage(props: Props) {
   }
 
   const { data: twitterIntent } = fetchTwitterIntentExpressedInterest({
-    path: `/invest/${project.slug}/pledge`,
     slug: params.slug,
     username: user.username,
   })

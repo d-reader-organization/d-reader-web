@@ -22,8 +22,7 @@ export default async function ProjectInvestPage(props: Props) {
   }
 
   const twitterIntent = !!me
-    ? fetchTwitterIntentExpressedInterest({ path: `/invest/${params.slug}`, slug: params.slug, username: me.username })
-        .data
+    ? fetchTwitterIntentExpressedInterest({ slug: params.slug, username: me.username }).data
     : ''
 
   return (

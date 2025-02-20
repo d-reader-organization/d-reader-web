@@ -17,11 +17,9 @@ export const fetchTwitterIntentComicMinted = async (params: TwitterIntentComicMi
 }
 
 export const fetchTwitterIntentExpressedInterest = ({
-  path = '',
   slug,
   username,
 }: {
-  path?: string
   slug: string
   username: string
 }): { data: Nullable<string>; errorMessage?: string } => {
@@ -30,7 +28,7 @@ export const fetchTwitterIntentExpressedInterest = ({
     return { data: null, errorMessage: `Project with slug ${slug} not found` }
   }
 
-  const twitterIntent = getTwitterIntentExpressedInterest({ path, project, username })
+  const twitterIntent = getTwitterIntentExpressedInterest({ project, username })
   return { data: twitterIntent }
 }
 

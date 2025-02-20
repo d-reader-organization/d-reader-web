@@ -163,9 +163,8 @@ export const SOCKET = Object.freeze({
 
 export const REFERRAL_REWARDING_PROJECT = 'bonk-and-the-curse-of-the-bear-king'
 
-export const generateReferralLink = ({ path, slug, username }: { path: string; slug: string; username: string }) => {
-  const pathname = !!path ? path : `/invest/${slug}`
-  return `${process.env.NEXT_PUBLIC_SITE_URL}${pathname}?${REFERRAL_CODE_KEY}=${username}`
+export const generateReferralLink = ({ slug, username }: { slug: string; username: string }) => {
+  return `${process.env.NEXT_PUBLIC_SITE_URL}/invest/${slug}?${REFERRAL_CODE_KEY}=${username}`
 }
 
 export const generateUserInviteReferralLink = (username: string) => {
