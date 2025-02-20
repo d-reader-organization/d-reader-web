@@ -4,6 +4,7 @@ import { fetchMe } from '@/app/lib/api/user/queries'
 import { Button, type ButtonProps } from '@/components/ui/Button'
 import { useState, useTransition, type MouseEvent } from 'react'
 import { RequireAuthDialog } from '../dialogs/RequireAuthenticationDialog'
+import { track } from '@vercel/analytics/react'
 
 export type RequireAuthWrapperButtonProps = React.PropsWithChildren &
   ButtonProps & { onClick: (event: MouseEvent<HTMLButtonElement>) => Promise<void> | void }
@@ -21,6 +22,7 @@ export const RequireAuthWrapperButton: React.FC<RequireAuthWrapperButtonProps> =
     startTransition(async () => {
       const me = await fetchMe()
       if (!me) {
+        track('Auth dialog open')
         setShowRequireAuthDialog(true)
         return
       }

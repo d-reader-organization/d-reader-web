@@ -10,6 +10,7 @@ import { Divider } from '../Divider'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { withRedirect } from '@/lib/utils'
 import { MailIcon } from '@/components/icons/theme/MailIcon'
+import { track } from '@vercel/analytics/react'
 
 type Props = {
   open?: boolean
@@ -40,7 +41,11 @@ export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }
         </Text>
         <div className='flex flex-col gap-6 w-full'>
           <div className='flex flex-col gap-4'>
-            <GoogleSignInButton buttonText='Continue with Google' className='justify-start' />
+            <GoogleSignInButton
+              buttonText='Continue with Google'
+              className='justify-start'
+              onClick={() => track('Auth Dialog - Google_Click')}
+            />
             <ButtonLink
               className='justify-start'
               href={withRedirect(RoutePath.Register, pathname)}
@@ -48,6 +53,7 @@ export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }
               size='lg'
               Icon={MailIcon}
               solid
+              onClick={() => track('Auth Dialog - Register_Click')}
             >
               Continue with Email
             </ButtonLink>
@@ -71,7 +77,11 @@ export const RequireAuthDialog: React.FC<Props> = ({ open = false, closeDialog }
           <Text as='span' styleVariant='body-normal' fontWeight='bold' className='text-grey-100'>
             Already have an account?&nbsp;
           </Text>
-          <Link className='underline text-white' href={withRedirect(RoutePath.Login, pathname)}>
+          <Link
+            className='underline text-white'
+            href={withRedirect(RoutePath.Login, pathname)}
+            onClick={() => track('Auth Dialog - Login_Click')}
+          >
             Log in
           </Link>
         </div>

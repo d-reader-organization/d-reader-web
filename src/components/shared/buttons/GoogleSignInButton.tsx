@@ -6,9 +6,10 @@ import { GoogleLogoIcon } from '@/components/icons/platform/GoogleLogoIcon'
 
 type Props = {
   buttonText?: string
+  onClick?: () => void
 } & Pick<React.HTMLAttributes<HTMLButtonElement>, 'className'>
 
-export const GoogleSignInButton: React.FC<Props> = ({ buttonText = 'Sign in with google', className }) => {
+export const GoogleSignInButton: React.FC<Props> = ({ buttonText = 'Sign in with google', className, onClick }) => {
   const isWebView = () => {
     const ua = navigator.userAgent.toLowerCase()
     return (
@@ -31,7 +32,10 @@ export const GoogleSignInButton: React.FC<Props> = ({ buttonText = 'Sign in with
   return (
     <Button
       Icon={GoogleLogoIcon}
-      onClick={() => handleSignIn('google')}
+      onClick={() => {
+        onClick?.()
+        handleSignIn('google')
+      }}
       type='button'
       size='lg'
       className={className}

@@ -5,6 +5,7 @@ import ClientContextProvider from '@/providers/ClientContextProvider'
 import { obviouslyNarrow, satoshi } from './fonts'
 import { getAccessToken, isAuthenticatedUser } from './lib/utils/auth'
 import { AuthStoreProvider } from '@/providers/AuthStoreProvider'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
   title: 'dReader',
@@ -49,6 +50,7 @@ export default async function RootLayout({
         <AuthStoreProvider accessToken={accessToken} isAuthenticated={isAuthenticated}>
           <ClientContextProvider>
             {children}
+            <Analytics />
             <Toaster />
           </ClientContextProvider>
         </AuthStoreProvider>

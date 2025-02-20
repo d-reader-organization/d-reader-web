@@ -19,6 +19,7 @@ import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { TokenIcon } from '../icons/logo/TokenIcon'
 import { ButtonLink } from '../ui/ButtonLink'
 import { ProjectCreatorSection } from '../shared/ProjectCreatorSection'
+import { track } from '@vercel/analytics/react'
 
 type ProjectFundingCardProps = {
   isAuthenticated: boolean
@@ -62,7 +63,11 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthen
         </section>
       </div>
       <ProjectCreatorSection creator={project.creator} />
-      <ButtonLink href={RoutePath.Pledge(project.slug)} variant='genesis'>
+      <ButtonLink
+        href={RoutePath.Pledge(project.slug)}
+        variant='genesis'
+        onClick={() => track('Express Interest Click')}
+      >
         Express Interest
       </ButtonLink>
     </div>
