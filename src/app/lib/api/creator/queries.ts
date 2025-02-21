@@ -3,7 +3,6 @@ import { CreatorParams } from '@/models/creator/creatorParams'
 import { fetchWrapper } from '../../fetchWrapper'
 import { CREATOR_QUERY_KEYS } from '@/api/creator/creatorKeys'
 import { Nullable } from '@/models/common'
-import { getAccessToken } from '../../utils/auth'
 
 const { CREATOR, GET, SEARCH, ME } = CREATOR_QUERY_KEYS
 

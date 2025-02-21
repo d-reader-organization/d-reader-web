@@ -19,11 +19,8 @@ export function withRedirect(pathname: string, redirectUrl?: string) {
 }
 
 /** Reconstruct the URL path string with an additional ref parameter */
-export function linkWithRef(pathname: string, referralCode: string) {
-  const [path, query] = pathname.split('?')
-  const referralCodeParam = `${REFERRAL_CODE_KEY}=${referralCode}`
-  // TODO (Luka): what if there is already a ref param present? override it?
-
-  if (!query) return path + `?${referralCodeParam}`
-  return path + `?${query}&${referralCodeParam}`
+export function linkWithRef(fullUrl: string, referralCode: string) {
+  const url = new URL(fullUrl)
+  url.searchParams.set(REFERRAL_CODE_KEY, referralCode)
+  return url.toString()
 }

@@ -13,8 +13,11 @@ import { mapZodParsedErrors } from '@/lib/forms'
 
 const { AUTH, USER, REGISTER, REGISTER_WITH_GOOGLE } = AUTH_QUERY_KEYS
 
-// TODO (Luka): hande ref on register
-const registerAction = async (_: AuthFormState | null, formData: FormData): Promise<AuthFormState | null> => {
+const registerAction = async (
+  ref: string | null,
+  _: AuthFormState | null,
+  formData: FormData
+): Promise<AuthFormState | null> => {
   const parsed = registerSchema.safeParse({
     name: formData.get('name') ?? '',
     email: formData.get('email') ?? '',
@@ -27,7 +30,7 @@ const registerAction = async (_: AuthFormState | null, formData: FormData): Prom
 
   try {
     const response = await fetchWrapper<Authorization>({
-      body: parsed.data,
+      body: { ...parsed.data, ...(!!ref && { ref }) },
       method: 'POST',
       path: `${AUTH}/${USER}/${REGISTER}`,
     })
@@ -51,7 +54,8 @@ const registerAction = async (_: AuthFormState | null, formData: FormData): Prom
 }
 
 const registerWithGoogleAction = async (
-  prev: AuthFormState | null,
+  ref: string | null,
+  _: AuthFormState | null,
   formData: FormData
 ): Promise<AuthFormState | null> => {
   const parsed = registerWithGoogleSchema.safeParse({
@@ -64,7 +68,7 @@ const registerWithGoogleAction = async (
 
   try {
     const response = await fetchWrapper<Authorization>({
-      body: parsed.data,
+      body: { ...parsed.data, ...(!!ref && { ref }) },
       headers: {
         authorization: `Google ${(await cookies()).get(googleAccessTokenKey)?.value}`,
       },

@@ -6,7 +6,7 @@ import { ProjectInfo } from './ProjectInfo'
 import { type Project } from '@/models/project'
 import { type PropsWithChildren } from 'react'
 import { RewardSection } from './RewardSection'
-import { ReferFriend } from './Referral'
+import { ReferPerson } from './Referral'
 import { track } from '@vercel/analytics/react'
 
 type Props = { project: Project; twitterIntent?: string; username?: string } & Pick<
@@ -34,7 +34,9 @@ export const KickstarterTabs: React.FC<Props> = ({ className, project, twitterIn
       </TabContent>
       <TabContent value='rewards' className='flex flex-col gap-4 max-md:items-center md:flex-row md:gap-7'>
         <RewardSection project={project} viewOnly />
-        {!!twitterIntent && !!username ? <ReferFriend twitterIntent={twitterIntent} username={username} /> : null}
+        {!!twitterIntent && !!username ? (
+          <ReferPerson projectSlug={project.slug} twitterIntent={twitterIntent} username={username} />
+        ) : null}
       </TabContent>
       <TabContent value='faq'></TabContent>
       <TabContent value='updates'></TabContent>

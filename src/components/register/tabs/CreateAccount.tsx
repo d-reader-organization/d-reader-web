@@ -18,6 +18,8 @@ import { ParsedFormError } from '@/models/common'
 import { FormErrorMessage } from '@/components/form/FormErrorMessage'
 import { findError } from '@/lib/forms'
 import { onSubmitPreventFormListener } from '@/app/lib/utils/submitFormWithPreventDefault'
+import { useSearchParams } from 'next/navigation'
+import { REFERRAL_CODE_KEY } from '@/constants/general'
 
 type Props = { isGoogleSignUp?: boolean; onSuccess: () => void }
 
@@ -61,7 +63,8 @@ type FormProps = {
 
 const RegisterForm: React.FC<FormProps> = ({ isGoogleSignUp, onSuccess }) => {
   const formAction = isGoogleSignUp ? registerWithGoogleAction : registerAction
-  const [state, action] = useActionState(formAction, null)
+  const searchParams = useSearchParams()
+  const [state, action] = useActionState(formAction.bind(null, searchParams.get(REFERRAL_CODE_KEY)), null)
   const { toast } = useToast()
 
   useEffect(() => {

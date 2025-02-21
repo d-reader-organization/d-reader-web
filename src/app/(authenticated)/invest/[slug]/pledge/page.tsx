@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { RewardSection } from '@/components/invest/RewardSection'
 import { fetchMe } from '@/app/lib/api/user/queries'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
-import { ReferFriend } from '@/components/invest/Referral'
+import { ReferPerson } from '@/components/invest/Referral'
 import { PledgeActions } from '@/components/invest/PledgeActions'
 import { ProjectHeader } from '@/components/shared/ProjectHeader'
 
@@ -43,7 +43,7 @@ export default async function PledgePage(props: Props) {
           <div className='flex flex-col gap-6 md:gap-10 items-center'>
             <div className='flex flex-col md:flex-row gap-6 w-full max-md:items-center md:justify-start'>
               <RewardSection project={project} />
-              <ReferFriend twitterIntent={twitterIntent} username={user.username} />
+              <ReferPerson projectSlug={project.slug} twitterIntent={twitterIntent} username={user.username} />
             </div>
             <PledgeActions slug={project.slug} username={user.username} />
           </div>

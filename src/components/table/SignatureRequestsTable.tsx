@@ -26,7 +26,10 @@ export const SignatureRequestsTable: React.FC<Props> = ({ title, creatorId, acce
   const [totalItems, setTotalItems] = useState<number>(0)
   const { TableTabs, tab } = useTableTabs([SignatureRequestsTab.Pending, SignatureRequestsTab.Resolved])
   const { TablePagination, skip, take } = useTablePagination({ totalItems })
-  const { data: paginatedRequests } = useFetchSignatureRequests({ accessToken, params: { creatorId, skip, take, status: tab } })
+  const { data: paginatedRequests } = useFetchSignatureRequests({
+    accessToken,
+    params: { creatorId, skip, take, status: tab },
+  })
 
   const isTableEmpty = totalItems == 0
   useEffect(() => {

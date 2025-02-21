@@ -9,22 +9,23 @@ import { LinkIcon } from '../icons/theme/LinkIcon'
 import { DiscordIcon } from '../icons/social/DiscordIcon'
 import { TelegramIcon } from '../icons/social/TelegramIcon'
 import Image from 'next/image'
-import { RoutePath } from '@/enums/routePath'
 import { linkWithRef } from '@/lib/utils'
 import { track } from '@vercel/analytics/react'
+import { RoutePath } from '@/enums/routePath'
+import { useSearchParams } from 'next/navigation'
 
-export function ReferFriend({ twitterIntent, username }: { twitterIntent: string | null; username: string }) {
-  return (
-    <div className='max-w-[480px] w-full min-h-[637px] h-fit rounded-xl border border-grey-300 relative p-4 flex flex-col gap-6'>
-      <ShareReferralBox twitterIntent={twitterIntent ?? ''} username={username} />
-      <div className='flex flex-col gap-4'>
-        {referralCardsData.map((card) => (
-          <ReferralCard card={card} key={card.title} />
-        ))}
-      </div>
+type ReferPersonProps = { projectSlug: string; twitterIntent: string | null; username: string }
+
+export const ReferPerson: React.FC<ReferPersonProps> = ({ projectSlug, twitterIntent, username }) => (
+  <div className='max-w-[480px] w-full min-h-[637px] h-fit rounded-xl border border-grey-300 relative p-4 flex flex-col gap-6'>
+    <ShareReferralBox projectSlug={projectSlug} twitterIntent={twitterIntent ?? ''} username={username} />
+    <div className='flex flex-col gap-4'>
+      {referralCardsData.map((card) => (
+        <ReferralCard card={card} key={card.title} />
+      ))}
     </div>
-  )
-}
+  </div>
+)
 
 type ReferralCardType = {
   description: string
@@ -80,81 +81,81 @@ const ReferralCard: React.FC<ReferralCardProps> = ({ card }) => {
   )
 }
 
-type ShareReferralBoxProps = {
-  twitterIntent: string
-  username: string
-}
-const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, username }) => (
-  <div className='rounded-[10px] bg-blue-300 shadow-[-4px_0px_0px_0px_#3D3E60] h-[160px] sm:h-[212px] flex justify-end w-full'>
-    <SomeImage />
-    <div className='flex flex-col p-2 sm:p-4 h-full justify-between max-w-[180px] sm:max-w-[260px]'>
-      <div className='flex flex-col gap-2 md:gap-4'>
-        <Text as='h3' styleVariant='primary-heading'>
-          Invite friends!
-        </Text>
-        <Text as='p' styleVariant='body-small' fontWeight='medium' className='text-grey-100'>
-          You unlock benefits for every friend you onboard to the campaign!
-        </Text>
+const ShareReferralBox: React.FC<ReferPersonProps> = ({ projectSlug, twitterIntent, username }) => {
+  const searchParams = useSearchParams()
+  return (
+    <div className='rounded-[10px] bg-blue-300 shadow-[-4px_0px_0px_0px_#3D3E60] h-[160px] sm:h-[212px] flex justify-end w-full'>
+      <SomeImage />
+      <div className='flex flex-col p-2 sm:p-4 h-full justify-between max-w-[180px] sm:max-w-[260px]'>
+        <div className='flex flex-col gap-2 md:gap-4'>
+          <Text as='h3' styleVariant='primary-heading'>
+            Invite friends!
+          </Text>
+          <Text as='p' styleVariant='body-small' fontWeight='medium' className='text-grey-100'>
+            You unlock benefits for every friend you onboard to the campaign!
+          </Text>
+        </div>
+        <DropdownMenu
+          onOpenChange={(open) => {
+            if (open) {
+              track('Click: Share the campaign')
+            }
+          }}
+        >
+          <DropdownMenuTrigger className='self-end' asChild>
+            <Button variant='white' Icon={ShareIconV2} solid={false} iconClassName='size-5' className='w-full'>
+              Share the campaign
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className='bg-white border-t border-t-grey-300 inline-flex p-4 gap-2 hover:bg-none w-full'>
+            <DropdownMenuItem asChild className='border border-grey-300 rounded-[10px]'>
+              <ButtonLink
+                href={twitterIntent ?? ''}
+                blank
+                variant='outline'
+                iconOnly
+                Icon={TwitterIcon}
+                iconClassName='text-grey-400'
+                onClick={() => track('Referral: Share on X click')}
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild className='border border-grey-300 rounded-[10px] hover:bg-none'>
+              <Button
+                variant='outline'
+                iconOnly
+                Icon={LinkIcon}
+                iconClassName='text-grey-400'
+                solid={false}
+                onClick={() => {
+                  const query = !!searchParams.size ? `?${searchParams.toString()}` : ''
+                  const finalUrl = process.env.NEXT_PUBLIC_SITE_URL + RoutePath.InvestDetails(projectSlug) + query
+                  const text = linkWithRef(finalUrl, username)
+                  track('Referral: Copy to clipboard')
+                  navigator.clipboard.writeText(text)
+                  toast({ description: 'Referral link copied to clipboard' })
+                }}
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              disabled
+              className='border border-grey-300 opacity-50 rounded-[10px] size-[42px] inline-flex justify-center items-center cursor-default'
+              onClick={() => track('Referral: Share on Discord click')}
+            >
+              <DiscordIcon className='text-grey-400  size-4.5' />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              disabled
+              className='border border-grey-300 opacity-50 rounded-[10px] size-[42px] inline-flex justify-center items-center cursor-default'
+              onClick={() => track('Referral: Share on Telegram click')}
+            >
+              <TelegramIcon className='text-grey-400  size-4.5' />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-      <DropdownMenu
-        onOpenChange={(open) => {
-          if (open) {
-            track('Click: Share the campaign')
-          }
-        }}
-      >
-        <DropdownMenuTrigger className='self-end' asChild>
-          <Button variant='white' Icon={ShareIconV2} solid={false} iconClassName='size-5' className='w-full'>
-            Share the campaign
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className='bg-white border-t border-t-grey-300 inline-flex p-4 gap-2 hover:bg-none w-full'>
-          <DropdownMenuItem asChild className='border border-grey-300 rounded-[10px]'>
-            <ButtonLink
-              href={twitterIntent}
-              blank
-              variant='outline'
-              iconOnly
-              Icon={TwitterIcon}
-              iconClassName='text-grey-400'
-              onClick={() => track('Referral: Share on X click')}
-            />
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild className='border border-grey-300 rounded-[10px] hover:bg-none'>
-            <Button
-              variant='outline'
-              iconOnly
-              Icon={LinkIcon}
-              iconClassName='text-grey-400'
-              solid={false}
-              onClick={() => {
-                // TODO (Luka): project slug below
-                const text = linkWithRef(RoutePath.InvestDetails('project slug'), username)
-                track('Referral: Copy to clipboard')
-                navigator.clipboard.writeText(text)
-                toast({ description: 'Referral link copied to clipboard' })
-              }}
-            />
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled
-            className='border border-grey-300 opacity-50 rounded-[10px] size-[42px] inline-flex justify-center items-center cursor-default'
-            onClick={() => track('Referral: Share on Discord click')}
-          >
-            <DiscordIcon className='text-grey-400  size-4.5' />
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled
-            className='border border-grey-300 opacity-50 rounded-[10px] size-[42px] inline-flex justify-center items-center cursor-default'
-            onClick={() => track('Referral: Share on Telegram click')}
-          >
-            <TelegramIcon className='text-grey-400  size-4.5' />
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
     </div>
-  </div>
-)
+  )
+}
 
 // TODO (Luka): what's up with this?
 const SomeImage = () => (
