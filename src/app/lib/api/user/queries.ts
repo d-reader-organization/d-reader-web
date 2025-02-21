@@ -1,4 +1,4 @@
-'use server' // TODO: figure out
+'use server'
 
 import { USER_QUERY_KEYS } from '@/api/user/userKeys'
 import { User, UserConsent } from '@/models/user'

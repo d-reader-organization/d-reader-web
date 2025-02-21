@@ -42,7 +42,7 @@ export async function CreatorDashboardSidebar({ activePath }: Props) {
       </SidebarHeader>
 
       <SidebarContent className='py-6'>
-        {/* TODO: finalize these styles. Sidebar is not shown on Mobile?!?! */}
+        {/* TODO (Josip & Luka): finalize these styles. Sidebar is not shown on Mobile?!?! */}
         <SidebarTrigger className='absolute top-0 -right-6 shadow-none bg-grey-500 rounded-l-none' />
 
         <SidebarMenu>

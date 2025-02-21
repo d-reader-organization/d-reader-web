@@ -155,7 +155,8 @@ function getNotificationData(notification: ActivityNotification): {
         buttonText: 'Subscribe',
         descriptionText: 'expressed interest in',
         hrefOrAction: async () => {
-          // TODO: and then redirect to the kickstarter page?
+          // TODO (Luka): IF the user is not on the campaign page, display a push notification which redirects to the campaign page after clicking the 'Express Interest' button.
+          // IF the user is on the campaign page, display a different component for this notification (Athar's Twitch stream GIF)
           return expressInterest({ request: { expressedAmount: 1 }, slug: notification.targetId })
         },
       }

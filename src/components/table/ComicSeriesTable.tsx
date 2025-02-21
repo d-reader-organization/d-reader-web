@@ -24,7 +24,6 @@ export const ComicSeriesTable: React.FC<Props> = ({ comics }) => {
           <TableHead className='text-center'>{/* Readers */}</TableHead>
           <TableHead className='text-center'>{/* Likes */}</TableHead>
           <TableHead className='text-center'>{/* Rating */}</TableHead>
-          {/* <TableHead className='text-center'>Bookmarks</TableHead> */}
           <TableHead>{/* Status */}</TableHead>
           <TableHead></TableHead>
         </TableRow>
@@ -63,7 +62,6 @@ export const ComicSeriesTable: React.FC<Props> = ({ comics }) => {
             <TableCell className='text-center'>
               <StarRatingChip rating={comic.stats.averageRating} />
             </TableCell>
-            {/* <TableCell className='text-center'>TODO: {comic.stats.bookmarksCount}</TableCell> */}
             <TableCell>
               <VerificationStatusChip isVerified={!!comic.verifiedAt} />
             </TableCell>

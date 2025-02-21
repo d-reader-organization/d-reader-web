@@ -1,4 +1,4 @@
-import { REDIRECT_TO_KEY } from '@/constants/general'
+import { REDIRECT_TO_KEY, REFERRAL_CODE_KEY } from '@/constants/general'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -16,4 +16,14 @@ export function withRedirect(pathname: string, redirectUrl?: string) {
 
   if (!query) return path + `?${redirectParam}`
   return path + `?${query}&${redirectParam}`
+}
+
+/** Reconstruct the URL path string with an additional ref parameter */
+export function linkWithRef(pathname: string, referralCode: string) {
+  const [path, query] = pathname.split('?')
+  const referralCodeParam = `${REFERRAL_CODE_KEY}=${referralCode}`
+  // TODO (Luka): what if there is already a ref param present? override it?
+
+  if (!query) return path + `?${referralCodeParam}`
+  return path + `?${query}&${referralCodeParam}`
 }

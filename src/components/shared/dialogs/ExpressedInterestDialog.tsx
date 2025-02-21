@@ -13,6 +13,7 @@ type Props = {
   username: string
 } & CommonDialogProps
 
+// TODO: Josip - figure out the design for this
 export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDialog, username }) => {
   const { data: twitterIntent } = fetchTwitterIntentExpressedInterest({ slug, username })
 
@@ -57,7 +58,6 @@ export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDia
               </Text>
             </div>
           </div>
-          {/* // TODO: copy my invite link */}
         </DialogHeader>
         <Realistic autorun={{ speed: 0.5, duration: 1000 }} />
 

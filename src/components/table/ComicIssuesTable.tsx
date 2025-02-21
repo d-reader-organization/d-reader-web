@@ -22,7 +22,6 @@ export const ComicIssuesTable: React.FC<Props> = ({ issues }) => {
           <TableHead className='text-center'>{/* Readers */}</TableHead>
           <TableHead className='text-center'>{/* Likes */}</TableHead>
           <TableHead className='text-center'>{/* Rating */}</TableHead>
-          {/* <TableHead className='text-center'>Bookmarks</TableHead> */}
           <TableHead>{/* Status */}</TableHead>
           <TableHead></TableHead>
         </TableRow>
@@ -63,7 +62,6 @@ export const ComicIssuesTable: React.FC<Props> = ({ issues }) => {
               <TableCell className='text-center'>
                 <StarRatingChip rating={issue.stats.averageRating} />
               </TableCell>
-              {/* <TableCell className='text-center'>TODO: {comic.stats.bookmarksCount}</TableCell> */}
               <TableCell>
                 <VerificationStatusChip isVerified={!!issue.verifiedAt} />
               </TableCell>

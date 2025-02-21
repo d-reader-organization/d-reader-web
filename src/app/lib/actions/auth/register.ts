@@ -13,7 +13,7 @@ import { mapZodParsedErrors } from '@/lib/forms'
 
 const { AUTH, USER, REGISTER, REGISTER_WITH_GOOGLE } = AUTH_QUERY_KEYS
 
-// TODO: hande ref on register
+// TODO (Luka): hande ref on register
 const registerAction = async (_: AuthFormState | null, formData: FormData): Promise<AuthFormState | null> => {
   const parsed = registerSchema.safeParse({
     name: formData.get('name') ?? '',

@@ -8,7 +8,7 @@ import { WalletSection } from './WalletSection'
 import { usePathname } from 'next/navigation'
 import { withRedirect } from '@/lib/utils'
 
-// TODO: Profile sheet styles are outdated, and we want to show the WalletSection only on the mint/comic-issue page?
+// TODO (Luka): Profile sheet styles are outdated, and we want to show the WalletSection only on the mint/comic-issue page?
 // Blocked: needs Matan's input on the Sign in / Sign up button behavior
 export const GuestProfileContent: React.FC = () => (
   <div className='flex flex-col justify-between gap-6 h-full'>

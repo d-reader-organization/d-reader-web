@@ -41,7 +41,6 @@ export const UnwrapIssueDialog: React.FC<Props> = ({ collectibleComics, showUnwr
           </DialogDescription>
         </DialogHeader>
 
-        {/* TODO: improve this dialog somehow, and sort the available comics by rarity? */}
         {unusedCollectibleComics.map((collectibleComic) => (
           <UnwrapIssueDialogItem
             key={collectibleComic.address}

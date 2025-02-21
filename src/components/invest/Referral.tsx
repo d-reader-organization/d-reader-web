@@ -9,6 +9,8 @@ import { LinkIcon } from '../icons/theme/LinkIcon'
 import { DiscordIcon } from '../icons/social/DiscordIcon'
 import { TelegramIcon } from '../icons/social/TelegramIcon'
 import Image from 'next/image'
+import { RoutePath } from '@/enums/routePath'
+import { linkWithRef } from '@/lib/utils'
 
 export function ReferFriend({ twitterIntent, username }: { twitterIntent: string | null; username: string }) {
   return (
@@ -118,7 +120,8 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
               iconClassName='text-grey-400'
               solid={false}
               onClick={() => {
-                const text = location.href.replace('/pledge', '') + `?ref=${username}` // todo do this properly with url and search params etc.
+                // TODO (Luka): project slug below
+                const text = linkWithRef(RoutePath.InvestDetails('project slug'), username)
                 navigator.clipboard.writeText(text)
                 toast({ description: 'Copied to clipboard' })
               }}
@@ -136,6 +139,7 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
   </div>
 )
 
+// TODO (Luka): what's up with this?
 const SomeImage = () => (
   <svg
     width='233'

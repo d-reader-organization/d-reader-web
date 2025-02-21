@@ -12,7 +12,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 }
 
 export const DefaultComicCard: React.FC<Props> = ({ comic, className }) => {
-  const isFree = false // TODO: showIsFree && comic.isFree
+  const isFree = false
 
   return (
     <Link

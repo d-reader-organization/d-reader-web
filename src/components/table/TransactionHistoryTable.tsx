@@ -21,16 +21,11 @@ import { useTableSort } from '@/hooks/useTableSort'
 import { CopyButton } from '../shared/CopyButton'
 import { useTableSearch } from '@/hooks/useTableSearch'
 
-// TODO: <TableNoContent />
-// TODO: ActivityFeed
-
-// TODO: Luka
+// TODO (Luka)
+// <TableNoContent />
+// ActivityFeed
 // filter functionality (drawers/sheets)
 // change table data based on the selected tab
-
-// TODO: Matan
-// replace chart with PieChart, Bars, or something similar
-// change the DialogClose into <Button variant="secondary" /> ?
 
 type Props = { title: string }
 

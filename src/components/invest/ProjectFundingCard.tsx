@@ -25,7 +25,7 @@ type ProjectFundingCardProps = {
   project: Project
 } & React.HTMLAttributes<HTMLDivElement>
 
-// TODO: rewrite the whole component, consider the mobile screen
+// TODO (Matan): redesign and refactor the whole component
 export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthenticated, className, project }) => {
   const currentDate = new Date()
   const { funding, slug } = project
@@ -148,7 +148,6 @@ const ExpressInterestButton: React.FC<ExpressInterestButtonProps> = ({ slug, isU
 
   const handleExpressInterest = async () => {
     toggleLoader()
-    // TODO: this should remove the interest to express, if the user is clicking on the "I'm interested" button
     const request: ExpressInterest = { expressedAmount: defaultPrice, ref: referralCode }
     const { errorMessage } = await expressInterest({ slug, request })
     toggleLoader()
