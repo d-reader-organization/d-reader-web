@@ -43,6 +43,7 @@
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query": "^5.51.11",
     "@tiplink/wallet-adapter": "^2.1.17",
+    "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

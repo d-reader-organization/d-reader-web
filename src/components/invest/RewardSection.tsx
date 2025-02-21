@@ -53,12 +53,12 @@ export const RewardSection: React.FC<Props> = ({ viewOnly = false, project }) =>
   const referralCode = searchParams.get(REFERRAL_CODE_KEY)
   const [isLoading, toggleLoader] = useToggle(false)
 
-  const handleCardSelect = async ({ cardId, amount }: { cardId: number; amount: number }) => {
+  const handleCardSelect = async ({ rewardId, amount }: { rewardId: number; amount: number }) => {
     toggleLoader()
     if (isLoading) {
       return
     }
-    setSelectedReward(cardId)
+    setSelectedReward(rewardId)
     const request: ExpressInterest = { expressedAmount: amount, ref: referralCode }
     const { errorMessage } = await expressInterest({ slug: project.slug, request })
     toggleLoader()
@@ -79,8 +79,8 @@ export const RewardSection: React.FC<Props> = ({ viewOnly = false, project }) =>
             reward={reward}
             selectedReward={selectedReward}
             viewOnly={viewOnly}
-            updateSelected={async (cardId) => {
-              await handleCardSelect({ amount: reward.price, cardId })
+            updateSelected={async (rewardId) => {
+              await handleCardSelect({ amount: reward.price, rewardId })
             }}
           />
         ))}

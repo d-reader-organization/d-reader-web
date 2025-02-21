@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import { CircleIcon } from '../icons/theme/CircleIcon'
 import { Button } from '../ui/Button'
 import { CheckCircleIcon } from '../icons/theme/CheckCircleIcon'
+import { track } from '@vercel/analytics/react'
 
 type RewardCardProps = {
   reward: Reward
@@ -19,12 +20,12 @@ type RewardCardProps = {
 
 export function RewardCard({ project, reward, selectedReward, viewOnly, updateSelected }: RewardCardProps) {
   const isSelected = reward.id === selectedReward
-
   return (
     <Button
       variant='ghost'
       onClick={() => {
         if (!viewOnly) {
+          track('Reward card click', { title: reward.title })
           updateSelected(reward.id)
         }
       }}

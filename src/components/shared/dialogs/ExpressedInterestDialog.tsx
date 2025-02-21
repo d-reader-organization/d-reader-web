@@ -7,6 +7,7 @@ import Realistic from 'react-canvas-confetti/dist/presets/realistic'
 import { Text } from '@/components/ui'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
 import { ButtonLink } from '@/components/ui/ButtonLink'
+import { track } from '@vercel/analytics/react'
 
 type Props = {
   slug: string
@@ -16,8 +17,18 @@ type Props = {
 export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDialog, username }) => {
   const { data: twitterIntent } = fetchTwitterIntentExpressedInterest({ slug, username })
 
+  const trackEventAndToggleDialog = (eventName: string) => {
+    track(eventName, { location: 'Expressed interest dialog' })
+    toggleDialog()
+  }
+
   return (
-    <Dialog open={open} onOpenChange={toggleDialog}>
+    <Dialog
+      open={open}
+      onOpenChange={() => {
+        trackEventAndToggleDialog('Close')
+      }}
+    >
       <DialogContent className='max-w-md' hideCloseIcon aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle asChild>
@@ -62,13 +73,13 @@ export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDia
         <Realistic autorun={{ speed: 0.5, duration: 1000 }} />
 
         <DialogFooter>
-          <DialogButton variant='secondary' onClick={toggleDialog}>
+          <DialogButton variant='secondary' onClick={() => trackEventAndToggleDialog('Close')}>
             Nah I&apos;m good
           </DialogButton>
           <ButtonLink
             href={twitterIntent || ''}
             className='bg-green-genesis bg-opacity-100 text-black w-full'
-            onClick={toggleDialog}
+            onClick={() => trackEventAndToggleDialog('Share on X click')}
             target='_blank'
           >
             Share on 𝕏
