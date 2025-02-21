@@ -11,6 +11,7 @@ import { TelegramIcon } from '../icons/social/TelegramIcon'
 import Image from 'next/image'
 import { RoutePath } from '@/enums/routePath'
 import { linkWithRef } from '@/lib/utils'
+import { track } from '@vercel/analytics/react'
 
 export function ReferFriend({ twitterIntent, username }: { twitterIntent: string | null; username: string }) {
   return (
@@ -95,8 +96,14 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
           You unlock benefits for every friend you onboard to the campaign!
         </Text>
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger className='self-end ' asChild>
+      <DropdownMenu
+        onOpenChange={(open) => {
+          if (open) {
+            track('Click: Share the campaign')
+          }
+        }}
+      >
+        <DropdownMenuTrigger className='self-end' asChild>
           <Button variant='white' Icon={ShareIconV2} solid={false} iconClassName='size-5' className='w-full'>
             Share the campaign
           </Button>
@@ -110,6 +117,7 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
               iconOnly
               Icon={TwitterIcon}
               iconClassName='text-grey-400'
+              onClick={() => track('Referral: Share on X click')}
             />
           </DropdownMenuItem>
           <DropdownMenuItem asChild className='border border-grey-300 rounded-[10px] hover:bg-none'>
@@ -122,16 +130,25 @@ const ShareReferralBox: React.FC<ShareReferralBoxProps> = ({ twitterIntent, user
               onClick={() => {
                 // TODO (Luka): project slug below
                 const text = linkWithRef(RoutePath.InvestDetails('project slug'), username)
+                track('Referral: Copy to clipboard')
                 navigator.clipboard.writeText(text)
-                toast({ description: 'Copied to clipboard' })
+                toast({ description: 'Referral link copied to clipboard' })
               }}
             />
           </DropdownMenuItem>
-          <DropdownMenuItem asChild disabled className='border border-grey-300 rounded-[10px]'>
-            <Button variant='outline' disabled iconOnly Icon={DiscordIcon} className='text-grey-400' />
+          <DropdownMenuItem
+            disabled
+            className='border border-grey-300 opacity-50 rounded-[10px] size-[42px] inline-flex justify-center items-center cursor-default'
+            onClick={() => track('Referral: Share on Discord click')}
+          >
+            <DiscordIcon className='text-grey-400  size-4.5' />
           </DropdownMenuItem>
-          <DropdownMenuItem asChild disabled className='border border-grey-300 rounded-[10px]'>
-            <Button variant='outline' disabled iconOnly Icon={TelegramIcon} />
+          <DropdownMenuItem
+            disabled
+            className='border border-grey-300 opacity-50 rounded-[10px] size-[42px] inline-flex justify-center items-center cursor-default'
+            onClick={() => track('Referral: Share on Telegram click')}
+          >
+            <TelegramIcon className='text-grey-400  size-4.5' />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

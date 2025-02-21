@@ -7,6 +7,7 @@ import { type Project } from '@/models/project'
 import { type PropsWithChildren } from 'react'
 import { RewardSection } from './RewardSection'
 import { ReferFriend } from './Referral'
+import { track } from '@vercel/analytics/react'
 
 type Props = { project: Project; twitterIntent?: string; username?: string } & Pick<
   React.HTMLAttributes<HTMLDivElement>,
@@ -15,7 +16,13 @@ type Props = { project: Project; twitterIntent?: string; username?: string } & P
 
 export const KickstarterTabs: React.FC<Props> = ({ className, project, twitterIntent, username }) => {
   return (
-    <Tabs defaultValue='about' className={cn('', className)}>
+    <Tabs
+      defaultValue='about'
+      className={className}
+      onValueChange={(tab: string) => {
+        track(`Kickstarter tab change: ${tab}`)
+      }}
+    >
       <TabsList className='border-b border-b-grey-300 w-full justify-center md:justify-start'>
         <TabTrigger title='About' />
         <TabTrigger title='Rewards' />
