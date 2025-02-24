@@ -29,7 +29,7 @@ export function Toaster() {
           </Toast>
         )
       })}
-      <ToastViewport />
+      <ToastViewport className='translate-y-[-100%]' />
     </ToastProvider>
   )
 }

@@ -135,6 +135,14 @@ const config = {
         'text-black': '#17191D',
       },
       keyframes: {
+        vibrate: {
+          '0%': { transform: 'translate(2px, 0)' },
+          '20%': { transform: 'translate(-2px, 0)' },
+          '40%': { transform: 'translate(2px, 0)' },
+          '60%': { transform: 'translate(-2px, 0)' },
+          '80%': { transform: 'translate(2px, 0)' },
+          '100%': { transform: 'translate(0, 0)' },
+        },
         'spin-horizontal': {
           '0%': { transform: 'rotateY(0deg)' },
           '100%': { transform: 'rotateY(360deg)' },
@@ -165,6 +173,7 @@ const config = {
         },
       },
       animation: {
+        vibrate: 'vibrate 0.3s linear infinite',
         'spin-horizontal': 'spin-horizontal 1s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',

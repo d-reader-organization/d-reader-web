@@ -2,7 +2,7 @@
 
 import { BasicUser } from '@/models/user'
 import { UserPlusIcon } from '../icons/theme/UserPlusIcon'
-import { Button, Text, toast } from '../ui'
+import { Text, toast } from '../ui'
 import { ButtonLink } from '../ui/ButtonLink'
 import { StarIcon } from '../icons/theme/StarIcon'
 import { BookmarkIcon } from '../icons/theme/BookmarkIcon'
@@ -13,7 +13,9 @@ import { favouritiseComic } from '@/app/lib/api/comic/mutations'
 import { expressInterest } from '@/app/lib/api/invest/mutations'
 import { followCreator } from '@/app/lib/api/creator/mutations'
 import { ExpressInterestIcon } from '../icons/theme/ExpressInterestIcon'
-import { TokenIcon } from '../icons/logo/TokenIcon'
+import Image from 'next/image'
+import MC_MONEY from 'public/assets/images/invest/mc-money.gif'
+import React, { useEffect, useState } from 'react'
 
 export type ActivityNotification = {
   user: BasicUser
@@ -156,7 +158,7 @@ function getNotificationData(notification: ActivityNotification): {
         buttonText: 'Subscribe',
         descriptionText: 'expressed interest in',
         hrefOrAction: async () => {
-          // TODO: and then redirect to the kickstarter page?
+          // TODO: and then redirect to the kickstarter page? -- yes
           return expressInterest({ request: { expressedAmount: 1 }, slug: notification.targetId })
         },
       }
@@ -193,19 +195,44 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notification }) =>
   const staticData = STATIC_ACTIVITY_DATA[notification.type]
   const IconWidget = staticData.icon
   const { buttonText, descriptionText, hrefOrAction } = getNotificationData(notification)
+  const [color, setColor] = useState('yellow')
 
-  if (notification.type == ActivityNotificationType.ExpressedInterest) {
-    return (
-      <div className='flex flex-col items-center gap-2'>
-        <TokenIcon className='h-20 w-20 animate-spin-horizontal' />
-        <Text as='h1' styleVariant='primary-heading'>
-          <span className='text-green-700'>Luka</span>
-          &nbsp;pledged to invest&nbsp;
-          <span className='text-green-700'>30$</span>
-          &nbsp;in Bonk !
-        </Text>
-      </div>
-    )
+  const handleClick = async () => {
+    if (typeof hrefOrAction === 'function') {
+      const response = await hrefOrAction()
+      const isError = !!response.errorMessage
+      toast({
+        variant: isError ? 'error' : 'success',
+        title: isError ? 'Error' : 'Success',
+        description: response.errorMessage ?? `You ${descriptionText} ${notification.targetTitle}`,
+      })
+    }
+  }
+
+  useEffect(() => {
+    let hue = 0
+    const interval = setInterval(() => {
+      hue = (hue + 1) % 360
+      const newColor = `hsl(${hue}, 100%, 50%)`
+      setColor(newColor)
+    }, 1)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const renderExpressedInterest = () => (
+    <div className='flex flex-col items-center gap-2' onClick={handleClick}>
+      <Image alt='money' height={20} width={30} src={MC_MONEY} />
+      <Text as='h2' styleVariant='primary-heading' className='animate-vibrate text-center'>
+        <span style={{ color }}>{notification.user.displayName}</span>
+        &nbsp;pledged to invest&nbsp;
+        in <span style={{ color }}>{notification.targetTitle} !</span>
+      </Text>
+    </div>
+  )
+
+  if (notification.type === ActivityNotificationType.ExpressedInterest) {
+    return renderExpressedInterest()
   }
 
   return (
@@ -213,7 +240,7 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notification }) =>
       <div className='flex gap-3 items-center'>
         <div
           className={cn(
-            'rounded-lg  bg-opacity-40 p-2 flex justify-center items-center size-[38px]',
+            'rounded-lg bg-opacity-40 p-2 flex justify-center items-center size-[38px]',
             staticData.bgColor
           )}
         >
@@ -232,29 +259,7 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notification }) =>
         >
           {buttonText}
         </ButtonLink>
-      ) : (
-        <Button
-          variant={notification.type === ActivityNotificationType.ComicBookmarked ? 'primary' : 'white'}
-          className={cn(
-            notification.type === ActivityNotificationType.ComicBookmarked
-              ? 'bg-green-genesis border-t-0 justify-self-end'
-              : ''
-          )}
-          onClick={async () => {
-            const response = await hrefOrAction()
-            const isError = !!response.errorMessage
-            toast({
-              variant: isError ? 'error' : 'success',
-              title: isError ? 'Error' : 'Success',
-              description: response.errorMessage ?? `You ${descriptionText} ${notification.targetTitle}`,
-            })
-            if (response.errorMessage) {
-            }
-          }}
-        >
-          {buttonText}
-        </Button>
-      )}
+      ) : null }
     </div>
   )
 }

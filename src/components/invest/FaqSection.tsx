@@ -26,8 +26,7 @@ export const FaqSection: React.FC<{ items: FAQItemType[] }> = ({ items }) => {
     }
     toast({
       description: <ActivityNotificationWidget notification={data} />,
-      duration: 3000000000000,
-      className: 'md:translate-y-[-200%] bg-transparent border-0',
+      className: `border-0 bg-transparent shadow-none`,
     })
   }
 
