@@ -1,6 +1,6 @@
 'use client'
 
-import CountUp from '../shared/CountUp'
+import { CountUp } from '../shared/CountUp'
 import { VariantSvgIconProps } from '@/lib/types'
 
 type Props = {
@@ -21,7 +21,7 @@ export const MetricCard: React.FC<Props> = ({ Icon, title, value = 0 }) => {
       <div>
         <p className='text-sm text-zinc-400'>{title}</p>
         <p className='text-2xl font-semibold'>
-          <CountUp value={value} duration={animationDuration} />
+          <CountUp value={value} durationInSeconds={animationDuration} />
         </p>
       </div>
     </div>

@@ -20,6 +20,8 @@ import { TokenIcon } from '../icons/logo/TokenIcon'
 import { ButtonLink } from '../ui/ButtonLink'
 import { ProjectCreatorSection } from '../shared/ProjectCreatorSection'
 import { track } from '@vercel/analytics/react'
+import { CountUp } from '../shared/CountUp'
+import { AnimatedProgress } from '../shared/AnimatedProgress'
 
 type ProjectFundingCardProps = {
   isAuthenticated: boolean
@@ -41,13 +43,18 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthen
         <Text as='p' styleVariant='body-normal' fontWeight='bold'>
           Overall project fund goal:
         </Text>
-        <Progress className='h-2.5' value={Math.min(1, (funding.pledgedAmount + 50000) / funding.raiseGoal) * 100} />
+        <AnimatedProgress
+          durationInSeconds={3}
+          value={Math.min(1, (funding.pledgedAmount + 50000) / funding.raiseGoal) * 100}
+        />
         {/* Contributors and pledges section */}
         <section className='flex flex-col gap-2 sm:flex-row w-full sm:justify-between'>
           <div className='flex flex-col'>
-            <Text as='h3' styleVariant='primary-heading' className='text-green-genesis'>
-              {formatCurrency({ value: funding.pledgedAmount, fractionDigits: 0 })}
-            </Text>
+            <CountUp
+              className='text-24 sm:text-32 tracking-0064 font-semibold leading-tight font-obviouslyNarrow text-green-genesis'
+              durationInSeconds={3}
+              value={funding.pledgedAmount}
+            />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
               pledged of&nbsp;{formatCurrency({ value: funding.raiseGoal, fractionDigits: 0 })}
             </Text>
