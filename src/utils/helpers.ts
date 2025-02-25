@@ -1,5 +1,4 @@
 import { generateReferralLink, generateUserInviteReferralLink } from '@/constants/general'
-import { PROJECTS } from '@/constants/projects'
 import { RoutePath } from '@/enums/routePath'
 import { CarouselSlide } from '@/models/carousel/carouselSlide'
 import { PartialGenre } from '@/models/genre'
@@ -143,11 +142,6 @@ export const getSlideFallbackUrl = (slide: CarouselSlide): string => {
   else if (slide.creatorId) return RoutePath.Creator(slide.creatorId)
   else if (slide.comicSlug) return RoutePath.Comic(slide.comicSlug)
   else return slide.externalLink ?? ''
-}
-
-export const findProjectBySlug = (slug: string) => {
-  const project = PROJECTS.find((project) => project.slug === slug)
-  return project
 }
 
 export const getTwitterIntentExpressedInterest = ({ project, username }: { project: Project; username: string }) => {

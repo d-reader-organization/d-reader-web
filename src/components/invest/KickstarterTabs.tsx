@@ -2,19 +2,18 @@
 
 import { cn } from '@/lib/utils'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/Tabs'
-import { ProjectInfo } from './ProjectInfo'
-import { type Project } from '@/models/project'
 import { type PropsWithChildren } from 'react'
 import { RewardSection } from './RewardSection'
 import { ReferPerson } from './Referral'
 import { track } from '@vercel/analytics/react'
+import { Campaign } from '@/models/campaign'
 
-type Props = { project: Project; twitterIntent?: string; username?: string } & Pick<
+type Props = { campaign: Campaign; twitterIntent?: string; username?: string } & Pick<
   React.HTMLAttributes<HTMLDivElement>,
   'className'
 >
 
-export const KickstarterTabs: React.FC<Props> = ({ className, project, twitterIntent, username }) => {
+export const KickstarterTabs: React.FC<Props> = ({ className, campaign, twitterIntent, username }) => {
   return (
     <Tabs
       defaultValue='about'
@@ -30,12 +29,13 @@ export const KickstarterTabs: React.FC<Props> = ({ className, project, twitterIn
         <TabTrigger disabled title='Updates' />
       </TabsList>
       <TabContent value='about'>
-        <ProjectInfo info={project.info} />
+        {/* TODO: update info to show .md file */}
+        {/* <ProjectInfo info={campaign.info} /> */}
       </TabContent>
       <TabContent value='rewards' className='flex flex-col gap-4 max-md:items-center md:flex-row md:gap-7'>
-        <RewardSection project={project} viewOnly />
+        <RewardSection campaign={campaign} viewOnly />
         {!!twitterIntent && !!username ? (
-          <ReferPerson projectSlug={project.slug} twitterIntent={twitterIntent} username={username} />
+          <ReferPerson campaignSlug={campaign.slug} twitterIntent={twitterIntent} username={username} />
         ) : null}
       </TabContent>
       <TabContent value='faq'></TabContent>

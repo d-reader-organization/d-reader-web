@@ -5,19 +5,15 @@ import { Dialog, DialogButton, DialogContent, DialogFooter, DialogHeader, Dialog
 import { CommonDialogProps } from '@/models/common'
 import Realistic from 'react-canvas-confetti/dist/presets/realistic'
 import { Text } from '@/components/ui'
-import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { track } from '@vercel/analytics/react'
 
 type Props = {
-  slug: string
-  username: string
+  twitterIntent: string
 } & CommonDialogProps
 
 // TODO: Josip - figure out the design for this
-export const ExpressedInterestDialog: React.FC<Props> = ({ open, slug, toggleDialog, username }) => {
-  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest({ slug, username })
-
+export const ExpressedInterestDialog: React.FC<Props> = ({ open, toggleDialog, twitterIntent }) => {
   const trackEventAndToggleDialog = (eventName: string) => {
     track(eventName, { location: 'Expressed interest dialog' })
     toggleDialog()

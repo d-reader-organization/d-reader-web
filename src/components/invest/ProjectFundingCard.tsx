@@ -13,7 +13,7 @@ import { RoutePath } from '@/enums/routePath'
 import { RequireAuthWrapperButton } from '../shared/buttons/RequireAuthWrapperButton'
 import { redirect, RedirectType, useSearchParams } from 'next/navigation'
 import { REFERRAL_CODE_KEY } from '@/constants/general'
-import { expressInterest } from '@/app/lib/api/invest/mutations'
+import { expressInterest } from '@/app/lib/api/campaign/mutations'
 import { useToggle } from '@/hooks'
 import { LoaderIcon } from '../icons/theme/LoaderIcon'
 import { TokenIcon } from '../icons/logo/TokenIcon'
@@ -22,17 +22,18 @@ import { ProjectCreatorSection } from '../shared/ProjectCreatorSection'
 import { track } from '@vercel/analytics/react'
 import { CountUp } from '../shared/CountUp'
 import { AnimatedProgress } from '../shared/AnimatedProgress'
+import { Campaign } from '@/models/campaign'
 
 type ProjectFundingCardProps = {
   isAuthenticated: boolean
-  project: Project
+  campaign: Campaign
 } & React.HTMLAttributes<HTMLDivElement>
 
 // TODO (Matan): redesign and refactor the whole component
-export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthenticated, className, project }) => {
+export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthenticated, className, campaign }) => {
   const currentDate = new Date()
-  const { funding, slug } = project
-  const startedAt = funding.startDate ? new Date(funding.startDate) : undefined
+  const { startDate, endDate, slug } = campaign
+  const startedAt = startDate ? new Date(startDate) : undefined
   // const hasFundingStarted = startedAt ? startedAt <= currentDate : false
   // const hasFundingEnded = funding.pledgedAmount >= funding.raiseGoal
   // const daysLeft = funding.endDate ? differenceInDays(new Date(funding.endDate), currentDate) : undefined
@@ -45,7 +46,7 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthen
         </Text>
         <AnimatedProgress
           durationInSeconds={3}
-          value={Math.min(1, (funding.pledgedAmount + 50000) / funding.raiseGoal) * 100}
+          value={Math.min(1, (campaign.stats?.tentativeAmountPledged || 0 + 50000) / campaign.raiseGoal) * 100}
         />
         {/* Contributors and pledges section */}
         <section className='flex flex-col gap-2 sm:flex-row w-full sm:justify-between'>
@@ -53,15 +54,15 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthen
             <CountUp
               className='text-24 sm:text-32 tracking-0064 font-semibold leading-tight font-obviouslyNarrow text-green-genesis'
               durationInSeconds={3}
-              value={funding.pledgedAmount}
+              value={campaign.stats?.tentativeAmountPledged}
             />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
-              pledged of&nbsp;{formatCurrency({ value: funding.raiseGoal, fractionDigits: 0 })}
+              pledged of&nbsp;{formatCurrency({ value: campaign.raiseGoal, fractionDigits: 0 })}
             </Text>
           </div>
           <div className='flex flex-col'>
             <Text as='h3' styleVariant='primary-heading' className='text-white'>
-              {formatNumberWithCommas(funding.numberOfInterestedInvestors)}&nbsp;contributors
+              {formatNumberWithCommas(campaign.stats?.tentativeBackers || 0)}&nbsp;contributors
             </Text>
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
               expressed interests
@@ -69,9 +70,9 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthen
           </div>
         </section>
       </div>
-      <ProjectCreatorSection creator={project.creator} />
+      {campaign.creator && <ProjectCreatorSection creator={campaign.creator} />}
       <ButtonLink
-        href={RoutePath.Pledge(project.slug)}
+        href={RoutePath.Pledge(campaign.slug)}
         variant='genesis'
         onClick={() => track('Express Interest Click')}
       >

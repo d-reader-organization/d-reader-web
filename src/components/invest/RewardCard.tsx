@@ -1,6 +1,5 @@
 'use client'
 
-import { type Project, type Reward } from '@/models/project'
 import { Card, CardContent } from '../ui/card'
 import { Text } from '../ui/Text'
 import Image from 'next/image'
@@ -9,23 +8,24 @@ import { CircleIcon } from '../icons/theme/CircleIcon'
 import { Button } from '../ui/Button'
 import { CheckCircleIcon } from '../icons/theme/CheckCircleIcon'
 import { track } from '@vercel/analytics/react'
+import { Campaign, CampaignReward } from '@/models/campaign'
 
 type RewardCardProps = {
-  reward: Reward
-  project: Project
+  reward: CampaignReward
+  campaign: Campaign
   selectedReward: number
   viewOnly: boolean
   updateSelected: (value: number) => void
 }
 
-export function RewardCard({ project, reward, selectedReward, viewOnly, updateSelected }: RewardCardProps) {
+export function RewardCard({ campaign, reward, selectedReward, viewOnly, updateSelected }: RewardCardProps) {
   const isSelected = reward.id === selectedReward
   return (
     <Button
       variant='ghost'
       onClick={() => {
         if (!viewOnly) {
-          track('Reward card click', { title: reward.title })
+          track('Reward card click', { title: reward.name })
           updateSelected(reward.id)
         }
       }}
@@ -49,7 +49,7 @@ export function RewardCard({ project, reward, selectedReward, viewOnly, updateSe
           <div className='flex flex-col items-start gap-3'>
             <div className='flex justify-between w-full'>
               <Text as='p' styleVariant='body-xlarge' fontWeight='bold'>
-                {reward.title}
+                {reward.name}
               </Text>
               {viewOnly ? null : isSelected ? (
                 <CheckCircleIcon className='size-6 text-green-genesis' />
@@ -58,7 +58,7 @@ export function RewardCard({ project, reward, selectedReward, viewOnly, updateSe
               )}
             </div>
             <Text styleVariant='body-normal' as='p' fontWeight='medium' className='text-grey-100 mb-2'>
-              ${reward.price}&nbsp; | &nbsp;{project.funding.numberOfBackers} backers
+              ${reward.price}&nbsp; | &nbsp;{campaign.stats?.tentativeBackers} backers
             </Text>
             <Text as='p' styleVariant='body-small' className='text-grey-100 text-start'>
               {reward.description}

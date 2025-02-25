@@ -8,9 +8,7 @@ export interface BasicCreator {
   isVerified: boolean
   avatar: string
   banner: string
-  logo: string
   description: string
-  flavorText: string
   tippingAddress: string
   website: string
   twitter: string
@@ -25,7 +23,7 @@ export interface Creator extends BasicCreator {
 }
 
 export type UpdateCreatorData = Partial<
-  Pick<Creator, 'description' | 'flavorText' | 'tippingAddress' | 'website' | 'twitter' | 'instagram' | 'linktree'>
+  Pick<Creator, 'description' | 'tippingAddress' | 'website' | 'twitter' | 'instagram' | 'linktree'>
 >
 
 export type UpdateCreatorFilesData = Partial<{

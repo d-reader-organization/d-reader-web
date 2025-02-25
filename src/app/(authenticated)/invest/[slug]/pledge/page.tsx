@@ -1,6 +1,6 @@
 import { GenesisLayout } from '@/components/layout/GenesisLayout'
 import { Text } from '@/components/ui'
-import { fetchProject } from '@/app/lib/api/invest/queries'
+import { fetchCampaign } from '@/app/lib/api/campaign/queries'
 import { notFound } from 'next/navigation'
 import { RewardSection } from '@/components/invest/RewardSection'
 import { fetchMe } from '@/app/lib/api/user/queries'
@@ -15,21 +15,21 @@ type Props = {
 
 export default async function PledgePage(props: Props) {
   const params = await props.params
-  const { data: project, errorMessage } = await fetchProject(params.slug)
+  const { data: campaign, errorMessage } = await fetchCampaign(params.slug)
   const user = await fetchMe()
 
-  if (!project || !user || errorMessage) {
+  if (!campaign || !user || errorMessage) {
     return notFound()
   }
 
-  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest({
-    slug: params.slug,
+  const twitterIntent = await fetchTwitterIntentExpressedInterest({
+    campaignSlug: params.slug,
     username: user.username,
   })
 
   return (
     <GenesisLayout>
-      <ProjectHeader title={project.title} subtitle={project.subtitle} />
+      <ProjectHeader title={campaign.title} subtitle={campaign.subtitle} />
       <div className='size-full min-h-screen flex flex-col border-t border-t-grey-300 mt-10 items-center p-4'>
         <div className='flex flex-col gap-6 mt-10 max-w-screen-lg w-full'>
           <div className='flex flex-col gap-3'>
@@ -42,10 +42,10 @@ export default async function PledgePage(props: Props) {
           </div>
           <div className='flex flex-col gap-6 md:gap-10 items-center'>
             <div className='flex flex-col md:flex-row gap-6 w-full max-md:items-center md:justify-start'>
-              <RewardSection project={project} />
-              <ReferPerson projectSlug={project.slug} twitterIntent={twitterIntent} username={user.username} />
+              <RewardSection campaign={campaign} />
+              <ReferPerson campaignSlug={campaign.slug} twitterIntent={twitterIntent} username={user.username} />
             </div>
-            <PledgeActions slug={project.slug} username={user.username} />
+            <PledgeActions twitterIntent={twitterIntent} />
           </div>
         </div>
       </div>

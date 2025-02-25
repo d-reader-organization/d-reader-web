@@ -1,12 +1,12 @@
-import { fetchProject } from '@/app/lib/api/invest/queries'
 import { join } from 'node:path'
 import { readFile } from 'node:fs/promises'
 import { ImageResponse } from 'next/og'
 import { METADATA_IMAGE_SIZE } from '@/constants/general'
+import { fetchCampaign } from '@/app/lib/api/campaign/queries'
 
 export async function GET(request: Request, props: { params: Promise<{ slug: string }> }) {
   const params = await props.params
-  const project = (await fetchProject(params.slug)).data
+  const project = (await fetchCampaign(params.slug)).data
 
   let bannerSrc = project?.banner
 

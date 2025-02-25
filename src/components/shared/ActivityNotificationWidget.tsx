@@ -10,7 +10,7 @@ import { HeartIcon } from '../icons/theme/HeartIcon'
 import { cn } from '@/lib/utils'
 import { RoutePath } from '@/enums/routePath'
 import { favouritiseComic } from '@/app/lib/api/comic/mutations'
-import { expressInterest } from '@/app/lib/api/invest/mutations'
+import { expressInterest } from '@/app/lib/api/campaign/mutations'
 import { followCreator } from '@/app/lib/api/creator/mutations'
 import { ExpressInterestIcon } from '../icons/theme/ExpressInterestIcon'
 

@@ -7,10 +7,11 @@ import { Avatar, AvatarImage } from '../ui/avatar'
 import { TokenIcon } from '../icons/logo/TokenIcon'
 import { SignedUpChip } from '../shared/chips/SignedUpChip'
 import { Text } from '../ui'
-import { fetchAllReferralCampaignReceipts, fetchProject } from '@/app/lib/api/invest/queries'
 import Image from 'next/image'
 import { EmptyReferral } from './EmptyReferral'
 import { ReferralCard } from './ReferralCard'
+import { fetchCampaignReferrals, fetchReferredCampaigns } from '@/app/lib/api/campaign/queries'
+import { Campaign } from '@/models/campaign'
 
 export const ReferralSettings: React.FC = async () => {
   const me = await fetchMe()
@@ -75,7 +76,7 @@ const UserReferralList: React.FC<UserReferralListProps> = async ({ referrals, re
 }
 
 const CampaignReferralList: React.FC<{ username: string }> = async ({ username }) => {
-  const campaigns = await fetchAllReferralCampaignReceipts()
+  const { data: campaigns } = await fetchReferredCampaigns({ take: 20, skip: 0 })
 
   return (
     <div className='flex flex-col gap-4'>
@@ -89,16 +90,16 @@ const CampaignReferralList: React.FC<{ username: string }> = async ({ username }
   )
 }
 
-const CampaignReferral: React.FC<{ campaign: ReferralCampaign; username: string }> = async ({ campaign }) => {
-  const { data: project } = await fetchProject(campaign.slug)
-  const isSuccesfulReferrals = campaign.totalReferred
+const CampaignReferral: React.FC<{ campaign: Campaign; username: string }> = async ({ campaign }) => {
+  const { data: referrals } = await fetchCampaignReferrals(campaign.id, { take: 20, skip: 0 })
+  const isSuccesfulReferrals = referrals?.totalItems
 
   return (
     <div className='flex flex-col rounded-xl p-4 border-1 border-grey-300 gap-4'>
       <div className='flex justify-between items-center'>
         <div className='flex items-center gap-3'>
           <Image
-            src={project?.banner || PLACEHOLDER_AVATAR}
+            src={campaign?.banner || PLACEHOLDER_AVATAR}
             alt='banner'
             width={53}
             height={53}
@@ -109,12 +110,12 @@ const CampaignReferral: React.FC<{ campaign: ReferralCampaign; username: string 
           </Text>
         </div>
         <Text as='span' fontWeight='medium' styleVariant='body-normal' className='text-grey-100'>
-          {campaign.totalReferred}
+          {referrals?.totalItems}
         </Text>
       </div>
       <div>
         {isSuccesfulReferrals ? (
-          campaign.receipts.map((referral, index) => (
+          referrals.data.map((referral, index) => (
             <div key={index} className='flex p-2 border-t-1 border-grey-300 justify-between'>
               <div className='flex items-center gap-3'>
                 <Avatar className='w-5 h-5'>
@@ -125,7 +126,7 @@ const CampaignReferral: React.FC<{ campaign: ReferralCampaign; username: string 
                 </Text>
                 <div className='bg-grey-400 rounded-lg px-2'>
                   <Text as='span' styleVariant='body-small' fontWeight='medium' className='text-grey-100'>
-                    {referral.expressedAmount}$
+                    {referral.amount}$
                   </Text>
                 </div>
               </div>

@@ -1,4 +1,3 @@
-import { SuccessfulProject } from '@/models/project'
 import { RoutePath } from '@/enums/routePath'
 import Image from 'next/image'
 import React from 'react'
@@ -9,21 +8,22 @@ import { roiTooltip } from '@/constants/tooltips'
 import { formatCurrency } from '@/utils/numbers'
 import { Text } from '../ui'
 import { ButtonLink } from '../ui/ButtonLink'
+import { SuccessfulCampaign } from '@/constants/projects'
 
 type Props = {
-  projects: SuccessfulProject[]
+  campaigns: SuccessfulCampaign[]
   title: string
 }
 
-export const ProjectsSection: React.FC<Props> = ({ projects, title }) => {
+export const ProjectsSection: React.FC<Props> = ({ campaigns, title }) => {
   return (
     <div className='flex flex-col gap-4 md:gap-10 md:my-10'>
       <Text as='h3' styleVariant='primary-heading'>
         {title}
       </Text>
       <div className='max-md:py-2 flex 1160:grid overflow-x-auto 1160:overflow-x-visible grid-cols-4 gap-4 md:gap-6 lg:gap-10'>
-        {projects.map((project) => (
-          <Card project={project} key={project.slug} />
+        {campaigns.map((campaign) => (
+          <Card campaign={campaign} key={campaign.slug} />
         ))}
       </div>
     </div>
@@ -31,33 +31,33 @@ export const ProjectsSection: React.FC<Props> = ({ projects, title }) => {
 }
 
 type CardProps = {
-  project: SuccessfulProject
+  campaign: SuccessfulCampaign
 }
 
-const Card: React.FC<CardProps> = ({ project }) => (
+const Card: React.FC<CardProps> = ({ campaign }) => (
   <div className='bg-grey-500 flex flex-col items-center gap-4 md:gap-[30px] p-4 md:p-6 pt-4 rounded-xl min-w-[260px] max-w-[260px] md:max-w-[354px]'>
     <div className='flex items-center max-h-[84px] h-full'>
       <Image
         alt=''
-        src={project.logo}
+        src={campaign.banner}
         className='max-h-[84px] h-full object-cover p-1 w-auto'
         width={306}
         height={84}
       />
     </div>
-    <RoiWidget roi={project.payout.roiPercent} tooltipText={roiTooltip(project.payout.roiPercent)} />
+    <RoiWidget roi={campaign.payout.roiPercent} tooltipText={roiTooltip(campaign.payout.roiPercent)} />
     <div className='flex justify-center gap-8 md:gap-12 lg:gap-16 xl:gap-20 items-center'>
       <InvestmentStatsBox
         title='REVENUE'
-        value={formatCurrency({ value: project.payout.revenue, fractionDigits: 0 })}
+        value={formatCurrency({ value: campaign.payout.revenue, fractionDigits: 0 })}
       />
-      <InvestmentStatsBox title='BUYERS' value={project.payout.numberOfBuyers} />
+      <InvestmentStatsBox title='BUYERS' value={campaign.payout.numberOfBuyers} />
     </div>
     <p className='text-sm md:text-base font-bold leading-normal md:leading-[22.4px] text-center'>
-      Profitability achieved {project.payout?.daysForRoi} days after the production started {/* offering closed. */}
+      Profitability achieved {campaign.payout?.daysForRoi} days after the production started {/* offering closed. */}
     </p>
     <ButtonLink
-      href={RoutePath.Payout(project.slug)}
+      href={RoutePath.Payout(campaign.slug)}
       prefetch={false}
       Icon={ChevronRightIcon}
       iconPosition='right'
