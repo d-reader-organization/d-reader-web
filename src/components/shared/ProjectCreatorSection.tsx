@@ -1,17 +1,14 @@
-import { type Project, type ProjectCreator } from '@/models/project'
 import { AvatarImage } from '@/components/shared/AvatarImage'
 import { ButtonLink } from '../ui/ButtonLink'
 import { RoutePath } from '@/enums/routePath'
 import { Text } from '../ui/Text'
-import { cn } from '@/lib/utils'
 import { BasicCreator } from '@/models/creator'
 
 type Props = {
   creator: BasicCreator
-  tags?: Project['tags']
 }
 
-export const ProjectCreatorSection: React.FC<Props> = ({ creator, tags = [] }) => {
+export const ProjectCreatorSection: React.FC<Props> = ({ creator }) => {
   return (
     <section className='flex flex-col w-full'>
       <ButtonLink href={RoutePath.Creator(creator.handle)} variant='ghost'>
@@ -20,7 +17,8 @@ export const ProjectCreatorSection: React.FC<Props> = ({ creator, tags = [] }) =
           {creator.displayName}
         </Text>
       </ButtonLink>
-      {tags.length ? (
+      {/* TODO: Update -> require decistion from Josip & Mattan */}
+      {/* {tags.length ? (
         <div className='flex flex-wrap gap-2 max-md:pl-[1px]'>
           {tags.map((tag, index) => (
             <div
@@ -34,7 +32,7 @@ export const ProjectCreatorSection: React.FC<Props> = ({ creator, tags = [] }) =
             </div>
           ))}
         </div>
-      ) : null}
+      ) : null} */}
     </section>
   )
 }

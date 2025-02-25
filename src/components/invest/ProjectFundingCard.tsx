@@ -46,7 +46,7 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthen
         </Text>
         <AnimatedProgress
           durationInSeconds={3}
-          value={Math.min(1, (campaign.stats?.expectedPledgedAmount || 0 + 50000) / campaign.raiseGoal) * 100}
+          value={Math.min(1, (campaign.stats?.tentativeAmountPledged || 0 + 50000) / campaign.raiseGoal) * 100}
         />
         {/* Contributors and pledges section */}
         <section className='flex flex-col gap-2 sm:flex-row w-full sm:justify-between'>
@@ -54,7 +54,7 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthen
             <CountUp
               className='text-24 sm:text-32 tracking-0064 font-semibold leading-tight font-obviouslyNarrow text-green-genesis'
               durationInSeconds={3}
-              value={campaign.stats?.expectedPledgedAmount}
+              value={campaign.stats?.tentativeAmountPledged}
             />
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
               pledged of&nbsp;{formatCurrency({ value: campaign.raiseGoal, fractionDigits: 0 })}
@@ -62,7 +62,7 @@ export const ProjectFundingCard: React.FC<ProjectFundingCardProps> = ({ isAuthen
           </div>
           <div className='flex flex-col'>
             <Text as='h3' styleVariant='primary-heading' className='text-white'>
-              {formatNumberWithCommas(campaign.stats?.numberOfUsersPledged || 0)}&nbsp;contributors
+              {formatNumberWithCommas(campaign.stats?.tentativeBackers || 0)}&nbsp;contributors
             </Text>
             <Text as='p' styleVariant='body-normal' fontWeight='medium' className='text-grey-100'>
               expressed interests

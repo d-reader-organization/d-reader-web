@@ -5,9 +5,9 @@ import { Button } from '../ui/Button'
 import { ExpressedInterestDialog } from '../shared/dialogs/ExpressedInterestDialog'
 import { track } from '@vercel/analytics/react'
 
-type Props = { slug: string; username: string }
+type Props = { twitterIntent: string | null }
 
-export const PledgeActions: React.FC<Props> = ({ slug, username }) => {
+export const PledgeActions: React.FC<Props> = ({ twitterIntent }) => {
   const [showExpressedInterestDialog, toggleExpressedInterestDialog] = useToggle()
   return (
     <>
@@ -28,8 +28,7 @@ export const PledgeActions: React.FC<Props> = ({ slug, username }) => {
       </div>
       {showExpressedInterestDialog && (
         <ExpressedInterestDialog
-          slug={slug}
-          username={username}
+          twitterIntent={twitterIntent || ''}
           open={showExpressedInterestDialog}
           toggleDialog={toggleExpressedInterestDialog}
         />

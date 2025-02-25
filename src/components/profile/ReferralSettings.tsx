@@ -10,8 +10,8 @@ import { Text } from '../ui'
 import Image from 'next/image'
 import { EmptyReferral } from './EmptyReferral'
 import { ReferralCard } from './ReferralCard'
-import { fetchCampaign, fetchCampaignReferrals, fetchReferredCampaigns } from '@/app/lib/api/campaign/queries'
-import { Campaign, UserCampaignInterest } from '@/models/campaign'
+import { fetchCampaignReferrals, fetchReferredCampaigns } from '@/app/lib/api/campaign/queries'
+import { Campaign } from '@/models/campaign'
 
 export const ReferralSettings: React.FC = async () => {
   const me = await fetchMe()
@@ -126,7 +126,7 @@ const CampaignReferral: React.FC<{ campaign: Campaign; username: string }> = asy
                 </Text>
                 <div className='bg-grey-400 rounded-lg px-2'>
                   <Text as='span' styleVariant='body-small' fontWeight='medium' className='text-grey-100'>
-                    {referral.expressedAmount}$
+                    {referral.amount}$
                   </Text>
                 </div>
               </div>

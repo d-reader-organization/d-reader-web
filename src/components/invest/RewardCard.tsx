@@ -1,6 +1,5 @@
 'use client'
 
-import { type Project, type Reward } from '@/models/project'
 import { Card, CardContent } from '../ui/card'
 import { Text } from '../ui/Text'
 import Image from 'next/image'
@@ -59,7 +58,7 @@ export function RewardCard({ campaign, reward, selectedReward, viewOnly, updateS
               )}
             </div>
             <Text styleVariant='body-normal' as='p' fontWeight='medium' className='text-grey-100 mb-2'>
-              ${reward.price}&nbsp; | &nbsp;{campaign.stats?.numberOfUsersPledged} backers
+              ${reward.price}&nbsp; | &nbsp;{campaign.stats?.tentativeBackers} backers
             </Text>
             <Text as='p' styleVariant='body-small' className='text-grey-100 text-start'>
               {reward.description}

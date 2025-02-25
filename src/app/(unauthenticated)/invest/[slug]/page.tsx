@@ -22,7 +22,7 @@ export default async function ProjectInvestPage(props: Props) {
   }
 
   const twitterIntent = !!me
-    ? fetchTwitterIntentExpressedInterest({ slug: params.slug, username: me.username }).data
+    ? await fetchTwitterIntentExpressedInterest({ campaignSlug: params.slug, username: me.username })
     : ''
 
   return (

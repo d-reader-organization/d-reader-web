@@ -23,9 +23,9 @@ export interface Campaign extends BasicCampaign {
 }
 
 export type CampaignStats = {
-  numberOfUsersPledged: number
-  expectedPledgedAmount: number
-  userExpressedAmount?: number
+  tentativeBackers: number
+  tentativeAmountPledged: number
+  myTentativeAmount?: number
 }
 
 export type CampaignReward = {
@@ -36,9 +36,10 @@ export type CampaignReward = {
   price: number
 }
 
-export type UserCampaignInterest = {
-  id: number
-  expressedInterestAt: Date
+export type CampaignActivityItem = {
+  timestamp: Date
   user: BasicUser
-  expressedAmount: number
+  amount: number
 }
+
+export type CampaignActivity = CampaignActivityItem[]

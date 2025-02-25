@@ -15,12 +15,7 @@ export type ProjectInfo = {
 
 export type ProjectFunding = {
   pledgedAmount: number
-  raiseGoal: number
   numberOfBackers: number
-  numberOfInterestedInvestors: number
-  startDate?: string
-  endDate?: string
-  expressedAmount?: number
 }
 
 export type ProjectPayout = {

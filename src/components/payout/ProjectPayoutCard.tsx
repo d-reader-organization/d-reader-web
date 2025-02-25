@@ -8,11 +8,12 @@ import { Text } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
 type Props = {
+  raiseGoal: number
   payout: ProjectPayout
   funding: ProjectFunding
 } & React.HTMLAttributes<HTMLDivElement>
 
-export const ProjectPayoutCard: React.FC<Props> = ({ payout, funding, className }) => {
+export const ProjectPayoutCard: React.FC<Props> = ({ payout, funding, raiseGoal, className }) => {
   return (
     <div
       className={cn(
@@ -27,7 +28,7 @@ export const ProjectPayoutCard: React.FC<Props> = ({ payout, funding, className 
       <div className='flex w-full md:flex-col items-start pb-[2px] md:gap-5 md:pb-[6px]'>
         <PayoutStats
           text={`total raised by ${funding.numberOfBackers} backers`}
-          value={formatCurrency({ value: funding.raiseGoal, fractionDigits: 0 })}
+          value={formatCurrency({ value: raiseGoal, fractionDigits: 0 })}
           valueColor='text-green-genesis'
           valueSizeMd='md:text-3xl'
           textSizeMd='md:text-xl'

@@ -22,8 +22,8 @@ export default async function PledgePage(props: Props) {
     return notFound()
   }
 
-  const { data: twitterIntent } = fetchTwitterIntentExpressedInterest({
-    slug: params.slug,
+  const twitterIntent = await fetchTwitterIntentExpressedInterest({
+    campaignSlug: params.slug,
     username: user.username,
   })
 
@@ -45,7 +45,7 @@ export default async function PledgePage(props: Props) {
               <RewardSection campaign={campaign} />
               <ReferPerson campaignSlug={campaign.slug} twitterIntent={twitterIntent} username={user.username} />
             </div>
-            <PledgeActions slug={campaign.slug} username={user.username} />
+            <PledgeActions twitterIntent={twitterIntent} />
           </div>
         </div>
       </div>
