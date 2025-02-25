@@ -35,7 +35,8 @@ export default async function PayoutPage(props: Props) {
             <ProjectBanner title={project.title} banner={project.banner} cover={project.cover} />
             <ProjectHeader title={project.title} subtitle={project.subtitle} className='md:hidden' />
             <ProjectPayoutCard payout={project.payout} funding={project.funding} className='md:hidden' />
-            <ProjectCreatorSection creator={project.creator} tags={project.tags} />
+            {/* TODO: Update this */}
+            {/* <ProjectCreatorSection creator={project.creator} tags={project.tags} /> */}
             <ProjectSummary summary={project.payout.summary} />
           </div>
           <div className='flex flex-col'>

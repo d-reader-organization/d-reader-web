@@ -4,9 +4,10 @@ import { ButtonLink } from '../ui/ButtonLink'
 import { RoutePath } from '@/enums/routePath'
 import { Text } from '../ui/Text'
 import { cn } from '@/lib/utils'
+import { BasicCreator } from '@/models/creator'
 
 type Props = {
-  creator: ProjectCreator
+  creator: BasicCreator
   tags?: Project['tags']
 }
 

@@ -1,9 +1,9 @@
 export const INVEST_QUERY_KEYS = Object.freeze({
-  INVEST: 'invest',
+  CAMPAIGN: 'campaign',
   GET: 'get',
   EXPRESS_INTEREST: 'express-interest',
   TRANSACTION: 'transaction',
-  INTEREST_RECEIPTS: 'interest-receipts',
-  REFERRAL_CAMPAIGN: 'referral-campaign',
-  RECEIPT: 'receipt',
+  BACKERS: 'backers',
+  REFERRAL: 'referral',
+  REFERRED: 'referred',
 })

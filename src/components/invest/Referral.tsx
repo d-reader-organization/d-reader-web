@@ -14,11 +14,11 @@ import { track } from '@vercel/analytics/react'
 import { RoutePath } from '@/enums/routePath'
 import { useSearchParams } from 'next/navigation'
 
-type ReferPersonProps = { projectSlug: string; twitterIntent: string | null; username: string }
+type ReferPersonProps = { campaignSlug: string; twitterIntent: string | null; username: string }
 
-export const ReferPerson: React.FC<ReferPersonProps> = ({ projectSlug, twitterIntent, username }) => (
+export const ReferPerson: React.FC<ReferPersonProps> = ({ campaignSlug, twitterIntent, username }) => (
   <div className='max-w-[480px] w-full min-h-[637px] h-fit rounded-xl border border-grey-300 relative p-4 flex flex-col gap-6'>
-    <ShareReferralBox projectSlug={projectSlug} twitterIntent={twitterIntent ?? ''} username={username} />
+    <ShareReferralBox campaignSlug={campaignSlug} twitterIntent={twitterIntent ?? ''} username={username} />
     <div className='flex flex-col gap-4'>
       {referralCardsData.map((card) => (
         <ReferralCard card={card} key={card.title} />
@@ -81,7 +81,7 @@ const ReferralCard: React.FC<ReferralCardProps> = ({ card }) => {
   )
 }
 
-const ShareReferralBox: React.FC<ReferPersonProps> = ({ projectSlug, twitterIntent, username }) => {
+const ShareReferralBox: React.FC<ReferPersonProps> = ({ campaignSlug, twitterIntent, username }) => {
   const searchParams = useSearchParams()
   return (
     <div className='rounded-[10px] bg-blue-300 shadow-[-4px_0px_0px_0px_#3D3E60] h-[160px] sm:h-[212px] flex justify-end w-full'>
@@ -128,7 +128,7 @@ const ShareReferralBox: React.FC<ReferPersonProps> = ({ projectSlug, twitterInte
                 solid={false}
                 onClick={() => {
                   const query = !!searchParams.size ? `?${searchParams.toString()}` : ''
-                  const finalUrl = process.env.NEXT_PUBLIC_SITE_URL + RoutePath.InvestDetails(projectSlug) + query
+                  const finalUrl = process.env.NEXT_PUBLIC_SITE_URL + RoutePath.InvestDetails(campaignSlug) + query
                   const text = linkWithRef(finalUrl, username)
                   track('Referral: Copy to clipboard')
                   navigator.clipboard.writeText(text)

@@ -1,4 +1,4 @@
-import { fetchHighInterestProjects, fetchSuccessfulProjects } from '@/app/lib/api/invest/queries'
+import { fetchCampaigns, fetchSuccessfulProjects } from '@/app/lib/api/campaign/queries'
 // import { investSlides } from '@/app/lib/data/invest/carouselData'
 // import { InvestCarousel } from '@/components/invest/Carousel'
 import FaqSection from '@/components/invest/FaqSection'
@@ -44,13 +44,7 @@ export const metadata: Metadata = {
 
 export default async function InvestPage() {
   const { data: successfulProjects } = await fetchSuccessfulProjects()
-  const { data: interestProjects, errorMessage } = await fetchHighInterestProjects()
-
-  const sliceIndex = ceil(interestProjects.length / 2)
-  const [firstHalf, secondHalf] = [
-    interestProjects.slice(0, sliceIndex),
-    interestProjects.slice(sliceIndex, interestProjects.length),
-  ]
+  const { data: campaings, errorMessage } = await fetchCampaigns()
 
   if (errorMessage) {
     notFound()
@@ -61,10 +55,10 @@ export default async function InvestPage() {
       <InvestPageHero />
       <GenesisLayout showFooter>
         <div className='flex flex-col gap-10 max-w-screen-xl w-full'>
-          <InvestSection data={firstHalf} title='Gauging Interest' />
+          <InvestSection data={campaings} title='Gauging Interest' />
           <ProjectsSection projects={successfulProjects} title='Recent Successful Projects' />
           {/* <InvestCarousel slides={investSlides} /> */}
-          <InvestSection data={secondHalf} title='You Might Like' />
+          <InvestSection data={campaings} title='You Might Like' />
           <FaqSection items={GENESIS_FAQ_ITEMS} />
         </div>
       </GenesisLayout>

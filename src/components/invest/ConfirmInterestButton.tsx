@@ -1,7 +1,7 @@
 'use client'
 
 import { RequireAuthWrapperButton, RequireAuthWrapperButtonProps } from '../shared/buttons/RequireAuthWrapperButton'
-import { expressInterest } from '@/app/lib/api/invest/mutations'
+import { expressInterest } from '@/app/lib/api/campaign/mutations'
 import { ExpressInterest } from '@/models/project'
 import { toast } from '../ui'
 import { useRouter } from 'next/navigation'
