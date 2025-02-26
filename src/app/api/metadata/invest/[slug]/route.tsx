@@ -11,7 +11,7 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
   let bannerSrc = project?.banner
 
   if (bannerSrc?.includes('assets')) {
-    const imagePath = join(process.cwd(), 'public', bannerSrc ?? '/assets/images/metadata-invest.png')
+    const imagePath = join(process.cwd(), 'public', bannerSrc ?? '/assets/images/metadata/metadata-invest.png')
     const bannerData = await readFile(imagePath)
     const extension = bannerSrc.split('.')[1] === 'png' ? 'png' : 'jpeg'
     bannerSrc = `data:image/${extension};base64,${bannerData.toString('base64')}`

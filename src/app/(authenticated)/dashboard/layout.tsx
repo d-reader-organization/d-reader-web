@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: 'dReader - Creator Dashboard',
     description:
       'Publish your comic, manga, webcomic, or a graphic novel. Start engaging with your readers and monetizing your work!',
-    images: '/assets/images/metadata-home.jpg',
+    images: '/assets/images/metadata/metadata-home.jpg',
     url: process.env.NEXT_PUBLIC_SITE_URL + '/dashboard',
     siteName: 'dReader',
   },
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@dReaderApp',
     creator: '@dReaderApp',
-    images: '/assets/images/metadata-home.jpg',
+    images: '/assets/images/metadata/metadata-home.jpg',
   },
 }
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'dReader - FAQ',
     description:
       'Find answers to most common questions regarding dReader - next generation platform for digital comics!',
-    images: '/assets/images/metadata-faq.jpg',
+    images: '/assets/images/metadata/metadata-faq.jpg',
     url: process.env.NEXT_PUBLIC_SITE_URL + '/faq',
     siteName: 'dReader',
   },
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@dReaderApp',
     creator: '@dReaderApp',
-    images: '/assets/images/metadata-faq.jpg',
+    images: '/assets/images/metadata/metadata-faq.jpg',
   },
 }
 

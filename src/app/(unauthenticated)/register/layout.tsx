@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     type: 'website',
     title: 'dReader - Register',
     description: 'Register to dReader to gain access to affordable, authentic & limited edition comics and manga!',
-    images: '/assets/images/metadata-register.jpg',
+    images: '/assets/images/metadata/metadata-register.jpg',
     url: process.env.NEXT_PUBLIC_SITE_URL + '/register',
     siteName: 'dReader',
   },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@dReaderApp',
     creator: '@dReaderApp',
-    images: '/assets/images/metadata-register.jpg',
+    images: '/assets/images/metadata/metadata-register.jpg',
   },
 }
 
