@@ -1,7 +1,7 @@
 import { Campaign } from '@/models/campaign'
 import { ProjectFunding, ProjectPayout } from '@/models/project'
 
-export type SuccessfulCampaign = Campaign & { payout: ProjectPayout } & { funding: ProjectFunding }
+export type SuccessfulCampaign = Campaign & { payout: ProjectPayout } & { funding: ProjectFunding } & { logo: string }
 
 export const CAMPAIGNS: SuccessfulCampaign[] = [
   {
@@ -13,6 +13,7 @@ export const CAMPAIGNS: SuccessfulCampaign[] = [
     subtitle: 'Survive or Die: The First Adventure in Tensor City',
     banner: 'https://d323dls9ny69nf.cloudfront.net/comics/enter-the-tensorverse/banner-1704914829715.png',
     cover: 'https://d323dls9ny69nf.cloudfront.net/comics/enter-the-tensorverse/cover-1704914829469.jpg',
+    logo: 'https://d323dls9ny69nf.cloudfront.net/comics/enter-the-tensorverse/logo-1704914830030.png',
     creator: {
       id: 1,
       handle: 'studio_nx',
@@ -57,6 +58,7 @@ export const CAMPAIGNS: SuccessfulCampaign[] = [
       'https://d323dls9ny69nf.cloudfront.net/comics/apt-323-collectors-edition-1713288491154/banner-1713964884959.png',
     cover:
       'https://d323dls9ny69nf.cloudfront.net/comics/apt-323-collectors-edition-1713288491154/issues/collectors-edition-1713289013265/cover-common-1713289076229.jpg',
+    logo: 'https://d323dls9ny69nf.cloudfront.net/comics/apt-323-collectors-edition-1713288491154/logo-1713964885062.png',
     creator: {
       id: 1,
       handle: 'studio_nx',
@@ -99,6 +101,7 @@ export const CAMPAIGNS: SuccessfulCampaign[] = [
     subtitle: 'Tales of Love, Mystery, and Sci-Fi in Dream City',
     banner: 'https://d323dls9ny69nf.cloudfront.net/comics/dream-city/banner.png',
     cover: 'https://d323dls9ny69nf.cloudfront.net/comics/dream-city/cover.png',
+    logo: 'https://d323dls9ny69nf.cloudfront.net/comics/dream-city/logo.png',
     creator: {
       id: 11,
       handle: 'brandon_mullins',
@@ -142,6 +145,7 @@ export const CAMPAIGNS: SuccessfulCampaign[] = [
     banner: 'https://d323dls9ny69nf.cloudfront.net/comics/liberty-square-originz/banner-1707999922284.png',
     cover:
       'https://d323dls9ny69nf.cloudfront.net/comics/liberty-square-originz/issues/embers/cover-common-1708002664074.png',
+    logo: 'https://d323dls9ny69nf.cloudfront.net/comics/liberty-square-originz/logo-1707999922532.png',
     creator: {
       id: 109,
       handle: 'liberty_square',

@@ -39,7 +39,7 @@ const Card: React.FC<CardProps> = ({ campaign }) => (
     <div className='flex items-center max-h-[84px] h-full'>
       <Image
         alt=''
-        src={campaign.banner}
+        src={campaign.logo}
         className='max-h-[84px] h-full object-cover p-1 w-auto'
         width={306}
         height={84}
