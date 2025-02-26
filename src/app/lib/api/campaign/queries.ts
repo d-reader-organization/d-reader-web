@@ -5,7 +5,7 @@ import { getAccessToken } from '../../utils/auth'
 import { Campaign, CampaignActivity, CampaignActivityItem } from '@/models/campaign'
 import { ReturnResponse } from '@/lib/types'
 import { PaginatedResponse } from '@/models/pagination'
-import { CampaignReferralParams, ReferredCampaignParams } from '@/models/campaign/campaignParams'
+import { CampaignFilterParams, CampaignReferralParams, ReferredCampaignParams } from '@/models/campaign/campaignParams'
 import { CAMPAIGNS, SuccessfulCampaign } from '@/constants/projects'
 
 const { GET, CAMPAIGN, BACKERS, REFERRAL, REFERRED } = INVEST_QUERY_KEYS
@@ -16,9 +16,10 @@ export function fetchSuccessfulCampaign(slug: string): SuccessfulCampaign | unde
   return campaign
 }
 
-export const fetchCampaigns = async (): Promise<ReturnResponse<Campaign[]>> => {
+export const fetchCampaigns = async (params: CampaignFilterParams): Promise<ReturnResponse<Campaign[]>> => {
   const { data: campaigns, errorMessage } = await fetchWrapper<Campaign[]>({
     path: `${CAMPAIGN}/${GET}`,
+    params,
   })
 
   if (errorMessage) {

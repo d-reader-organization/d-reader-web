@@ -5,6 +5,8 @@ export type ExpressInterestParams = {
   ref?: string | null
 }
 
+export type CampaignFilterParams = Pagination
+
 export type ReferredCampaignParams = Pagination
 
 export type CampaignReferralParams = Pagination

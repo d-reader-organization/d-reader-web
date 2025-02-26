@@ -43,8 +43,10 @@ export const metadata: Metadata = {
 }
 
 export default async function InvestPage() {
-  const { data: campaings, errorMessage } = await fetchCampaigns()
+  const { data: campaings, errorMessage } = await fetchCampaigns({ take: 6, skip: 0 })
 
+  const sliceIndex = Math.ceil(campaings.length / 2)
+  const [firstHalf, secondHalf] = [campaings.slice(0, sliceIndex), campaings.slice(sliceIndex, campaings.length)]
   if (errorMessage) {
     notFound()
   }
@@ -54,10 +56,10 @@ export default async function InvestPage() {
       <InvestPageHero />
       <GenesisLayout showFooter>
         <div className='flex flex-col gap-10 max-w-screen-xl w-full'>
-          <InvestSection data={campaings} title='Gauging Interest' />
+          <InvestSection data={firstHalf} title='Gauging Interest' />
           <ProjectsSection campaigns={CAMPAIGNS} title='Recent Successful Projects' />
           {/* <InvestCarousel slides={investSlides} /> */}
-          <InvestSection data={campaings} title='You Might Like' />
+          <InvestSection data={secondHalf} title='You Might Like' />
           <FaqSection items={GENESIS_FAQ_ITEMS} />
         </div>
       </GenesisLayout>
