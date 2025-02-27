@@ -10,7 +10,7 @@ export type BasicCampaign = {
   banner: string
   cover: string
   info: string
-  video: string
+  videoUrl: string
   raiseGoal: number
   startDate?: Date
   endDate?: Date

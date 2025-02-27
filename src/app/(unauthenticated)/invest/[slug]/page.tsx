@@ -39,7 +39,7 @@ export default async function ProjectInvestPage(props: Props) {
               title={campaign.title}
               banner={campaign.banner}
               cover={campaign.cover}
-              videoUrl={campaign.video}
+              videoUrl={campaign.videoUrl}
             />
             <ProjectHeader subtitle={campaign.subtitle} title={campaign.title} className='md:hidden' />
           </div>

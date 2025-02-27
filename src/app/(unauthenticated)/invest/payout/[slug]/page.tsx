@@ -24,7 +24,12 @@ export default async function PayoutPage(props: Props) {
         <ProjectHeader title={campaign.title} subtitle={campaign.subtitle} className='max-md:hidden' />
         <div className='flex flex-col md:flex-row w-full h-full gap-6 md:gap-8'>
           <div className='flex flex-col w-full'>
-            <ProjectBanner title={campaign.title} banner={campaign.banner} cover={campaign.cover} />
+            <ProjectBanner
+              title={campaign.title}
+              banner={campaign.banner}
+              cover={campaign.cover}
+              videoUrl={campaign.videoUrl}
+            />
             <ProjectHeader title={campaign.title} subtitle={campaign.subtitle} className='md:hidden' />
             <ProjectPayoutCard
               payout={campaign.payout}
