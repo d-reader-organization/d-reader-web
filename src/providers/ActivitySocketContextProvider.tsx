@@ -3,7 +3,6 @@
 import { ActivityNotification, ActivityNotificationWidget } from '@/components/shared/ActivityNotificationWidget'
 import { useToast } from '@/components/ui/toast'
 import { SOCKET } from '@/constants/general'
-import { useQueue } from '@/hooks/useQueue'
 import { User } from '@/models/user'
 import React, { createContext, PropsWithChildren, useContext, useEffect, useRef, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
@@ -25,14 +24,26 @@ type ActivitySocketContextProps = {
   me: User | null
 } & PropsWithChildren
 
+const queue: {
+  items: ActivityNotification[]
+  add: (item: ActivityNotification) => void
+  remove: (item: ActivityNotification) => void
+} = {
+  items: [],
+  add(item) {
+    this.items = [...this.items, item]
+  },
+  remove(item) {
+    this.items = this.items.filter((value) => value.createdAt !== item.createdAt)
+  },
+}
+
 export const ActivitySocketProvider: React.FC<ActivitySocketContextProps> = ({ children, me }) => {
   const socketRef = useRef<Socket | null>(null)
   const [isConnected, setIsConnected] = useState(false)
-  const [isToastShown, setIsToastShown] = useState(false)
-  const queue = useQueue<ActivityNotification>({
-    initialState: [],
-  })
   const { toast } = useToast()
+  let isToastShown = false
+
   useEffect(() => {
     socketRef.current = io(process.env.NEXT_PUBLIC_API_ENDPOINT ?? '', {
       transports: ['websocket'],
@@ -83,16 +94,16 @@ export const ActivitySocketProvider: React.FC<ActivitySocketContextProps> = ({ c
   }
 
   const displayToast = (notifications: ActivityNotification[]) => {
-    setIsToastShown(true)
+    isToastShown = true
     toast({
       description: <ActivityNotificationWidget notifications={notifications} />,
-      onOpenChange: (_) => {
+      onOpenChange: (open) => {
         const newNotifications = getNotificationsFromQueue()
         if (newNotifications?.length) {
           displayToast(newNotifications)
           return
         }
-        setIsToastShown(false)
+        isToastShown = open
       },
     })
   }

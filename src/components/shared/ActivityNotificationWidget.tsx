@@ -217,7 +217,7 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notifications }) =
 
   return (
     <div className='flex gap-2 justify-between items-center w-[380px]'>
-      <div className='flex gap-3 items-center'>
+      <div className='flex gap-3 items-center max-w-[260px]'>
         <div
           className={cn(
             'rounded-lg  bg-opacity-40 p-2 flex justify-center items-center size-[38px]',
@@ -232,6 +232,7 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notifications }) =
         <ButtonLink
           href={hrefOrAction}
           variant={notification.type === ActivityNotificationType.ComicBookmarked ? 'white' : 'outline'}
+          className='max-w-[100px]'
         >
           {buttonText}
         </ButtonLink>
@@ -239,6 +240,7 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notifications }) =
         <Button
           variant={notification.type === ActivityNotificationType.ExpressedInterest ? 'primary' : 'white'}
           className={cn(
+            'max-w-[100px]',
             notification.type === ActivityNotificationType.ExpressedInterest
               ? 'bg-green-genesis border-t-0 justify-self-end'
               : ''
