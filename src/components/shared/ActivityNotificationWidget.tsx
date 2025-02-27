@@ -22,7 +22,7 @@ export type ActivityNotification = {
   createdAt: Date | string
 }
 
-type Props = { notification: ActivityNotification }
+type Props = { notifications?: ActivityNotification[] }
 
 export enum ActivityNotificationType {
   ComicRated = 'ComicRated',
@@ -94,32 +94,54 @@ const STATIC_ACTIVITY_DATA: Record<ActivityNotificationType, StaticData> = {
   },
 }
 
-function getNotificationData(notification: ActivityNotification): {
+type DescriptionContentType = {
+  userDisplayName: string
+  middleText: string
+  target: string
+}
+
+function buildDescriptionContent({
+  keyword,
+  notifications,
+}: {
+  keyword: string
+  notifications: ActivityNotification[]
+}): DescriptionContentType {
+  const firstNotif = notifications.at(0)
+  return {
+    middleText: notifications.length > 1 ? `and ${notifications.length - 1} more ${keyword}` : keyword,
+    target: firstNotif?.targetTitle ?? '',
+    userDisplayName: firstNotif?.user.displayName ?? '',
+  }
+}
+
+export function getNotificationData(notifications: ActivityNotification[]): {
   buttonText: string
-  descriptionText: string
+  descriptionContent: DescriptionContentType
   hrefOrAction:
     | string
     | (() => Promise<{
         errorMessage?: string
       }>)
 } {
+  const notification = notifications.at(0)!
   switch (notification.type) {
     case ActivityNotificationType.ComicRated:
       return {
         buttonText: 'Check out',
-        descriptionText: 'rated',
+        descriptionContent: buildDescriptionContent({ keyword: 'rated', notifications }),
         hrefOrAction: RoutePath.Comic(notification.targetId),
       }
     case ActivityNotificationType.ComicLiked:
       return {
         buttonText: 'See why',
-        descriptionText: 'liked',
+        descriptionContent: buildDescriptionContent({ keyword: 'liked', notifications }),
         hrefOrAction: RoutePath.Comic(notification.targetId),
       }
     case ActivityNotificationType.ComicBookmarked:
       return {
         buttonText: 'Favorite',
-        descriptionText: 'favorited',
+        descriptionContent: buildDescriptionContent({ keyword: 'favorited', notifications }),
         hrefOrAction: async () => {
           return favouritiseComic(notification.targetId)
         },
@@ -127,25 +149,25 @@ function getNotificationData(notification: ActivityNotification): {
     case ActivityNotificationType.ComicIssueLiked:
       return {
         buttonText: 'See why',
-        descriptionText: 'liked',
+        descriptionContent: buildDescriptionContent({ keyword: 'liked', notifications }),
         hrefOrAction: RoutePath.ComicIssue(notification.targetId),
       }
     case ActivityNotificationType.ComicIssueRated:
       return {
         buttonText: 'Check out',
-        descriptionText: 'rated',
+        descriptionContent: buildDescriptionContent({ keyword: 'rated', notifications }),
         hrefOrAction: RoutePath.ComicIssue(notification.targetId),
       }
     case ActivityNotificationType.CollectibleComicMinted:
       return {
         buttonText: 'Mint now',
-        descriptionText: 'minted',
+        descriptionContent: buildDescriptionContent({ keyword: 'minted', notifications }),
         hrefOrAction: RoutePath.Mint(notification.targetId),
       }
     case ActivityNotificationType.CreatorFollow:
       return {
         buttonText: 'Follow',
-        descriptionText: 'followed',
+        descriptionContent: buildDescriptionContent({ keyword: 'followed', notifications }),
         hrefOrAction: async () => {
           return followCreator(+notification.targetId)
         },
@@ -153,7 +175,7 @@ function getNotificationData(notification: ActivityNotification): {
     case ActivityNotificationType.ExpressedInterest:
       return {
         buttonText: 'Subscribe',
-        descriptionText: 'expressed interest in',
+        descriptionContent: buildDescriptionContent({ keyword: 'expressed interest in', notifications }),
         hrefOrAction: async () => {
           // TODO (Luka): IF the user is not on the campaign page, display a push notification which redirects to the campaign page after clicking the 'Express Interest' button.
           // IF the user is on the campaign page, display a different component for this notification (Athar's Twitch stream GIF)
@@ -164,35 +186,34 @@ function getNotificationData(notification: ActivityNotification): {
 }
 
 type ActivityNotificationDescriptionProps = {
-  userDisplayName: string
-  description: string
-  targetTitle: string
+  descriptionContent: DescriptionContentType
 }
 
-const ActivityNotificationDescription: React.FC<ActivityNotificationDescriptionProps> = ({
-  description,
-  targetTitle,
-  userDisplayName,
-}) => (
-  <>
+const ActivityNotificationDescription: React.FC<ActivityNotificationDescriptionProps> = ({ descriptionContent }) => {
+  return (
     <div className='flex flex-wrap max-h-10'>
       <Text as='span' styleVariant='body-small' fontWeight='bold'>
-        {userDisplayName}&nbsp;
+        {descriptionContent.userDisplayName}&nbsp;
       </Text>
       <Text as='p' styleVariant='body-small' className='text-ellipsis'>
-        {description}&nbsp;
+        {descriptionContent.middleText}&nbsp;
       </Text>
       <Text as='span' styleVariant='body-small' fontWeight='bold' className='underline text-ellipsis'>
-        {targetTitle}
+        {descriptionContent.target}
       </Text>
     </div>
-  </>
-)
+  )
+}
 
-export const ActivityNotificationWidget: React.FC<Props> = ({ notification }) => {
-  const staticData = STATIC_ACTIVITY_DATA[notification.type]
+export const ActivityNotificationWidget: React.FC<Props> = ({ notifications }) => {
+  if (!notifications?.length) {
+    return null
+  }
+
+  const notification = notifications.at(0)!
+  const staticData = STATIC_ACTIVITY_DATA[notifications[0].type]
   const IconWidget = staticData.icon
-  const { buttonText, descriptionText, hrefOrAction } = getNotificationData(notification)
+  const { buttonText, descriptionContent, hrefOrAction } = getNotificationData(notifications)
 
   return (
     <div className='flex gap-2 justify-between items-center w-[380px]'>
@@ -205,11 +226,7 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notification }) =>
         >
           <IconWidget className={cn('size-4.5', staticData.textColor)} />
         </div>
-        <ActivityNotificationDescription
-          description={descriptionText}
-          targetTitle={notification.targetTitle}
-          userDisplayName={notification.user.displayName}
-        />
+        <ActivityNotificationDescription descriptionContent={descriptionContent} />
       </div>
       {typeof hrefOrAction === 'string' ? (
         <ButtonLink
@@ -232,7 +249,7 @@ export const ActivityNotificationWidget: React.FC<Props> = ({ notification }) =>
             toast({
               variant: isError ? 'error' : 'success',
               title: isError ? 'Error' : 'Success',
-              description: response.errorMessage ?? `You ${descriptionText} ${notification.targetTitle}`,
+              description: response.errorMessage ?? `You ${descriptionContent.middleText} ${descriptionContent.target}`,
             })
             if (response.errorMessage) {
             }
