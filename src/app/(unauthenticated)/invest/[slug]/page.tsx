@@ -8,6 +8,7 @@ import { fetchMe } from '@/app/lib/api/user/queries'
 import { fetchTwitterIntentExpressedInterest } from '@/app/lib/api/twitter/queries'
 import { KickstarterTabs } from '@/components/invest/KickstarterTabs'
 import { fetchCampaign } from '@/app/lib/api/campaign/queries'
+import { SUCC_RESPONSE_STATUS_CODES } from '@/constants/general'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -23,6 +24,10 @@ export default async function ProjectInvestPage(props: Props) {
 
   const twitterIntent = !!me
     ? await fetchTwitterIntentExpressedInterest({ campaignSlug: params.slug, username: me.username })
+    : ''
+  const markdownResponse = await fetch(campaign.info)
+  const markdownContent = SUCC_RESPONSE_STATUS_CODES.includes(markdownResponse.status)
+    ? await markdownResponse.text()
     : ''
 
   return (
@@ -48,6 +53,7 @@ export default async function ProjectInvestPage(props: Props) {
         <KickstarterTabs
           className='w-full mt-6 md:mt-10 max-w-screen-xl p-4 md:p-6'
           campaign={campaign}
+          markdownContent={markdownContent}
           twitterIntent={twitterIntent ?? ''}
           username={me?.username}
         />

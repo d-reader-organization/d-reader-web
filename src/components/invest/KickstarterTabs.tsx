@@ -7,13 +7,14 @@ import { RewardSection } from './RewardSection'
 import { ReferPerson } from './Referral'
 import { track } from '@vercel/analytics/react'
 import { Campaign } from '@/models/campaign'
+import { MarkdownRenderer } from '../shared/MarkdownRenderer'
 
-type Props = { campaign: Campaign; twitterIntent?: string; username?: string } & Pick<
+type Props = { campaign: Campaign; markdownContent: string; twitterIntent?: string; username?: string } & Pick<
   React.HTMLAttributes<HTMLDivElement>,
   'className'
 >
 
-export const KickstarterTabs: React.FC<Props> = ({ className, campaign, twitterIntent, username }) => {
+export const KickstarterTabs: React.FC<Props> = ({ className, campaign, markdownContent, twitterIntent, username }) => {
   return (
     <Tabs
       defaultValue='about'
@@ -28,7 +29,8 @@ export const KickstarterTabs: React.FC<Props> = ({ className, campaign, twitterI
         <TabTrigger disabled title='FAQ' />
         <TabTrigger disabled title='Updates' />
       </TabsList>
-      <TabContent value='about'>
+      <TabContent value='about' className='flex-col'>
+        <MarkdownRenderer content={markdownContent} />
         {/* TODO: update info to show .md file */}
         {/* <ProjectInfo info={campaign.info} /> */}
       </TabContent>

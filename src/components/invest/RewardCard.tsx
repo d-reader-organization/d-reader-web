@@ -46,7 +46,7 @@ export function RewardCard({ campaign, reward, selectedReward, viewOnly, updateS
             priority
             className='rounded-[10px] max-h-[180px] h-full w-auto'
           />
-          <div className='flex flex-col items-start gap-3'>
+          <div className='flex flex-col items-start gap-3 w-full'>
             <div className='flex justify-between w-full'>
               <Text as='p' styleVariant='body-xlarge' fontWeight='bold'>
                 {reward.name}

@@ -9,13 +9,14 @@ import { expressInterest } from '@/app/lib/api/campaign/mutations'
 import { toast } from '../ui/toast'
 import { Campaign } from '@/models/campaign'
 import { ExpressInterestParams } from '@/models/campaign/campaignParams'
+import { cn } from '@/lib/utils'
 
 type Props = {
   viewOnly?: boolean
   campaign: Campaign
-}
+} & Pick<React.HTMLAttributes<HTMLDivElement>, 'className'>
 
-export const RewardSection: React.FC<Props> = ({ viewOnly = false, campaign }) => {
+export const RewardSection: React.FC<Props> = ({ campaign, className, viewOnly = false }) => {
   // const defaultSelected = rewards.findIndex((reward) => reward.price === project.funding.expressedAmount) ?? 0
   const [selectedReward, setSelectedReward] = useState(0) //TODO: update this
   const searchParams = useSearchParams()
@@ -39,22 +40,20 @@ export const RewardSection: React.FC<Props> = ({ viewOnly = false, campaign }) =
   }
 
   return (
-    <>
-      <div className='flex flex-col gap-4'>
-        {campaign.rewards &&
-          campaign.rewards.map((reward) => (
-            <RewardCard
-              key={reward.id}
-              campaign={campaign}
-              reward={reward}
-              selectedReward={selectedReward}
-              viewOnly={viewOnly}
-              updateSelected={async (rewardId) => {
-                await handleCardSelect({ amount: reward.price, rewardId })
-              }}
-            />
-          ))}
-      </div>
-    </>
+    <div className={cn('flex flex-col gap-4 max-w-[750px] w-full', className)}>
+      {campaign.rewards &&
+        campaign.rewards.map((reward) => (
+          <RewardCard
+            key={reward.id}
+            campaign={campaign}
+            reward={reward}
+            selectedReward={selectedReward}
+            viewOnly={viewOnly}
+            updateSelected={async (rewardId) => {
+              await handleCardSelect({ amount: reward.price, rewardId })
+            }}
+          />
+        ))}
+    </div>
   )
 }
