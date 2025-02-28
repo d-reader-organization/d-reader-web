@@ -4,10 +4,10 @@ import {
 } from '@/models/twitter/twitterIntentComicMintedParams'
 import { TWITTER_QUERY_KEYS } from '@/api/twitter/twitterKeys'
 import { Nullable } from '@/models/common'
-import { getTwitterIntentExpressedInterest, getTwitterIntentInviteUser } from '@/utils/helpers'
+import { getTwitterIntentInviteUser } from '@/utils/helpers'
 import { fetchWrapper } from '../../fetchWrapper'
 
-const { TWITTER, INTENT, COMIC_MINTED, CAMPAIGN } = TWITTER_QUERY_KEYS
+const { TWITTER, INTENT, COMIC_MINTED, EXPRESSED_INTEREST } = TWITTER_QUERY_KEYS
 
 export const fetchTwitterIntentComicMinted = async (params: TwitterIntentComicMintedParams): Promise<string | null> => {
   const response = await fetchWrapper<string>({
@@ -19,10 +19,11 @@ export const fetchTwitterIntentComicMinted = async (params: TwitterIntentComicMi
 }
 
 export const fetchTwitterIntentExpressedInterest = async (
+  slug: string,
   params: TwitterIntentCampaignInterestParams
 ): Promise<string | null> => {
   const response = await fetchWrapper<string>({
-    path: `${TWITTER}/${INTENT}/${COMIC_MINTED}`,
+    path: `${TWITTER}/${INTENT}/${EXPRESSED_INTEREST}/${slug}`,
     params,
     isTextResponse: true,
   })

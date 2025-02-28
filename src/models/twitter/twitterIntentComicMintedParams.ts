@@ -5,7 +5,6 @@ export type TwitterIntentComicMintedParams = {
 
 export type TwitterIntentCampaignInterestParams = {
   username: string
-  campaignSlug: string
   utmSource?: UtmSource
 }
 

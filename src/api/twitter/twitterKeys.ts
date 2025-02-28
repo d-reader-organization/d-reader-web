@@ -4,7 +4,7 @@ export const TWITTER_QUERY_KEYS = Object.freeze({
   TWITTER: 'twitter',
   INTENT: 'intent',
   COMIC_MINTED: 'comic-minted',
-  CAMPAIGN: 'campaign',
+  EXPRESSED_INTEREST: 'expressed-interest',
 })
 
 export const twitterKeys = Object.freeze({

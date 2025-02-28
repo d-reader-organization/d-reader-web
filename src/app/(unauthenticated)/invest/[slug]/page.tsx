@@ -22,9 +22,8 @@ export default async function ProjectInvestPage(props: Props) {
     return notFound()
   }
 
-  const twitterIntent = !!me
-    ? await fetchTwitterIntentExpressedInterest({ campaignSlug: params.slug, username: me.username })
-    : ''
+  const twitterIntent = !!me ? await fetchTwitterIntentExpressedInterest(params.slug, { username: me.username }) : ''
+
   const markdownResponse = await fetch(campaign.info)
   const markdownContent = SUCC_RESPONSE_STATUS_CODES.includes(markdownResponse.status)
     ? await markdownResponse.text()

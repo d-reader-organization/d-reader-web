@@ -22,10 +22,7 @@ export default async function PledgePage(props: Props) {
     return notFound()
   }
 
-  const twitterIntent = await fetchTwitterIntentExpressedInterest({
-    campaignSlug: params.slug,
-    username: user.username,
-  })
+  const twitterIntent = await fetchTwitterIntentExpressedInterest(params.slug, { username: user.username })
 
   return (
     <GenesisLayout>
