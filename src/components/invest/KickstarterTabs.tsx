@@ -31,8 +31,6 @@ export const KickstarterTabs: React.FC<Props> = ({ className, campaign, markdown
       </TabsList>
       <TabContent value='about' className='flex-col'>
         <MarkdownRenderer content={markdownContent} />
-        {/* TODO: update info to show .md file */}
-        {/* <ProjectInfo info={campaign.info} /> */}
       </TabContent>
       <TabContent value='rewards' className='flex flex-col gap-4 max-md:items-center md:flex-row md:gap-7'>
         <RewardSection campaign={campaign} viewOnly />
